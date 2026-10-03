@@ -2609,5 +2609,15 @@ h1.jt{letter-spacing:0;text-wrap:wrap;line-height:1.4}
 .term-preview iframe{height:min(300px,35dvh)}
 #termPreviewStatus{font-size:11px;line-height:1.4;overflow-wrap:anywhere}
 </style><script>
-if('serviceWorker' in navigator && window.isSecureContext)window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(function(e){console.warn('離線下載未完成，請保持網路後重新開啟。',e);});});
+if('serviceWorker' in navigator && window.isSecureContext)window.addEventListener('load',function(){
+  var refreshing=false;
+  navigator.serviceWorker.addEventListener('controllerchange',function(){
+    if(refreshing)return;
+    refreshing=true;
+    location.reload();
+  });
+  navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'}).then(function(reg){
+    reg.update().catch(function(){});
+  }).catch(function(e){console.warn('離線下載未完成，請保持網路後重新開啟。',e);});
+});
 </script></body></html>
