@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.69"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.70"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -986,7 +986,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src">內文、分卷、科判、披尋記與常柏法師釋，全部依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷皆照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<br>原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.69</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.70</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><pre class="version-doc" id="versionDoc"></pre></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
@@ -3331,7 +3331,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var panel=$('menu').querySelector('.mpop');
     function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent='v'+v;$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
     $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){showSettingsPage('history');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showSettingsPage('history');}};
-    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.69\n最後更新：2026年10月4日";
+    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.70\n最後更新：2026年10月4日";
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
@@ -3560,7 +3560,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     setupReaderControls();
   function setupBooksTools(){
     var popup=document.createElement('aside');popup.className='book-size';popup.id='bookSize';popup.hidden=true;popup.setAttribute('aria-label','閱讀大小');
-    popup.innerHTML='<div class="book-size-row"><button data-size="-1" aria-label="縮小 10%">−</button><output id="bookPercent"></output><button data-size="1" aria-label="放大 10%">＋</button></div><button class="book-font">字體與行距</button>';
+    popup.innerHTML='<div class="book-size-row"><button data-size="-1" aria-label="縮小 10%">小</button><output id="bookPercent"></output><button data-size="1" aria-label="放大 10%">大</button></div><button class="book-font">字體與行距</button>';popup.classList.add('seg');
     document.body.appendChild(popup);var key='m',anchor=null;
     function update(){ $('bookPercent').textContent=Math.round(Z[key]*100)+'%'; }
     function place(){if(popup.hidden||!anchor)return;var b=overlayBounds(),v=viewportBox(),r=anchor.getBoundingClientRect(),w=popup.offsetWidth,h=popup.offsetHeight;popup.style.left=Math.max(v.left+12,Math.min(v.left+v.width-w-12,r.right-w))+'px';popup.style.top=Math.max(b.top,Math.min(b.bottom-h,r.bottom+8))+'px';popup.style.maxHeight=Math.max(60,b.bottom-b.top)+'px';popup.style.overflowY='auto';}
@@ -3569,6 +3569,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var fontTools=document.createElement('div');fontTools.className='grp font-pane-tools';
     document.querySelector('#ftWrap .ftpop').prepend(fontTools);
     ['r','m','p'].forEach(function(k){var row=document.createElement('div');row.className='font-pane-row';var name=document.createElement('span');name.textContent=zNames[k];row.appendChild(name);var button=document.querySelector('.books-tools[data-z="'+k+'"] .book-size-button');if(k==='m'){var copy=button.cloneNode(true);copy.onclick=function(){button.onclick.call(copy);};copy.classList.add('phone-size-entry');row.appendChild(copy);}else row.appendChild(button);fontTools.appendChild(row);});
+    // 電腦：正文與科判右上各一個「大小」鈕
+    (function(){var pr=[].slice.call(fontTools.querySelectorAll('.font-pane-row'))[2],pb=pr&&pr.querySelector('.book-size-button'),pt=document.querySelector('.books-tools[data-z="p"]'),mb=document.querySelector('.books-tools[data-z="m"] .book-size-button');
+      [mb,pb].forEach(function(b){if(!b)return;b.classList.add('dx');b.innerHTML='<span class="g">大<span class="s">小</span></span>';b.setAttribute('aria-label','字的大小');});
+      function home(){if(!pb||!pt)return;if(deviceLayout==='mac'){if(pb.parentElement!==pt)pt.insertBefore(pb,pt.firstChild);}else if(pb.parentElement!==pr)pr.appendChild(pb);}
+      home();window.addEventListener('reader-layout',home);})();
     var bar=document.querySelector('.zbar'),juanButton=document.createElement('button');juanButton.type='button';juanButton.className='phone-juan-button';juanButton.textContent='卷';juanButton.setAttribute('aria-label','選擇卷次');juanButton.setAttribute('aria-haspopup','true');juanButton.setAttribute('aria-expanded','false');$('menu').after(juanButton);
     var juans=$('juans'),home=juans.parentElement;
     function juanHome(){if(phoneMode()){if(juans.parentElement!==document.body)document.body.appendChild(juans);}else{home.appendChild(juans);document.documentElement.classList.remove('phone-juan-open');}juanButton.setAttribute('aria-expanded',String(document.documentElement.classList.contains('phone-juan-open')));}
@@ -4295,6 +4300,19 @@ html{scroll-snap-type:y proximity;scroll-padding-top:70px}
 </style>
 <style id="v168">/* v1.68 iPad：正文工具列不放 aA，保留搜尋與縮圖鈕 */
 :root[data-layout=ipad] .books-tools[data-z=m] .book-size-button{display:none!important}
+</style>
+<style id="v170">/* v1.70 電腦：正文、科判右上「大小」鈕；按下為「小｜大」 */
+:root:root:root .book-size-button.dx{display:inline-grid!important;place-items:center;letter-spacing:0!important;color:var(--fg);min-width:40px;padding:0 6px}
+:root:root:root .book-size-button.dx .g{display:inline-flex;align-items:baseline;gap:1px;font:500 16px/1 var(--ui)}
+:root:root:root .book-size-button.dx .s{font-size:11px}
+.books-tools[data-z=p] .book-size-button.dx{min-height:36px}
+.book-size.seg{padding:5px!important;width:auto!important;border-radius:14px!important}
+.book-size.seg .book-size-row{display:flex!important;margin:0!important;gap:0!important;background:var(--hover);border-radius:10px;overflow:hidden}
+.book-size.seg .book-size-row button{background:transparent!important;border-radius:0!important;min-width:54px!important;min-height:34px!important;font:500 15px/1 var(--ui)!important;color:var(--fg)}
+.book-size.seg .book-size-row button[data-size="-1"]{font-size:13px!important}
+.book-size.seg .book-size-row button+button,.book-size.seg .book-size-row output+button{border-inline-start:1px solid var(--rule)!important}
+.book-size.seg .book-size-row button:hover{background:color-mix(in srgb,var(--acc) 22%,transparent)!important}
+.book-size.seg output,.book-size.seg .book-font{display:none!important}
 </style>
 </body></html>
 <style>
