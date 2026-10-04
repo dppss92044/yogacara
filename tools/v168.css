@@ -1,0 +1,2 @@
+/* v1.68 iPad：正文工具列不放 aA，保留搜尋與縮圖鈕 */
+:root[data-layout=ipad] .books-tools[data-z=m] .book-size-button{display:none!important}

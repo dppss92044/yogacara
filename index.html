@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.67"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.69"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -986,7 +986,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src">內文、分卷、科判、披尋記與常柏法師釋，全部依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷皆照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<br>原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.67</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.69</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><pre class="version-doc" id="versionDoc"></pre></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
@@ -2843,14 +2843,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     window.addEventListener("resize", setHH); setHH();
   })();
   // ---------- guided tour: forced on the first visit, replay from 「導覽」 ----------
-  var TOUR_VER="7";
-  var TOUR=[{"t": "閱讀導覽", "d": "先認識主要區塊。略過或看完後，第一次把鼠標移到功能上，會出現簡短說明。"}, {"s": ".rail-top", "t": "卷目次", "d": "點卷號，切換要讀的卷。"}, {"s": "#rv", "t": "串文科判", "d": "看層次、找段落。點一條科判，就跳到對應內文。"}, {"s": "#article", "t": "內文", "d": "這裡讀正文。反白佛學詞語或句子，可查看辭典。"}, {"s": "#panel", "t": "直書科判", "d": "這裡看直書科判表，可與正文對照。"}, {"s": "#menuBtn", "t": "閱讀功能", "d": "三點裡可開關註釋、調整字體，也能匯出內容。"}, {"s": "#searchButton", "t": "搜尋", "d": "點左右置換旁的放大鏡，輸入要找的字詞。"}, {"s": ".zbar", "t": "欄位工具", "d": "可縮放閱讀畫面、交換欄位。碰到各按鈕時，再看操作說明。"}];
+  var TOUR_VER="8";
+  var TOUR=[{"t": "閱讀導覽", "d": "三欄同步：左邊卷次、中間正文、右邊直書科判。捲動正文時，標題上滑到畫面約五分之二處會自動反白，三欄一起跟到同一科。", "desk": 1}, {"s": ".rail-top", "t": "卷目次", "d": "點卷號切換卷。下方卷次科判可一直上下滑，會接著看到前後卷。", "desk": 1}, {"s": "#rv", "t": "卷次科判", "d": "點一條標題，正文與直書科判都跳到同一處。", "desk": 1}, {"s": "#article", "t": "查辭典", "d": "用滑鼠拖曳反白詞語，佛學辭典就會出現；在反白處按右鍵也可以。", "desk": 1, "demo": 1}, {"s": "#panel", "t": "直書科判：標題", "d": "點一下標題：正文跳到該段。點兩下標題：回到它的上一層並置中；◎開頭的標題點兩下，回到它在母支中的位置。", "desk": 1}, {"s": "#panel", "t": "直書科判：小字", "d": "點標題下方的小字「(分N)」：跳到這一科展開的分支。點兩下右側「別表」的小字：跳到那一科的位置。", "desk": 1}, {"s": "#labBadge", "t": "科標（藏版）", "d": "科判欄左上角的「干支／章節」，點一下切換標號。", "desk": 1}, {"s": "#edBadge", "t": "版本", "d": "點正文右上的「藏版／韓版」，直接切換版本，停在同一段原文。", "desk": 1}, {"s": "#menuBtn", "t": "功能", "d": "三點裡可切換版本、開關註釋、調整字體與介面，也能匯出。", "desk": 1}, {"s": "#searchButton", "t": "搜尋", "d": "點放大鏡，輸入要找的字詞。", "desk": 1}, {"t": "閱讀導覽", "d": "下方三個分頁：卷次、正文、科判。左上「卷」可開百卷目次。", "phone": 1}, {"s": "#article", "t": "查辭典 1／3：反白", "d": "在正文上長按一個詞，出現反白後，拖動兩端的控制點調整範圍。", "phone": 1, "demo": 1}, {"s": "#article", "t": "查辭典 2／3：查詞", "d": "反白處下方會出現小小的「查詞」按鈕（上方是系統的拷貝選單），點它就開啟佛學辭典，視窗在畫面中間。", "phone": 1}, {"s": "#article", "t": "查辭典 3／3：關閉", "d": "點辭典外面或關閉鈕即可回到正文；系統的拷貝選單照常可用，不會互相擋住。", "phone": 1}, {"s": ".device-tabs", "t": "科判分頁", "d": "點標題跳到正文；點小字「(分N)」看下一層；點兩下標題回到上一層。左下的 ↑ 一鍵回到頂端。", "phone": 1}, {"s": "#menuBtn", "t": "功能", "d": "三點裡可切換版本、開關註釋、調整字體，也能匯出。", "phone": 1}];
   function runTour(forced) {
     if ($("tour")) return;
     document.documentElement.classList.remove("barless");
     try { localStorage.setItem("hk-bar", "1"); } catch (e) {}
     document.documentElement.style.setProperty("--hh", $("top").offsetHeight + "px");
-    var NARROW = narrowNow(), STEPS = TOUR.filter(function(x){return (!x.desk || deviceLayout!=="iphone") && (!x.ipad || deviceLayout==="ipad");});
+    var NARROW = narrowNow(), STEPS = TOUR.filter(function(x){if(x.s==="#labBadge"&&EDITION!=="zang")return false;return (!x.desk || deviceLayout!=="iphone") && (!x.phone || deviceLayout==="iphone") && (!x.ipad || deviceLayout==="ipad");});
     var wasPinned=menuPinned;menuPinned=false;$("menu").classList.remove("pinned");
     if (!NARROW) { setRail(true); if (S.view !== "v" && !S.panel) setPanel(true); }
     var box = document.createElement("div"); box.className = "tour"; box.id = "tour";
@@ -2984,8 +2984,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     sc.addEventListener('pointerdown',function(){railDrag=true;});
     window.addEventListener('pointerup',function(){railDrag=false;},true);window.addEventListener('pointercancel',function(){railDrag=false;},true);
   }
-  function railOpenGuard(){var a=$('railOpen'),b=$('menuBtn');if(!a||!b)return;a.style.visibility='';var r1=a.getBoundingClientRect(),r2=b.getBoundingClientRect();if(r1.width&&r2.width&&r1.right>r2.left-6&&r1.left<r2.right+6&&r1.bottom>r2.top&&r1.top<r2.bottom)a.style.visibility='hidden';}
-  window.addEventListener('resize',function(){setTimeout(railOpenGuard,60);});window.addEventListener('reader-layout',function(){setTimeout(railOpenGuard,60);});setInterval(railOpenGuard,1500);
+  function railOpenGuard(){
+    var zb=document.querySelector('.zbar');if(!zb)return;var a=$('railOpen'),b=$('menuBtn'),po=$('panelOpen'),sb=document.querySelector('.books-tools[data-z="m"]');
+    zb.style.paddingLeft='';zb.style.paddingRight='';if(a)a.style.visibility='';
+    function hit(x,y){if(!x||!y)return 0;var r1=x.getBoundingClientRect(),r2=y.getBoundingClientRect();if(!r1.width||!r2.width||r1.bottom<=r2.top||r1.top>=r2.bottom)return 0;return r1.right>r2.left-6&&r1.left<r2.right+6;}
+    if(a&&b&&hit(a,b)){if(deviceLayout==='ipad'){var need=a.getBoundingClientRect().right+8-b.getBoundingClientRect().left;zb.style.paddingLeft=(parseFloat(getComputedStyle(zb).paddingLeft)+need)+'px';}else a.style.visibility='hidden';}
+    if(po&&sb&&hit(po,sb)){var need2=sb.getBoundingClientRect().right-po.getBoundingClientRect().left+8;zb.style.paddingRight=(parseFloat(getComputedStyle(zb).paddingRight)+need2)+'px';}
+  }
+  window.addEventListener('resize',function(){setTimeout(railOpenGuard,60);});window.addEventListener('reader-layout',function(){setTimeout(railOpenGuard,60);});setInterval(railOpenGuard,800);document.addEventListener('click',function(){setTimeout(railOpenGuard,350);setTimeout(railOpenGuard,900);},true);
   // 手機科判：一鍵回頂
   setTimeout(function(){var p=$('panel');if(!p||$('chartTop'))return;var b=document.createElement('button');b.type='button';b.id='chartTop';b.className='chart-top';b.setAttribute('aria-label','回到頂端');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 11l6-6 6 6"/></svg>';b.onclick=function(e){e.stopPropagation();var v=$('pview');if(v)v.scrollTo({top:0,behavior:'smooth'});};p.appendChild(b);},0);
   function focusRailCamera(a){railProg=Date.now()+700;railAnchor=null;
@@ -3325,7 +3331,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var panel=$('menu').querySelector('.mpop');
     function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent='v'+v;$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
     $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){showSettingsPage('history');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showSettingsPage('history');}};
-    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.67\n最後更新：2026年10月4日";
+    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.69\n最後更新：2026年10月4日";
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
@@ -4286,6 +4292,9 @@ html{scroll-snap-type:y proximity;scroll-padding-top:70px}
 .chart-top{display:none}
 :root[data-layout=iphone] .chart-top{display:grid;place-items:center;position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 70px);z-index:40;width:34px;height:34px;border-radius:50%;border:1px solid var(--rule);background:color-mix(in srgb,var(--bg) 85%,transparent);color:var(--muted);opacity:.6;padding:0;-webkit-tap-highlight-color:transparent}
 .chart-top svg{width:16px;height:16px}
+</style>
+<style id="v168">/* v1.68 iPad：正文工具列不放 aA，保留搜尋與縮圖鈕 */
+:root[data-layout=ipad] .books-tools[data-z=m] .book-size-button{display:none!important}
 </style>
 </body></html>
 <style>
