@@ -1,0 +1,161 @@
+{
+  "results": [
+    {
+      "name": "phone",
+      "edition": "zang",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 96 頁"
+      },
+      "desktopColor": false,
+      "passed": true
+    },
+    {
+      "name": "phone",
+      "edition": "hk",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 2018 頁"
+      },
+      "desktopColor": false,
+      "passed": true
+    },
+    {
+      "name": "phone-landscape",
+      "edition": "zang",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 96 頁"
+      },
+      "desktopColor": false,
+      "passed": true
+    },
+    {
+      "name": "phone-landscape",
+      "edition": "hk",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 2018 頁"
+      },
+      "desktopColor": false,
+      "passed": true
+    },
+    {
+      "name": "ipad",
+      "edition": "zang",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 96 頁"
+      },
+      "desktopColor": false,
+      "passed": true
+    },
+    {
+      "name": "ipad",
+      "edition": "hk",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 2018 頁"
+      },
+      "desktopColor": false,
+      "passed": true
+    },
+    {
+      "name": "ipad-landscape",
+      "edition": "zang",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 96 頁"
+      },
+      "desktopColor": false,
+      "passed": true
+    },
+    {
+      "name": "ipad-landscape",
+      "edition": "hk",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 2018 頁"
+      },
+      "desktopColor": false,
+      "passed": true
+    },
+    {
+      "name": "desktop-narrow",
+      "edition": "zang",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 96 頁"
+      },
+      "desktopColor": true,
+      "passed": true
+    },
+    {
+      "name": "desktop-narrow",
+      "edition": "hk",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 2018 頁"
+      },
+      "desktopColor": true,
+      "passed": true
+    },
+    {
+      "name": "desktop",
+      "edition": "zang",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 96 頁"
+      },
+      "desktopColor": true,
+      "passed": true
+    },
+    {
+      "name": "desktop",
+      "edition": "hk",
+      "centered": 0,
+      "volume": {
+        "j": 67,
+        "r": 67,
+        "title": "卷第六十七",
+        "p": "卷第六十七・共 2018 頁"
+      },
+      "desktopColor": true,
+      "passed": true
+    }
+  ],
+  "errors": []
+}
