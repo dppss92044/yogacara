@@ -1,0 +1,10 @@
+/* v1.73 右上工具膠囊：比例與滑過的淡灰底 */
+:root:root:root:root .books-tools{display:inline-flex!important;align-items:center!important;gap:2px!important;height:36px!important;min-height:0!important;padding:0 3px!important;box-sizing:border-box!important;border-radius:18px!important;background:#fff!important;border:1px solid color-mix(in srgb,var(--rule) 70%,transparent)!important;box-shadow:0 1px 4px rgba(0,0,0,.07)!important}
+:root:root:root:root .books-tools>button,:root:root:root:root .books-tools>form>button,:root:root:root:root .books-tools .icb,:root:root:root:root .books-tools #searchButton{height:30px!important;min-height:0!important;min-width:30px!important;width:auto!important;padding:0 7px!important;margin:0!important;border:0!important;border-radius:15px!important;background:transparent!important;box-shadow:none!important;display:inline-grid!important;place-items:center!important;color:var(--fg)!important;opacity:1!important}
+:root:root:root:root .books-tools>button:hover,:root:root:root:root .books-tools .icb:hover,:root:root:root:root .books-tools #searchButton:hover,:root:root:root:root .books-tools button[aria-expanded=true]{background:rgba(0,0,0,.06)!important}
+:root:root:root:root .books-tools svg{width:17px!important;height:17px!important}
+:root:root:root:root .books-tools .book-size-button.dx{padding:0 8px!important}
+:root:root:root:root .books-tools .book-size-button.dx .g{font:500 15px/1 var(--ui)!important;gap:1px}
+:root:root:root:root .books-tools .book-size-button.dx .s{font-size:11px!important}
+:root:root:root:root .books-tools form{display:contents}
+:root:root:root:root:root[data-layout=iphone] .books-tools .book-size-button{display:none!important}

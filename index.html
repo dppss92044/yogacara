@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.70"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.73"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -986,7 +986,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src">內文、分卷、科判、披尋記與常柏法師釋，全部依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷皆照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<br>原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.70</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.73</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><pre class="version-doc" id="versionDoc"></pre></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
@@ -2993,7 +2993,10 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
   window.addEventListener('resize',function(){setTimeout(railOpenGuard,60);});window.addEventListener('reader-layout',function(){setTimeout(railOpenGuard,60);});setInterval(railOpenGuard,800);document.addEventListener('click',function(){setTimeout(railOpenGuard,350);setTimeout(railOpenGuard,900);},true);
   // 手機科判：一鍵回頂
-  setTimeout(function(){var p=$('panel');if(!p||$('chartTop'))return;var b=document.createElement('button');b.type='button';b.id='chartTop';b.className='chart-top';b.setAttribute('aria-label','回到頂端');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 11l6-6 6 6"/></svg>';b.onclick=function(e){e.stopPropagation();var v=$('pview');if(v)v.scrollTo({top:0,behavior:'smooth'});};p.appendChild(b);},0);
+  setTimeout(function(){var p=$('panel');if(!p||$('chartTop'))return;var b=document.createElement('button');b.type='button';b.id='chartTop';b.className='chart-top';b.setAttribute('aria-label','回到頂端');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 11l6-6 6 6"/></svg><span class="t">回上方</span>';b.title='按一下：本卷科判頂端；按兩下：第一卷';
+      var tmr=0;function goTop(j){var v=$('pview');if(!v)return;if(j==null){v.scrollTo({top:0,behavior:'smooth'});return;}var p=JFIRSTPAGE[j]||2,el=$('pp'+p);if(!el){v.scrollTo({top:0,behavior:'smooth'});return;}if(!el.firstChild)fillPage(el,p);pScrollLock=Date.now()+900;var r=el.getBoundingClientRect(),rv=v.getBoundingClientRect();v.scrollTo({top:v.scrollTop+r.top-rv.top-8,behavior:'smooth'});setPanelLabel(p,j);}
+      b.onclick=function(e){e.stopPropagation();if(phoneMode()){goTop(null);return;}clearTimeout(tmr);tmr=setTimeout(function(){goTop(PJ[S.ppage]||S.juan||1);},260);};
+      b.ondblclick=function(e){e.stopPropagation();clearTimeout(tmr);goTop(1);};p.appendChild(b);},0);
   function focusRailCamera(a){railProg=Date.now()+700;railAnchor=null;
     var sc=$('rscroll');if(!a||!sc.clientHeight||railDrag)return;
     var r=a.getBoundingClientRect(),s=sc.getBoundingClientRect();
@@ -3331,7 +3334,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var panel=$('menu').querySelector('.mpop');
     function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent='v'+v;$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
     $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){showSettingsPage('history');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showSettingsPage('history');}};
-    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.70\n最後更新：2026年10月4日";
+    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.73\n最後更新：2026年10月4日";
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
@@ -3565,14 +3568,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     function update(){ $('bookPercent').textContent=Math.round(Z[key]*100)+'%'; }
     function place(){if(popup.hidden||!anchor)return;var b=overlayBounds(),v=viewportBox(),r=anchor.getBoundingClientRect(),w=popup.offsetWidth,h=popup.offsetHeight;popup.style.left=Math.max(v.left+12,Math.min(v.left+v.width-w-12,r.right-w))+'px';popup.style.top=Math.max(b.top,Math.min(b.bottom-h,r.bottom+8))+'px';popup.style.maxHeight=Math.max(60,b.bottom-b.top)+'px';popup.style.overflowY='auto';}
     function hide(){if(!popup.hidden)Motion.close(popup,function(){popup.hidden=true;anchor=null;});}
-    document.querySelectorAll('.zc').forEach(function(zc){var tools=document.createElement('span');tools.className='books-tools';tools.dataset.z=zc.dataset.z;tools.innerHTML='<button class="book-size-button" aria-label="閱讀大小" aria-haspopup="dialog">aA</button><button class="book-search-button" aria-label="搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button>';zc.after(tools);tools.firstChild.onclick=function(){key=zc.dataset.z;anchor=this;popup.dataset.menuOwned=String(!!this.closest('#menu'));popup.hidden=false;update();place();Motion.open(popup);};if(zc.dataset.z==='m'){tools.lastChild.replaceWith($('searchForm'));}else {var close=zc.dataset.z==='r'?$('railClose'):$('panelClose');close.innerHTML=zc.dataset.z==='r'?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="1.2"/><path d="M9.6 4.5v15"/></svg>':'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="1.2"/><path d="M14.4 4.5v15"/></svg>';close.setAttribute('aria-label','收起視窗');tools.lastChild.replaceWith(close);}});
+    document.querySelectorAll('.zc').forEach(function(zc){var tools=document.createElement('span');tools.className='books-tools';tools.dataset.z=zc.dataset.z;tools.innerHTML='<button class="book-size-button" aria-label="閱讀大小" aria-haspopup="dialog">aA</button><button class="book-search-button" aria-label="搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button>';zc.after(tools);tools.firstChild.onclick=function(){key=zc.dataset.z;anchor=this;popup.dataset.menuOwned=String(!!this.closest('#menu'));popup.hidden=false;var tb=this.closest('.books-tools');popup.style.background=tb?getComputedStyle(tb).backgroundColor:'';update();place();Motion.open(popup);};if(zc.dataset.z==='m'){tools.lastChild.replaceWith($('searchForm'));}else {var close=zc.dataset.z==='r'?$('railClose'):$('panelClose');close.innerHTML=zc.dataset.z==='r'?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="1.2"/><path d="M9.6 4.5v15"/></svg>':'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="1.2"/><path d="M14.4 4.5v15"/></svg>';close.setAttribute('aria-label','收起視窗');tools.lastChild.replaceWith(close);}});
     var fontTools=document.createElement('div');fontTools.className='grp font-pane-tools';
     document.querySelector('#ftWrap .ftpop').prepend(fontTools);
     ['r','m','p'].forEach(function(k){var row=document.createElement('div');row.className='font-pane-row';var name=document.createElement('span');name.textContent=zNames[k];row.appendChild(name);var button=document.querySelector('.books-tools[data-z="'+k+'"] .book-size-button');if(k==='m'){var copy=button.cloneNode(true);copy.onclick=function(){button.onclick.call(copy);};copy.classList.add('phone-size-entry');row.appendChild(copy);}else row.appendChild(button);fontTools.appendChild(row);});
     // 電腦：正文與科判右上各一個「大小」鈕
-    (function(){var pr=[].slice.call(fontTools.querySelectorAll('.font-pane-row'))[2],pb=pr&&pr.querySelector('.book-size-button'),pt=document.querySelector('.books-tools[data-z="p"]'),mb=document.querySelector('.books-tools[data-z="m"] .book-size-button');
-      [mb,pb].forEach(function(b){if(!b)return;b.classList.add('dx');b.innerHTML='<span class="g">大<span class="s">小</span></span>';b.setAttribute('aria-label','字的大小');});
-      function home(){if(!pb||!pt)return;if(deviceLayout==='mac'){if(pb.parentElement!==pt)pt.insertBefore(pb,pt.firstChild);}else if(pb.parentElement!==pr)pr.appendChild(pb);}
+    (function(){var rows=[].slice.call(fontTools.querySelectorAll('.font-pane-row')),pr=rows[2],pb=pr&&pr.querySelector('.book-size-button'),pt=document.querySelector('.books-tools[data-z="p"]'),mb=document.querySelector('.books-tools[data-z="m"] .book-size-button'),rr=rows[0],rb=rr&&rr.querySelector('.book-size-button'),rt=document.querySelector('.books-tools[data-z="r"]');
+      [mb,pb,rb].forEach(function(b){if(!b)return;b.classList.add('dx');b.innerHTML='<span class="g">大<span class="s">小</span></span>';b.setAttribute('aria-label','字的大小');});
+      function home(){var big=deviceLayout==='mac'||deviceLayout==='ipad';[[pb,pt,pr],[rb,rt,rr]].forEach(function(x){if(!x[0]||!x[1])return;if(big){if(x[0].parentElement!==x[1])x[1].insertBefore(x[0],x[1].firstChild);}else if(x[0].parentElement!==x[2])x[2].appendChild(x[0]);});}
       home();window.addEventListener('reader-layout',home);})();
     var bar=document.querySelector('.zbar'),juanButton=document.createElement('button');juanButton.type='button';juanButton.className='phone-juan-button';juanButton.textContent='卷';juanButton.setAttribute('aria-label','選擇卷次');juanButton.setAttribute('aria-haspopup','true');juanButton.setAttribute('aria-expanded','false');$('menu').after(juanButton);
     var juans=$('juans'),home=juans.parentElement;
@@ -4313,6 +4316,31 @@ html{scroll-snap-type:y proximity;scroll-padding-top:70px}
 .book-size.seg .book-size-row button+button,.book-size.seg .book-size-row output+button{border-inline-start:1px solid var(--rule)!important}
 .book-size.seg .book-size-row button:hover{background:color-mix(in srgb,var(--acc) 22%,transparent)!important}
 .book-size.seg output,.book-size.seg .book-font{display:none!important}
+:root:root:root:root[data-layout=ipad] .books-tools[data-z=m] .book-size-button.dx{display:inline-grid!important}
+</style>
+<style id="v173">/* v1.72 */
+:root:root:root .book-size-button.dx{padding:0 4px 0 10px!important}
+:root:root:root .book-size-button.dx .g{font-size:14px!important}
+:root:root:root .book-size-button.dx .s{font-size:9px!important}
+.book-size.seg{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;opacity:1!important}
+.book-size.seg .book-size-row{background:transparent!important}
+/* 電腦／平板：科判欄左下「回上方」 */
+:root:not([data-layout=iphone]) .chart-top{display:grid!important;place-items:center;position:absolute;left:16px;bottom:16px;top:auto;z-index:40;width:46px;height:46px;border-radius:50%;border:0;padding:0;cursor:pointer;
+  background:color-mix(in srgb,var(--fg) 64%,var(--bg));color:#fff;opacity:.5;transition:opacity .15s}
+:root:not([data-layout=iphone]) .chart-top:hover,:root:not([data-layout=iphone]) .chart-top:focus-visible{opacity:1}
+:root:not([data-layout=iphone]) .chart-top svg{display:none}
+.chart-top .t{display:none;font:600 12px/1 var(--ui);letter-spacing:.02em}
+:root:not([data-layout=iphone]) .chart-top .t{display:block}
+/* v1.73 右上工具膠囊：比例與滑過的淡灰底 */
+:root:root:root:root .books-tools{display:inline-flex!important;align-items:center!important;gap:2px!important;height:36px!important;min-height:0!important;padding:0 3px!important;box-sizing:border-box!important;border-radius:18px!important;background:#fff!important;border:1px solid color-mix(in srgb,var(--rule) 70%,transparent)!important;box-shadow:0 1px 4px rgba(0,0,0,.07)!important}
+:root:root:root:root .books-tools>button,:root:root:root:root .books-tools>form>button,:root:root:root:root .books-tools .icb,:root:root:root:root .books-tools #searchButton{height:30px!important;min-height:0!important;min-width:30px!important;width:auto!important;padding:0 7px!important;margin:0!important;border:0!important;border-radius:15px!important;background:transparent!important;box-shadow:none!important;display:inline-grid!important;place-items:center!important;color:var(--fg)!important;opacity:1!important}
+:root:root:root:root .books-tools>button:hover,:root:root:root:root .books-tools .icb:hover,:root:root:root:root .books-tools #searchButton:hover,:root:root:root:root .books-tools button[aria-expanded=true]{background:rgba(0,0,0,.06)!important}
+:root:root:root:root .books-tools svg{width:17px!important;height:17px!important}
+:root:root:root:root .books-tools .book-size-button.dx{padding:0 8px!important}
+:root:root:root:root .books-tools .book-size-button.dx .g{font:500 15px/1 var(--ui)!important;gap:1px}
+:root:root:root:root .books-tools .book-size-button.dx .s{font-size:11px!important}
+:root:root:root:root .books-tools form{display:contents}
+:root:root:root:root:root[data-layout=iphone] .books-tools .book-size-button{display:none!important}
 </style>
 </body></html>
 <style>

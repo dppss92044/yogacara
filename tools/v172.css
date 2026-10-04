@@ -1,0 +1,13 @@
+/* v1.72 */
+:root:root:root .book-size-button.dx{padding:0 4px 0 10px!important}
+:root:root:root .book-size-button.dx .g{font-size:14px!important}
+:root:root:root .book-size-button.dx .s{font-size:9px!important}
+.book-size.seg{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;opacity:1!important}
+.book-size.seg .book-size-row{background:transparent!important}
+/* 電腦／平板：科判欄左下「回上方」 */
+:root:not([data-layout=iphone]) .chart-top{display:grid!important;place-items:center;position:absolute;left:16px;bottom:16px;top:auto;z-index:40;width:46px;height:46px;border-radius:50%;border:0;padding:0;cursor:pointer;
+  background:color-mix(in srgb,var(--fg) 64%,var(--bg));color:#fff;opacity:.5;transition:opacity .15s}
+:root:not([data-layout=iphone]) .chart-top:hover,:root:not([data-layout=iphone]) .chart-top:focus-visible{opacity:1}
+:root:not([data-layout=iphone]) .chart-top svg{display:none}
+.chart-top .t{display:none;font:600 12px/1 var(--ui);letter-spacing:.02em}
+:root:not([data-layout=iphone]) .chart-top .t{display:block}
