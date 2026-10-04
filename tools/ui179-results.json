@@ -1,0 +1,19 @@
+{
+  "results": [
+    {
+      "savedPreferences": false,
+      "liveDictionaryScale": true,
+      "percentageButton": true,
+      "sanitized": true,
+      "fallback": true
+    },
+    {
+      "savedPreferences": true,
+      "liveDictionaryScale": true,
+      "percentageButton": true,
+      "sanitized": true,
+      "fallback": true
+    }
+  ],
+  "errors": []
+}
