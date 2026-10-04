@@ -1,0 +1,43 @@
+/* v1.58 */
+/* 卷次樹狀線：從上一層第一個字的正中間接下來 */
+:root:root:root:root .rol a.sub::before{inset-inline-start:calc((var(--rd) - 1) * var(--rs,.8em) + 8px + .5em - .5px)!important;inline-size:calc(var(--rs,.8em) - .5em - 1px)!important}
+:root:root:root:root .rol a.sub.more::after{inset-inline-start:calc((var(--rd) - 1) * var(--rs,.8em) + 8px + .5em - .5px)!important}
+:root:root:root:root[data-mobile-ui=true] .rol a.sub::before,:root:root:root:root[data-mobile-ui=true] .rol a.sub.more::after{inset-inline-start:min(calc((var(--rd) - 1) * var(--rs,.8em) + 8px + .5em - .5px),42%)!important}
+
+/* 直書：標號與正文、卷次同色；(分N) 好點 */
+.kscale .nd .lb,.kscale .head span .lb{color:var(--cinnabar)}
+.kscale .nd.nt{padding:.8mm .6mm;margin:-.8mm -.6mm;border-radius:1mm}
+.kscale .tcy{text-combine-upright:all;-webkit-text-combine:horizontal}
+
+/* 科判標號（藏版限定） */
+:root:not([data-edition=zang]) .label-settings{display:none!important}
+:root:root:root:root .settings-panel[data-settings-page=root]>.label-settings{margin:0!important;border:0!important;border-radius:0!important;overflow:visible!important;padding:2px 4px!important;box-sizing:border-box;background:linear-gradient(var(--rule),var(--rule)) 44px 100%/calc(100% - 56px) 1px no-repeat,var(--bg)!important}
+.settings-panel[data-settings-page=root] .label-body{display:none}
+.settings-panel:not([data-settings-page=root]):not([data-settings-page=label])>.label-settings{display:none!important}
+.settings-panel[data-settings-page=label]>.label-settings{display:block}
+.settings-panel[data-settings-page=label] #labelBtn{display:none!important}
+.label-body{display:grid;gap:10px;padding:2px 0 4px}
+.label-choice{display:flex;align-items:center;width:100%;box-sizing:border-box;text-align:left;border:0;border-radius:14px;background:var(--bg);padding:14px 16px;min-height:62px;cursor:pointer;color:var(--fg);font:15px var(--ui)}
+.label-choice b{font:600 16px var(--ui)}.label-choice small{color:var(--muted);font:12px/1.45 var(--ui)}
+.label-choice[aria-checked=true]{background:color-mix(in srgb,var(--acc) 26%,var(--bg))}
+@media (hover:hover) and (pointer:fine){
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=label] .label-body{display:grid!important;position:absolute!important;left:calc(100% + 8px)!important;right:auto!important;top:var(--fly-top,0px)!important;width:300px!important;max-height:var(--fly-maxh,80vh)!important;overflow-y:auto!important;margin:0!important;padding:12px!important;box-sizing:border-box;background:var(--rail)!important;border:1px solid var(--rule)!important;border-radius:20px!important;box-shadow:0 14px 44px rgba(0,0,0,.18)!important;z-index:5}
+:root:root:root:root .settings-panel[data-settings-page=root].fly-left[data-hover=label] .label-body{left:auto!important;right:calc(100% + 8px)!important}
+}
+
+/* 介面選擇：不打勾，選中的以底色表示 */
+:root:root:root .layout-choice .layout-check{display:none!important}
+:root:root:root .settings-panel .layout-choice{background:var(--bg)!important}
+:root:root:root .settings-panel .layout-choice[aria-pressed=true]{background:color-mix(in srgb,var(--acc) 30%,var(--bg))!important;color:var(--fg)!important}
+:root:root:root .settings-panel .layout-choice[aria-pressed=true] svg{color:var(--fg)!important}
+
+/* 匯出鍵改短 */
+:root:root:root:root .settings-panel .ex-card .ex-go{display:block;width:auto!important;min-width:120px;height:40px;margin:8px 0 0 auto!important;padding:0 26px!important;border-radius:10px!important}
+
+/* 問題回報：只有框與送出 */
+.settings-panel[data-settings-page=report] #reportPage{padding:12px!important;gap:10px!important}
+#reportText{min-height:180px}
+:root:root:root .settings-panel .rp-send{width:auto;min-width:110px;justify-self:end;height:40px;padding:0 24px}
+
+/* 版本紀錄：一行一項 */
+#versionDetail p{white-space:pre-line}
