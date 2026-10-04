@@ -1,0 +1,111 @@
+{
+  "results": [
+    {
+      "ed": "hk",
+      "label": "gz",
+      "pages": 2017,
+      "headerOverflow": [],
+      "fitted": [
+        {
+          "p": 542,
+          "bounds": {
+            "l": 16.571038000808382,
+            "t": 16.000007901551058,
+            "r": 182.82946584130642,
+            "b": 278.00002399303094
+          },
+          "bad": [],
+          "headerBad": [],
+          "overlap": [],
+          "crossings": [],
+          "fitted": "0.99877"
+        },
+        {
+          "p": 1334,
+          "bounds": {
+            "l": 19.432165703254196,
+            "t": 16.00002102273986,
+            "r": 179.96933736785377,
+            "b": 278.00002399303094
+          },
+          "bad": [],
+          "headerBad": [],
+          "overlap": [],
+          "crossings": [],
+          "fitted": "0.99681"
+        }
+      ],
+      "overflow": [],
+      "overlap": [],
+      "edge": [],
+      "crossings": [],
+      "page998": {
+        "p": 998,
+        "bounds": {
+          "l": 19.165248424765238,
+          "t": 17.85140562248996,
+          "r": 180.2165163410997,
+          "b": 265.0507914008977
+        },
+        "bad": [],
+        "headerBad": [],
+        "overlap": [],
+        "crossings": [],
+        "fitted": null
+      }
+    },
+    {
+      "ed": "zang",
+      "label": "gz",
+      "pages": 95,
+      "headerOverflow": [],
+      "fitted": [
+        {
+          "p": 94,
+          "bounds": {
+            "l": 19.88387776750384,
+            "t": 16.00003111596201,
+            "r": 179.5188405275514,
+            "b": 278.0000562913419
+          },
+          "bad": [],
+          "headerBad": [],
+          "overlap": [],
+          "crossings": [],
+          "fitted": "0.99524"
+        }
+      ],
+      "overflow": [],
+      "overlap": [],
+      "edge": [],
+      "crossings": []
+    },
+    {
+      "ed": "zang",
+      "label": "zj",
+      "pages": 95,
+      "headerOverflow": [],
+      "fitted": [
+        {
+          "p": 88,
+          "bounds": {
+            "l": 17.95682327194809,
+            "t": 16.000006892228843,
+            "r": 181.4456285620423,
+            "b": 278.00002399303094
+          },
+          "bad": [],
+          "headerBad": [],
+          "overlap": [],
+          "crossings": [],
+          "fitted": "0.99893"
+        }
+      ],
+      "overflow": [],
+      "overlap": [],
+      "edge": [],
+      "crossings": []
+    }
+  ],
+  "errors": []
+}

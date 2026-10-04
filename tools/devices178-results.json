@@ -1,0 +1,413 @@
+{
+  "results": [
+    {
+      "name": "phone-landscape",
+      "ed": "hk",
+      "label": "gz",
+      "pages": 2017,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 542,
+          "scale": "0.99877"
+        },
+        {
+          "p": 1334,
+          "scale": "0.99681"
+        }
+      ],
+      "page998": {
+        "p": 998,
+        "bad": [],
+        "overlap": [],
+        "crossings": [],
+        "lost": [],
+        "fitted": null,
+        "bounds": {
+          "l": 19.16524918498643,
+          "t": 17.851414502357965,
+          "r": 180.2165169941157,
+          "b": 265.050790871848
+        }
+      }
+    },
+    {
+      "name": "phone",
+      "ed": "hk",
+      "label": "gz",
+      "pages": 2017,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 542,
+          "scale": "0.99877"
+        },
+        {
+          "p": 1334,
+          "scale": "0.99681"
+        }
+      ],
+      "page998": {
+        "p": 998,
+        "bad": [],
+        "overlap": [],
+        "crossings": [],
+        "lost": [],
+        "fitted": null,
+        "bounds": {
+          "l": 19.165248779133655,
+          "t": 17.851400082594676,
+          "r": 180.21651359886843,
+          "b": 265.050791809761
+        }
+      }
+    },
+    {
+      "name": "phone-landscape",
+      "ed": "zang",
+      "label": "gz",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 94,
+          "scale": "0.99524"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "phone",
+      "ed": "zang",
+      "label": "gz",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 94,
+          "scale": "0.99524"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "phone-landscape",
+      "ed": "zang",
+      "label": "zj",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 88,
+          "scale": "0.99893"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "phone",
+      "ed": "zang",
+      "label": "zj",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 88,
+          "scale": "0.99893"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "ipad",
+      "ed": "hk",
+      "label": "gz",
+      "pages": 2017,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 542,
+          "scale": "0.99877"
+        },
+        {
+          "p": 1334,
+          "scale": "0.99681"
+        }
+      ],
+      "page998": {
+        "p": 998,
+        "bad": [],
+        "overlap": [],
+        "crossings": [],
+        "lost": [],
+        "fitted": null,
+        "bounds": {
+          "l": 19.165249455767476,
+          "t": 17.851407293872413,
+          "r": 180.21652098471813,
+          "b": 265.05080004068
+        }
+      }
+    },
+    {
+      "name": "ipad",
+      "ed": "zang",
+      "label": "gz",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 94,
+          "scale": "0.99524"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "ipad",
+      "ed": "zang",
+      "label": "zj",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 88,
+          "scale": "0.99893"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "ipad-landscape",
+      "ed": "hk",
+      "label": "gz",
+      "pages": 2017,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 542,
+          "scale": "0.99877"
+        },
+        {
+          "p": 1334,
+          "scale": "0.99681"
+        }
+      ],
+      "page998": {
+        "p": 998,
+        "bad": [],
+        "overlap": [],
+        "crossings": [],
+        "lost": [],
+        "fitted": null,
+        "bounds": {
+          "l": 19.165260573932446,
+          "t": 17.85141796293538,
+          "r": 180.21651197591498,
+          "b": 265.0508055296066
+        }
+      }
+    },
+    {
+      "name": "ipad-landscape",
+      "ed": "zang",
+      "label": "gz",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 94,
+          "scale": "0.99524"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "ipad-landscape",
+      "ed": "zang",
+      "label": "zj",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 88,
+          "scale": "0.99893"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "desktop-narrow",
+      "ed": "hk",
+      "label": "gz",
+      "pages": 2017,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 542,
+          "scale": "0.99877"
+        },
+        {
+          "p": 1334,
+          "scale": "0.99681"
+        }
+      ],
+      "page998": {
+        "p": 998,
+        "bad": [],
+        "overlap": [],
+        "crossings": [],
+        "lost": [],
+        "fitted": null,
+        "bounds": {
+          "l": 19.16523578649833,
+          "t": 17.85140745142775,
+          "r": 180.2164796704615,
+          "b": 265.0507510997156
+        }
+      }
+    },
+    {
+      "name": "desktop-narrow",
+      "ed": "zang",
+      "label": "gz",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 94,
+          "scale": "0.99524"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "desktop",
+      "ed": "hk",
+      "label": "gz",
+      "pages": 2017,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 542,
+          "scale": "0.99877"
+        },
+        {
+          "p": 1334,
+          "scale": "0.99681"
+        }
+      ],
+      "page998": {
+        "p": 998,
+        "bad": [],
+        "overlap": [],
+        "crossings": [],
+        "lost": [],
+        "fitted": null,
+        "bounds": {
+          "l": 19.16525115116642,
+          "t": 17.851409427997982,
+          "r": 180.2165249217347,
+          "b": 265.0507651760706
+        }
+      }
+    },
+    {
+      "name": "desktop-narrow",
+      "ed": "zang",
+      "label": "zj",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 88,
+          "scale": "0.99893"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "desktop",
+      "ed": "zang",
+      "label": "gz",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 94,
+          "scale": "0.99524"
+        }
+      ],
+      "page998": null
+    },
+    {
+      "name": "desktop",
+      "ed": "zang",
+      "label": "zj",
+      "pages": 95,
+      "overflow": [],
+      "overlap": [],
+      "crossings": [],
+      "lost": [],
+      "fitted": [
+        {
+          "p": 88,
+          "scale": "0.99893"
+        }
+      ],
+      "page998": null
+    }
+  ],
+  "errors": []
+}
