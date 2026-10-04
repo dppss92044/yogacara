@@ -1,0 +1,10 @@
+/* v1.83 工具膠囊：全圓角、按鈕等寬 */
+:root:root:root:root:root .books-tools,:root:root:root:root:root .reader-actions,:root:root:root:root:root .lab-badge{border-radius:999px!important}
+:root:root:root:root:root .reader-actions{display:inline-grid!important;grid-auto-flow:column!important;grid-auto-columns:36px!important;align-items:center!important;justify-items:center!important;gap:2px!important;padding:0 3px!important;height:36px!important;box-sizing:border-box!important}
+:root:root:root:root:root .reader-actions>*{width:36px!important;height:30px!important;min-width:0!important;margin:0!important;display:grid!important;place-items:center!important}
+:root:root:root:root:root .reader-actions>.menu>.mbtn,:root:root:root:root:root .reader-actions button{width:32px!important;height:30px!important;min-height:0!important;padding:0!important;border-radius:999px!important}
+:root:root:root:root:root .reader-actions #railOpen{position:static!important;transform:none!important;inset:auto!important;visibility:visible!important;opacity:1!important}
+:root:root:root:root:root .reader-actions svg{width:18px!important;height:18px!important}
+:root:root:root:root:root .books-tools{height:36px!important}
+:root:root:root:root:root .books-tools>button,:root:root:root:root:root .books-tools .icb,:root:root:root:root:root .books-tools #searchButton{border-radius:999px!important}
+:root:root:root:root:root .book-size.seg,:root:root:root:root:root .book-size.seg .book-size-row{border-radius:999px!important}
