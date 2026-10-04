@@ -1,0 +1,13 @@
+/* v1.75 邊角微圓（iOS 風格） */
+:root:not([data-layout=iphone]) .wrap>.rail{border-top-right-radius:12px;border-bottom-right-radius:12px;overflow:hidden}
+:root:not([data-layout=iphone]) .wrap>.panel{border-top-left-radius:12px;border-bottom-left-radius:12px;overflow:hidden}
+:root:not([data-layout=iphone]) .wrap.panes-swapped>.panel{border-radius:0 12px 12px 0}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap>.rail{border-radius:0 16px 16px 0!important}
+.pview .ksheet,.kview .ksheet,.ksheet .page{border-radius:6px}
+.pview .ksheet{overflow:hidden}
+.rail-top,.juans{border-radius:10px}
+.rail .rscroll{border-radius:10px}
+.zbar,.pbar{border-radius:0 0 10px 10px}
+.term-preview,.book-size,.menu .mpop,#tour .card,.dict-chip,.edition-body,.ex-card,.grp{border-radius:14px}
+input,select,textarea,button{border-radius:8px}
+.juans a,.juans>*{border-radius:8px}

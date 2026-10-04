@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.74"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.75"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -986,7 +986,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src">內文、分卷、科判、披尋記與常柏法師釋，全部依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷皆照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<br>原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.74</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.75</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><pre class="version-doc" id="versionDoc"></pre></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
@@ -3351,7 +3351,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var panel=$('menu').querySelector('.mpop');
     function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent='v'+v;$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
     $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){showSettingsPage('history');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showSettingsPage('history');}};
-    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.74\n最後更新：2026年10月4日";
+    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.75\n最後更新：2026年10月4日";
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
@@ -4379,6 +4379,20 @@ html{scroll-snap-type:y proximity;scroll-padding-top:70px}
 #railPin{display:none}
 :root[data-layout=ipad] #railPin{display:inline-grid!important}
 :root[data-layout=ipad] #railPin[aria-pressed=true]{color:var(--cinnabar)!important}
+</style>
+<style id="v175">/* v1.75 邊角微圓（iOS 風格） */
+:root:not([data-layout=iphone]) .wrap>.rail{border-top-right-radius:12px;border-bottom-right-radius:12px;overflow:hidden}
+:root:not([data-layout=iphone]) .wrap>.panel{border-top-left-radius:12px;border-bottom-left-radius:12px;overflow:hidden}
+:root:not([data-layout=iphone]) .wrap.panes-swapped>.panel{border-radius:0 12px 12px 0}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap>.rail{border-radius:0 16px 16px 0!important}
+.pview .ksheet,.kview .ksheet,.ksheet .page{border-radius:6px}
+.pview .ksheet{overflow:hidden}
+.rail-top,.juans{border-radius:10px}
+.rail .rscroll{border-radius:10px}
+.zbar,.pbar{border-radius:0 0 10px 10px}
+.term-preview,.book-size,.menu .mpop,#tour .card,.dict-chip,.edition-body,.ex-card,.grp{border-radius:14px}
+input,select,textarea,button{border-radius:8px}
+.juans a,.juans>*{border-radius:8px}
 </style>
 </body></html>
 <style>
