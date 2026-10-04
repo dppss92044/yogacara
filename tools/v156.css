@@ -1,0 +1,79 @@
+/* v1.56 */
+/* 功能選單：單一圓角卡片；分隔線縮在框內，不超出 */
+:root:root:root:root .settings-panel[data-settings-page=root]>:is(.edition-settings,.content-settings,.learning-settings-list,.ft,.dl,.about){margin:0!important;border:0!important;border-radius:0!important;overflow:visible!important;padding:3px 4px!important;box-sizing:border-box;background:linear-gradient(var(--rule),var(--rule)) 44px 100%/calc(100% - 56px) 1px no-repeat,var(--bg)!important}
+:root:root:root:root .settings-panel[data-settings-page=root]>.edition-settings{border-radius:14px 14px 0 0!important;padding-top:4px!important}
+:root:root:root:root .settings-panel[data-settings-page=root]>.about{border-radius:0 0 14px 14px!important;padding-bottom:4px!important;background:var(--bg)!important}
+:root:root:root:root .settings-panel[data-settings-page=root]>#tourBtn{display:flex;width:100%}
+:root:root:root:root .settings-panel[data-settings-page=root] .mi{min-height:40px!important;padding:6px 10px!important;border-radius:10px!important;background:transparent!important;font-size:15px!important;gap:12px}
+:root:root:root:root .settings-panel[data-settings-page=root] .mi:hover{background:var(--acc)!important}
+:root:root:root:root .settings-panel[data-settings-page=root] .mi svg{width:19px;height:19px;flex:0 0 19px}
+:root:root:root:root .settings-panel[data-settings-page=root]>#tourBtn{padding:6px 14px!important;border-radius:0!important;background:linear-gradient(var(--rule),var(--rule)) 44px 100%/calc(100% - 56px) 1px no-repeat,var(--bg)!important;min-height:46px!important}
+:root:root:root:root .settings-panel[data-settings-page=root]>#tourBtn:hover{background:linear-gradient(var(--acc),var(--acc)) 4px 3px/calc(100% - 8px) calc(100% - 6px) no-repeat,var(--bg)!important}
+.mi .mi-val{font:500 14px var(--kai)!important;color:var(--muted)!important;opacity:.85}
+
+/* 正文右上方的版本字 */
+.ed-badge{pointer-events:auto;flex:none;margin-inline-start:auto;margin-inline-end:6px;border:0;background:none;padding:0 4px;min-width:28px;height:32px;font:400 17px/32px var(--kai);color:var(--muted);opacity:.5;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ed-badge:hover{opacity:.9}
+.zbar .ed-badge+.books-tools{margin-inline-start:0!important}
+
+/* 觸控查詞按鈕：浮在反白字正上方 */
+:root .dict-chip{left:var(--chip-left,16px)!important;top:var(--chip-top,80px)!important;right:auto!important;bottom:auto!important;margin:0!important}
+:root[data-single-pane=true] .dict-chip{bottom:auto!important}
+:root[data-layout=iphone] .term-preview,:root[data-layout=ipad] .term-preview{box-shadow:0 18px 60px rgba(0,0,0,.28)}
+
+/* 直書科判：頁首字較好點；捏合時不讓系統整頁縮放 */
+.kscale .head span[data-id],.kscale .head span[data-page]{padding:.6mm 0;border-radius:1mm}
+:root[data-mobile-ui=true] .pview{touch-action:pan-x pan-y}
+
+/* 問題回報 */
+#reportPage{display:none}
+.settings-panel[data-settings-page=report]>.about,.settings-panel[data-settings-page=report] .apop{display:block!important}
+.settings-panel[data-settings-page=report] .about-overview,.settings-panel[data-settings-page=report] #versionHistory,.settings-panel[data-settings-page=report] #versionDetail{display:none!important}
+.settings-panel[data-settings-page=report] #reportPage{display:grid;gap:8px;background:var(--bg);border-radius:14px;padding:14px}
+.rp-hint{margin:0 0 4px!important;font:13.5px/1.7 var(--ui);color:var(--fg)!important}
+.rp-label{font:12.5px var(--ui);color:var(--muted)}
+#reportText,#reportContact{width:100%;box-sizing:border-box;border:1px solid var(--rule);border-radius:10px;background:var(--bg);color:var(--fg);font:16px/1.6 var(--ui);padding:10px 12px;resize:vertical}
+#reportText:focus,#reportContact:focus{outline:2px solid color-mix(in srgb,var(--acc) 60%,transparent);outline-offset:0}
+.rp-meta{font:12px/1.5 var(--ui);color:var(--muted)}
+:root:root:root .settings-panel .rp-send{height:44px;border:0;border-radius:12px!important;background:var(--acc2)!important;color:#fff!important;font:600 15px var(--ui)!important;cursor:pointer}
+.rp-send:disabled{opacity:.55}
+.rp-msg{margin:0!important;font:13px/1.6 var(--ui);color:var(--muted)!important}.rp-msg:empty{display:none}
+.rp-msg a{color:var(--link)}
+
+/* 手機卷次換卷提示：放大、微微閃爍 */
+:root[data-mobile-ui=true] .pull{font:600 15px/1.4 var(--ui);letter-spacing:.06em;padding:10px 0;animation:pull-glow 1.5s ease-in-out infinite}
+@keyframes pull-glow{0%,100%{filter:opacity(1)}50%{filter:opacity(.45)}}
+@media(prefers-reduced-motion:reduce){:root[data-mobile-ui=true] .pull{animation:none}}
+
+/* 行動版捲動：不用 CSS 吸附，也不在捲動中模糊合成 */
+:root[data-mobile-ui=true]{scroll-snap-type:none!important}
+:root[data-mobile-ui=true] .reading-volume h1{scroll-snap-align:none!important}
+:root[data-mobile-ui=true] .device-tabs{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+:root[data-mobile-ui=true] .article{touch-action:pan-y pinch-zoom}
+
+/* 電腦：滑過選單列即浮現下一層 */
+@media (hover:hover) and (pointer:fine){
+:root:root:root:root .menu .mpop.settings-panel[data-settings-page=root][data-hover]{overflow:visible!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover]>:not(.settings-head){position:static!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=edition] .edition-body,
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=content] .content-body,
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=layout] .settings-body,
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=ft] .ftpop,
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=dl] .dlpop,
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=about] .apop{display:block!important;position:absolute!important;left:calc(100% + 8px)!important;right:auto!important;top:var(--fly-top,0px)!important;width:300px!important;max-width:calc(100vw - 24px)!important;max-height:var(--fly-maxh,80vh)!important;overflow-y:auto!important;overflow-x:hidden!important;margin:0!important;padding:12px!important;box-sizing:border-box;background:var(--rail)!important;border:1px solid var(--rule)!important;border-radius:20px!important;box-shadow:0 14px 44px rgba(0,0,0,.18)!important;z-index:5}
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=edition] .edition-body{display:grid!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=dl] .dlpop{width:460px!important}
+:root:root:root:root .settings-panel[data-settings-page=root].fly-left[data-hover] :is(.edition-body,.content-body,.settings-body,.ftpop,.dlpop,.apop){left:auto!important;right:calc(100% + 8px)!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=content] #optsTop .grp,
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=layout] .layout-choices{background:var(--bg)!important;border-radius:14px!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=about] .about-overview .grp{background:var(--bg)}
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover] .mi.version-history-button{background:var(--bg)!important;margin-top:8px}
+}
+:root:root:root:root .settings-panel[data-settings-page=root]>#tourBtn{border:0!important;margin:0!important;min-height:42px!important}
+:root:root:root:root .settings-panel[data-settings-page=root]>:is(.edition-settings,.content-settings,.learning-settings-list,.ft,.dl,.about){padding:2px 4px!important}
+:root:root:root:root .settings-panel[data-settings-page=root] .mi{min-height:38px!important}
+/* 置中用的外框不擋住頁首（最右邊的直書標題）；框內科判照常可點 */
+.kscale .shift{pointer-events:none}
+.kscale .shift .nd,.kscale .shift .ref{pointer-events:auto}
+:root[data-mobile-ui=true] .pull.bot{background:linear-gradient(color-mix(in srgb,var(--rail) 0%,transparent),var(--rail) 40%);padding:22px 0 12px}
+:root[data-mobile-ui=true] .pull.top{background:linear-gradient(var(--rail) 60%,color-mix(in srgb,var(--rail) 0%,transparent));padding:12px 0 22px}
