@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.73"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.74"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -986,7 +986,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src">內文、分卷、科判、披尋記與常柏法師釋，全部依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷皆照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<br>原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.73</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.74</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><pre class="version-doc" id="versionDoc"></pre></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
@@ -1029,7 +1029,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var $ = function(id){return /^b\d+$|^nt\d+$|^meta$|^k\d+$/.test(id)&&typeof S!=='undefined'&&S?document.getElementById('j'+S.juan+'-'+id)||document.getElementById(id):document.getElementById(id);};
 
   var ipadPinned=true;
-  try { ipadPinned=localStorage.getItem("hk-ipad-pinned")!=="0"; }catch(e){}
+  ipadPinned=true;var ipadRailDock=false;try{ipadRailDock=localStorage.getItem("hk-ipad-rail-dock")==="1";}catch(e){}
+  function ipadFloat(){return deviceLayout==="ipad"&&!ReaderUI.single&&!ipadRailDock;}
+  function railModeUI(){document.documentElement.dataset.ipadRail=ipadFloat()?"float":"dock";var b=document.getElementById("railPin");if(b){b.setAttribute("aria-pressed",String(ipadRailDock));b.title=ipadRailDock?"取消固定卷次":"固定卷次";b.setAttribute("aria-label",b.title);}}
   document.documentElement.dataset.ipadPinned=String(ipadPinned);
   var layoutPref = "auto", deviceLayout;
   var ReaderUI={ready:false,screen:'read',single:false,portrait:false,width:innerWidth,height:innerHeight,bookmark:null};
@@ -2796,6 +2798,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function narrowNow() { return !VM && ReaderUI.single; }
 
   function setRail(on) {
+    if(ReaderUI.ready&&ipadFloat()){railOn=on;rail.classList.toggle("open",on);wrap.classList.remove("no-rail");updFloat();setTimeout(function(){placeGutters();fitP();fitV();},0);return;}
     if(ReaderUI.ready&&ReaderUI.single){selectReaderPane(on?'catalog':ReaderUI.screen==='catalog'?'read':ReaderUI.screen);return;}
     railOn = on;
     if (narrowNow()) { rail.classList.toggle("open", on); wrap.classList.remove("no-rail"); }
@@ -2803,6 +2806,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     updFloat(); setTimeout(function () { placeGutters(); fitP(); fitV(); }, 0);
   }
   function updFloat() {
+    if (typeof ipadFloat === "function" && ReaderUI.ready && ipadFloat()) { $("railOpen").hidden = rail.classList.contains("open"); $("panelOpen").hidden = S.panel || S.view === "v"; main.classList.toggle("ro", !$("railOpen").hidden); if (typeof placeGutters === "function") placeGutters(); return; }
     $("railOpen").hidden = railOn && !narrowNow() ? true : narrowNow() ? rail.classList.contains("open") : railOn;
     $("panelOpen").hidden = S.panel || S.view === "v";
     main.classList.toggle("ro", !$("railOpen").hidden); main.classList.toggle("po", !$("panelOpen").hidden && !VM);
@@ -2843,8 +2847,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     window.addEventListener("resize", setHH); setHH();
   })();
   // ---------- guided tour: forced on the first visit, replay from 「導覽」 ----------
-  var TOUR_VER="8";
-  var TOUR=[{"t": "閱讀導覽", "d": "三欄同步：左邊卷次、中間正文、右邊直書科判。捲動正文時，標題上滑到畫面約五分之二處會自動反白，三欄一起跟到同一科。", "desk": 1}, {"s": ".rail-top", "t": "卷目次", "d": "點卷號切換卷。下方卷次科判可一直上下滑，會接著看到前後卷。", "desk": 1}, {"s": "#rv", "t": "卷次科判", "d": "點一條標題，正文與直書科判都跳到同一處。", "desk": 1}, {"s": "#article", "t": "查辭典", "d": "用滑鼠拖曳反白詞語，佛學辭典就會出現；在反白處按右鍵也可以。", "desk": 1, "demo": 1}, {"s": "#panel", "t": "直書科判：標題", "d": "點一下標題：正文跳到該段。點兩下標題：回到它的上一層並置中；◎開頭的標題點兩下，回到它在母支中的位置。", "desk": 1}, {"s": "#panel", "t": "直書科判：小字", "d": "點標題下方的小字「(分N)」：跳到這一科展開的分支。點兩下右側「別表」的小字：跳到那一科的位置。", "desk": 1}, {"s": "#labBadge", "t": "科標（藏版）", "d": "科判欄左上角的「干支／章節」，點一下切換標號。", "desk": 1}, {"s": "#edBadge", "t": "版本", "d": "點正文右上的「藏版／韓版」，直接切換版本，停在同一段原文。", "desk": 1}, {"s": "#menuBtn", "t": "功能", "d": "三點裡可切換版本、開關註釋、調整字體與介面，也能匯出。", "desk": 1}, {"s": "#searchButton", "t": "搜尋", "d": "點放大鏡，輸入要找的字詞。", "desk": 1}, {"t": "閱讀導覽", "d": "下方三個分頁：卷次、正文、科判。左上「卷」可開百卷目次。", "phone": 1}, {"s": "#article", "t": "查辭典 1／3：反白", "d": "在正文上長按一個詞，出現反白後，拖動兩端的控制點調整範圍。", "phone": 1, "demo": 1}, {"s": "#article", "t": "查辭典 2／3：查詞", "d": "反白處下方會出現小小的「查詞」按鈕（上方是系統的拷貝選單），點它就開啟佛學辭典，視窗在畫面中間。", "phone": 1}, {"s": "#article", "t": "查辭典 3／3：關閉", "d": "點辭典外面或關閉鈕即可回到正文；系統的拷貝選單照常可用，不會互相擋住。", "phone": 1}, {"s": ".device-tabs", "t": "科判分頁", "d": "點標題跳到正文；點小字「(分N)」看下一層；點兩下標題回到上一層。左下的 ↑ 一鍵回到頂端。", "phone": 1}, {"s": "#menuBtn", "t": "功能", "d": "三點裡可切換版本、開關註釋、調整字體，也能匯出。", "phone": 1}];
+  var TOUR_VER="9";
+  var TOUR=[{"t": "閱讀導覽", "d": "左邊是卷次。\n中間是正文。\n右邊是直書科判。\n三欄會一起跟著走。", "desk": 1}, {"s": ".rail-top", "t": "卷目次", "d": "點卷號，換一卷。\n往下滑，會接到下一卷。", "desk": 1}, {"s": "#railPin", "t": "固定卷次", "d": "點圖釘，卷次固定在左邊。\n再點一下，卷次改回浮動。", "ipad": 1}, {"s": "#rv", "t": "卷次科判", "d": "點一下標題。\n正文和科判一起跳過去。", "desk": 1}, {"s": "#article", "t": "查辭典", "d": "用滑鼠反白一個詞。\n辭典就會跳出來。", "desk": 1, "demo": 1}, {"s": "#panel", "t": "科判標題", "d": "點一下標題：正文跳到這一段。\n點兩下標題：回到上一層。", "desk": 1}, {"s": "#panel", "t": "科判小字", "d": "點一下小字（分N）：跳到下一層。\n點兩下右邊「別表」小字：跳到那一科。", "desk": 1}, {"s": "#chartTop", "t": "回上方", "d": "點一下：回到這一卷的科判。\n點兩下：回到第一卷。", "desk": 1}, {"s": "#labBadge", "t": "科標", "d": "點一下「干支／章節」。\n標號就會換。", "desk": 1}, {"s": "#edBadge", "t": "版本", "d": "點一下「藏版／韓版」。\n版本就會換，停在同一段原文。", "desk": 1}, {"s": ".books-tools[data-z=\"m\"] .book-size-button", "t": "大小", "d": "點「大小」。\n再點「小」或「大」。\n每點一下，字改 10%。", "desk": 1}, {"s": "#menuBtn", "t": "功能", "d": "點三點，打開功能。", "desk": 1}, {"s": "#searchButton", "t": "搜尋", "d": "點放大鏡。\n輸入要找的字。", "desk": 1}, {"t": "閱讀導覽", "d": "下面有三個分頁：卷次、正文、科判。\n左上「卷」可以選卷。", "phone": 1}, {"s": "#article", "t": "查辭典 1／3", "d": "長按一個詞。\n拖兩端，調整反白範圍。", "phone": 1, "demo": 1}, {"s": "#article", "t": "查辭典 2／3", "d": "反白下方會出現「查詞」。\n點一下「查詞」，打開辭典。", "phone": 1}, {"s": "#article", "t": "查辭典 3／3", "d": "點辭典外面。\n辭典就關掉。", "phone": 1}, {"s": ".device-tabs", "t": "科判", "d": "點一下標題：跳到正文。\n點一下小字（分N）：看下一層。\n點兩下標題：回上一層。\n點左下 ↑：回到頂端。", "phone": 1}, {"s": "#menuBtn", "t": "功能", "d": "點三點，打開功能。", "phone": 1}];
   function runTour(forced) {
     if ($("tour")) return;
     document.documentElement.classList.remove("barless");
@@ -2996,7 +3000,20 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   setTimeout(function(){var p=$('panel');if(!p||$('chartTop'))return;var b=document.createElement('button');b.type='button';b.id='chartTop';b.className='chart-top';b.setAttribute('aria-label','回到頂端');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 11l6-6 6 6"/></svg><span class="t">回上方</span>';b.title='按一下：本卷科判頂端；按兩下：第一卷';
       var tmr=0;function goTop(j){var v=$('pview');if(!v)return;if(j==null){v.scrollTo({top:0,behavior:'smooth'});return;}var p=JFIRSTPAGE[j]||2,el=$('pp'+p);if(!el){v.scrollTo({top:0,behavior:'smooth'});return;}if(!el.firstChild)fillPage(el,p);pScrollLock=Date.now()+900;var r=el.getBoundingClientRect(),rv=v.getBoundingClientRect();v.scrollTo({top:v.scrollTop+r.top-rv.top-8,behavior:'smooth'});setPanelLabel(p,j);}
       b.onclick=function(e){e.stopPropagation();if(phoneMode()){goTop(null);return;}clearTimeout(tmr);tmr=setTimeout(function(){goTop(PJ[S.ppage]||S.juan||1);},260);};
-      b.ondblclick=function(e){e.stopPropagation();clearTimeout(tmr);goTop(1);};p.appendChild(b);},0);
+      b.ondblclick=function(e){e.stopPropagation();clearTimeout(tmr);goTop(1);};
+      function placeCT(){if(phoneMode()){return;}var v=$('pview');if(!v||panel.hidden||!v.clientHeight){b.dataset.off='1';return;}var rv=v.getBoundingClientRect(),y=rv.bottom-14-31,sh=null,best=null;
+        v.querySelectorAll('.ksheet .page').forEach(function(x){var r=x.getBoundingClientRect();if(!r.width)return;if(r.bottom<rv.top||r.top>rv.bottom)return;if(r.top<=y&&r.bottom>=y+31)sh=r;if(r.bottom<y+31&&r.bottom>rv.top+60&&(!best||r.bottom>best.bottom))best=r;});
+        if(!sh&&best){sh=best;y=best.bottom-12-31;}if(!sh){b.dataset.off='1';return;}delete b.dataset.off;
+        document.documentElement.style.setProperty('--ct-x',(Math.max(sh.left,rv.left)+12)+'px');document.documentElement.style.setProperty('--ct-y',Math.min(y,sh.bottom-12-31)+'px');}
+      var pq=0;function qCT(){if(!pq)pq=requestAnimationFrame(function(){pq=0;placeCT();});}
+      setTimeout(function(){var v=$('pview');if(v)v.addEventListener('scroll',qCT,{passive:true});window.addEventListener('resize',qCT);window.addEventListener('reader-layout',qCT);setInterval(placeCT,400);placeCT();},300);p.appendChild(b);},0);
+  (function mkPin(){
+    var rt=document.querySelector('.books-tools[data-z="r"]'),pp=$('panelPin');if(!rt||!$('railClose')||$('railClose').parentElement!==rt){setTimeout(mkPin,200);return;}if(!$('railPin')){var b=document.createElement('button');b.type='button';b.id='railPin';b.className='icb';b.innerHTML=pp?pp.innerHTML:'📌';rt.insertBefore(b,$('railClose'));
+      b.onclick=function(e){e.stopPropagation();ipadRailDock=!ipadRailDock;try{localStorage.setItem('hk-ipad-rail-dock',ipadRailDock?'1':'0');}catch(er){}rail.classList.remove('open');railOn=true;wrap.classList.remove('no-rail');railModeUI();if(ipadFloat()){railOn=false;}updFloat();boundWidths&&0;setTimeout(function(){placeGutters();fitP();fitV();},30);};}
+    railModeUI();
+    document.addEventListener('pointerdown',function(e){if(!ipadFloat()||!rail.classList.contains('open'))return;if(rail.contains(e.target)||e.target.closest('#railOpen,#tour'))return;setRail(false);},true);
+    rail.addEventListener('click',function(e){if(ipadFloat()&&e.target.closest('.rol a'))setTimeout(function(){setRail(false);},250);});
+  })();
   function focusRailCamera(a){railProg=Date.now()+700;railAnchor=null;
     var sc=$('rscroll');if(!a||!sc.clientHeight||railDrag)return;
     var r=a.getBoundingClientRect(),s=sc.getBoundingClientRect();
@@ -3290,17 +3307,17 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if(modeChanged){
         dismissMenu();closeSearch();
         if(ReaderUI.single){ReaderUI.screen='read';selectReaderPane('read',false);}
-        else{railOn=true;rail.classList.remove('open');wrap.classList.remove('no-rail');S.panel=true;applyPanel();ReaderUI.screen='read';}
+        else{railOn=!ipadFloat();rail.classList.remove('open');wrap.classList.remove('no-rail');S.panel=true;applyPanel();ReaderUI.screen='read';}
         lastMode=mode;
       }
-      boundWidths();pinUI();syncReaderUI();placeGutters();fitP();fitV();positionSubmenus();placeSearch();
+      railModeUI();boundWidths();pinUI();syncReaderUI();updFloat();placeGutters();fitP();fitV();positionSubmenus();placeSearch();
       if(modeChanged||visible&&(old!==deviceLayout||ReaderUI.width!==adapt.lastWidth))requestAnimationFrame(restoreReading);
       adapt.lastWidth=ReaderUI.width;window.dispatchEvent(new Event("reader-layout"));
     }
     function queueAdapt(){cancelAnimationFrame(raf);raf=requestAnimationFrame(adapt);}
     document.querySelectorAll('[data-layout-choice]').forEach(function(b){b.onclick=function(){if(document.documentElement.dataset.phoneLocked==='true'&&b.dataset.layoutChoice!=='iphone')return;layoutPref=b.dataset.layoutChoice==='iphone'?'auto':b.dataset.layoutChoice;try{localStorage.setItem('hk-device-layout-v146',layoutPref);}catch(e){}adapt();};});
     window.addEventListener('resize',queueAdapt);window.addEventListener('orientationchange',function(){setTimeout(queueAdapt,80);});
-    $('panelPin').onclick=function(){ipadPinned=!ipadPinned;try{localStorage.setItem('hk-ipad-pinned',ipadPinned?'1':'0');}catch(e){}pinUI();setPanel(true);syncReaderUI();fitP();};
+    $('panelPin').onclick=function(){if(deviceLayout==='ipad')return;ipadPinned=!ipadPinned;try{localStorage.setItem('hk-ipad-pinned',ipadPinned?'1':'0');}catch(e){}pinUI();setPanel(true);syncReaderUI();fitP();};
     window.addEventListener('reader-before-update',saveReadingPosition);window.addEventListener('pagehide',saveReadingPosition);
     document.addEventListener('visibilitychange',function(){if(document.hidden)saveReadingPosition();});
     adapt();resumeReadingPosition();
@@ -3334,7 +3351,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var panel=$('menu').querySelector('.mpop');
     function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent='v'+v;$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
     $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){showSettingsPage('history');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showSettingsPage('history');}};
-    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.73\n最後更新：2026年10月4日";
+    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.74\n最後更新：2026年10月4日";
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
@@ -3360,7 +3377,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
 
 
 
-    $('swapPanes').onclick=function(){if(deviceLayout==='ipad'&&!ipadPinned)$('panelPin').click();if(panel.hidden)setPanel(true);var on=wrap.classList.toggle('panes-swapped');this.setAttribute('aria-pressed',String(on));placeGutters();fitP();updateHeadingBounds();};
+    $('swapPanes').onclick=function(){if(panel.hidden)setPanel(true);var on=wrap.classList.toggle('panes-swapped');this.setAttribute('aria-pressed',String(on));placeGutters();fitP();updateHeadingBounds();};
     document.querySelectorAll('.learning-settings').forEach(function(d){d.addEventListener('mouseenter',function(){if(!settingsPage&&matchMedia('(hover:hover)').matches){d.open=true;positionSubmenus();}});d.addEventListener('mouseleave',function(){if(!lockedSub && !d.closest('[data-pin],[data-hover=layout]') && matchMedia('(hover:hover)').matches)d.open=false;});});
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&menuPinned){dismissMenu();}});
     new MutationObserver(positionSubmenus).observe($('menu'),{attributes:true,subtree:true,attributeFilter:['class','open']});window.addEventListener('resize',positionSubmenus);
@@ -4341,6 +4358,27 @@ html{scroll-snap-type:y proximity;scroll-padding-top:70px}
 :root:root:root:root .books-tools .book-size-button.dx .s{font-size:11px!important}
 :root:root:root:root .books-tools form{display:contents}
 :root:root:root:root:root[data-layout=iphone] .books-tools .book-size-button{display:none!important}
+</style>
+<style id="v174">/* v1.74 */
+/* 導覽：一句一行 */
+#tour .card .bd{white-space:pre-line}
+/* 回上方：更淡、縮小 1/3，只放在白色紙面上 */
+:root:not([data-layout=iphone]) .chart-top{position:fixed!important;left:var(--ct-x,-999px)!important;top:var(--ct-y,-999px)!important;bottom:auto!important;width:31px!important;height:31px!important;opacity:.25!important}
+:root:not([data-layout=iphone]) .chart-top:hover,:root:not([data-layout=iphone]) .chart-top:focus-visible{opacity:.5!important}
+:root:not([data-layout=iphone]) .chart-top .t{font-size:8.5px!important;letter-spacing:0!important}
+:root:not([data-layout=iphone]) .chart-top[data-off]{display:none!important}
+/* iPad：取消科判圖釘；卷次預設浮動，可用圖釘固定 */
+:root:root:root:root[data-layout=ipad] #panelPin{display:none!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap.with-panel{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap:not(.with-panel){grid-template-columns:minmax(0,1fr)!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap>.main{grid-column:1!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap>.panel{grid-column:2!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] #gutL{display:none!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap>.rail{display:flex!important;position:fixed!important;top:0!important;left:0!important;bottom:0!important;height:100dvh!important;width:min(380px,42vw)!important;z-index:90!important;transform:translateX(-105%)!important;transition:transform .22s ease;box-shadow:10px 0 34px rgba(0,0,0,.16)!important;border-right:1px solid var(--rule)!important;visibility:visible!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap>.rail.open{transform:none!important}
+#railPin{display:none}
+:root[data-layout=ipad] #railPin{display:inline-grid!important}
+:root[data-layout=ipad] #railPin[aria-pressed=true]{color:var(--cinnabar)!important}
 </style>
 </body></html>
 <style>

@@ -1,0 +1,20 @@
+/* v1.74 */
+/* 導覽：一句一行 */
+#tour .card .bd{white-space:pre-line}
+/* 回上方：更淡、縮小 1/3，只放在白色紙面上 */
+:root:not([data-layout=iphone]) .chart-top{position:fixed!important;left:var(--ct-x,-999px)!important;top:var(--ct-y,-999px)!important;bottom:auto!important;width:31px!important;height:31px!important;opacity:.25!important}
+:root:not([data-layout=iphone]) .chart-top:hover,:root:not([data-layout=iphone]) .chart-top:focus-visible{opacity:.5!important}
+:root:not([data-layout=iphone]) .chart-top .t{font-size:8.5px!important;letter-spacing:0!important}
+:root:not([data-layout=iphone]) .chart-top[data-off]{display:none!important}
+/* iPad：取消科判圖釘；卷次預設浮動，可用圖釘固定 */
+:root:root:root:root[data-layout=ipad] #panelPin{display:none!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap.with-panel{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap:not(.with-panel){grid-template-columns:minmax(0,1fr)!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap>.main{grid-column:1!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap>.panel{grid-column:2!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] #gutL{display:none!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap>.rail{display:flex!important;position:fixed!important;top:0!important;left:0!important;bottom:0!important;height:100dvh!important;width:min(380px,42vw)!important;z-index:90!important;transform:translateX(-105%)!important;transition:transform .22s ease;box-shadow:10px 0 34px rgba(0,0,0,.16)!important;border-right:1px solid var(--rule)!important;visibility:visible!important}
+:root:root:root:root:root[data-layout=ipad][data-ipad-rail=float] .wrap>.rail.open{transform:none!important}
+#railPin{display:none}
+:root[data-layout=ipad] #railPin{display:inline-grid!important}
+:root[data-layout=ipad] #railPin[aria-pressed=true]{color:var(--cinnabar)!important}
