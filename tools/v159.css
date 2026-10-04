@@ -1,0 +1,22 @@
+/* v1.59 */
+/* 介面：懸停浮窗在列的正右方；選項縮小；目前的以底色標示 */
+@media (hover:hover) and (pointer:fine){
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover] .learning-settings{position:static!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=layout] .settings-body{width:216px!important;padding:8px!important}
+}
+:root:root:root:root .settings-panel .layout-choices{display:flex!important;gap:6px!important;padding:6px!important;margin:0!important;border-radius:12px!important}
+:root:root:root:root .settings-panel .layout-choice{height:42px!important;min-height:0!important;padding:0!important;border-radius:9px!important;flex:1 1 0!important;justify-content:center!important;background:transparent!important}
+:root:root:root:root .settings-panel .layout-choice svg{width:21px!important;height:21px!important;flex:0 0 21px!important;color:var(--muted)!important}
+:root:root:root:root .settings-panel .layout-choice[aria-pressed=true]{background:color-mix(in srgb,var(--acc) 30%,var(--bg))!important}
+:root:root:root:root .settings-panel .layout-choice[aria-pressed=true] svg{color:var(--fg)!important}
+:root:root:root:root .settings-panel .layout-choice:hover{background:color-mix(in srgb,var(--acc) 14%,var(--bg))!important}
+:root:root:root:root .settings-panel .layout-choice[aria-pressed=true]:hover{background:color-mix(in srgb,var(--acc) 30%,var(--bg))!important}
+
+/* 字體／粗細：列縮窄 */
+:root:root:root .settings-panel .source-font-controls{gap:0!important;padding:0!important}
+:root:root:root .settings-panel .source-font-controls .settings-row{min-height:0!important;padding:8px 12px!important;font-size:15px}
+:root:root:root .settings-panel .source-font-controls .settings-row+.settings-row{border-top:.5px solid var(--hair)}
+:root:root:root .settings-panel .source-font-controls select{width:auto!important;max-width:9em!important;min-width:0;font-size:15px!important;padding:4px 6px!important;border-radius:8px}
+
+/* 版本紀錄：程式摘要用等寬字 */
+#versionDetail p{font:13px/1.9 ui-monospace,SFMono-Regular,Menlo,"PingFang TC",monospace!important}
