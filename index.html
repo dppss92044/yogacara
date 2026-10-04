@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.66"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.67"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -986,7 +986,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src">內文、分卷、科判、披尋記與常柏法師釋，全部依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷皆照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<br>原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.66</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.67</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><pre class="version-doc" id="versionDoc"></pre></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
@@ -1205,6 +1205,35 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     $("pageCurrent").textContent=p; $("pageTotal").textContent=PAGES.length+1;
     $("pJuan").textContent = "卷第" + cn(jl || PJ[p] || 1) + "・共 " + (PAGES.length + 1) + " 頁";
   }
+  // 把科判欄的某一科捲到畫面正中；頁面延遲排版時再校正，使用者一動就停
+  var chartGen = 0;
+  function chartCenter(tgt, id, p, preferRoot) {
+    var pv = $("pview"), gen = ++chartGen, t0 = Date.now();
+    function find() { var el = $("pp" + p); if (!el) return tgt; return (preferRoot && el.querySelector('.nd.rt[data-id="' + id + '"]')) || (tgt && tgt.isConnected ? tgt : el.querySelector('[data-id="' + id + '"]')); }
+    function fix() {
+      if (gen !== chartGen) return; var t = find(); if (!t || !t.getClientRects().length) return;
+      var rv = pv.getBoundingClientRect(), sh = $("pp" + p);
+      // 該頁還在畫面外（尚未排版）：先把那一頁捲進來，下一個畫面再精確置中
+      if (sh) { var sr = sh.getBoundingClientRect(); if (sr.bottom < rv.top + 20 || sr.top > rv.bottom - 20) { pScrollLock = Date.now() + 400; pv.scrollTop += sr.top - rv.top; requestAnimationFrame(function () { requestAnimationFrame(fix); }); return; } }
+      var r = t.getBoundingClientRect();
+      var dy = (r.top + r.height / 2) - (rv.top + pv.clientHeight / 2), dx = (r.left + r.width / 2) - (rv.left + pv.clientWidth / 2);
+      if (r.height > pv.clientHeight * 0.8) dy = r.top - rv.top - pv.clientHeight * 0.1;
+      pScrollLock = Date.now() + 400;
+      if (Math.abs(dy) > 2) pv.scrollTop += dy; if (Math.abs(dx) > 2) pv.scrollLeft += dx;
+    }
+    fix(); [120, 450, 1000].forEach(function (ms) { setTimeout(fix, ms); });
+    ["wheel", "touchstart", "pointerdown"].forEach(function (ev) { pv.addEventListener(ev, function () { if (Date.now() - t0 > 80) chartGen++; }, { once: true, passive: true }); });
+  }
+  function chartJumpTo(id, wantRoot, from) {
+    if (!(id >= 0) || !N[id]) return;
+    buildPanel();
+    var p = wantRoot ? (OWN[id] || APPEAR[id]) : (APPEAR[id] || OWN[id]); if (!p) return;
+    var el = $("pp" + p); if (!el) return; if (!el.firstChild) fillPage(el, p);
+    var t = wantRoot ? el.querySelector('.nd.rt[data-id="' + id + '"]') : el.querySelector('.nd.tt[data-id="' + id + '"]:not(.rt)');
+    if (!t) t = el.querySelector('.nd[data-id="' + id + '"]');
+    markIn($("pzoom"), id); panelHold = true; setPanelLabel(p);
+    chartCenter(t, id, p, wantRoot);
+  }
   function panelPage(p, hl, jl, preferRoot) {
     buildPanel();
     var MAX = PAGES.length + 1; p = Math.max(2, Math.min(MAX, p | 0));
@@ -1214,11 +1243,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     if (hl != null) markIn($("pzoom"), hl);
     var pv = $("pview"), tgt = hl != null ? (preferRoot && el.querySelector('.nd.rt[data-id="' + hl + '"]')) || el.querySelector('[data-id="' + hl + '"]') : null;
     pScrollLock = Date.now() + 600;
-    if (tgt) {
-      var r = tgt.getBoundingClientRect(), rv = pv.getBoundingClientRect();
-      pv.scrollTop += (r.top - rv.top) - pv.clientHeight / 3;
-      pv.scrollLeft += (r.left - rv.left) - pv.clientWidth / 2;
-    } else pv.scrollTop = el.offsetTop - 12;
+    if (tgt) chartCenter(tgt, hl, p, preferRoot);
+    else pv.scrollTop = el.offsetTop - 12;
     setPanelLabel(p, jl);
   }
   $("pview").addEventListener("scroll", function () {
@@ -1232,8 +1258,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function panelFocus(i) { panelJuan = N[i][6]; panelPage(APPEAR[i] || 2, i, N[i][6]); }
 
   // ---------- left rail: 卷 + its 干支科判 (rubber band into adjacent 卷) ----------
-  function renderRail(j) {
-    S.railJuan = j;
+  function railHTML(j) {
     var carried = !JL[j] && CARRY[j] != null, list = JL[j] || (carried ? pathOf(CARRY[j]) : []), out = [];
     out.push('<div class="rhead">卷第' + cn(j) + "</div>");
     out.push('<div class="rsub">' + (carried ? "本卷承接前卷科判" : "本卷 " + list.length + " 科") + "</div><div class=\"rol\">");
@@ -1241,7 +1266,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var dl = list.map(function (k) { return N[k][3] - minD; });
     var maxD = 1; dl.forEach(function (d) { if (d > maxD) maxD = d; });
     var avail = Math.max(120, ($("rscroll").clientWidth || 270) / ((Z.r || 1) * (FT.s || 1)) - 120);
-    $("rinner").style.setProperty("--rs", Math.max(14, Math.min(20, avail / maxD)).toFixed(2) + "px");
+    var rsv = Math.max(14, Math.min(20, avail / maxD)).toFixed(2);
     var moreA = dl.map(function (d, li) { for (var q = li + 1; q < dl.length; q++) { if (dl[q] < d) return false; if (dl[q] === d) return true; } return false; });
     var lastAt = [];
     // 這一層的上層科判在前一卷（本卷看不到）：之後還有同層科判，豎線就從頂端一路接下來
@@ -1254,26 +1279,65 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       out.push('<a href="#n' + k + '" data-n="' + k + '" data-juan="' + j + '"' + (carried ? ' data-carry="' + j + '"' : '') + (d > 0 ? ' class="sub' + (more ? " more" : "") + '"' : "") + ' style="--rd:' + d + (bg.length ? ";background:" + bg.join(",") : "") + '"><span class="lb">' + esc(lab(k)) + '</span><span class="rail-title">' + esc(N[k][0]) + "</span></a>");
     }
     out.push("</div>");
-    $("rinner").innerHTML = out.join("");
-    if ($("rscroll").dataset.rj !== String(j)) { railUserX = false; $("rscroll").dataset.rj = j; }
-    $("rscroll")._progX = Date.now(); $("rscroll").scrollTop = 0; if (!railUserX) $("rscroll").scrollLeft = 0;
+    return '<div class="rsec" data-j="' + j + '" style="--rs:' + rsv + 'px">' + out.join("") + "</div>";
+  }
+  function railMark(j) {
+    S.railJuan = j;
     var as = $("juans").children; for (var q = 0; q < as.length; q++) as[q].classList.toggle("on", q + 1 === j);
     $("jCur").textContent = "卷" + j;
+  }
+  var railBusy = false, railProg = 0;
+  function railFill() {
+    var sc = $("rscroll"), inner = $("rinner"), secs = inner.querySelectorAll(".rsec"); if (!secs.length || railBusy) return;
+    railBusy = true;
+    var last = +secs[secs.length - 1].dataset.j, first = +secs[0].dataset.j;
+    if (last < 100 && sc.scrollHeight - sc.scrollTop - sc.clientHeight < 1400) inner.insertAdjacentHTML("beforeend", railHTML(last + 1));
+    if (first > 1 && sc.scrollTop < 500) { var an = secs[0], o0 = an.offsetTop, st0 = sc.scrollTop; inner.insertAdjacentHTML("afterbegin", railHTML(first - 1)); sc._progX = Date.now(); sc.scrollTop = st0 + an.offsetTop - o0; }
+    secs = inner.querySelectorAll(".rsec");
+    if (secs.length > 7) {
+      var mid = sc.scrollTop + sc.clientHeight / 2, a0 = secs[0], aN = secs[secs.length - 1];
+      if (a0.offsetTop + a0.offsetHeight < mid - 3000) { var a1 = secs[1], o1 = a1.offsetTop, st1 = sc.scrollTop; a0.remove(); sc.scrollTop = st1 - (o1 - a1.offsetTop); }
+      else if (aN.offsetTop > mid + 3000) aN.remove();
+    }
+    railBusy = false;
+  }
+  var railAnchor = null;
+  function railHold() { if (!railAnchor || Date.now() > railAnchor.until) { railAnchor = null; return; } var sc = $("rscroll"), x = $("rinner").querySelector('.rsec[data-j="' + railAnchor.j + '"]'); if (x) { railProg = Date.now() + 300; sc.scrollTop = x.offsetTop - 6; } }
+  function renderRail(j) {
+    railMark(j); railProg = Date.now() + 900; railAnchor = { j: j, until: Date.now() + 1200 };
+    setTimeout(railHold, 60); setTimeout(railHold, 300); setTimeout(railHold, 800);
+    $("rinner").innerHTML = railHTML(j);
+    if ($("rscroll").dataset.rj !== String(j)) { railUserX = false; $("rscroll").dataset.rj = j; }
+    $("rscroll")._progX = Date.now(); $("rscroll").scrollTop = 0; if (!railUserX) $("rscroll").scrollLeft = 0;
+    railFill();
     $("pullTop").textContent = j > 1 ? "繼續上滑，進入卷第" + cn(j - 1) : "";
     $("pullBot").textContent = j < 100 ? "繼續下滑，進入卷第" + cn(j + 1) : "";
   }
+  setTimeout(function () {
+    var sc = $("rscroll"), tk = false;
+    ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function (ev) { sc.addEventListener(ev, function () { railAnchor = null; railProg = 0; }, { passive: true }); });
+    sc.addEventListener("scroll", function () {
+      if (tk) return; tk = true;
+      requestAnimationFrame(function () {
+        tk = false; railFill(); railHold();
+        var line = sc.getBoundingClientRect().top + sc.clientHeight * 0.5, cur = null;
+        sc.querySelectorAll(".rsec").forEach(function (x) { var r = x.getBoundingClientRect(); if (r.top <= line && r.bottom > line) cur = +x.dataset.j; });
+        if (cur && cur !== S.railJuan && Date.now() > railProg) railMark(cur);
+      });
+    }, { passive: true });
+  }, 0);
   (function rubber() {
     var sc = $("rscroll"), inner = $("rinner"), pull = 0, timer = null, TH = 260, startY = null, edge = 0, cool = 0;
     function atTop() { return VM ? sc.scrollLeft >= -1 : sc.scrollTop <= 0; }
     function atBot() { return VM ? sc.scrollLeft <= -(sc.scrollWidth - sc.clientWidth) + 1 : sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 1; }
-    function show() {
+    function show() { pull = 0; return;
       var p = Math.max(-TH, Math.min(TH, pull));
       inner.style.transform = p ? (VM ? "translateX(" + (p * 0.35) + "px)" : "translateY(" + (-p * 0.35) + "px)") : "";
       $("pullBot").style.opacity = pull > 0 ? Math.min(1, pull / TH + .2) : 0;
       $("pullTop").style.opacity = pull < 0 ? Math.min(1, -pull / TH + .2) : 0;
     }
     function reset() { pull = 0; inner.style.transition = "transform .25s"; show(); setTimeout(function () { inner.style.transition = ""; }, 260); }
-    function commit(dir) {
+    function commit(dir) { reset(); return;
       var j = S.railJuan + dir; reset(); cool = Date.now() + 700;
       if (j < 1 || j > 100) return;
       goJuan(j);if(phoneMode())selectReaderPane("catalog",false);
@@ -1315,9 +1379,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
 
   function railFocus(i, contextJuan) {
     var j = nodeJuan(i,contextJuan||S.juan);
-    if (S.railJuan !== j) renderRail(j);
-    var c = $("rinner").querySelector("a.cur"); if (c) c.classList.remove("cur");
-    var a = $("rinner").querySelector('a[data-n="' + i + '"]');
+    if (!$("rinner").querySelector('.rsec[data-j="' + j + '"]')) renderRail(j); else if (S.railJuan !== j) railMark(j);
+    $("rinner").querySelectorAll("a.cur").forEach(function (x) { x.classList.remove("cur"); });
+    var a = $("rinner").querySelector('.rsec[data-j="' + j + '"] a[data-n="' + i + '"]') || $("rinner").querySelector('a[data-n="' + i + '"]');
     if (a) {
       a.classList.add("cur");focusRailCamera(a);
     }
@@ -1390,9 +1454,24 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     panelJuan = j; panelPage(linkedPage, i, j);
     panelHold = true;
   }
+  setTimeout(function () {
+    var pz = $("pzoom"); if (!pz) return;
+    pz.addEventListener("dblclick", function (e) {
+      var t = e.target; if (!(t instanceof Element)) return;
+      var h = t.closest(".head [data-id]");
+      if (h) { e.preventDefault(); chartJumpTo(+h.dataset.id, false); return; }
+      var nd = t.closest(".nd.tt[data-id]"); if (!nd) return;
+      e.preventDefault(); var id = +nd.dataset.id; if (!(id >= 0) || !N[id]) return;
+      if (nd.classList.contains("rt")) { chartJumpTo(id, false); return; }
+      var pid = N[id][4], sheet = nd.closest(".ksheet"), pe = pid >= 0 && sheet && (sheet.querySelector('.nd.tt[data-id="' + pid + '"]:not(.rt)') || sheet.querySelector('.nd.tt[data-id="' + pid + '"]'));
+      if (pe) { markIn(pz, pid); panelHold = true; chartCenter(pe, pid, +sheet.dataset.p, pe.classList.contains("rt")); }
+      else if (pid >= 0) chartJumpTo(pid, false);
+      try { getSelection().removeAllRanges(); } catch (er) {}
+    });
+  }, 0);
   function goSub(g) {
-    if (OWN[g]) { focusNode(g, "go", OWN[g]); return; }
-    for (var c = g + 1; c < N.length; c++) if (N[c][4] === g) { focusNode(c, "go", APPEAR[c]); return; }
+    if (OWN[g]) { focusNode(g, "go", OWN[g]); chartJumpTo(g, true); return; }
+    for (var c = g + 1; c < N.length; c++) if (N[c][4] === g) { focusNode(c, "go", APPEAR[c]); chartJumpTo(c, false); return; }
     focusNode(g, "panel");
   }
   // floating ↑ in the 直書科判 panel: when this 科's parent sits on an earlier page, lead back up to it (and on to the root)
@@ -1664,7 +1743,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   // 直書科判（藏版）：每頁依樹狀結構重新排版（v1.65）。
   // 同層對齊、兄弟等距、奇數子科中間那科與上層同一直線、連接線一律在字塊正中、括號不斷在欄尾。
   function vlabel(i) { return EDITION === "zang" && LABEL === "zj" && ZJ ? (ZJ[i] || "") : labG(i); }
-  var VT = { FULL: 4.93, HALF: 2.73, NFULL: 3.25, NHALF: 1.8, WC: 5.19, TOP: 16, BOTTOM: 282, LEFT: 12, RIGHT: 184.6, LEVEL: 10, STUB: 4.6, BAND: 10, CG: 1.0, NL: 5, LEAF: 14 };
+  var VT = { FULL: 4.93, HALF: 2.73, NFULL: 3.25, NHALF: 1.8, WC: 5.19, TOP: 16, BOTTOM: 282, LEFT: 12, RIGHT: 184.6, LEVEL: 10, STUB: 4.6, BAND: 10, CG: 1.0, LONG: 18, GAP: 2.47 };
   function vpitch() { return VT.WC + VT.CG; }
   function vtoks(str, full, half) {
     var out = [], re = /[0-9]{1,2}|[\s\S]/g, m;
@@ -1716,12 +1795,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   // 藏版（干支／章節）：樹狀重排；韓版：原書版面（長標題下方有空間才合回一欄）。
   // 藏版（干支／章節）：樹狀重排；韓版：原書版面（長標題下方有空間才合回一欄）。
   // 規則：有下層的科，正文超過 5 字換行（平均分，前多後少）；沒有下層的科，正文超過 14 字才換行。
-  var VCFG = [[14, 10], [14, 8], [14, 6.5], [10, 6.5], [8, 6], [6, 5.5], [5, 5], [5, 4.5, 4]];
+  // 以整頁放不放得下為準：先全部一欄寫完（極長的才分），放不下時才挑最高那條支線上最長的科換行
+  var VCFG = [[10], [8], [6.5], [5.5], [4.5]];
   function relayoutSheet(pg) {
     if (!pg || pg.dataset.rl) return;
     if (EDITION !== "zang") { relayoutMerge(pg); if (pg.dataset.rl) smallParensHK(pg); return; }
     pg.dataset.rl = "1";
-    try { for (var i = 0; i < VCFG.length; i++) { VT.LEAF = VCFG[i][0]; VT.LEVEL = VCFG[i][1]; VT.NL = VCFG[i][2] || 5; VT.STUB = Math.min(4.6, VCFG[i][1] * 0.46); VT.BAND = Math.max(8, VCFG[i][1]); if (layoutTreePage(pg)) { pg.dataset.cfg = i; break; } } }
+    try { for (var i = 0; i < VCFG.length; i++) { VT.LEVEL = VCFG[i][0]; VT.STUB = Math.min(4.6, VCFG[i][0] * 0.46); VT.BAND = Math.max(8, VCFG[i][0]); if (layoutTreePage(pg)) { pg.dataset.cfg = i; break; } } }
     catch (err) { if (window.console) console.warn("chart layout", err); }
   }
   function smallParensHK(pg) {
@@ -1777,7 +1857,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         var lead = n.rt ? [{ c: "◎", h: "◎", a: VT.FULL }] : [];
         var lt = vtoks(vlabel(n.id), VT.FULL, VT.HALF).map(function (x) { return { c: x.c, h: '<span class="lb">' + x.h + "</span>", a: x.a }; });
         // 章節科標：標號後空一個字再接標題
-        if (ZJM && lt.length) lt.push({ c: "　", h: "　", a: VT.FULL });
+        if (ZJM && lt.length) lt.push({ c: " ", h: '<span class="vgap"></span>', a: VT.GAP });
         var ttl = verticalForms(N[n.id][0]), pm = /\([^()]*\)$/.exec(ttl), pnTk = [];
         // 標題後面的括號小注：字級、顏色與「(分N)」相同
         if (pm && pm.index > 0) { pnTk = vtoks(ttl.slice(pm.index), VT.NFULL, VT.NHALF).map(function (x) { return { c: x.c, h: '<span class="pn">' + x.h + "</span>", a: x.a, pn: 1 }; }); ttl = ttl.slice(0, pm.index); }
@@ -1786,8 +1866,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       }
       n.ntTk = n.nt ? vtoks(n.nt, VT.NFULL, VT.NHALF) : null;
       n.adv = n.tk.slice(n.labN).reduce(function (s, t) { return s + (t.pn ? 0 : t.a); }, 0) / VT.FULL - 0.01;
-      var lim = n.kids.length ? VT.NL : VT.LEAF;
-      n.k = n.adv <= lim ? 1 : Math.ceil(n.adv / lim);
+      // 有下層、正文超過 10 字的科，預設分兩欄（較美觀）；其餘先一欄寫完，視整頁空間再換
+      n.k = n.kids.length && n.adv > 10 ? Math.max(2, Math.ceil(n.adv / 9)) : n.adv <= VT.LONG ? 1 : Math.ceil(n.adv / 14);
       vmeasure(n);
     });
     // 4) 垂直：每一科的下層緊接在它自己下面（各分支依自身高度，不強求同層對齊）
@@ -1796,8 +1876,25 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var bands = [];
     roots.forEach(function (r) { var b = bands.filter(function (x) { return Math.abs(x.t - r.t) < 3; })[0]; if (!b) { b = { t: r.t, trees: [] }; bands.push(b); } b.trees.push(r); });
     bands.forEach(function (b) { b.trees.sort(function (a, c) { return c.r - a.r; }); b.h = Math.max.apply(null, b.trees.map(hgt)); });
-    var total = bands.reduce(function (s, b) { return s + b.h; }, 0) + (bands.length - 1) * VT.BAND;
-    if (total > VT.BOTTOM - VT.TOP + 0.01) return false;
+    function total() { bands.forEach(function (b) { b.h = Math.max.apply(null, b.trees.map(hgt)); }); return bands.reduce(function (s, b) { return s + b.h; }, 0) + (bands.length - 1) * VT.BAND; }
+    function canWrap(n) { var body = n.tk.slice(n.labN).filter(function (t) { return !t.pn; }).length; return body >= 3 * (n.k + 1) || (n.k === 1 && body >= 4); }
+    var guard = 0;
+    while (total() > VT.BOTTOM - VT.TOP + 0.01 && guard++ < 300) {
+      var bb = bands.reduce(function (a, b) { return b.h > a.h ? b : a; }), best = null;
+      bb.trees.forEach(function (r) {
+        if (r.H < bb.h - 0.01) return;
+        // 最高的那條支線（可能不只一條）上，挑字最長、還能換行的科
+        (function walk(n, rest) {
+          var onPath = Math.abs(n.H - rest) < 0.01;
+          if (!onPath) return;
+          if (canWrap(n) && (!best || n.h > best.h)) best = n;
+          n.kids.forEach(function (c) { walk(c, rest - n.kt); });
+        })(r, r.H);
+      });
+      if (!best) return false;
+      best.k++; vmeasure(best);
+    }
+    if (total() > VT.BOTTOM - VT.TOP + 0.01) return false;
     // 5) 水平：以實際字塊（含連接線）的上下範圍判斷碰撞
     function own(n) { return { x0: -0.5 * VT.WC - (n.cols.length - 1) * vpitch(), x1: 0.5 * VT.WC, y0: 0, y1: n.h }; }
     function shift(bx, dx, dy) { return bx.map(function (b) { return { x0: b.x0 + dx, x1: b.x1 + dx, y0: b.y0 + dy, y1: b.y1 + dy }; }); }
@@ -2462,7 +2559,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if (!lockedSub && !t.closest(".dl")) openDl(false);
       var ja = t.closest("#juans a"); if (ja) { e.preventDefault(); goJuan(+ja.dataset.j); if(narrowNow())setRail(false); return; }
       var kn = t.closest(".kn[data-kn]"); if (kn) { focusNode(+kn.dataset.kn, "text",null,+kn.closest(".reading-volume").dataset.juan); return; }
-      var rn = t.closest(".rol a"); if (rn && rn.dataset.carry) { e.preventDefault(); carryFocus(+rn.dataset.n, +rn.dataset.carry); return; } if (rn) { e.preventDefault(); focusNode(+rn.dataset.n, "rail",null,S.railJuan); rail.classList.remove("open"); return; }
+      var rn = t.closest(".rol a"); if (rn && rn.dataset.juan) railMark(+rn.dataset.juan); if (rn && rn.dataset.carry) { e.preventDefault(); carryFocus(+rn.dataset.n, +rn.dataset.carry); return; } if (rn) { e.preventDefault(); focusNode(+rn.dataset.n, "rail",null,S.railJuan); rail.classList.remove("open"); return; }
       var hk = t.closest("[data-k]"); if (hk) { e.preventDefault(); var ki = +hk.dataset.k; openText(N[ki][6]); focusNode(ki, "search"); try { history.pushState(null, "", "#j" + N[ki][6]); } catch (er) {} return; }
       var hn = t.closest("[data-nj]"); if (hn) {
         e.preventDefault(); var nj = +hn.dataset.nj, nk = hn.dataset.nk === "p" ? "px" : "cb";
@@ -2887,7 +2984,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     sc.addEventListener('pointerdown',function(){railDrag=true;});
     window.addEventListener('pointerup',function(){railDrag=false;},true);window.addEventListener('pointercancel',function(){railDrag=false;},true);
   }
-  function focusRailCamera(a){
+  function railOpenGuard(){var a=$('railOpen'),b=$('menuBtn');if(!a||!b)return;a.style.visibility='';var r1=a.getBoundingClientRect(),r2=b.getBoundingClientRect();if(r1.width&&r2.width&&r1.right>r2.left-6&&r1.left<r2.right+6&&r1.bottom>r2.top&&r1.top<r2.bottom)a.style.visibility='hidden';}
+  window.addEventListener('resize',function(){setTimeout(railOpenGuard,60);});window.addEventListener('reader-layout',function(){setTimeout(railOpenGuard,60);});setInterval(railOpenGuard,1500);
+  // 手機科判：一鍵回頂
+  setTimeout(function(){var p=$('panel');if(!p||$('chartTop'))return;var b=document.createElement('button');b.type='button';b.id='chartTop';b.className='chart-top';b.setAttribute('aria-label','回到頂端');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 11l6-6 6 6"/></svg>';b.onclick=function(e){e.stopPropagation();var v=$('pview');if(v)v.scrollTo({top:0,behavior:'smooth'});};p.appendChild(b);},0);
+  function focusRailCamera(a){railProg=Date.now()+700;railAnchor=null;
     var sc=$('rscroll');if(!a||!sc.clientHeight||railDrag)return;
     var r=a.getBoundingClientRect(),s=sc.getBoundingClientRect();
     sc.scrollTop=Math.max(0,sc.scrollTop+r.top-s.top+(r.height-sc.clientHeight)/2);
@@ -2931,7 +3032,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var queuedTap=null,suppressClickUntil=0,doubleTargets={read:0,chart:0,catalog:0},lastDouble=0;window.addEventListener('reader-before-navigation',function(){if(queuedTap){clearTimeout(queuedTap.timer);queuedTap=null;}});
     function hitNode(target){var el=target.closest('.kn[data-kn],.rol a[data-n],#pzoom [data-id]');if(!el)return null;var i=+(el.dataset.kn||el.dataset.n||el.dataset.id);return i>=0&&N[i]?{el:el,i:i,juan:el.closest('.reading-volume')?+el.closest('.reading-volume').dataset.juan:el.dataset.juan?+el.dataset.juan:PJ[+(el.closest('.ksheet')||{}).dataset?.p]||S.juan}:null;}
     function singleNode(hit,screen){
-      if(screen==='catalog'){if(hit.el.dataset.carry){carryFocus(hit.i,+hit.el.dataset.carry);return;}focusNode(hit.i,'rail',null,hit.juan);return;}
+      if(screen==='catalog'){if(hit.el.dataset.juan)railMark(+hit.el.dataset.juan);if(hit.el.dataset.carry){carryFocus(hit.i,+hit.el.dataset.carry);return;}focusNode(hit.i,'rail',null,hit.juan);return;}
       if(screen==='chart'){var page=+(hit.el.closest('.ksheet')||{}).dataset?.p;focusNode(hit.i,hit.el.closest('.head')?'panelhead':'panel',page,hit.juan);return;}
       focusNode(hit.i,'text',null,hit.juan);centerReadingHeading($('k'+hit.i));
     }
@@ -3207,7 +3308,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
 
   var settingsPage='root',versionBack='about';
-  var versionSummaries={"1.66":"v1.66（2026年10月4日更新）\n\n1. 正文捲動時，標題上滑到畫面約五分之二處即自動反白，卷次、科判兩欄同步。\n2. 科標（干支／章節）改到科判欄左上角，點一下切換；功能列表移除科標。\n3. 正文右上改回「藏版／韓版」。\n4. 藏版直書科判：各分支依自身高度往下排，不再為對齊而拉長支線。\n5. 藏版直書科判：有下層的科，標題超過五字換行（七字為四、三）；沒有下層的科原則不換行。\n6. 章節科標後空一字再接標題；換行的兩行間距縮小一半。\n7. 字體「恢復預設」一併還原拖曳過的欄寬與大小。\n8. 電腦版功能浮窗可直接滑過去點選，不再跳掉；功能鍵不再蓋住卷次縮圖鈕。\n9. 字體設定移除卷次／科判大小列（電腦正文的放大縮小保留）。\n10. 版本說明精簡。","1.65":"feat(sync): 捲動正文時三欄一律跟讀反白（點空白不再停止）\nrefactor(chart): 藏版直書科判重排：字後直接接支線、兄弟等距、支架直線置中、紙面空時放寬間距\nfix(chart): 超過 12 字平均分兩欄，續欄與首欄正文同高、欄距加寬\nfix(chart): 括號不斷欄；標題後括號小注與 (分N) 同字級、同色\nstyle(chart): 阿拉伯數字用 Times New Roman\nstyle(text): 正文欄科判標題灰色加深\nfeat(menu): 問題回報直接開郵件；版本紀錄改成單一文件（新的在上）\nremove(hk): 韓版移除章節科標，只留干支","1.64":"revert(chart): 直書科判恢復 v1.59 版面（原排法，長標題下方有空間才合回一欄），標號顏色保留\nfix(text): 正文欄科判標題改淡灰色（兩版）\nfix(rail): 上層科判在前一卷時，樹狀豎線照樣延伸到頂\nfix(rail): 副標題「本卷 N 科」與全部科判一起縮排\nfix(rail): 手動拖橫向捲軸後不再強制左右對焦\nfix(menu): 點「介面」直接釘住右側三個圖示，移除獨立頁面","1.63":"桌面正文捲動持續追蹤下一科判，其他兩欄同步定位，點空白停止；科判標題約六字換直欄；功能列表分為閱讀、顯示、其他並保留八個入口；大小工具收進字體設定，手機新增卷次浮窗、淡色置中卷名，科判縮放限制100%～200%。","1.62":"科判改為各分支依標題長度排列，縮短多餘支線；標題墨色統一，尾端括號與分科小字同格式；修正三欄同標題黃底連動、正文捲動標示與隱藏欄位同步；點擊正文與科判後將目標定位於畫面中上方。","1.27":"feat(layout): 手機／平板／電腦三種自適應介面\nfeat(prefs): 記住介面偏好","1.28":"feat(study): 學習模式、筆記保存\nfeat(export): 多格式匯出\nfix(ipad): 科判釘選","1.29":"feat(dict): 佛學名相辭典、原文查詞、外部詞條預覽","1.30":"feat(notes): 段落內直接編輯、筆記樣式、篩選\nfeat(dict): 反白查詞","1.31":"feat(view): 原文／筆記自由組合顯示\nfeat(print): 完整列印、小冊子","1.32":"feat(layout): 內文與科判左右置換並保存","1.33":"refactor(study): 右鍵／長按叫出註釋、心得、提問\nfeat(print): 擴充紙張","1.34":"chore: 無紀錄","1.35":"chore: 無紀錄","1.36":"fix(outline): 還原串文縮排、間距、連接線\nrefactor(menu): 重整功能列表","1.37":"refactor(menu): 分層選單\nremove(notes): 移除書寫與筆記，保留閱讀核心","1.38":"refactor(dict): 只保留反白查詞","1.39":"refactor(tour): 重整導覽與提示\nrefactor(search): 單一放大鏡","1.40":"feat(desktop): 內文與科判預設 1:1\nfix(font): 恢復預設","1.41":"remove(toolbar): 上方常駐功能列\nfeat(menu): 點外部或空白鍵關閉","1.42":"refactor(chart): 簡化頁碼\nfix(ipad): 欄位排列、保留閱讀位置","1.43":"feat(ipad): 可保存的拖曳欄寬\nfix(menu): 固定時不影響正文版面","1.44":"style(search): 提示文字、縮排、輸入位置","1.45":"feat(ipad): 橫向三欄、直向單欄","1.46":"fix(responsive): 手機／平板搜尋、選單、科判溢出、裝置偵測","1.47":"feat(sync): 目次、正文、科判位置連動\nfix(dict): 觸控反白、辭典邊界\nrefactor(mobile): 功能列表改小型浮窗","1.48":"feat(pwa): 自動更新","1.49":"refactor(state): 統一閱讀位置與欄位狀態\nfix(mobile): 欄寬、旋轉、搜尋、浮窗定位\nfeat(pwa): 更新後保存閱讀位置","1.50":"feat(outline): 目次橫書自動對焦\nfeat(phone): 雙擊連動、邊緣翻頁、A4 單頁科判、預設 125%","1.51":"fix(dict): 放開後才顯示\nrefactor(menu): 分組子頁\nfeat(phone): 自動鎖定介面\nfeat(about): 版本紀錄","1.52":"feat(motion): 統一動效、按鍵回饋、拖曳節流\nfeat(zoom): 50%～200%、25% 級距\nfeat(theme): 四種閱讀底色","1.53":"revert(theme): 白底配色\nfeat(zoom): 預設 100%、10% 級距\nfeat(reader): 正文跨卷連續閱讀\nfeat(chart): 連續捲動","1.54":"feat(edition): 韓清淨／藏經版本切換\nfix(dict): 觸控反白查詞\nfix(chart): 100% 不左右滑\nrefactor(ui): 字體、匯出面板、底部導覽\nperf(scroll): 行動版捲動","1.55":"fix(pwa): index.html network-first\nfix(pwa): 每版獨立快取、activate 清舊快取\nfeat(pwa): 安全時機自動重新載入一次並還原位置","1.56":"feat(edition): 預設藏經科判、正文版本字\nfeat(about): 問題回報\nfeat(menu): 電腦懸停子選單\nfeat(chart): 捏合縮放、頁首可點\nfix(chart): 直書括號\nperf(scroll): 行動捲動","1.57":"fix(nav): 點卷號停在前一卷","1.58":"feat(label): 藏版科標 干支／章節\nfeat(edition): 點版本字直接切換\nfix(chart): 長標題換欄、連接線置中、括號半形\nfix(chart): 點科判不跳頁；(分N) 跳下一層\nfix(chart): 縮放以中央為準\nfix(outline): 樹狀線接字中央\nfix(dict): 查詞鍵移到反白下方\nstyle(menu): 介面底色、匯出、問題回報精簡","1.59":"fix(outline): 藏版承接前卷的科判不再跳到別卷\nfix(nav): 點卷號時卷首貼齊頂端、不露前一卷\nfeat(edition): 切換版本停在同一段原文，三欄同步\nfix(menu): 介面浮窗出現在右側、目前選項以底色標示、縮小\nstyle(font): 字體列縮窄，「粗度」改「粗細」\nrename(menu): 科判標號 → 科標\nrefactor(about): 版本紀錄改程式摘要","1.61":"修正卷內早段定位被捲動偵測覆蓋與三欄選卷同步；行動版辭典移回底部；修正科判捏合與放開定位、兩版科標切換；手機正文單卷捲軸與卷末阻尼換卷；固定顯示目前卷名；修正離線重開後卷首定位覆蓋閱讀位置。","1.60":"refactor(chart): 直書科判每頁依樹狀結構重排（兩版、全部頁面）\nfix(chart): 連接線接在第一欄（標號欄）正中，不歪、不突出\nfix(chart): 奇數子科：中間那科與上層同一直線\nfix(chart): 兄弟等距；放不下時逐組等距，橫排小表等距\nfix(chart): 括號整組移到下一欄開頭，不斷在欄尾\nfix(chart): 高度不夠才分欄；續欄從標號下方起，不留單字孤欄\nfix(label): 章節科標不留空格，與干支同一排版"};
+  var versionSummaries={"1.67":"v1.67\n最後更新：2026年10月4日","1.66":"v1.66（2026年10月4日更新）\n\n1. 正文捲動時，標題上滑到畫面約五分之二處即自動反白，卷次、科判兩欄同步。\n2. 科標（干支／章節）改到科判欄左上角，點一下切換；功能列表移除科標。\n3. 正文右上改回「藏版／韓版」。\n4. 藏版直書科判：各分支依自身高度往下排，不再為對齊而拉長支線。\n5. 藏版直書科判：有下層的科，標題超過五字換行（七字為四、三）；沒有下層的科原則不換行。\n6. 章節科標後空一字再接標題；換行的兩行間距縮小一半。\n7. 字體「恢復預設」一併還原拖曳過的欄寬與大小。\n8. 電腦版功能浮窗可直接滑過去點選，不再跳掉；功能鍵不再蓋住卷次縮圖鈕。\n9. 字體設定移除卷次／科判大小列（電腦正文的放大縮小保留）。\n10. 版本說明精簡。","1.65":"feat(sync): 捲動正文時三欄一律跟讀反白（點空白不再停止）\nrefactor(chart): 藏版直書科判重排：字後直接接支線、兄弟等距、支架直線置中、紙面空時放寬間距\nfix(chart): 超過 12 字平均分兩欄，續欄與首欄正文同高、欄距加寬\nfix(chart): 括號不斷欄；標題後括號小注與 (分N) 同字級、同色\nstyle(chart): 阿拉伯數字用 Times New Roman\nstyle(text): 正文欄科判標題灰色加深\nfeat(menu): 問題回報直接開郵件；版本紀錄改成單一文件（新的在上）\nremove(hk): 韓版移除章節科標，只留干支","1.64":"revert(chart): 直書科判恢復 v1.59 版面（原排法，長標題下方有空間才合回一欄），標號顏色保留\nfix(text): 正文欄科判標題改淡灰色（兩版）\nfix(rail): 上層科判在前一卷時，樹狀豎線照樣延伸到頂\nfix(rail): 副標題「本卷 N 科」與全部科判一起縮排\nfix(rail): 手動拖橫向捲軸後不再強制左右對焦\nfix(menu): 點「介面」直接釘住右側三個圖示，移除獨立頁面","1.63":"桌面正文捲動持續追蹤下一科判，其他兩欄同步定位，點空白停止；科判標題約六字換直欄；功能列表分為閱讀、顯示、其他並保留八個入口；大小工具收進字體設定，手機新增卷次浮窗、淡色置中卷名，科判縮放限制100%～200%。","1.62":"科判改為各分支依標題長度排列，縮短多餘支線；標題墨色統一，尾端括號與分科小字同格式；修正三欄同標題黃底連動、正文捲動標示與隱藏欄位同步；點擊正文與科判後將目標定位於畫面中上方。","1.27":"feat(layout): 手機／平板／電腦三種自適應介面\nfeat(prefs): 記住介面偏好","1.28":"feat(study): 學習模式、筆記保存\nfeat(export): 多格式匯出\nfix(ipad): 科判釘選","1.29":"feat(dict): 佛學名相辭典、原文查詞、外部詞條預覽","1.30":"feat(notes): 段落內直接編輯、筆記樣式、篩選\nfeat(dict): 反白查詞","1.31":"feat(view): 原文／筆記自由組合顯示\nfeat(print): 完整列印、小冊子","1.32":"feat(layout): 內文與科判左右置換並保存","1.33":"refactor(study): 右鍵／長按叫出註釋、心得、提問\nfeat(print): 擴充紙張","1.34":"chore: 無紀錄","1.35":"chore: 無紀錄","1.36":"fix(outline): 還原串文縮排、間距、連接線\nrefactor(menu): 重整功能列表","1.37":"refactor(menu): 分層選單\nremove(notes): 移除書寫與筆記，保留閱讀核心","1.38":"refactor(dict): 只保留反白查詞","1.39":"refactor(tour): 重整導覽與提示\nrefactor(search): 單一放大鏡","1.40":"feat(desktop): 內文與科判預設 1:1\nfix(font): 恢復預設","1.41":"remove(toolbar): 上方常駐功能列\nfeat(menu): 點外部或空白鍵關閉","1.42":"refactor(chart): 簡化頁碼\nfix(ipad): 欄位排列、保留閱讀位置","1.43":"feat(ipad): 可保存的拖曳欄寬\nfix(menu): 固定時不影響正文版面","1.44":"style(search): 提示文字、縮排、輸入位置","1.45":"feat(ipad): 橫向三欄、直向單欄","1.46":"fix(responsive): 手機／平板搜尋、選單、科判溢出、裝置偵測","1.47":"feat(sync): 目次、正文、科判位置連動\nfix(dict): 觸控反白、辭典邊界\nrefactor(mobile): 功能列表改小型浮窗","1.48":"feat(pwa): 自動更新","1.49":"refactor(state): 統一閱讀位置與欄位狀態\nfix(mobile): 欄寬、旋轉、搜尋、浮窗定位\nfeat(pwa): 更新後保存閱讀位置","1.50":"feat(outline): 目次橫書自動對焦\nfeat(phone): 雙擊連動、邊緣翻頁、A4 單頁科判、預設 125%","1.51":"fix(dict): 放開後才顯示\nrefactor(menu): 分組子頁\nfeat(phone): 自動鎖定介面\nfeat(about): 版本紀錄","1.52":"feat(motion): 統一動效、按鍵回饋、拖曳節流\nfeat(zoom): 50%～200%、25% 級距\nfeat(theme): 四種閱讀底色","1.53":"revert(theme): 白底配色\nfeat(zoom): 預設 100%、10% 級距\nfeat(reader): 正文跨卷連續閱讀\nfeat(chart): 連續捲動","1.54":"feat(edition): 韓清淨／藏經版本切換\nfix(dict): 觸控反白查詞\nfix(chart): 100% 不左右滑\nrefactor(ui): 字體、匯出面板、底部導覽\nperf(scroll): 行動版捲動","1.55":"fix(pwa): index.html network-first\nfix(pwa): 每版獨立快取、activate 清舊快取\nfeat(pwa): 安全時機自動重新載入一次並還原位置","1.56":"feat(edition): 預設藏經科判、正文版本字\nfeat(about): 問題回報\nfeat(menu): 電腦懸停子選單\nfeat(chart): 捏合縮放、頁首可點\nfix(chart): 直書括號\nperf(scroll): 行動捲動","1.57":"fix(nav): 點卷號停在前一卷","1.58":"feat(label): 藏版科標 干支／章節\nfeat(edition): 點版本字直接切換\nfix(chart): 長標題換欄、連接線置中、括號半形\nfix(chart): 點科判不跳頁；(分N) 跳下一層\nfix(chart): 縮放以中央為準\nfix(outline): 樹狀線接字中央\nfix(dict): 查詞鍵移到反白下方\nstyle(menu): 介面底色、匯出、問題回報精簡","1.59":"fix(outline): 藏版承接前卷的科判不再跳到別卷\nfix(nav): 點卷號時卷首貼齊頂端、不露前一卷\nfeat(edition): 切換版本停在同一段原文，三欄同步\nfix(menu): 介面浮窗出現在右側、目前選項以底色標示、縮小\nstyle(font): 字體列縮窄，「粗度」改「粗細」\nrename(menu): 科判標號 → 科標\nrefactor(about): 版本紀錄改程式摘要","1.61":"修正卷內早段定位被捲動偵測覆蓋與三欄選卷同步；行動版辭典移回底部；修正科判捏合與放開定位、兩版科標切換；手機正文單卷捲軸與卷末阻尼換卷；固定顯示目前卷名；修正離線重開後卷首定位覆蓋閱讀位置。","1.60":"refactor(chart): 直書科判每頁依樹狀結構重排（兩版、全部頁面）\nfix(chart): 連接線接在第一欄（標號欄）正中，不歪、不突出\nfix(chart): 奇數子科：中間那科與上層同一直線\nfix(chart): 兄弟等距；放不下時逐組等距，橫排小表等距\nfix(chart): 括號整組移到下一欄開頭，不斷在欄尾\nfix(chart): 高度不夠才分欄；續欄從標號下方起，不留單字孤欄\nfix(label): 章節科標不留空格，與干支同一排版"};
   function showSettingsPage(page){
     settingsPage=page;var menu=$('menu'),panel=menu.querySelector('.mpop');
     panel.dataset.settingsPage=page;panel.scrollTop=0;
@@ -3224,7 +3325,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var panel=$('menu').querySelector('.mpop');
     function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent='v'+v;$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
     $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){showSettingsPage('history');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showSettingsPage('history');}};
-    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.66（2026年10月4日更新）\n\n1. 正文捲動時，標題上滑到畫面約五分之二處即自動反白，卷次、科判兩欄同步。\n2. 科標（干支／章節）改到科判欄左上角，點一下切換；功能列表移除科標。\n3. 正文右上改回「藏版／韓版」。\n4. 藏版直書科判：各分支依自身高度往下排，不再為對齊而拉長支線。\n5. 藏版直書科判：有下層的科，標題超過五字換行（七字為四、三）；沒有下層的科原則不換行。\n6. 章節科標後空一字再接標題；換行的兩行間距縮小一半。\n7. 字體「恢復預設」一併還原拖曳過的欄寬與大小。\n8. 電腦版功能浮窗可直接滑過去點選，不再跳掉；功能鍵不再蓋住卷次縮圖鈕。\n9. 字體設定移除卷次／科判大小列（電腦正文的放大縮小保留）。\n10. 版本說明精簡。";
+    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.67\n最後更新：2026年10月4日";
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
@@ -3485,7 +3586,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     // Native vertical scrolling is unchanged. The small pull hint only exists
     // outside a volume edge and commits on release, never during normal scrolling.
     var sc=$('rscroll'),inner=$('rinner'),pull=null,cool=0,paint=Motion.rafThrottle(function(){if(!pull)return;inner.style.transform='translate3d(0,'+Motion.rubberBand(pull.distance,18)+'px,0)';$('pullTop').style.opacity=pull.distance>0?Math.min(1,Math.abs(pull.distance)/90):0;$('pullBot').style.opacity=pull.distance<0?Math.min(1,Math.abs(pull.distance)/90):0;});
-    sc.addEventListener('touchstart',function(e){if(!(e.target instanceof Element)||!phoneMode()||e.touches.length!==1||selected())return;var t=e.touches[0];pull={x:t.clientX,y:t.clientY,edgeY:null,distance:0};},{passive:true});
+    sc.addEventListener('touchstart',function(e){if(true||!(e.target instanceof Element)||!phoneMode()||e.touches.length!==1||selected())return;var t=e.touches[0];pull={x:t.clientX,y:t.clientY,edgeY:null,distance:0};},{passive:true});
     sc.addEventListener('touchmove',function(e){if(!pull)return;if(e.touches.length!==1||selected()){pull=null;return;}var t=e.touches[0],dx=t.clientX-pull.x,dy=t.clientY-pull.y;if(Math.abs(dx)>Math.abs(dy)){pull=null;return;}var outside=dy>0&&sc.scrollTop<=0||dy<0&&sc.scrollTop+sc.clientHeight>=sc.scrollHeight-1;if(!outside){pull.edgeY=null;pull.distance=0;return;}if(pull.edgeY===null)pull.edgeY=t.clientY;pull.distance=t.clientY-pull.edgeY;if(!Motion.reduced())paint();},{passive:true});
     function releasePull(cancel){if(!pull)return;paint.flush();var d=pull.distance;pull=null;paint.cancel();inner.style.removeProperty('transform');$('pullTop').style.opacity=0;$('pullBot').style.opacity=0;if(!cancel&&Math.abs(d)>90&&Date.now()>cool){var next=S.railJuan+(d<0?1:-1);if(next>=1&&next<=100){cool=Date.now()+700;goJuan(next);selectReaderPane('catalog',false);}}Motion.run(inner,[{transform:'translate3d(0,'+Motion.rubberBand(d,18)+'px,0)'},{transform:'translate3d(0,0,0)'}]);}
     sc.addEventListener('touchend',function(){releasePull(false);},{passive:true});sc.addEventListener('touchcancel',function(){releasePull(true);},{passive:true});
@@ -4168,6 +4269,23 @@ html{scroll-snap-type:y proximity;scroll-padding-top:70px}
 .settings-panel[data-hover] :is(.edition-body,.content-body,.settings-body,.ftpop,.dlpop,.apop,.label-body)::before{content:"";position:absolute;top:-10px;bottom:-10px;left:-14px;width:16px}
 .settings-panel.fly-left[data-hover] :is(.edition-body,.content-body,.settings-body,.ftpop,.dlpop,.apop,.label-body)::before{left:auto;right:-14px}
 }
+</style>
+<style id="v167">/* v1.67 */
+.kscale .vgap{display:inline-block;inline-size:2.47mm;block-size:1px}
+/* 版本選擇：淡黃底，不要框、不要勾 */
+:root:root:root:root .settings-panel .edition-choice{border:0!important;box-shadow:none!important;outline:0!important;background:var(--bg)!important}
+:root:root:root:root .settings-panel .edition-choice[aria-checked=true]{background:color-mix(in srgb,var(--acc) 30%,var(--bg))!important}
+:root:root:root:root .settings-panel .edition-choice .ed-ck{display:none!important}
+/* 功能列表不顯示捲軸 */
+:root:root:root:root .menu .mpop,:root:root:root:root .menu .mpop *{scrollbar-width:none}
+.menu .mpop::-webkit-scrollbar,.menu .mpop *::-webkit-scrollbar{display:none}
+/* 卷次：連續多卷 */
+#rinner .rsec+.rsec{margin-top:26px;padding-top:14px;border-top:1px solid var(--rule)}
+:root:root #pullTop,:root:root #pullBot{display:none!important}
+/* 手機科判：左下一鍵回頂 */
+.chart-top{display:none}
+:root[data-layout=iphone] .chart-top{display:grid;place-items:center;position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 70px);z-index:40;width:34px;height:34px;border-radius:50%;border:1px solid var(--rule);background:color-mix(in srgb,var(--bg) 85%,transparent);color:var(--muted);opacity:.6;padding:0;-webkit-tap-highlight-color:transparent}
+.chart-top svg{width:16px;height:16px}
 </style>
 </body></html>
 <style>

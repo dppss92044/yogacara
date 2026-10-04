@@ -1,0 +1,16 @@
+/* v1.67 */
+.kscale .vgap{display:inline-block;inline-size:2.47mm;block-size:1px}
+/* 版本選擇：淡黃底，不要框、不要勾 */
+:root:root:root:root .settings-panel .edition-choice{border:0!important;box-shadow:none!important;outline:0!important;background:var(--bg)!important}
+:root:root:root:root .settings-panel .edition-choice[aria-checked=true]{background:color-mix(in srgb,var(--acc) 30%,var(--bg))!important}
+:root:root:root:root .settings-panel .edition-choice .ed-ck{display:none!important}
+/* 功能列表不顯示捲軸 */
+:root:root:root:root .menu .mpop,:root:root:root:root .menu .mpop *{scrollbar-width:none}
+.menu .mpop::-webkit-scrollbar,.menu .mpop *::-webkit-scrollbar{display:none}
+/* 卷次：連續多卷 */
+#rinner .rsec+.rsec{margin-top:26px;padding-top:14px;border-top:1px solid var(--rule)}
+:root:root #pullTop,:root:root #pullBot{display:none!important}
+/* 手機科判：左下一鍵回頂 */
+.chart-top{display:none}
+:root[data-layout=iphone] .chart-top{display:grid;place-items:center;position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom,0px) + 70px);z-index:40;width:34px;height:34px;border-radius:50%;border:1px solid var(--rule);background:color-mix(in srgb,var(--bg) 85%,transparent);color:var(--muted);opacity:.6;padding:0;-webkit-tap-highlight-color:transparent}
+.chart-top svg{width:16px;height:16px}
