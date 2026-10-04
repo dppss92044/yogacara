@@ -1,0 +1,3 @@
+/* v1.89 百卷浮窗改由程式控制：離開範圍、點別處、選卷後一定收起 */
+:root:root:root .rail-top.fold-done:not(.jpeek) .juans{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+:root:root:root .rail-top.fold-done.jpeek .juans{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important}
