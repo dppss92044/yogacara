@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.79"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.80"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -997,7 +997,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             <h5>自訂匯出</h5>
             <div class="ex-row"><span class="ex-l">卷次</span><div class="ex-c ex-range"><span>卷</span><input id="exFrom" type="number" min="1" max="100" value="1" aria-label="起始卷"><span>至</span><input id="exTo" type="number" min="1" max="100" value="1" aria-label="結束卷"><span class="ex-quick"><button class="lk" id="exThis">本卷</button><button class="lk" id="exAll">全部</button></span></div></div>
             <div class="ex-row"><span class="ex-l">內容</span><div class="cks"><label class="ck"><input type="checkbox" id="exText"><span>內文</span></label><label class="ck"><input type="checkbox" id="exKp"><span>科判</span></label><label class="ck notes-only"><input type="checkbox" id="exPx"><span>披尋記</span></label><label class="ck notes-only"><input type="checkbox" id="exCb"><span>常柏法師釋</span></label></div></div>
-            <div class="ex-row"><span class="ex-l">格式</span><div class="cks"><label class="ck"><input type="checkbox" id="exF_pdf"><span>PDF</span></label><label class="ck"><input type="checkbox" id="exF_docx"><span>Word</span></label><label class="ck"><input type="checkbox" id="exF_html"><span>HTML</span></label><label class="ck"><input type="checkbox" id="exF_md"><span>Markdown</span></label><label class="ck"><input type="checkbox" id="exF_txt"><span>TXT</span></label></div></div>
+            <div class="ex-row"><span class="ex-l">格式</span><div class="cks"><label class="ck"><input type="checkbox" id="exF_pdf"><span>PDF</span></label><label class="ck"><input type="checkbox" id="exF_docx"><span>Word</span></label><label class="ck"><input type="checkbox" id="exF_html"><span>HTML</span></label><label class="ck"><input type="checkbox" id="exF_md"><span>md</span></label><label class="ck"><input type="checkbox" id="exF_txt"><span>TXT</span></label></div></div>
             <div class="ex-row"><span class="ex-l">方式</span><div class="cks"><label class="ck"><input type="radio" id="exSep" name="exm"><span>個別檔案</span></label><label class="ck"><input type="radio" id="exZip" name="exm"><span>打包 ZIP</span></label></div></div>
             <button class="go ex-go" id="exGo">匯出</button>
             <div class="msg" id="exMsg"></div>
@@ -1005,7 +1005,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           <section class="ex-card ex-kp">
             <h5>直書科判表 PDF</h5>
             <p class="ex-info" id="dlInfo">選擇要匯出的頁碼範圍。</p>
-            <div class="ex-row"><span class="ex-l">頁碼</span><div class="ex-c ex-range"><span>第</span><input id="dlFrom" type="number" min="1" aria-label="起始頁"><span>至</span><input id="dlTo" type="number" min="1" aria-label="結束頁"><span>頁</span></div></div>
+            <div class="ex-row zang-only"><span class="ex-l">科標</span><div class="cks"><label class="ck"><input type="radio" name="kpl" id="kplGz"><span>干支</span></label><label class="ck"><input type="radio" name="kpl" id="kplZj"><span>章節</span></label></div></div><div class="ex-row"><span class="ex-l">頁碼</span><div class="ex-c ex-range"><span>第</span><input id="dlFrom" type="number" min="1" aria-label="起始頁"><span>至</span><input id="dlTo" type="number" min="1" aria-label="結束頁"><span>頁</span></div></div>
             <div class="ex-acts"><button class="allbtn" id="dlAll"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v9.5M6 9l4 4 4-4M3.5 15.5v1.5h13v-1.5"/></svg>整本科判表</button><button class="go" id="dlGo">匯出所選頁</button><button id="dlCancel" hidden></button></div>
             <div class="msg" id="dlMsg"></div>
           </section>
@@ -1017,7 +1017,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src">內文、分卷、科判、披尋記與常柏法師釋，全部依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷皆照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<br>原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.79</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.80</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><pre class="version-doc" id="versionDoc"></pre></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
@@ -2191,7 +2191,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     else { var j = S.view === "t" ? S.juan : S.railJuan; r = JRANGE[j] || [2, 2]; }
     $("dlFrom").value = r[0]; $("dlTo").value = r[1]; $("dlFrom").max = $("dlTo").max = NPDF;
     var cj = S.view === "t" ? S.juan : S.railJuan || 1; $("exFrom").value = cj; $("exTo").value = cj; $("exMsg").textContent = "";
-    $("dlInfo").textContent = "全書共 " + NPDF + " 頁（第 1 頁為封面）。預設為" + (S.view === "v" ? "目前這一頁" : "本卷所在的頁數") + "。";
+    $("dlInfo").textContent = EDITION === "zang" ? "藏經科判表第 2 至 " + NPDF + " 頁。預設為本卷所在的頁數。" : "全書共 " + NPDF + " 頁（第 1 頁為封面）。預設為" + (S.view === "v" ? "目前這一頁" : "本卷所在的頁數") + "。";
+    if (EDITION === "zang") { if (+$("dlFrom").value < 2) $("dlFrom").value = 2; if (+$("dlTo").value < 2) $("dlTo").value = 2; }
+    $("dlPop").querySelectorAll('input[type=radio]').forEach(function (x) { x.dataset.on = x.checked ? "1" : "0"; });
     $("dlMsg").textContent = "";
   }
   // ================= 匯出：TXT / Markdown / Word / HTML / PDF，可個別匯出或打包 ZIP =================
@@ -2465,6 +2467,72 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     pages.forEach(function (pg, i) { var s = "— " + (i + 1) + " —", w = 0; for (var q = 0; q < s.length; q++) w += cw(kai, 9, s[q]); pg.drawText(s, { x: (W - w) / 2, y: 34, size: 9, font: F.kai, color: C.mute }); });
     return new Blob([await doc.save()], { type: "application/pdf" });
   }
+  // ---- 藏版直書科判表 PDF：依畫面排版逐頁轉成 PDF（干支／章節可選） ----
+  async function zangKepanPDF(a, b, lab, onStep) {
+    await loadPdfLib();
+    if (!window.fontkit) await loadScript("data/fontkit.umd.min.js");
+    var P = PDFLib, doc = await P.PDFDocument.create(); doc.registerFontkit(window.fontkit);
+    var kai = await doc.embedFont(await pdfFont("kai"), { subset: false });
+    doc.setTitle("瑜伽師地論藏經科判表（" + (lab === "zj" ? "章節" : "干支") + "）"); doc.setLanguage("zh-TW");
+    var W = 595.28, H = 841.89, oldLab = LABEL, host = document.createElement("div");
+    host.className = "ksheet"; host.style.cssText = "position:fixed;left:-4000px;top:0;width:210mm;height:297mm;background:#fff;z-index:-1";
+    document.body.appendChild(host);
+    function rgb(c) { var m = /(\d+(?:\.\d+)?)[ ,]+(\d+(?:\.\d+)?)[ ,]+(\d+(?:\.\d+)?)/.exec(c || ""); return m ? P.rgb(+m[1] / 255, +m[2] / 255, +m[3] / 255) : P.rgb(0, 0, 0); }
+    function tw(s, sz) { try { return kai.widthOfTextAtSize(s, sz); } catch (e) { return sz * s.length; } }
+    try {
+      LABEL = lab;
+      for (var p = a; p <= b; p++) {
+        host.innerHTML = ""; fillPage(host, p);
+        var ks = host.querySelector(".kscale"); if (ks) ks.style.transform = "none";
+        var pg = host.querySelector(".page"); if (!pg) continue;
+        var R = pg.getBoundingClientRect(), s = W / R.width, page = doc.addPage([W, H]);
+        function X(x) { return (x - R.left) * s; } function Y(y) { return H - (y - R.top) * s; }
+        // 連接線
+        pg.querySelectorAll("svg line").forEach(function (ln) {
+          var M = ln.getScreenCTM(); if (!M) return;
+          var x1 = +ln.getAttribute("x1"), y1 = +ln.getAttribute("y1"), x2 = +ln.getAttribute("x2"), y2 = +ln.getAttribute("y2");
+          page.drawLine({ start: { x: X(M.a * x1 + M.c * y1 + M.e), y: Y(M.b * x1 + M.d * y1 + M.f) }, end: { x: X(M.a * x2 + M.c * y2 + M.e), y: Y(M.b * x2 + M.d * y2 + M.f) }, thickness: 0.8, color: P.rgb(0.12, 0.11, 0.1) });
+        });
+        // 文字：逐字依畫面位置寫入
+        var wk = document.createTreeWalker(pg, NodeFilter.SHOW_TEXT), t, rg = document.createRange();
+        while ((t = wk.nextNode())) {
+          var el = t.parentElement; if (!el || el.closest("svg")) continue;
+          var cs = getComputedStyle(el); if (cs.visibility === "hidden" || cs.display === "none") continue;
+          var sz = parseFloat(cs.fontSize) * s, col = rgb(cs.color), vert = /vertical/.test(cs.writingMode), str = t.data;
+          if (!str.trim()) continue;
+          var tcy = el.closest(".tcy");
+          if (!vert || tcy) {
+            var box = (tcy || el).getBoundingClientRect(), txt = str.trim(), fs = tcy ? Math.min(sz, box.width * s / Math.max(1, txt.length) * 1.7) : sz, w = tw(txt, fs);
+            var cx = tcy ? X(box.left + box.width / 2) - w / 2 : X(box.left), cy = Y(box.top + box.height / 2) - fs * 0.36;
+            if (!tcy) { rg.selectNodeContents(t); var rb = rg.getBoundingClientRect(); cx = X(rb.left); cy = Y(rb.top + rb.height / 2) - fs * 0.36; }
+            page.drawText(txt, { x: cx, y: cy, size: fs, font: kai, color: col });
+            continue;
+          }
+          for (var i = 0; i < str.length; i++) {
+            var ch = str[i]; if (/\s/.test(ch)) continue;
+            rg.setStart(t, i); rg.setEnd(t, i + 1); var r = rg.getBoundingClientRect(); if (!r.width && !r.height) continue;
+            var ccx = X(r.left + r.width / 2), top = Y(r.top), mid = Y(r.top + r.height / 2);
+            if (/[\x21-\x7e—―─…～]/.test(ch)) page.drawText(ch, { x: ccx - sz * 0.36, y: top - (r.height * s - tw(ch, sz)) / 2, size: sz, font: kai, color: col, rotate: P.degrees(-90) });
+            else page.drawText(ch, { x: ccx - tw(ch, sz) / 2, y: mid - sz * 0.36, size: sz, font: kai, color: col });
+          }
+        }
+        if (onStep) onStep(p - a + 1, b - a + 1);
+        await new Promise(function (r) { setTimeout(r, 0); });
+      }
+    } finally { LABEL = oldLab; host.remove(); }
+    return new Blob([await doc.save()], { type: "application/pdf" });
+  }
+  function zangLab() { return $("kplZj") && $("kplZj").checked ? "zj" : $("kplGz") && $("kplGz").checked ? "gz" : LABEL; }
+  async function zangKpExport(all) {
+    var msg = $("dlMsg"), a = all ? 2 : Math.max(2, Math.min(NPDF, +$("dlFrom").value || 2)), b = all ? NPDF : Math.max(2, Math.min(NPDF, +$("dlTo").value || a));
+    if (b < a) { var t = a; a = b; b = t; }
+    var lab = zangLab(), name = "瑜伽師地論藏經科判表（" + (lab === "zj" ? "章節" : "干支") + "）" + (all ? "全本" : "_第" + a + (b > a ? "-" + b : "") + "頁") + ".pdf";
+    msg.textContent = "正在產生 PDF…";
+    try {
+      var blob = await zangKepanPDF(a, b, lab, function (d, n) { msg.textContent = "正在排版 PDF…（" + d + "／" + n + " 頁）"; });
+      await saveFile(name, blob); msg.textContent = "已匯出：" + name;
+    } catch (err) { msg.textContent = err && err.code === "declined" ? "已取消存檔。" : (/font|script|load/i.test(String(err && err.message)) ? "需要的字型或程式沒有載入，請確認 data 資料夾完整，或連網後再試。" : "產生檔案時出錯：" + (err && err.message || err)); }
+  }
   // ---- save a file (artifact download channel or a plain link) ----
   async function saveFile(name, blob) {
     var dl = window.claude && window.claude.use ? await window.claude.use("downloads") : null;
@@ -2668,11 +2736,18 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     $("dlBtn").onclick = function () { if ($("dlPop").hidden) { openDl(true); document.querySelector(".menu .dl").classList.add("on"); $("about").classList.remove("open"); } };
     $("dlCancel").onclick = function () { openDl(false); };
     $("exGo").onclick = doExport;
-    $("dlAll").onclick = dlAllKepan;
+    $("dlAll").onclick = function () { if (EDITION === "zang") zangKpExport(true); else dlAllKepan(); };
     $("exOne").onclick = function (e) { e.stopPropagation(); doExport({ a: 1, b: 100, inc: { text: true, kp: true, px: false, cb: false }, fm: ["pdf"] }); };
     $("exThis").onclick = function () { var cj = S.view === "t" ? S.juan : S.railJuan || 1; $("exFrom").value = cj; $("exTo").value = cj; };
     $("exAll").onclick = function () { $("exFrom").value = 1; $("exTo").value = 100; };
-    $("dlGo").onclick = doDownload;
+    $("dlGo").onclick = function () { if (EDITION === "zang") zangKpExport(false); else doDownload(); };
+    new MutationObserver(function () { if ($("dlPop").hidden) return; if (!$("dlFrom").value) { var j0 = S.view === "t" ? S.juan : S.railJuan, r0 = JRANGE[j0] || [2, 2]; $("dlFrom").value = Math.max(EDITION === "zang" ? 2 : 1, r0[0]); $("dlTo").value = Math.max(EDITION === "zang" ? 2 : 1, r0[1]); }
+      $("dlInfo").textContent = EDITION === "zang" ? "藏經科判表第 2 至 " + NPDF + " 頁。預設為本卷所在的頁數。" : "全書共 " + NPDF + " 頁（第 1 頁為封面）。預設為本卷所在的頁數。";
+      if (EDITION === "zang" && !$("kplGz").checked && !$("kplZj").checked) { $(LABEL === "zj" ? "kplZj" : "kplGz").checked = true; }
+      $("dlPop").querySelectorAll('input[type=radio]').forEach(function (x) { x.dataset.on = x.checked ? "1" : "0"; });
+    }).observe($("dlPop"), { attributes: true, attributeFilter: ["hidden"] });
+    // 匯出面板：單選項目再點一下即取消
+    $("dlPop").addEventListener("click", function (e) { var r = e.target; if (!(r instanceof HTMLInputElement) || r.type !== "radio") return; if (r.dataset.on === "1") { r.checked = false; r.dataset.on = "0"; } else { $("dlPop").querySelectorAll('input[name="' + r.name + '"]').forEach(function (x) { x.dataset.on = "0"; }); r.dataset.on = "1"; } });
     $("searchForm").addEventListener("submit", function (e) { e.preventDefault(); search($("q").value); closeSearch();if(ReaderUI.ready)selectReaderPane("read",false);try { history.pushState(null, "", "#search"); } catch (er) {} });
     $("railOpen").onclick = function () { setRail(true); };
     $("railClose").onclick = function () { setRail(false); };
@@ -2768,7 +2843,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   FT.s=1;FT.l=Number.isFinite(+FT.l)?Math.max(.85,Math.min(1.25,+FT.l)):1;
   ['r','m','p'].forEach(function(k){Z[k]=Number.isFinite(+Z[k])?Math.max(k==='p'&&phoneMode()?1:.5,Math.min(k==='p'&&!phoneMode()?3:2,Math.round(+Z[k]*10)/10)):1;});
   function deviceZoom(){applyZoom();}
-  function applyZoom() {
+  function applyZoom() { setTimeout(function () { window.dispatchEvent(new Event("reader-zoom")); }, 0);
     if(phoneMode())Z.p=Math.max(1,Math.min(2,Math.round(Z.p*10)/10));
     var R = document.documentElement.style;document.documentElement.dataset.largeReading=String(Z.m>1.5);
     R.setProperty("--zr", Z.r * FT.s); R.setProperty("--zm", Z.m * FT.s); $("pview").style.setProperty("--zp", Z.p * FT.s);
@@ -3168,6 +3243,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     try{enabled=localStorage.getItem('hk-dict-preview')!=='0';}catch(e){}$('optDict').checked=enabled;
     var knownTerms=("阿賴耶識 阿頼耶識 阿陀那識 末那識 一切種子識 有餘依涅槃 無餘依涅槃 無自性性 三摩呬多 三摩鉢底 三摩地 三摩耶 三摩呬多地 非三摩呬多地 有尋有伺 無尋唯伺 無尋無伺 如來藏 阿羅漢 辟支佛 摩訶薩 菩提薩埵 瑜伽師 瑜伽 菩薩 聲聞 獨覺 如來 菩提 涅槃 般若 波羅蜜多 波羅蜜 緣起 因緣 無明 行識 名色 六處 六入 十二處 十八界 十二因緣 六識 八識 眼識 耳識 鼻識 舌識 身識 意識 眼根 耳根 鼻根 舌根 身根 意根 五根 五力 四諦 苦諦 集諦 滅諦 道諦 八正道 四念處 四正勤 四神足 七覺支 五蘊 色蘊 受蘊 想蘊 行蘊 識蘊 五陰 色法 心法 心所法 心所 不相應行 無為法 有為法 無為 有為 無常 無我 苦空 真如 法性 法界 法身 自性 空性 不二 煩惱 所知障 煩惱障 種子 習氣 現行 轉依 熏習 俱生 分別 作意 觸受 思慧 想思 善法 不善法 無記 貪瞋癡 貪欲 瞋恚 愚癡 慢疑 惡見 正見 正思惟 正語 正業 正命 正精進 正念 正定 奢摩他 毘鉢舍那 毗鉢舍那 止觀 禪定 等持 等至 等引 靜慮 初禪 二禪 三禪 四禪 四靜慮 欲界 色界 無色界 三界 三業 身業 語業 意業 業力 業果 業報 因果 異熟 等流 增上 勝解 念根 精進 正知 正念 善巧 方便 慈悲 喜捨 慈無量 悲無量 喜無量 捨無量 四無量心 法住 法爾 佛法 僧伽 苾芻 比丘 比丘尼 優婆塞 優婆夷 三寶 四眾 六度 持戒 布施 忍辱 戒定慧 戒律 解脫 律儀 根境 四大 地水火風 地界 水界 火界 風界 極微 識住 中有 生有 死有 本有 地獄 傍生 餓鬼 天人 非天 阿修羅 輪迴 生死 出離 攝受 攝藏 隨眠 結使 纏縛 斷惑 聖道 見道 修道 無學道 有學 無學 凡夫 聖者 佛陀 三藏 名相 法相 法數 法門 五事 五法 三性 遍計所執 依他起 圓成實 圓成實性 所緣 能緣 能取 所取 有漏 無漏 漏盡 有情 無情 心識 心意識 本地分 攝決擇分 攝釋分 攝異門分 攝事分").split(/\s+/).filter(Boolean).sort(function(a,b){return b.length-a.length;});
     function hidePreview(){longPressActive=false;dismissedSelection=String(getSelection()||'');if(window.CSS&&CSS.highlights)CSS.highlights.delete('dict-term');clearTimeout(selectionTimer);clearTimeout(waitTimer);generation++;if(!pop.hidden)Motion.close(pop,function(){pop.hidden=true;});currentTerm='';activeRange=null;}
+    window.addEventListener('reader-zoom',function(){placePreview();});
     function placePreview(){if(pop.hidden||!activeRange)return;var ds=deviceLayout==='mac'?Z.m:1;pop.style.setProperty('--dict-scale',ds);if(mobileDictionary()){var vb=viewportBox(),bb=overlayBounds(),sw=Math.min(520,vb.width-24),maxH=Math.max(60,Math.min(vb.height*.55,bb.bottom-bb.top-8));pop.style.setProperty('--dict-width',sw+'px');pop.style.setProperty('--dict-maxheight',maxH+'px');pop.style.setProperty('--dict-left',(vb.left+(vb.width-sw)/2)+'px');pop.style.setProperty('--dict-top',Math.max(bb.top,Math.min(bb.bottom-Math.min(pop.offsetHeight,maxH),phoneMode()?vb.top+(vb.height-Math.min(pop.offsetHeight,maxH))/2:bb.bottom-Math.min(pop.offsetHeight,maxH)))+'px');return;}var v=viewportBox(),bounds=overlayBounds(),rects=Array.from(activeRange.getClientRects()),r=rects.find(function(x){return x.bottom>bounds.top&&x.top<bounds.bottom;})||activeRange.getBoundingClientRect(),w=Math.max(80,Math.min(430*ds,v.width-24));pop.style.setProperty('--dict-width',w+'px');pop.style.setProperty('--dict-maxheight',Math.max(60,bounds.bottom-bounds.top)+'px');var h=Math.min(pop.offsetHeight,bounds.bottom-bounds.top),x=Math.max(v.left+12,Math.min(v.left+v.width-w-12,r.left)),y=r.bottom+10;if(y+h>bounds.bottom)y=r.top-h-10;y=Math.max(bounds.top,Math.min(bounds.bottom-h,y));pop.style.setProperty('--dict-left',x+'px');pop.style.setProperty('--dict-top',y+'px');}
     function showPreview(term,range){
       term=term.trim();if(!enabled || !term || term.length>40)return;activeRange=range;if(window.CSS&&CSS.highlights&&window.Highlight)CSS.highlights.set('dict-term',new Highlight(range));
@@ -3412,7 +3488,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
 
   var settingsPage='root',versionBack='about';
-  var versionSummaries={"1.79":"電腦卷次與正文預設120%，正文顯示倍率；辭典內文隨正文倍率調整、增加字距並採新細明體優先；行動科判回卷首操作統一；分開概略／詳細導覽；手機辭典預覽置中並統一圓角。","1.78":"科判新增實際文字與支線邊界校正，超出閱讀紙面時僅調整該頁；字型載入後重新校正可見頁並保留閱讀位置與反白；共用於藏版、韓版及手機／平板／電腦。","1.77":"卷次大小與縮圖外框改用欄位灰底；電腦正文工具列靠近左右上角；科標文字垂直置中；顏色設定改為淡紅色科標，保留標題原色；滑過字體浮窗即可固定操作；卷次原生捲動不再自動向右偏移，手動位置保持至主動選科或換卷。","1.76":"電腦科判工具列改為浮動，移除上方多餘留白；科標與功能按鍵採同款圓角外框；取消電腦卷次圖釘；正文卷名置中；卷次標題可直接選卷；正文反白追蹤線調至2/6；新增電腦科判標題顏色與預設還原。","1.67":"v1.67\n最後更新：2026年10月4日","1.66":"v1.66（2026年10月4日更新）\n\n1. 正文捲動時，標題上滑到畫面約五分之二處即自動反白，卷次、科判兩欄同步。\n2. 科標（干支／章節）改到科判欄左上角，點一下切換；功能列表移除科標。\n3. 正文右上改回「藏版／韓版」。\n4. 藏版直書科判：各分支依自身高度往下排，不再為對齊而拉長支線。\n5. 藏版直書科判：有下層的科，標題超過五字換行（七字為四、三）；沒有下層的科原則不換行。\n6. 章節科標後空一字再接標題；換行的兩行間距縮小一半。\n7. 字體「恢復預設」一併還原拖曳過的欄寬與大小。\n8. 電腦版功能浮窗可直接滑過去點選，不再跳掉；功能鍵不再蓋住卷次縮圖鈕。\n9. 字體設定移除卷次／科判大小列（電腦正文的放大縮小保留）。\n10. 版本說明精簡。","1.65":"feat(sync): 捲動正文時三欄一律跟讀反白（點空白不再停止）\nrefactor(chart): 藏版直書科判重排：字後直接接支線、兄弟等距、支架直線置中、紙面空時放寬間距\nfix(chart): 超過 12 字平均分兩欄，續欄與首欄正文同高、欄距加寬\nfix(chart): 括號不斷欄；標題後括號小注與 (分N) 同字級、同色\nstyle(chart): 阿拉伯數字用 Times New Roman\nstyle(text): 正文欄科判標題灰色加深\nfeat(menu): 問題回報直接開郵件；版本紀錄改成單一文件（新的在上）\nremove(hk): 韓版移除章節科標，只留干支","1.64":"revert(chart): 直書科判恢復 v1.59 版面（原排法，長標題下方有空間才合回一欄），標號顏色保留\nfix(text): 正文欄科判標題改淡灰色（兩版）\nfix(rail): 上層科判在前一卷時，樹狀豎線照樣延伸到頂\nfix(rail): 副標題「本卷 N 科」與全部科判一起縮排\nfix(rail): 手動拖橫向捲軸後不再強制左右對焦\nfix(menu): 點「介面」直接釘住右側三個圖示，移除獨立頁面","1.63":"桌面正文捲動持續追蹤下一科判，其他兩欄同步定位，點空白停止；科判標題約六字換直欄；功能列表分為閱讀、顯示、其他並保留八個入口；大小工具收進字體設定，手機新增卷次浮窗、淡色置中卷名，科判縮放限制100%～200%。","1.62":"科判改為各分支依標題長度排列，縮短多餘支線；標題墨色統一，尾端括號與分科小字同格式；修正三欄同標題黃底連動、正文捲動標示與隱藏欄位同步；點擊正文與科判後將目標定位於畫面中上方。","1.27":"feat(layout): 手機／平板／電腦三種自適應介面\nfeat(prefs): 記住介面偏好","1.28":"feat(study): 學習模式、筆記保存\nfeat(export): 多格式匯出\nfix(ipad): 科判釘選","1.29":"feat(dict): 佛學名相辭典、原文查詞、外部詞條預覽","1.30":"feat(notes): 段落內直接編輯、筆記樣式、篩選\nfeat(dict): 反白查詞","1.31":"feat(view): 原文／筆記自由組合顯示\nfeat(print): 完整列印、小冊子","1.32":"feat(layout): 內文與科判左右置換並保存","1.33":"refactor(study): 右鍵／長按叫出註釋、心得、提問\nfeat(print): 擴充紙張","1.34":"chore: 無紀錄","1.35":"chore: 無紀錄","1.36":"fix(outline): 還原串文縮排、間距、連接線\nrefactor(menu): 重整功能列表","1.37":"refactor(menu): 分層選單\nremove(notes): 移除書寫與筆記，保留閱讀核心","1.38":"refactor(dict): 只保留反白查詞","1.39":"refactor(tour): 重整導覽與提示\nrefactor(search): 單一放大鏡","1.40":"feat(desktop): 內文與科判預設 1:1\nfix(font): 恢復預設","1.41":"remove(toolbar): 上方常駐功能列\nfeat(menu): 點外部或空白鍵關閉","1.42":"refactor(chart): 簡化頁碼\nfix(ipad): 欄位排列、保留閱讀位置","1.43":"feat(ipad): 可保存的拖曳欄寬\nfix(menu): 固定時不影響正文版面","1.44":"style(search): 提示文字、縮排、輸入位置","1.45":"feat(ipad): 橫向三欄、直向單欄","1.46":"fix(responsive): 手機／平板搜尋、選單、科判溢出、裝置偵測","1.47":"feat(sync): 目次、正文、科判位置連動\nfix(dict): 觸控反白、辭典邊界\nrefactor(mobile): 功能列表改小型浮窗","1.48":"feat(pwa): 自動更新","1.49":"refactor(state): 統一閱讀位置與欄位狀態\nfix(mobile): 欄寬、旋轉、搜尋、浮窗定位\nfeat(pwa): 更新後保存閱讀位置","1.50":"feat(outline): 目次橫書自動對焦\nfeat(phone): 雙擊連動、邊緣翻頁、A4 單頁科判、預設 125%","1.51":"fix(dict): 放開後才顯示\nrefactor(menu): 分組子頁\nfeat(phone): 自動鎖定介面\nfeat(about): 版本紀錄","1.52":"feat(motion): 統一動效、按鍵回饋、拖曳節流\nfeat(zoom): 50%～200%、25% 級距\nfeat(theme): 四種閱讀底色","1.53":"revert(theme): 白底配色\nfeat(zoom): 預設 100%、10% 級距\nfeat(reader): 正文跨卷連續閱讀\nfeat(chart): 連續捲動","1.54":"feat(edition): 韓清淨／藏經版本切換\nfix(dict): 觸控反白查詞\nfix(chart): 100% 不左右滑\nrefactor(ui): 字體、匯出面板、底部導覽\nperf(scroll): 行動版捲動","1.55":"fix(pwa): index.html network-first\nfix(pwa): 每版獨立快取、activate 清舊快取\nfeat(pwa): 安全時機自動重新載入一次並還原位置","1.56":"feat(edition): 預設藏經科判、正文版本字\nfeat(about): 問題回報\nfeat(menu): 電腦懸停子選單\nfeat(chart): 捏合縮放、頁首可點\nfix(chart): 直書括號\nperf(scroll): 行動捲動","1.57":"fix(nav): 點卷號停在前一卷","1.58":"feat(label): 藏版科標 干支／章節\nfeat(edition): 點版本字直接切換\nfix(chart): 長標題換欄、連接線置中、括號半形\nfix(chart): 點科判不跳頁；(分N) 跳下一層\nfix(chart): 縮放以中央為準\nfix(outline): 樹狀線接字中央\nfix(dict): 查詞鍵移到反白下方\nstyle(menu): 介面底色、匯出、問題回報精簡","1.59":"fix(outline): 藏版承接前卷的科判不再跳到別卷\nfix(nav): 點卷號時卷首貼齊頂端、不露前一卷\nfeat(edition): 切換版本停在同一段原文，三欄同步\nfix(menu): 介面浮窗出現在右側、目前選項以底色標示、縮小\nstyle(font): 字體列縮窄，「粗度」改「粗細」\nrename(menu): 科判標號 → 科標\nrefactor(about): 版本紀錄改程式摘要","1.61":"修正卷內早段定位被捲動偵測覆蓋與三欄選卷同步；行動版辭典移回底部；修正科判捏合與放開定位、兩版科標切換；手機正文單卷捲軸與卷末阻尼換卷；固定顯示目前卷名；修正離線重開後卷首定位覆蓋閱讀位置。","1.60":"refactor(chart): 直書科判每頁依樹狀結構重排（兩版、全部頁面）\nfix(chart): 連接線接在第一欄（標號欄）正中，不歪、不突出\nfix(chart): 奇數子科：中間那科與上層同一直線\nfix(chart): 兄弟等距；放不下時逐組等距，橫排小表等距\nfix(chart): 括號整組移到下一欄開頭，不斷在欄尾\nfix(chart): 高度不夠才分欄；續欄從標號下方起，不留單字孤欄\nfix(label): 章節科標不留空格，與干支同一排版"};
+  var versionSummaries={"1.80":"藏版匯出新增直書科判表 PDF，可選干支或章節。\n匯出格式 Markdown 改稱 md；單選項目再點一下即可取消。\n電腦版辭典（含外部頁面備援）隨正文放大縮小即時調整。","1.79":"電腦卷次與正文預設120%，正文顯示倍率；辭典內文隨正文倍率調整、增加字距並採新細明體優先；行動科判回卷首操作統一；分開概略／詳細導覽；手機辭典預覽置中並統一圓角。","1.78":"科判新增實際文字與支線邊界校正，超出閱讀紙面時僅調整該頁；字型載入後重新校正可見頁並保留閱讀位置與反白；共用於藏版、韓版及手機／平板／電腦。","1.77":"卷次大小與縮圖外框改用欄位灰底；電腦正文工具列靠近左右上角；科標文字垂直置中；顏色設定改為淡紅色科標，保留標題原色；滑過字體浮窗即可固定操作；卷次原生捲動不再自動向右偏移，手動位置保持至主動選科或換卷。","1.76":"電腦科判工具列改為浮動，移除上方多餘留白；科標與功能按鍵採同款圓角外框；取消電腦卷次圖釘；正文卷名置中；卷次標題可直接選卷；正文反白追蹤線調至2/6；新增電腦科判標題顏色與預設還原。","1.67":"v1.67\n最後更新：2026年10月4日","1.66":"v1.66（2026年10月4日更新）\n\n1. 正文捲動時，標題上滑到畫面約五分之二處即自動反白，卷次、科判兩欄同步。\n2. 科標（干支／章節）改到科判欄左上角，點一下切換；功能列表移除科標。\n3. 正文右上改回「藏版／韓版」。\n4. 藏版直書科判：各分支依自身高度往下排，不再為對齊而拉長支線。\n5. 藏版直書科判：有下層的科，標題超過五字換行（七字為四、三）；沒有下層的科原則不換行。\n6. 章節科標後空一字再接標題；換行的兩行間距縮小一半。\n7. 字體「恢復預設」一併還原拖曳過的欄寬與大小。\n8. 電腦版功能浮窗可直接滑過去點選，不再跳掉；功能鍵不再蓋住卷次縮圖鈕。\n9. 字體設定移除卷次／科判大小列（電腦正文的放大縮小保留）。\n10. 版本說明精簡。","1.65":"feat(sync): 捲動正文時三欄一律跟讀反白（點空白不再停止）\nrefactor(chart): 藏版直書科判重排：字後直接接支線、兄弟等距、支架直線置中、紙面空時放寬間距\nfix(chart): 超過 12 字平均分兩欄，續欄與首欄正文同高、欄距加寬\nfix(chart): 括號不斷欄；標題後括號小注與 (分N) 同字級、同色\nstyle(chart): 阿拉伯數字用 Times New Roman\nstyle(text): 正文欄科判標題灰色加深\nfeat(menu): 問題回報直接開郵件；版本紀錄改成單一文件（新的在上）\nremove(hk): 韓版移除章節科標，只留干支","1.64":"revert(chart): 直書科判恢復 v1.59 版面（原排法，長標題下方有空間才合回一欄），標號顏色保留\nfix(text): 正文欄科判標題改淡灰色（兩版）\nfix(rail): 上層科判在前一卷時，樹狀豎線照樣延伸到頂\nfix(rail): 副標題「本卷 N 科」與全部科判一起縮排\nfix(rail): 手動拖橫向捲軸後不再強制左右對焦\nfix(menu): 點「介面」直接釘住右側三個圖示，移除獨立頁面","1.63":"桌面正文捲動持續追蹤下一科判，其他兩欄同步定位，點空白停止；科判標題約六字換直欄；功能列表分為閱讀、顯示、其他並保留八個入口；大小工具收進字體設定，手機新增卷次浮窗、淡色置中卷名，科判縮放限制100%～200%。","1.62":"科判改為各分支依標題長度排列，縮短多餘支線；標題墨色統一，尾端括號與分科小字同格式；修正三欄同標題黃底連動、正文捲動標示與隱藏欄位同步；點擊正文與科判後將目標定位於畫面中上方。","1.27":"feat(layout): 手機／平板／電腦三種自適應介面\nfeat(prefs): 記住介面偏好","1.28":"feat(study): 學習模式、筆記保存\nfeat(export): 多格式匯出\nfix(ipad): 科判釘選","1.29":"feat(dict): 佛學名相辭典、原文查詞、外部詞條預覽","1.30":"feat(notes): 段落內直接編輯、筆記樣式、篩選\nfeat(dict): 反白查詞","1.31":"feat(view): 原文／筆記自由組合顯示\nfeat(print): 完整列印、小冊子","1.32":"feat(layout): 內文與科判左右置換並保存","1.33":"refactor(study): 右鍵／長按叫出註釋、心得、提問\nfeat(print): 擴充紙張","1.34":"chore: 無紀錄","1.35":"chore: 無紀錄","1.36":"fix(outline): 還原串文縮排、間距、連接線\nrefactor(menu): 重整功能列表","1.37":"refactor(menu): 分層選單\nremove(notes): 移除書寫與筆記，保留閱讀核心","1.38":"refactor(dict): 只保留反白查詞","1.39":"refactor(tour): 重整導覽與提示\nrefactor(search): 單一放大鏡","1.40":"feat(desktop): 內文與科判預設 1:1\nfix(font): 恢復預設","1.41":"remove(toolbar): 上方常駐功能列\nfeat(menu): 點外部或空白鍵關閉","1.42":"refactor(chart): 簡化頁碼\nfix(ipad): 欄位排列、保留閱讀位置","1.43":"feat(ipad): 可保存的拖曳欄寬\nfix(menu): 固定時不影響正文版面","1.44":"style(search): 提示文字、縮排、輸入位置","1.45":"feat(ipad): 橫向三欄、直向單欄","1.46":"fix(responsive): 手機／平板搜尋、選單、科判溢出、裝置偵測","1.47":"feat(sync): 目次、正文、科判位置連動\nfix(dict): 觸控反白、辭典邊界\nrefactor(mobile): 功能列表改小型浮窗","1.48":"feat(pwa): 自動更新","1.49":"refactor(state): 統一閱讀位置與欄位狀態\nfix(mobile): 欄寬、旋轉、搜尋、浮窗定位\nfeat(pwa): 更新後保存閱讀位置","1.50":"feat(outline): 目次橫書自動對焦\nfeat(phone): 雙擊連動、邊緣翻頁、A4 單頁科判、預設 125%","1.51":"fix(dict): 放開後才顯示\nrefactor(menu): 分組子頁\nfeat(phone): 自動鎖定介面\nfeat(about): 版本紀錄","1.52":"feat(motion): 統一動效、按鍵回饋、拖曳節流\nfeat(zoom): 50%～200%、25% 級距\nfeat(theme): 四種閱讀底色","1.53":"revert(theme): 白底配色\nfeat(zoom): 預設 100%、10% 級距\nfeat(reader): 正文跨卷連續閱讀\nfeat(chart): 連續捲動","1.54":"feat(edition): 韓清淨／藏經版本切換\nfix(dict): 觸控反白查詞\nfix(chart): 100% 不左右滑\nrefactor(ui): 字體、匯出面板、底部導覽\nperf(scroll): 行動版捲動","1.55":"fix(pwa): index.html network-first\nfix(pwa): 每版獨立快取、activate 清舊快取\nfeat(pwa): 安全時機自動重新載入一次並還原位置","1.56":"feat(edition): 預設藏經科判、正文版本字\nfeat(about): 問題回報\nfeat(menu): 電腦懸停子選單\nfeat(chart): 捏合縮放、頁首可點\nfix(chart): 直書括號\nperf(scroll): 行動捲動","1.57":"fix(nav): 點卷號停在前一卷","1.58":"feat(label): 藏版科標 干支／章節\nfeat(edition): 點版本字直接切換\nfix(chart): 長標題換欄、連接線置中、括號半形\nfix(chart): 點科判不跳頁；(分N) 跳下一層\nfix(chart): 縮放以中央為準\nfix(outline): 樹狀線接字中央\nfix(dict): 查詞鍵移到反白下方\nstyle(menu): 介面底色、匯出、問題回報精簡","1.59":"fix(outline): 藏版承接前卷的科判不再跳到別卷\nfix(nav): 點卷號時卷首貼齊頂端、不露前一卷\nfeat(edition): 切換版本停在同一段原文，三欄同步\nfix(menu): 介面浮窗出現在右側、目前選項以底色標示、縮小\nstyle(font): 字體列縮窄，「粗度」改「粗細」\nrename(menu): 科判標號 → 科標\nrefactor(about): 版本紀錄改程式摘要","1.61":"修正卷內早段定位被捲動偵測覆蓋與三欄選卷同步；行動版辭典移回底部；修正科判捏合與放開定位、兩版科標切換；手機正文單卷捲軸與卷末阻尼換卷；固定顯示目前卷名；修正離線重開後卷首定位覆蓋閱讀位置。","1.60":"refactor(chart): 直書科判每頁依樹狀結構重排（兩版、全部頁面）\nfix(chart): 連接線接在第一欄（標號欄）正中，不歪、不突出\nfix(chart): 奇數子科：中間那科與上層同一直線\nfix(chart): 兄弟等距；放不下時逐組等距，橫排小表等距\nfix(chart): 括號整組移到下一欄開頭，不斷在欄尾\nfix(chart): 高度不夠才分欄；續欄從標號下方起，不留單字孤欄\nfix(label): 章節科標不留空格，與干支同一排版"};
   function showSettingsPage(page){
     settingsPage=page;var menu=$('menu'),panel=menu.querySelector('.mpop');
     panel.dataset.settingsPage=page;panel.scrollTop=0;
@@ -3429,7 +3505,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var panel=$('menu').querySelector('.mpop');
     function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent='v'+v;$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
     $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){showSettingsPage('history');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showSettingsPage('history');}};
-    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.79\n最後更新：2026年10月4日\n\n"+versionSummaries["1.79"];
+    $('versionHistory').onclick=null;$('versionDoc').textContent="v1.80\n最後更新：2026年10月4日\n\n"+versionSummaries["1.80"];
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn','#detailedTourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
@@ -4484,6 +4560,12 @@ html{scroll-snap-type:y proximity;scroll-padding-top:70px}
 .term-preview,.book-size,.menu .mpop,#tour .card,.dict-chip,.edition-body,.ex-card,.grp{border-radius:14px}
 input,select,textarea,button{border-radius:8px}
 .juans a,.juans>*{border-radius:8px}
+</style>
+<style id="v180">/* v1.80 */
+:root:root:root[data-edition=zang] .ex-kp{display:block!important}
+:root:not([data-edition=zang]) .zang-only{display:none!important}
+/* 辭典：外部頁面備援也跟著正文倍率放大 */
+:root:root .term-preview iframe{zoom:var(--dict-scale,1);height:300px!important;max-height:calc(45dvh / var(--dict-scale,1))!important}
 </style>
 </body></html>
 <style>

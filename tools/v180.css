@@ -1,0 +1,5 @@
+/* v1.80 */
+:root:root:root[data-edition=zang] .ex-kp{display:block!important}
+:root:not([data-edition=zang]) .zang-only{display:none!important}
+/* 辭典：外部頁面備援也跟著正文倍率放大 */
+:root:root .term-preview iframe{zoom:var(--dict-scale,1);height:300px!important;max-height:calc(45dvh / var(--dict-scale,1))!important}
