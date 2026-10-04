@@ -1,0 +1,76 @@
+[
+  {
+    "ed": "hk",
+    "label": "gz",
+    "wraps": {
+      "6": 2011,
+      "7": 2,
+      "8": 4
+    },
+    "pages": 2017,
+    "nodeCount": 57191,
+    "originalCount": 51390,
+    "noteCount": 4392,
+    "maxStem": 19.540000000000006,
+    "fail": [],
+    "overflow": [],
+    "overflowCount": 0,
+    "overlap": [],
+    "overlapCount": 0
+  },
+  {
+    "ed": "hk",
+    "label": "zj",
+    "wraps": {
+      "6": 2011,
+      "7": 2,
+      "8": 4
+    },
+    "pages": 2017,
+    "nodeCount": 57191,
+    "originalCount": 51390,
+    "noteCount": 4392,
+    "maxStem": 19.540000000000006,
+    "fail": [],
+    "overflow": [],
+    "overflowCount": 0,
+    "overlap": [],
+    "overlapCount": 0
+  },
+  {
+    "ed": "zang",
+    "label": "gz",
+    "wraps": {
+      "6": 93,
+      "7": 2
+    },
+    "pages": 95,
+    "nodeCount": 2934,
+    "originalCount": 2422,
+    "noteCount": 278,
+    "maxStem": 19.539999999999992,
+    "fail": [],
+    "overflow": [],
+    "overflowCount": 0,
+    "overlap": [],
+    "overlapCount": 0
+  },
+  {
+    "ed": "zang",
+    "label": "zj",
+    "wraps": {
+      "6": 93,
+      "7": 2
+    },
+    "pages": 95,
+    "nodeCount": 2934,
+    "originalCount": 2422,
+    "noteCount": 278,
+    "maxStem": 19.540000000000006,
+    "fail": [],
+    "overflow": [],
+    "overflowCount": 0,
+    "overlap": [],
+    "overlapCount": 0
+  }
+]

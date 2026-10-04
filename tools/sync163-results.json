@@ -1,0 +1,101 @@
+{
+  "results": [
+    {
+      "name": "phone",
+      "ed": "hk",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "phone",
+      "ed": "zang",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "phone-landscape",
+      "ed": "hk",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "phone-landscape",
+      "ed": "zang",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "ipad-portrait",
+      "ed": "hk",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "ipad-portrait",
+      "ed": "zang",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "ipad-landscape",
+      "ed": "hk",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "ipad-landscape",
+      "ed": "zang",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "desktop-narrow",
+      "ed": "hk",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "desktop-narrow",
+      "ed": "zang",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "desktop",
+      "ed": "hk",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    },
+    {
+      "name": "desktop",
+      "ed": "zang",
+      "clickAllThree": true,
+      "sameYellow": true,
+      "upperMiddle": true,
+      "scrollHighlight": true
+    }
+  ],
+  "errors": []
+}

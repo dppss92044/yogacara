@@ -1,0 +1,137 @@
+{
+  "results": [
+    {
+      "name": "phone",
+      "ed": "hk",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": true,
+      "bottomDictionary": true,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "phone",
+      "ed": "zang",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": true,
+      "bottomDictionary": true,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "phone-landscape",
+      "ed": "hk",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": true,
+      "bottomDictionary": true,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "phone-landscape",
+      "ed": "zang",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": true,
+      "bottomDictionary": true,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "ipad-portrait",
+      "ed": "hk",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": true,
+      "bottomDictionary": true,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "ipad-portrait",
+      "ed": "zang",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": true,
+      "bottomDictionary": true,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "ipad-landscape",
+      "ed": "hk",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": true,
+      "bottomDictionary": true,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "ipad-landscape",
+      "ed": "zang",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": true,
+      "bottomDictionary": true,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "desktop-narrow",
+      "ed": "hk",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": false,
+      "bottomDictionary": false,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "desktop-narrow",
+      "ed": "zang",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": false,
+      "bottomDictionary": false,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "desktop",
+      "ed": "hk",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": false,
+      "bottomDictionary": false,
+      "reloadPosition": true,
+      "fits": true
+    },
+    {
+      "name": "desktop",
+      "ed": "zang",
+      "frontHeadings67": true,
+      "volumeSync": true,
+      "labelSwitch": true,
+      "pinch": false,
+      "bottomDictionary": false,
+      "reloadPosition": true,
+      "fits": true
+    }
+  ],
+  "errors": []
+}

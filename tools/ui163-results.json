@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "name": "phone",
+      "groups": true,
+      "eightEntries": true,
+      "phoneJuan": true,
+      "phoneZoomBounds": true,
+      "phonePinchBounds": true,
+      "desktopTracking": false,
+      "viewportFits": true
+    },
+    {
+      "name": "phone-landscape",
+      "groups": true,
+      "eightEntries": true,
+      "phoneJuan": true,
+      "phoneZoomBounds": true,
+      "phonePinchBounds": true,
+      "desktopTracking": false,
+      "viewportFits": true
+    },
+    {
+      "name": "ipad-portrait",
+      "groups": true,
+      "eightEntries": true,
+      "phoneJuan": false,
+      "phoneZoomBounds": false,
+      "phonePinchBounds": false,
+      "desktopTracking": false,
+      "viewportFits": true
+    },
+    {
+      "name": "ipad-landscape",
+      "groups": true,
+      "eightEntries": true,
+      "phoneJuan": false,
+      "phoneZoomBounds": false,
+      "phonePinchBounds": false,
+      "desktopTracking": false,
+      "viewportFits": true
+    },
+    {
+      "name": "desktop-narrow",
+      "groups": true,
+      "eightEntries": true,
+      "phoneJuan": false,
+      "phoneZoomBounds": false,
+      "phonePinchBounds": false,
+      "desktopTracking": true,
+      "viewportFits": true
+    },
+    {
+      "name": "desktop",
+      "groups": true,
+      "eightEntries": true,
+      "phoneJuan": false,
+      "phoneZoomBounds": false,
+      "phonePinchBounds": false,
+      "desktopTracking": true,
+      "viewportFits": true
+    }
+  ],
+  "errors": []
+}
