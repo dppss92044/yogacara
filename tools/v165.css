@@ -1,0 +1,11 @@
+/* v1.65 */
+/* 正文欄科判標題：灰色再深一點，仍與正文區隔 */
+:root:root .txt .kn,:root:root .kn{color:color-mix(in srgb,var(--fg) 64%,var(--bg))}
+:root:root .kn .sm{color:color-mix(in srgb,var(--fg) 52%,var(--bg))}
+/* 直書科判：阿拉伯數字用 Times New Roman；標題後括號小注與 (分N) 同字級、同色 */
+.kscale .tcy{font-family:"Times New Roman",Times,serif}
+.kscale .nd .pn{font-size:.66em;color:var(--muted)}
+/* 韓版只有干支科標 */
+:root:root:root:root:not([data-edition=zang]) .label-settings{display:none!important}
+/* 版本紀錄：單一文件，新的在最上面 */
+.version-doc{margin:0;padding:12px 14px;max-height:62vh;overflow:auto;white-space:pre-wrap;font:12.5px/1.75 ui-monospace,SFMono-Regular,Menlo,"PingFang TC",monospace;color:var(--fg);background:var(--bg);border-radius:12px}
