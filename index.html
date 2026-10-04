@@ -138,9 +138,6 @@ button.motion-pressed,summary.motion-pressed{scale:.97}
 .settings-panel[data-settings-page=version] #versionDetail{display:block}
 .about-source{background:var(--bg);border-radius:14px;padding:14px;margin-bottom:14px}
 .about-source summary{cursor:pointer;font:15px var(--ui)}
-:root[data-reading-theme] .ksheet{background:var(--paper);color:var(--fg)}
-:root[data-reading-theme] #pzoom svg text{fill:var(--fg)!important}
-:root[data-reading-theme] #pzoom svg path,:root[data-reading-theme] #pzoom svg line,:root[data-reading-theme] #pzoom svg polyline{stroke:var(--muted)!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}button,summary{transition:none!important}button.motion-pressed,summary.motion-pressed{scale:1!important}.book-size,.term-preview,.mpop{animation:none!important}}
 /* At 175–200% a deep heading may extend beyond its pane. Keep its original
    indentation and let that heading pan locally instead of widening the app. */
@@ -920,8 +917,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     <div class="menu" id="menu">
       <button class="mbtn" id="menuBtn" aria-label="選單：導覽、關於、匯出" aria-haspopup="menu"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="10" cy="10" r="8"/><circle cx="6.3" cy="10" r=".9" fill="currentColor" stroke="none"/><circle cx="10" cy="10" r=".9" fill="currentColor" stroke="none"/><circle cx="13.7" cy="10" r=".9" fill="currentColor" stroke="none"/></svg></button>
       <div class="mpop" role="menu"><div class="settings-head"><button id="settingsBack" type="button" aria-label="返回功能列表" hidden>‹</button><strong id="settingsTitle" aria-live="polite">功能</strong></div>
-        <div class="content-settings"><button class="mi" id="contentBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>內文選取</span><i class="chev">›</i></button><div class="content-body">        <div class="msw" id="optsTop" role="group" aria-labelledby="mswH">
-          <div class="mh" id="mswH">內文選取</div>
+        <div class="content-settings"><button class="mi" id="contentBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>內文</span><i class="chev">›</i></button><div class="content-body">        <div class="msw" id="optsTop" role="group" aria-labelledby="mswH">
+          <div class="mh" id="mswH">內文</div>
           <div class="grp">
           <label class="sw kp"><span class="nm">科判</span><input type="checkbox" id="optKp" role="switch" checked><span class="tr" aria-hidden="true"></span></label>
           <label class="sw dict"><span class="nm">辭典</span><input type="checkbox" id="optDict" role="switch" checked><span class="tr" aria-hidden="true"></span></label>
@@ -946,7 +943,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
 </div>
         <h5>字體大小</h5>
         <div class="fbox grp">
-          <div class="fsz"><button class="fa sm" id="fsDn" aria-label="字體縮小">A</button><div class="frng"><input type="range" id="fsR" min="0" max="6" step="1" value="3" aria-label="字體大小"><div class="fticks" aria-hidden="true"><i></i><i></i><i></i><i class="d"></i><i></i><i></i><i></i></div><div class="fdef" aria-hidden="true">預設</div></div><button class="fa lg" id="fsUp" aria-label="字體放大">A</button></div>
+          <div class="fsz"><button class="fa sm" id="fsDn" aria-label="字體縮小">A</button><div class="frng"><input type="range" id="fsR" min="0" max="15" step="1" value="5" aria-label="字體大小"><div class="fticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i class="d"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="fdef" aria-hidden="true">預設</div></div><button class="fa lg" id="fsUp" aria-label="字體放大">A</button></div>
         </div>
         <h5>版面</h5>
         <div class="grp"><div class="grow"><span>行距</span><div class="seg" id="lsSeg" role="radiogroup" aria-label="行距"><button data-l="0.85" role="radio">緊湊</button><button data-l="1" role="radio">標準</button><button data-l="1.25" role="radio">寬鬆</button></div></div></div>
@@ -985,8 +982,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src">內文、分卷、科判、披尋記與常柏法師釋，全部依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷皆照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<br>原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.52</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
-<button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button></div><div id="versionHistory"><button class="version-row" data-version="1.52"><span>v1.52</span><span>›</span></button><button class="version-row" data-version="1.51"><span>v1.52</span><span>›</span></button><button class="version-row" data-version="1.50"><span>v1.50</span><span>›</span></button><button class="version-row" data-version="1.49"><span>v1.49</span><span>›</span></button><button class="version-row" data-version="1.48"><span>v1.48</span><span>›</span></button><button class="version-row" data-version="1.47"><span>v1.47</span><span>›</span></button><button class="version-row" data-version="1.46"><span>v1.46</span><span>›</span></button><button class="version-row" data-version="1.45"><span>v1.45</span><span>›</span></button><button class="version-row" data-version="1.44"><span>v1.44</span><span>›</span></button><button class="version-row" data-version="1.43"><span>v1.43</span><span>›</span></button><button class="version-row" data-version="1.42"><span>v1.42</span><span>›</span></button><button class="version-row" data-version="1.41"><span>v1.41</span><span>›</span></button><button class="version-row" data-version="1.40"><span>v1.40</span><span>›</span></button><button class="version-row" data-version="1.39"><span>v1.39</span><span>›</span></button><button class="version-row" data-version="1.38"><span>v1.38</span><span>›</span></button><button class="version-row" data-version="1.37"><span>v1.37</span><span>›</span></button><button class="version-row" data-version="1.36"><span>v1.36</span><span>›</span></button><button class="version-row" data-version="1.35"><span>v1.35</span><span>›</span></button><button class="version-row" data-version="1.34"><span>v1.34</span><span>›</span></button><button class="version-row" data-version="1.33"><span>v1.33</span><span>›</span></button><button class="version-row" data-version="1.32"><span>v1.32</span><span>›</span></button><button class="version-row" data-version="1.31"><span>v1.31</span><span>›</span></button><button class="version-row" data-version="1.30"><span>v1.30</span><span>›</span></button><button class="version-row" data-version="1.29"><span>v1.29</span><span>›</span></button><button class="version-row" data-version="1.28"><span>v1.28</span><span>›</span></button><button class="version-row" data-version="1.27"><span>v1.27</span><span>›</span></button></div><div id="versionDetail"><b></b><p></p></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.53</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
+<button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button></div><div id="versionHistory"><button class="version-row" data-version="1.53"><span>v1.53</span><span>›</span></button><button class="version-row" data-version="1.52"><span>v1.52</span><span>›</span></button><button class="version-row" data-version="1.51"><span>v1.51</span><span>›</span></button><button class="version-row" data-version="1.50"><span>v1.50</span><span>›</span></button><button class="version-row" data-version="1.49"><span>v1.49</span><span>›</span></button><button class="version-row" data-version="1.48"><span>v1.48</span><span>›</span></button><button class="version-row" data-version="1.47"><span>v1.47</span><span>›</span></button><button class="version-row" data-version="1.46"><span>v1.46</span><span>›</span></button><button class="version-row" data-version="1.45"><span>v1.45</span><span>›</span></button><button class="version-row" data-version="1.44"><span>v1.44</span><span>›</span></button><button class="version-row" data-version="1.43"><span>v1.43</span><span>›</span></button><button class="version-row" data-version="1.42"><span>v1.42</span><span>›</span></button><button class="version-row" data-version="1.41"><span>v1.41</span><span>›</span></button><button class="version-row" data-version="1.40"><span>v1.40</span><span>›</span></button><button class="version-row" data-version="1.39"><span>v1.39</span><span>›</span></button><button class="version-row" data-version="1.38"><span>v1.38</span><span>›</span></button><button class="version-row" data-version="1.37"><span>v1.37</span><span>›</span></button><button class="version-row" data-version="1.36"><span>v1.36</span><span>›</span></button><button class="version-row" data-version="1.35"><span>v1.35</span><span>›</span></button><button class="version-row" data-version="1.34"><span>v1.34</span><span>›</span></button><button class="version-row" data-version="1.33"><span>v1.33</span><span>›</span></button><button class="version-row" data-version="1.32"><span>v1.32</span><span>›</span></button><button class="version-row" data-version="1.31"><span>v1.31</span><span>›</span></button><button class="version-row" data-version="1.30"><span>v1.30</span><span>›</span></button><button class="version-row" data-version="1.29"><span>v1.29</span><span>›</span></button><button class="version-row" data-version="1.28"><span>v1.28</span><span>›</span></button><button class="version-row" data-version="1.27"><span>v1.27</span><span>›</span></button></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
     </div>
@@ -1025,7 +1022,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
 <script>
 (function () {
   "use strict";
-  var $ = function (id) { return document.getElementById(id); };
+  var $ = function(id){return /^b\d+$|^nt\d+$|^meta$/.test(id)&&typeof S!=='undefined'&&S?document.getElementById('j'+S.juan+'-'+id)||document.getElementById(id):document.getElementById(id);};
 
   var ipadPinned=true;
   try { ipadPinned=localStorage.getItem("hk-ipad-pinned")!=="0"; }catch(e){}
@@ -1039,7 +1036,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var shortSide=Math.min(innerWidth,innerHeight),longSide=Math.max(innerWidth,innerHeight);
     var locked=isPhone||!isTablet&&shortSide<=600&&longSide<=1000&&longSide/shortSide>=1.25;
     var available=isTablet?'ipad':locked?'iphone':innerWidth<1180?'ipad':'mac';
-    if(!['auto','ipad','mac'].includes(layoutPref))layoutPref='auto';
+    if(!['auto','ipad','mac','iphone'].includes(layoutPref))layoutPref='auto';
     deviceLayout=locked?'iphone':layoutPref==='auto'?available:layoutPref;
     document.documentElement.dataset.phoneLocked=String(locked);
     document.documentElement.dataset.layout=deviceLayout;updateViewportState();
@@ -1167,7 +1164,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
   function fitP() {
     if(phoneMode()){
-      var pv=$('pview'),w=Math.max(40,Math.min(pv.clientWidth-16,(pv.clientHeight-30)*210/297))*(Z?Z.p*FT.s/1.25:1);
+      var pv=$('pview'),w=Math.max(40,pv.clientWidth-16)*(Z?Z.p*FT.s:1);
       if(pv.clientWidth){$('pzoom').style.setProperty('--phone-sheet-width',w+'px');pv.style.setProperty('--pks',w/(210*96/25.4));}return;
     }
     var any = $("pzoom").querySelector(".ksheet");
@@ -1182,7 +1179,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function panelPage(p, hl, jl) {
     buildPanel();
     var MAX = PAGES.length + 1; p = Math.max(2, Math.min(MAX, p | 0));
-    if(phoneMode()){setPhoneChartPage(p,hl);return;}
+
     var el = $("pp" + p); if (!el) return;
     if (!el.firstChild) fillPage(el, p);
     if (hl != null) markIn($("pzoom"), hl);
@@ -1347,9 +1344,21 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
 
 
+  // Consecutive volumes use the unchanged paragraph builder; native scroll owns movement.
+  var streamObserver=null,streamQueue=0,streamBusy=false,streamGeneration=0;
+  function volumeHTML(j){return renderText(j,true).replace(/id="(b\d+|nt\d+|meta|pg\d+)"/g,function(_,id){return 'id="j'+j+'-'+id+'"';}).replace(/id="k(\d+)"/g,function(_,id){return N[+id]&&N[+id][6]!==j?'id="j'+j+'-k'+id+'"':'id="k'+id+'"';});}
+  function createVolume(j){var el=document.createElement('section');el.className='reading-volume';el.id='volume-'+j;el.dataset.juan=j;el.innerHTML=volumeHTML(j);el.dataset.options=JSON.stringify(OPT);return el;}
+  function watchStream(){if(streamObserver)streamObserver.disconnect();streamObserver=new IntersectionObserver(function(entries){if(streamBusy)return;entries.forEach(function(entry){if(!entry.isIntersecting)return;var j=+entry.target.closest('.reading-volume').dataset.juan;if(entry.target.dataset.edge==='end'&&j<100&&!document.getElementById('volume-'+(j+1)))addVolume(j+1,false);if(entry.target.dataset.edge==='start'&&j>1&&!document.getElementById('volume-'+(j-1)))addVolume(j-1,true);});},{rootMargin:'1200px 0px'});var sections=article.querySelectorAll('.reading-volume');if(!sections.length)return;[sections[0],sections[sections.length-1]].forEach(function(el,index){var marker=el.querySelector(index?'[data-edge="end"]':'[data-edge="start"]');if(!marker){marker=document.createElement('div');marker.className='volume-edge';marker.dataset.edge=index?'end':'start';if(index)el.appendChild(marker);else el.prepend(marker);}streamObserver.observe(marker);});}
+  function addVolume(j,prepend){if(streamBusy||S.view!=='t'||document.getElementById('volume-'+j))return;streamBusy=true;var generation=streamGeneration;requestAnimationFrame(function(){if(generation!==streamGeneration)return;if(document.getElementById('volume-'+j)){streamBusy=false;return;}var first=article.querySelector('.reading-volume'),top=first?first.getBoundingClientRect().top:0,el=createVolume(j);if(prepend)article.prepend(el);else article.appendChild(el);if(prepend&&first)window.scrollBy(0,first.getBoundingClientRect().top-top);streamBusy=false;watchStream();if(OPT.px||OPT.cb)loadNotes(j).then(function(ok){if(ok&&document.getElementById('volume-'+j))refreshVolume(j);});});}
+  function refreshVolume(j){var el=document.getElementById('volume-'+j);if(!el)return;var mark=captureReading(),anchor=mark?$(mark.id):null,top=anchor?anchor.getBoundingClientRect().top:null;el.innerHTML=volumeHTML(j);el.dataset.options=JSON.stringify(OPT);if(anchor&&top!==null){var next=$(mark.id);if(next)window.scrollBy(0,next.getBoundingClientRect().top-top);}watchStream();}
+  function renderContinuous(j){var section=document.getElementById('volume-'+j);if(!section||!article.querySelector('.reading-volume')){streamGeneration++;streamBusy=false;if(streamObserver)streamObserver.disconnect();article.replaceChildren(createVolume(j));watchStream();}else {article.querySelectorAll('.reading-volume').forEach(function(el){if(el.dataset.options!==JSON.stringify(OPT)||+el.dataset.juan===j)refreshVolume(+el.dataset.juan);});}if(j<100&&!document.getElementById('volume-'+(j+1)))addVolume(j+1,false);}
+  function trackStream(){if(S.view!=='t'||ReaderUI.single&&ReaderUI.screen!=='read'||!main.getClientRects().length)return;var sections=article.querySelectorAll('.reading-volume');if(!sections.length)return;var line=document.querySelector('.zbar').getBoundingClientRect().bottom+30,lo=0,hi=sections.length-1;while(lo<hi){var mid=Math.ceil((lo+hi)/2);if(sections[mid].getBoundingClientRect().top<=line)lo=mid;else hi=mid-1;}var j=+sections[lo].dataset.juan;if(j!==S.juan){S.juan=j;try{history.replaceState(null,'','#j'+j);}catch(e){}S.cur=null;ReaderUI.bookmark=null;linkedPage=null;if(S.railJuan!==j)renderRail(j);if(S.panel)renderPanel(j);if(j<100)addVolume(j+1,false);}watchNearEnd(sections);}
+  function watchNearEnd(sections){if(streamBusy)return;var last=sections[sections.length-1],j=+last.dataset.juan;if(j<100&&last.getBoundingClientRect().bottom<innerHeight+1200)addVolume(j+1,false);}
+  window.addEventListener('scroll',function(){if(streamQueue)return;streamQueue=requestAnimationFrame(function(){streamQueue=0;trackStream();});},{passive:true});
+
   // ---------- 內文 ----------
   function kIndEm(d) { return +(d <= 8 ? d * 1.2 : 9.6 + (d - 8) * 0.6).toFixed(2); }
-  function renderText(j) {
+  function renderText(j,collect) {
     // 內文 = 大菩提網站該卷頁面：藍字原文、科判、披尋記、常柏法師釋，全依網站原本的順序
     var t = TXT[j - 1], out = [];
     out.push('<h1 class="jt">' + esc(t[0]) + "</h1>");
@@ -1401,10 +1410,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     flush(t[1].length);
     closeG();
     out.push("</div>");
-    out.push('<nav class="pager">' + (j > 1 ? '<a href="#j' + (j - 1) + '">← ' + esc(TXT[j - 2][0]) + "</a>" : "<span></span>") + (j < 100 ? '<a href="#j' + (j + 1) + '">' + esc(TXT[j][0]) + " →</a>" : "<span></span>") + "</nav>");
-    article.innerHTML = out.join("");
-
+    var html=out.join('');
+    if(collect)return html;
+    renderContinuous(j);
   }
+
   function openText(j, target, mark) {
     if(S.juan!==j){S.cur=null;ReaderUI.bookmark=null;linkedPage=null;}
     setView("t"); S.juan = j;
@@ -1415,7 +1425,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     if (el) {
       if (mark) { var s = el.textContent, i = s.indexOf(mark); if (i >= 0) el.innerHTML = esc(s.slice(0, i)) + "<mark>" + esc(mark) + "</mark>" + esc(s.slice(i + mark.length)); }
       el.classList.add("flash"); reveal(target);
-    } else { window.scrollTo(0, 0); main.scrollLeft = 0; }
+    } else { var section=document.getElementById("volume-"+j);if(section)section.scrollIntoView({block:"start"});main.scrollLeft = 0; }
   }
   // keep a jumped-to element in plain sight: below the sticky control band, about a quarter down,
   // and re-check after late layout shifts (notes / fonts) unless the reader has scrolled meanwhile
@@ -1442,7 +1452,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       spyT = false;
       if (Date.now() < spyLock) return;
       var hh = (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hh")) || 0) + 60;
-      var ks = article.querySelectorAll(".kn"), cur = null, lo = 0, hi = ks.length - 1, line = VM ? main.getBoundingClientRect().right - 70 : 0;
+      var ks = (document.getElementById("volume-"+S.juan)||article).querySelectorAll(".kn"), cur = null, lo = 0, hi = ks.length - 1, line = VM ? main.getBoundingClientRect().right - 70 : 0;
       while (lo <= hi) { var mid = (lo + hi) >> 1, rr = ks[mid].getBoundingClientRect(); if (VM ? rr.right >= line : rr.top <= hh) { cur = ks[mid]; lo = mid + 1; } else hi = mid - 1; }
       if (!cur) return;
       var i = +cur.dataset.kn;
@@ -2194,14 +2204,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var resetSourceFont=function(){};
   var FT = { s: 1, l: 1 };
   try { var sft = JSON.parse(localStorage.getItem("hk-font") || "null"); if (sft && sft.s) FT = sft; } catch (e) {}
-  var Z = { r: 1, m: 1, p: 1 }, zPane = "m", zNames = { r: "卷目次", m: "內文", p: "直書科判" }, zt = null;
-  try { var sz = JSON.parse(localStorage.getItem("hk5-zoom") || "null"); if (sz) Z = sz; } catch (e) {}
-  FT.s=Number.isFinite(+FT.s)?Math.max(.85,Math.min(1.5,+FT.s)):1;FT.l=Number.isFinite(+FT.l)?Math.max(.85,Math.min(1.25,+FT.l)):1;
-  ["r","m","p"].forEach(function(k){Z[k]=Number.isFinite(+Z[k])?Math.max(.5,Math.min(2,Math.round(+Z[k]*4)/4)):1;});
-  // Legacy font multiplier is folded into the pane scales once, never stacked.
-  if(FT.s!==1){try{var legacyPhone=JSON.parse(localStorage.getItem('hk-phone-zoom-v150')||'null')||{r:1.25,m:1.25,p:1.25};["r","m","p"].forEach(function(k){legacyPhone[k]=Math.max(.5,Math.min(2,Math.round((+legacyPhone[k]||1.25)*FT.s*4)/4));});localStorage.setItem('hk-phone-zoom-v150',JSON.stringify(legacyPhone));}catch(e){}["r","m","p"].forEach(function(k){Z[k]=Math.max(.5,Math.min(2,Math.round(Z[k]*FT.s*4)/4));});FT.s=1;try{localStorage.setItem('hk-font',JSON.stringify(FT));localStorage.setItem('hk5-zoom',JSON.stringify(Z));}catch(e){}}
-  var desktopZoom=Object.assign({},Z),zoomPhone=false;
-  function deviceZoom(){if(phoneMode()===zoomPhone)return;if(zoomPhone){Z=Object.assign({},desktopZoom);}else{desktopZoom=Object.assign({},Z);try{Z=JSON.parse(localStorage.getItem('hk-phone-zoom-v150')||'null')||{r:1.25,m:1.25,p:1.25};}catch(e){Z={r:1.25,m:1.25,p:1.25};}}["r","m","p"].forEach(function(k){Z[k]=Number.isFinite(+Z[k])?Math.max(.5,Math.min(2,Math.round(+Z[k]*4)/4)):1.25;});zoomPhone=phoneMode();applyZoom();}
+  var Z = {r:1,m:1,p:1},zPane='m',zNames={r:'卷次',m:'正文',p:'科判'},zt=null;
+  try{var saved=JSON.parse(localStorage.getItem('hk-zoom-v153')||'null');if(saved)Z=saved;}catch(e){}
+  FT.s=1;FT.l=Number.isFinite(+FT.l)?Math.max(.85,Math.min(1.25,+FT.l)):1;
+  ['r','m','p'].forEach(function(k){Z[k]=Number.isFinite(+Z[k])?Math.max(.5,Math.min(2,Math.round(+Z[k]*10)/10)):1;});
+  function deviceZoom(){applyZoom();}
   function applyZoom() {
     var R = document.documentElement.style;document.documentElement.dataset.largeReading=String(Z.m>1.5);
     R.setProperty("--zr", Z.r * FT.s); R.setProperty("--zm", Z.m * FT.s); $("pview").style.setProperty("--zp", Z.p * FT.s);
@@ -2210,7 +2217,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     fitP();queueHeadingBounds();
   }
   function setFont(sz, lsp, save) {
-    if(sz!=null){FT.s=1;["r","m","p"].forEach(function(k){Z[k]=Math.max(.5,Math.min(2,Math.round(sz*4)/4));});try{localStorage.setItem(phoneMode()?"hk-phone-zoom-v150":"hk5-zoom",JSON.stringify(Z));}catch(e){}}
+    if(sz!=null){FT.s=1;["r","m","p"].forEach(function(k){Z[k]=Math.max(.5,Math.min(2,Math.round(sz*10)/10));});try{localStorage.setItem("hk-zoom-v153",JSON.stringify(Z));}catch(e){}}
     if (lsp != null) FT.l = lsp;
     fsUI(Z.m);
     document.querySelectorAll("#lsSeg button").forEach(function (b) { var on = +b.dataset.l === FT.l; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); });
@@ -2218,20 +2225,20 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     applyZoom();
     if (save) { try { localStorage.setItem("hk-font", JSON.stringify(FT)); } catch (e) {} setTimeout(function () { window.dispatchEvent(new Event("resize")); }, 30); }
   }
-  var FSTEPS = [.5,.75,1,1.25,1.5,1.75,2];
+  var FSTEPS = Array.from({length:16},function(_,i){return (50+i*10)/100;});
   function fsIdx(v) { var b = 0; FSTEPS.forEach(function (x, i) { if (Math.abs(x - v) < Math.abs(FSTEPS[b] - v)) b = i; }); return b; }
   function fsUI(v) {
     var r = $("fsR"), ix = fsIdx(v); if (+r.value !== ix) r.value = ix;
-    r.style.setProperty("--fp", (ix / 6 * 100) + "%");var defaultIx=phoneMode()?3:2;document.querySelectorAll(".fticks i").forEach(function(t,i){t.classList.toggle("d",i===defaultIx);});document.querySelector(".fdef").style.left=(defaultIx/6*100)+"%";
+    r.style.setProperty("--fp", (ix / 15 * 100) + "%");var defaultIx=5;document.querySelectorAll(".fticks i").forEach(function(t,i){t.classList.toggle("d",i===defaultIx);});document.querySelector(".fdef").style.left=(defaultIx/15*100)+"%";
 
   }
   var fsT = null;
   $("fsR").addEventListener("input", function () { var v = FSTEPS[+this.value]; fsUI(v); clearTimeout(fsT); fsT = setTimeout(function () { setFont(v, null, 0); }, 140); });
   $("fsR").addEventListener("change", function () { clearTimeout(fsT); setFont(FSTEPS[+this.value], null, true); });
   $("fsDn").onclick = function () { setFont(FSTEPS[Math.max(0, fsIdx(Z.m) - 1)], null, true); };
-  $("fsUp").onclick = function () { setFont(FSTEPS[Math.min(6, fsIdx(Z.m) + 1)], null, true); };
+  $("fsUp").onclick = function () { setFont(FSTEPS[Math.min(15, fsIdx(Z.m) + 1)], null, true); };
   $("lsSeg").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) setFont(null, +b.dataset.l, true); });
-  $("fsReset").onclick = function () { setFont(phoneMode()?1.25:1, 1, true); resetSourceFont(); };
+  $("fsReset").onclick = function () { setFont(1, 1, true); resetSourceFont(); };
   function openFt(on) { if(lockedSub && (lockedSub!=="ft" || !on))return; $("ftWrap").classList.toggle("open", on); if (on) { $("about").classList.remove("open"); document.querySelector(".menu .dl").classList.remove("on"); openDl(false); } }
   $("ftBtn").addEventListener("mouseenter", function () { openFt(true); });
   $("ftBtn").onclick = function () { openFt(true); };
@@ -2253,9 +2260,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     if (cur < railNeed()) { document.documentElement.style.setProperty("--rw", Math.min(railNeed(),Math.max(240,innerWidth-600)) + "px"); if (typeof placeGutters === "function") setTimeout(placeGutters, 0); }
   }
   function zoomBy(k, f) {
-    Z[k] = f === 0 ? (phoneMode()?1.25:1) : Math.max(.5,Math.min(2,Math.round((Z[k]+(f>0?.25:-.25))*4)/4));
+    Z[k] = f === 0 ? 1 : Math.max(50,Math.min(200,Math.round(Z[k]*100)+(f>0?10:-10)))/100;
     applyZoom(); if (k === "r") ensureRail();
-    try { localStorage.setItem(phoneMode()?"hk-phone-zoom-v150":"hk5-zoom", JSON.stringify(Z)); } catch (e) {}
+    try { localStorage.setItem("hk-zoom-v153", JSON.stringify(Z)); } catch (e) {}
     var tip = $("ztip"); tip.textContent = zNames[k] + " " + Math.round(Z[k] * 100) + "%";
     var el = k === "r" ? rail : k === "p" ? panel : main, r = el.getBoundingClientRect();
     tip.style.left = (r.left + r.width / 2 - 50) + "px"; tip.style.top = (r.top + 12) + "px";
@@ -2434,7 +2441,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function dismissMenu(){lockedSub=null;menuPinned=false;$("menu").classList.remove("pinned");$("menuBtn").setAttribute("aria-pressed","false");var settings=document.querySelector(".learning-settings");if(settings)settings.open=false;closeMenu(true);}
   document.addEventListener("keydown",function(e){if(e.code!=="Space"||!$("menu").classList.contains("open"))return;if(e.target.closest('input,textarea,select,[contenteditable="true"]'))return;e.preventDefault();dismissMenu();});
   var resetReaderHints=function(){};
-  var HINTS=[{"s": "#jFold", "t": "卷目次", "d": "點一下收起卷號，再點一下展開。"}, {"s": "#juans a", "t": "選卷", "d": "點卷號，閱讀那一卷。"}, {"s": "#rv .rol a", "t": "科判", "d": "點這條，內文與科判表一起跳過去。"}, {"s": "#pNum", "t": "跳頁", "d": "輸入科判頁碼，按 Enter。"}, {"s": "#swapPanes", "t": "左右置換", "d": "點一下交換內文與科判表，再點復原。"}, {"s": "#panelPin", "t": "釘選", "d": "點一下，科判表固定在旁邊；再點恢復浮動。"}, {"s": "#gutL,#gutR", "t": "欄寬", "d": "按住這條線，左右拖動調整寬度。"}, {"s": ".zc", "t": "放大縮小", "d": "按 − 或 ＋ 縮放；點百分比還原 100%。"}, {"s": "#railClose,#panelClose", "t": "收起欄位", "d": "點一下隱藏這一欄。"}, {"s": "#railOpen,#panelOpen", "t": "開啟欄位", "d": "點一下重新顯示這一欄。"}, {"s": "#searchButton", "t": "搜尋", "d": "點放大鏡，輸入字詞後按 Enter。"}, {"s": "#menuBtn", "t": "功能列表", "d": "移過來查看功能；點一下固定展開，再點收起。"}, {"s": ".sw.kp", "t": "科判", "d": "亮燈顯示正文科判，熄燈隱藏。"}, {"s": ".sw.px", "t": "披尋記", "d": "亮燈顯示披尋記，熄燈隱藏。"}, {"s": ".sw.cb", "t": "常柏法師釋", "d": "亮燈顯示常柏法師釋，熄燈隱藏。"}, {"s": ".learning-settings summary", "t": "介面", "d": "手機自動配合螢幕；其他裝置可選平板或電腦。"}, {"s": ".sw.dict", "t": "辭典", "d": "亮燈開啟反白查詞，熄燈關閉。滑鼠移過正文不會查詞。"}, {"s": "#ftBtn", "t": "字體", "d": "這裡改字體、大小與行距。"}, {"s": "#dlBtn", "t": "匯出", "d": "選卷次、內容與格式，把檔案下載下來。"}, {"s": "#aboutBtn", "t": "關於", "d": "這裡看版本與資料來源。"}, {"s": "#tourBtn", "t": "導覽", "d": "重看大導覽，也讓各功能的第一次提示重新出現。"}, {"s": "#termChoices button", "t": "切換詞語", "d": "反白含多個詞時，點這裡切換要看的詞。"}, {"s": "#termPreviewClose", "t": "關閉辭典", "d": "點 × 關閉。Escape 或點外面也可以。"}, {"s": "#termPreviewLink", "t": "完整詞條", "d": "內容沒顯示時，點這裡另開詞條。需要連網。"}, {"s": "#termPreview", "t": "反白查詞", "d": "上面選詞，下面看解釋。點 × 關閉。"}, {"s": "#article .txt p,#article h1", "t": "反白佛學辭典", "d": "按住滑鼠拖曳反白，含佛學詞就會出現辭典。可以選整句；有多個詞時，在視窗上方切換。"}, {"s": "#panel .pview", "t": "直書科判", "d": "點科判標題，跳到相應內文。"}, {"s": "#barHide", "t": "收起頂部", "d": "點一下收起最上面的工具列。"}, {"s": "#dockTab", "t": "展開頂部", "d": "點一下重新顯示頂部工具列。"}];
+  var HINTS=[{"s": "#jFold", "t": "卷目次", "d": "點一下收起卷號，再點一下展開。"}, {"s": "#juans a", "t": "選卷", "d": "點卷號，閱讀那一卷。"}, {"s": "#rv .rol a", "t": "科判", "d": "點這條，內文與科判表一起跳過去。"}, {"s": "#pNum", "t": "跳頁", "d": "輸入科判頁碼，按 Enter。"}, {"s": "#swapPanes", "t": "左右置換", "d": "點一下交換內文與科判表，再點復原。"}, {"s": "#panelPin", "t": "釘選", "d": "點一下，科判表固定在旁邊；再點恢復浮動。"}, {"s": "#gutL,#gutR", "t": "欄寬", "d": "按住這條線，左右拖動調整寬度。"}, {"s": ".zc", "t": "放大縮小", "d": "按 − 或 ＋ 縮放；點百分比還原 100%。"}, {"s": "#railClose,#panelClose", "t": "收起欄位", "d": "點一下隱藏這一欄。"}, {"s": "#railOpen,#panelOpen", "t": "開啟欄位", "d": "點一下重新顯示這一欄。"}, {"s": "#searchButton", "t": "搜尋", "d": "點放大鏡，輸入字詞後按 Enter。"}, {"s": "#menuBtn", "t": "功能列表", "d": "移過來查看功能；點一下固定展開，再點收起。"}, {"s": ".sw.kp", "t": "科判", "d": "亮燈顯示正文科判，熄燈隱藏。"}, {"s": ".sw.px", "t": "披尋記", "d": "亮燈顯示披尋記，熄燈隱藏。"}, {"s": ".sw.cb", "t": "常柏法師釋", "d": "亮燈顯示常柏法師釋，熄燈隱藏。"}, {"s": ".learning-settings summary", "t": "介面", "d": "手機自動配合螢幕；其他裝置可選平板或電腦。"}, {"s": ".sw.dict", "t": "辭典", "d": "亮燈開啟辭典。手機與平板雙擊正文詞語；電腦反白查詞。"}, {"s": "#ftBtn", "t": "字體", "d": "這裡改字體、大小與行距。"}, {"s": "#dlBtn", "t": "匯出", "d": "選卷次、內容與格式，把檔案下載下來。"}, {"s": "#aboutBtn", "t": "關於", "d": "這裡看版本與資料來源。"}, {"s": "#tourBtn", "t": "導覽", "d": "重看大導覽，也讓各功能的第一次提示重新出現。"}, {"s": "#termChoices button", "t": "切換詞語", "d": "反白含多個詞時，點這裡切換要看的詞。"}, {"s": "#termPreviewClose", "t": "關閉辭典", "d": "點 × 關閉。Escape 或點外面也可以。"}, {"s": "#termPreviewLink", "t": "完整詞條", "d": "內容沒顯示時，點這裡另開詞條。需要連網。"}, {"s": "#termPreview", "t": "反白查詞", "d": "上面選詞，下面看解釋。點 × 關閉。"}, {"s": "#article .txt p,#article h1", "t": "反白佛學辭典", "d": "手機與平板：雙擊正文詞語查辭典，長按仍使用系統反白功能。電腦：反白查詞，可選整句後切換詞語。"}, {"s": "#panel .pview", "t": "直書科判", "d": "點科判標題，跳到相應內文。"}, {"s": "#barHide", "t": "收起頂部", "d": "點一下收起最上面的工具列。"}, {"s": "#dockTab", "t": "展開頂部", "d": "點一下重新顯示頂部工具列。"}];
   (function(){
     var key='hk-reader-hints-v139',seen={};try{seen=JSON.parse(localStorage.getItem(key)||'{}')||{};}catch(e){}
     var tip=document.createElement('aside');tip.className='reader-hint';tip.hidden=true;tip.setAttribute('role','status');tip.innerHTML='<button aria-label="關閉說明">×</button><b></b><p></p>';document.body.appendChild(tip);
@@ -2496,7 +2503,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     if(phone){
       $('jFold').setAttribute('aria-haspopup','dialog');$('jFold').setAttribute('aria-expanded',String(!!root.classList.contains('phone-juan-open')));
       $('jFold').closest('.rail-top').classList.remove('fold','fold-done');
-      if(S.panel){buildPanel();setPhoneChartPage(S.ppage||linkedPage||2,S.cur);}
+      if(S.panel){buildPanel();fitP();}
     }else{
       root.classList.remove('phone-juan-open');$('jFold').removeAttribute('aria-haspopup');
       if(phoneChartWas){$('pzoom').querySelectorAll('.phone-page').forEach(function(e){e.classList.remove('phone-page');});fitP();}
@@ -2546,7 +2553,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var longPressActive=false,holdTimer=null,holdPoint=null,pendingHeld=null,touchCount=0,releasePending=false,activePointers=new Set();
     function mobileDictionary(){return deviceLayout!=='mac'||navigator.maxTouchPoints>1;}
     function selectingNow(){return releasePending||touchCount>0||activePointers.size>0||dragging;}
-    function queueSelection(){clearTimeout(selectionTimer);if(mobileDictionary()&&selectingNow())return;selectionTimer=setTimeout(function(){if(mobileDictionary()&&selectingNow())return;showSelection();},mobileDictionary()?750:120);}
+    function queueSelection(){clearTimeout(selectionTimer);if(mobileDictionary())return;if(mobileDictionary()&&selectingNow())return;selectionTimer=setTimeout(function(){if(mobileDictionary()&&selectingNow())return;showSelection();},mobileDictionary()?750:120);}
     article.addEventListener('contextmenu',function(){clearTimeout(selectionTimer);});
     main.addEventListener('scroll',function(){clearTimeout(holdTimer);holdPoint=null;pendingHeld=null;},{passive:true});
     var pop=$('termPreview'),enabled=true,selectionTimer=null,waitTimer=null,currentTerm='',activeRange=null,dragging=false,generation=0,frames=new Map(),dismissedSelection='';
@@ -2565,6 +2572,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       waitTimer=setTimeout(function(){if(token===generation)status.textContent='來源回應較慢，請點下方連結直接開啟詞條。';},6000);
     }
     function showSelection(){
+      if(mobileDictionary())return;
       if(!enabled || dragging||mobileDictionary()&&selectingNow())return;var sel=window.getSelection();if(!sel || !sel.rangeCount || sel.isCollapsed){if(longPressActive)return;dismissedSelection='';if(!pop.hidden&&!pop.contains(document.activeElement))hidePreview();return;}
       if(!article.contains(sel.anchorNode)||!article.contains(sel.focusNode))return;
       var selected=sel.toString().trim();if(!selected||selected===dismissedSelection)return;
@@ -2574,6 +2582,23 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       showPreview(term,sel.getRangeAt(0).cloneRange());
       var choices=$('termChoices');choices.replaceChildren();matches.filter(function(t,i,all){return !all.slice(0,i).some(function(longer){return longer.includes(t);});}).slice(0,20).forEach(function(t){var b=document.createElement('button');b.textContent=t;b.onclick=function(){if(activeRange)showPreview(t,activeRange.cloneRange());};choices.appendChild(b);});
     }
+    var lastTap=null,tapStart=null,lastLookup=0;
+    function wordAt(x,y){
+      if(!enabled||performance.now()-lastLookup<250)return;
+      var range=document.caretRangeFromPoint?document.caretRangeFromPoint(x,y):null;
+      if(!range&&document.caretPositionFromPoint){var pos=document.caretPositionFromPoint(x,y);if(pos){range=document.createRange();range.setStart(pos.offsetNode,pos.offset);range.collapse(true);}}
+      if(!range||range.startContainer.nodeType!==3||!article.contains(range.startContainer))return;
+      var node=range.startContainer,text=node.textContent,offset=range.startOffset,term=null,start=0;
+      knownTerms.some(function(t){var at=text.indexOf(t);while(at>=0){if(offset>=at&&offset<=at+t.length){term=t;start=at;return true;}at=text.indexOf(t,at+1);}return false;});
+      if(!term)return;
+      range.setStart(node,start);range.setEnd(node,start+term.length);
+      var sel=getSelection();if(sel&&!sel.isCollapsed)sel.removeAllRanges();
+      lastLookup=performance.now();$('termChoices').replaceChildren();showPreview(term,range);window.dispatchEvent(new Event('reader-phone-dictionary'));
+    }
+    article.addEventListener('touchstart',function(e){if(!mobileDictionary()||e.touches.length!==1||e.target.closest('.kh,button,a,input')){tapStart=null;return;}var sel=getSelection();if(sel&&!sel.isCollapsed){tapStart=null;lastTap=null;return;}var t=e.touches[0];tapStart={x:t.clientX,y:t.clientY,time:performance.now()};},{passive:true});
+    article.addEventListener('touchend',function(e){if(!tapStart||!e.changedTouches.length)return;var t=e.changedTouches[0],now=performance.now(),start=tapStart;tapStart=null;if(now-start.time>250||Math.hypot(t.clientX-start.x,t.clientY-start.y)>12){lastTap=null;return;}if(lastTap&&now-lastTap.time<350&&Math.hypot(t.clientX-lastTap.x,t.clientY-lastTap.y)<20){e.preventDefault();lastTap=null;wordAt(t.clientX,t.clientY);}else lastTap={x:t.clientX,y:t.clientY,time:now};},{passive:false});
+    article.addEventListener('touchcancel',function(){tapStart=null;lastTap=null;},{passive:true});
+    article.addEventListener('dblclick',function(e){if(mobileDictionary()&&!e.target.closest('.kh')){e.preventDefault();wordAt(e.clientX,e.clientY);}});
     // Selection stays visible while the user moves into the popup or its external link.
     document.addEventListener('selectionchange',function(){if(mobileDictionary()&&selectingNow()){if(!pop.hidden)hidePreview();dismissedSelection='';}queueSelection();});
     document.addEventListener('pointerdown',function(e){if(pop.contains(e.target))return;if(mobileDictionary()){releasePending=true;activePointers.add(e.pointerId);}else if(article.contains(e.target))dragging=true;clearTimeout(selectionTimer);});
@@ -2590,7 +2615,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     document.addEventListener('pointerdown',function(e){if(!pop.hidden && !pop.contains(e.target)){hidePreview();if(article.contains(e.target))dismissedSelection='';}});
     document.addEventListener('keydown',function(e){if(e.key==='Escape')hidePreview();});
     window.addEventListener('scroll',function(){var selected=getSelection();if(selected&&!selected.isCollapsed)queuePreview();else hidePreview();},{passive:true});var queuePreview=Motion.rafThrottle(placePreview);window.addEventListener('resize',queuePreview);window.addEventListener('reader-viewport',queuePreview);if(window.visualViewport)window.visualViewport.addEventListener('resize',queuePreview);
-    new MutationObserver(hidePreview).observe(article,{childList:true});
+    new MutationObserver(function(){if(activeRange&&article.contains(activeRange.startContainer)){queuePreview();return;}hidePreview();}).observe(article,{childList:true,subtree:true});
   }
 
   var sourceFonts={kai:'"TWKai","TWKai2","BiauKai","DFKai-SB","標楷體",serif',song:'"Songti TC","PMingLiU","新細明體",serif',pingfang:'"PingFang TC","Microsoft JhengHei",sans-serif',jhenghei:'"Microsoft JhengHei","PingFang TC",sans-serif',noto:'"Noto Sans TC","PingFang TC",sans-serif',notoSerif:'"Noto Serif TC","Songti TC",serif',system:'-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif'};
@@ -2620,7 +2645,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function captureReading(){
     if(S.view!=='t'||!main.getClientRects().length)return ReaderUI.bookmark;
     var limit=document.querySelector('.zbar').getBoundingClientRect().bottom+8;
-    var list=article.querySelectorAll('[id]'),el=null;
+    var list=(document.getElementById('volume-'+S.juan)||article).querySelectorAll('[id]'),el=null;
     for(var n=0;n<list.length;n++){var r=list[n].getBoundingClientRect();if(r.bottom>limit){el=list[n];break;}}
     if(el)ReaderUI.bookmark={juan:S.juan,id:el.id,offset:el.getBoundingClientRect().top,cur:S.cur,page:linkedPage||S.ppage};
     return ReaderUI.bookmark;
@@ -2649,14 +2674,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
   function saveReadingPosition(){
     var b=ReaderUI.single&&ReaderUI.screen!=='read'&&ReaderUI.screen!=='search'?ReaderUI.bookmark:captureReading();
-    if(!b)return;
+    if(!b)return;b.hash=location.hash;
     try{localStorage.setItem('hk-reading-position-v149',JSON.stringify(b));}catch(e){}
   }
   function resumeReadingPosition(){
     try{
       var b=JSON.parse(localStorage.getItem('hk-reading-position-v149')||'null');
       var explicit=location.hash.match(/^#(?:j|n|v)(\d+)/);
-      if(!b||b.juan<1||b.juan>100||explicit&&location.hash!=='#j'+b.juan)return;
+      if(!b||b.juan<1||b.juan>100||explicit&&location.hash!==b.hash&&location.hash!=='#j'+b.juan)return;
       openText(b.juan);if(N[b.cur]&&N[b.cur][6]===b.juan){S.cur=b.cur;linkedPage=b.page||APPEAR[b.cur];railFocus(b.cur);if($('k'+b.cur))$('k'+b.cur).classList.add('on');}
       ReaderUI.bookmark=b;requestAnimationFrame(restoreReading);setTimeout(restoreReading,350);
     }catch(e){}
@@ -2721,7 +2746,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       adapt.lastWidth=ReaderUI.width;window.dispatchEvent(new Event("reader-layout"));
     }
     function queueAdapt(){cancelAnimationFrame(raf);raf=requestAnimationFrame(adapt);}
-    document.querySelectorAll('[data-layout-choice]').forEach(function(b){b.onclick=function(){if(document.documentElement.dataset.phoneLocked==='true')return;layoutPref=b.dataset.layoutChoice;try{localStorage.setItem('hk-device-layout-v146',layoutPref);}catch(e){}adapt();};});
+    document.querySelectorAll('[data-layout-choice]').forEach(function(b){b.onclick=function(){if(document.documentElement.dataset.phoneLocked==='true'&&b.dataset.layoutChoice!=='iphone')return;layoutPref=b.dataset.layoutChoice==='iphone'?'auto':b.dataset.layoutChoice;try{localStorage.setItem('hk-device-layout-v146',layoutPref);}catch(e){}adapt();};});
     window.addEventListener('resize',queueAdapt);window.addEventListener('orientationchange',function(){setTimeout(queueAdapt,80);});
     $('panelPin').onclick=function(){ipadPinned=!ipadPinned;try{localStorage.setItem('hk-ipad-pinned',ipadPinned?'1':'0');}catch(e){}pinUI();setPanel(true);syncReaderUI();fitP();};
     window.addEventListener('reader-before-update',saveReadingPosition);window.addEventListener('pagehide',saveReadingPosition);
@@ -2740,11 +2765,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
 
   var settingsPage='root',versionBack='about';
-  var versionSummaries={"1.27": "建立手機、平板、電腦三種自適應介面與偏好記憶。", "1.28": "新增學習模式、筆記保存與多格式匯出，完善 iPad 科判釘選。", "1.29": "新增佛學名相辭典，支援原文查詞與外部詞條預覽。", "1.30": "學習筆記改為段落內直接編輯，增加筆記樣式、篩選與反白查詞。", "1.31": "新增原文／筆記自由組合顯示、完整列印與小冊子功能。", "1.32": "新增內文與科判左右置換，並保存使用者偏好。", "1.33": "學習模式改為右鍵／長按叫出註釋、心得、提問，精簡常駐介面並擴充列印紙張。", "1.34": "目前缺少更新紀錄。", "1.35": "目前缺少更新紀錄。", "1.36": "還原串文原有縮排、間距與連接線，統一介面風格並重新整理功能列表。", "1.37": "功能列表改為分層選單，大幅移除書寫與筆記功能，保留核心閱讀功能。", "1.38": "辭典取消懸浮與點按自動查詞，只保留反白選取查詞。", "1.39": "重整大導覽與功能提示，搜尋簡化成單一放大鏡。", "1.40": "電腦版內文與科判預設 1：1，重新整理內文選取與恢復預設功能。", "1.41": "移除上方常駐功能列，功能列表可由點擊外部或空白鍵關閉。", "1.42": "簡化科判頁碼顯示，修正平板欄位排列並保留閱讀位置。", "1.43": "平板加入可保存的拖曳欄寬，功能列表固定時不再影響正文版面。", "1.44": "微調搜尋欄提示文字、縮排與輸入位置。", "1.45": "確立平板橫向三欄、直向單欄的閱讀架構。", "1.46": "全面修正手機／平板搜尋、選單、科判溢出與裝置自動偵測等響應式問題。", "1.47": "完成目次、正文、科判位置連動，改善觸控反白查詞與辭典邊界，手機／平板功能列表改為小型懸浮視窗。", "1.48": "加入 App 自動更新功能。", "1.49": "統一閱讀位置與欄位狀態；修正行動版欄寬、旋轉、搜尋與浮窗定位；更新後保存閱讀位置。", "1.50": "目次保持橫書並自動對焦；行動版保留完整科判縮排；手機新增雙擊連動、邊緣翻頁、A4 單頁科判及 125% 預設倍率。", "1.51": "反白查字典改為放開後顯示；功能列表改為分組子頁；手機自動鎖定介面；移除行動版欄位收起圖示；增加電腦閱讀留白與科判灰底；加入版本紀錄。", "1.52": "統一輕量動效、按鍵回饋、浮窗進出與拖曳節流；改善手機滑動和卷次邊界提醒；保留原生反白、放開後查詞；縮放改為 25% 級距（50%～200%）；新增四種閱讀底色、大小／搜尋控制及獨立版本摘要。"};
+  var versionSummaries={"1.27": "建立手機、平板、電腦三種自適應介面與偏好記憶。", "1.28": "新增學習模式、筆記保存與多格式匯出，完善 iPad 科判釘選。", "1.29": "新增佛學名相辭典，支援原文查詞與外部詞條預覽。", "1.30": "學習筆記改為段落內直接編輯，增加筆記樣式、篩選與反白查詞。", "1.31": "新增原文／筆記自由組合顯示、完整列印與小冊子功能。", "1.32": "新增內文與科判左右置換，並保存使用者偏好。", "1.33": "學習模式改為右鍵／長按叫出註釋、心得、提問，精簡常駐介面並擴充列印紙張。", "1.34": "目前缺少更新紀錄。", "1.35": "目前缺少更新紀錄。", "1.36": "還原串文原有縮排、間距與連接線，統一介面風格並重新整理功能列表。", "1.37": "功能列表改為分層選單，大幅移除書寫與筆記功能，保留核心閱讀功能。", "1.38": "辭典取消懸浮與點按自動查詞，只保留反白選取查詞。", "1.39": "重整大導覽與功能提示，搜尋簡化成單一放大鏡。", "1.40": "電腦版內文與科判預設 1：1，重新整理內文與恢復預設功能。", "1.41": "移除上方常駐功能列，功能列表可由點擊外部或空白鍵關閉。", "1.42": "簡化科判頁碼顯示，修正平板欄位排列並保留閱讀位置。", "1.43": "平板加入可保存的拖曳欄寬，功能列表固定時不再影響正文版面。", "1.44": "微調搜尋欄提示文字、縮排與輸入位置。", "1.45": "確立平板橫向三欄、直向單欄的閱讀架構。", "1.46": "全面修正手機／平板搜尋、選單、科判溢出與裝置自動偵測等響應式問題。", "1.47": "完成目次、正文、科判位置連動，改善觸控反白查詞與辭典邊界，手機／平板功能列表改為小型懸浮視窗。", "1.48": "加入 App 自動更新功能。", "1.49": "統一閱讀位置與欄位狀態；修正行動版欄寬、旋轉、搜尋與浮窗定位；更新後保存閱讀位置。", "1.50": "目次保持橫書並自動對焦；行動版保留完整科判縮排；手機新增雙擊連動、邊緣翻頁、A4 單頁科判及 125% 預設倍率。", "1.51": "反白查字典改為放開後顯示；功能列表改為分組子頁；手機自動鎖定介面；移除行動版欄位收起圖示；增加電腦閱讀留白與科判灰底；加入版本紀錄。", "1.53":"恢復原有白底配色；大小預設100%、每次10%；正文跨卷連續上下閱讀、科判連續捲動；精簡工具與功能面板，行動版改為雙擊查詞。", "1.52": "統一輕量動效、按鍵回饋、浮窗進出與拖曳節流；改善手機滑動和卷次邊界提醒；保留原生反白、放開後查詞；縮放改為 25% 級距（50%～200%）；新增四種閱讀底色、大小／搜尋控制及獨立版本摘要。"};
   function showSettingsPage(page){
     settingsPage=page;var menu=$('menu'),panel=menu.querySelector('.mpop');
     panel.dataset.settingsPage=page;panel.scrollTop=0;
-    var names={root:'功能',content:'內文選取',layout:'介面',ft:'字體',dl:'匯出',about:'關於',history:'版本紀錄',version:'更新摘要'};
+    var names={root:'功能',content:'內文',layout:'介面',ft:'字體',dl:'匯出',about:'關於',history:'版本紀錄',version:'更新摘要'};
     $('settingsTitle').textContent=names[page]||'功能';$('settingsBack').hidden=page==='root';$('settingsBack').setAttribute('aria-label',page==='history'?'返回關於':'返回功能列表');
     $('ftWrap').classList.toggle('open',page==='ft');$('about').classList.toggle('open',page==='about'||page==='history'||page==='version');
     document.querySelector('.menu .dl').classList.toggle('on',page==='dl');$('dlPop').hidden=page!=='dl';
@@ -2756,7 +2781,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function setupSettingsNavigation(){
     var panel=$('menu').querySelector('.mpop');
     function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent='v'+v;$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
-    $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){versionPage('1.52','about');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();versionPage('1.52','about');}};
+    $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){versionPage('1.53','about');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();versionPage('1.53','about');}};
     $('versionHistory').onclick=function(e){var b=e.target.closest('[data-version]');if(b)versionPage(b.dataset.version,'history');};
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
@@ -2767,6 +2792,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     document.querySelector('.learning-settings').addEventListener('toggle',function(){if(settingsPage==='layout'&&!this.open)this.open=true;});
     panel.addEventListener('keydown',function(e){if(e.key==='Escape'&&settingsPage!=='root'){e.preventDefault();e.stopPropagation();showSettingsPage(settingsPage==='version'?versionBack:settingsPage==='history'?'about':'root');}});
     document.querySelectorAll('.version-entry').forEach(function(d){var pinned=d.open,preview=false;d.addEventListener('mouseenter',function(){if(matchMedia('(hover:hover)').matches&&!pinned){preview=true;d.open=true;}});d.addEventListener('mouseleave',function(){if(preview&&!pinned){preview=false;d.open=false;}});d.querySelector('summary').addEventListener('click',function(e){if(preview){e.preventDefault();preview=false;pinned=true;d.open=true;}else pinned=!d.open;});});
+    var choices=document.querySelector('.layout-choices'),phone=document.createElement('button');phone.type='button';phone.className='mi sw layout-choice';phone.dataset.layoutChoice='iphone';phone.setAttribute('role','menuitemradio');phone.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4"/></svg><span class="layout-check" aria-hidden="true">✓</span>';phone.onclick=function(){layoutPref='iphone';try{localStorage.setItem('hk-device-layout-v146','iphone');}catch(e){}window.dispatchEvent(new Event('resize'));};phone.setAttribute('aria-checked',String(deviceLayout==='iphone'));phone.setAttribute('aria-pressed',String(deviceLayout==='iphone'));choices.appendChild(phone);['mac','ipad','iphone'].forEach(function(k){choices.appendChild(choices.querySelector('[data-layout-choice="'+k+'"]'));});
+    choices.querySelectorAll('[data-layout-choice]').forEach(function(b){var names={mac:'蘋果電腦',ipad:'平板',iphone:'手機'};b.setAttribute('aria-label',names[b.dataset.layoutChoice]);b.title=names[b.dataset.layoutChoice];});
     showSettingsPage('root');
   }
 
@@ -2811,21 +2838,19 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     setupDictionaryPreview();
     setupReaderControls();
   function setupBooksTools(){
-    var popup=document.createElement('aside');popup.className='book-size';popup.id='bookSize';popup.hidden=true;popup.setAttribute('aria-label','閱讀大小與底色');
-    popup.innerHTML='<div class="book-size-row"><button data-size="-1" aria-label="縮小 25%">−</button><output id="bookPercent"></output><button data-size="1" aria-label="放大 25%">＋</button></div><div class="book-colors"></div><button class="book-font">字體與行距</button>';
+    var popup=document.createElement('aside');popup.className='book-size';popup.id='bookSize';popup.hidden=true;popup.setAttribute('aria-label','閱讀大小');
+    popup.innerHTML='<div class="book-size-row"><button data-size="-1" aria-label="縮小 10%">−</button><output id="bookPercent"></output><button data-size="1" aria-label="放大 10%">＋</button></div><button class="book-font">字體與行距</button>';
     document.body.appendChild(popup);var key='m',anchor=null;
-    var themes={black:{bg:'#161616',paper:'#161616',fg:'#e5e5e3',rail:'#202020',muted:'#a7a7a2',rule:'#41413d',hover:'#30302c',popS:'#252523',seam:'#353532',shadow:'#00000066'},gray:{bg:'#e6e6e3',paper:'#e6e6e3',fg:'#242422',rail:'#dededb',muted:'#666661',rule:'#c5c5be',hover:'#d3d3cd',popS:'#f0f0ec',seam:'#c9c9c3',shadow:'#00000022'},white:{bg:'#ffffff',paper:'#ffffff',fg:'#242422',rail:'#f5f5f2',muted:'#73736d',rule:'#deded8',hover:'#ecece6',popS:'#ffffff',seam:'#dcdcd6',shadow:'#00000022'},yellow:{bg:'#faf6e8',paper:'#faf6e8',fg:'#242422',rail:'#f2eedf',muted:'#737065',rule:'#ddd7c7',hover:'#ece5d3',popS:'#faf6e8',seam:'#dcd5c5',shadow:'#00000022'}};
-    function setTheme(name){if(!themes[name])name='white';var root=document.documentElement;root.dataset.readingTheme=name;Object.keys(themes.black).forEach(function(k){root.style.removeProperty('--'+k);if(themes[name][k])root.style.setProperty('--'+k,themes[name][k]);});try{localStorage.setItem('hk-reading-theme-v152',name);}catch(e){}popup.querySelectorAll('[data-theme]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.theme===name));});}
-    Object.keys(themes).forEach(function(name){var b=document.createElement('button'),colors={black:['#161616','#eee','黑'],gray:['#e6e6e3','#242422','灰'],white:['#fff','#242422','白'],yellow:['#faf6e8','#242422','黃']},c=colors[name];b.dataset.theme=name;b.style.setProperty('--choice-bg',c[0]);b.style.setProperty('--choice-fg',c[1]);b.textContent=c[2];b.setAttribute('aria-label',c[2]+'色底');b.onclick=function(){setTheme(name);};popup.querySelector('.book-colors').appendChild(b);});
     function update(){ $('bookPercent').textContent=Math.round(Z[key]*100)+'%'; }
     function place(){if(popup.hidden||!anchor)return;var b=overlayBounds(),v=viewportBox(),r=anchor.getBoundingClientRect(),w=popup.offsetWidth,h=popup.offsetHeight;popup.style.left=Math.max(v.left+12,Math.min(v.left+v.width-w-12,r.right-w))+'px';popup.style.top=Math.max(b.top,Math.min(b.bottom-h,r.bottom+8))+'px';popup.style.maxHeight=Math.max(60,b.bottom-b.top)+'px';popup.style.overflowY='auto';}
     function hide(){if(!popup.hidden)Motion.close(popup,function(){popup.hidden=true;anchor=null;});}
-    document.querySelectorAll('.zc').forEach(function(zc){var tools=document.createElement('span');tools.className='books-tools';tools.dataset.z=zc.dataset.z;tools.innerHTML='<button class="book-size-button" aria-label="閱讀大小" aria-haspopup="dialog">大小</button><button class="book-search-button" aria-label="搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button>';zc.after(tools);tools.firstChild.onclick=function(){key=zc.dataset.z;anchor=this;popup.hidden=false;update();place();Motion.open(popup);};if(zc.dataset.z==='m'){tools.lastChild.replaceWith($('searchForm'));}else tools.lastChild.onclick=function(){hide();if(ReaderUI.single)selectReaderPane('search',false);openSearch();};});
+    document.querySelectorAll('.zc').forEach(function(zc){var tools=document.createElement('span');tools.className='books-tools';tools.dataset.z=zc.dataset.z;tools.innerHTML='<button class="book-size-button" aria-label="閱讀大小" aria-haspopup="dialog">aA</button><button class="book-search-button" aria-label="搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button>';zc.after(tools);tools.firstChild.onclick=function(){key=zc.dataset.z;anchor=this;popup.hidden=false;update();place();Motion.open(popup);};if(zc.dataset.z==='m'){tools.lastChild.replaceWith($('searchForm'));}else {var close=zc.dataset.z==='r'?$('railClose'):$('panelClose');close.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16M12 9l-3 3 3 3"/></svg>';close.setAttribute('aria-label','收起視窗');tools.lastChild.replaceWith(close);}});
+    var pageBadge=document.querySelector('#panel .page-jump');if(pageBadge)panel.appendChild(pageBadge);
     popup.addEventListener('click',function(e){var b=e.target.closest('[data-size]');if(b){zoomBy(key,+b.dataset.size);update();}});
     popup.querySelector('.book-font').onclick=function(){hide();showSettingsPage('ft');openMenu();};
     document.addEventListener('pointerdown',function(e){if(!popup.contains(e.target)&&!e.target.closest('.book-size-button'))hide();});document.addEventListener('keydown',function(e){if(e.key==='Escape')hide();});
     var queuePlace=Motion.rafThrottle(place);window.addEventListener('resize',queuePlace);window.addEventListener('reader-viewport',queuePlace);window.addEventListener('reader-layout',hide);
-    try{setTheme(localStorage.getItem('hk-reading-theme-v152')||'white');}catch(e){setTheme('white');}
+    ['bg','paper','fg','rail','muted','rule','hover','popS','seam','shadow'].forEach(function(k){document.documentElement.style.removeProperty('--'+k);});delete document.documentElement.dataset.readingTheme;document.documentElement.dataset.theme='light';try{localStorage.removeItem('hk-reading-theme-v152');}catch(e){}
     // A press on a chart heading follows its parent; text remains natively selectable.
     var hold=null,point=null,consumed=0;
     $('pview').addEventListener('pointerdown',function(e){if(!phoneMode()||e.pointerType!=='touch')return;var el=e.target.closest('[data-id]');if(!el)return;point={x:e.clientX,y:e.clientY};clearTimeout(hold);hold=setTimeout(function(){var i=+el.dataset.id,p=N[i]&&N[i][4];if(p!=null&&p>=0&&N[p]){focusNode(p,'panel',APPEAR[p]||S.ppage);selectReaderPane('chart',false);panelPage(APPEAR[p]||S.ppage,p);consumed=Date.now()+700;phoneStep.holdUntil=consumed;window.dispatchEvent(new Event('reader-phone-dictionary'));}},550);},{passive:true});
@@ -2834,26 +2859,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     document.addEventListener('click',function(e){if(Date.now()<consumed&&$('pview').contains(e.target)){e.preventDefault();e.stopImmediatePropagation();}},true);
   }
   function setupPhoneGestures(){
-    var gesture=null,render=Motion.rafThrottle(function(){if(!gesture)return;gesture.el.style.transform='translate3d('+gesture.shown+'px,0,0)';});
-    function selected(){var s=getSelection();return s&&!s.isCollapsed;}
-    function abort(){render.cancel();if(gesture){Motion.cancel(gesture.el);gesture.el.classList.remove('motion-dragging');gesture.el.style.removeProperty('transform');gesture.el.style.removeProperty('will-change');}gesture=null;}
-    // Safari cancels Pointer Events when native scrolling wins. Touch Events are
-    // deliberately used for direction arbitration; no capture or touch-action:none.
-    document.addEventListener('touchstart',function(e){abort();if(!(e.target instanceof Element)||!phoneMode()||e.touches.length!==1||selected()||!$('termPreview').hidden||!$('q').hidden||e.target.closest('button,input,select,.mpop,.term-preview,.juans'))return;
-      var t=e.touches[0];if(e.target.closest('.kh,.rol')&&t.clientX>24&&t.clientX<innerWidth-24)return;var el=ReaderUI.screen==='chart'?$('pzoom'):ReaderUI.screen==='catalog'?$('rinner'):article;if(!el.contains(e.target))return;
-      Motion.cancel(el);gesture={el:el,x:t.clientX,y:t.clientY,dx:0,dy:0,shown:0,start:performance.now(),lastTime:performance.now(),lastX:t.clientX,velocity:0,lock:null,scrollWidth:el.scrollWidth,width:innerWidth};
-    },{passive:true});
-    document.addEventListener('touchmove',function(e){if(!gesture)return;if(e.touches.length!==1||selected()){abort();return;}var g=gesture,t=e.touches[0],now=performance.now();g.dx=t.clientX-g.x;g.dy=t.clientY-g.y;
-      if(!g.lock){if(Math.abs(g.dy)>12&&Math.abs(g.dy)>Math.abs(g.dx)*.8){abort();return;}if(Math.abs(g.dx)>14&&Math.abs(g.dx)>Math.abs(g.dy)*1.6&&now-g.start<300){g.lock='x';g.el.classList.add('motion-dragging');}else if(now-g.start>300){abort();return;}}
-      if(g.lock!=='x')return;e.preventDefault();var dt=now-g.lastTime;if(dt>0)g.velocity=(t.clientX-g.lastX)/dt;g.lastX=t.clientX;g.lastTime=now;
-      var current=ReaderUI.screen==='chart'?S.ppage:ReaderUI.screen==='catalog'?S.railJuan:S.juan,last=ReaderUI.screen==='chart'?PAGES.length+1:100,first=ReaderUI.screen==='chart'?2:1,bound=g.dx>0?current<=first:current>=last;
-      g.shown=Motion.reduced()?0:bound?Motion.rubberBand(g.dx,48):g.dx;render();
-    },{passive:false});
-    document.addEventListener('touchend',function(e){if(!gesture)return;var g=gesture;render.flush();if(e.changedTouches.length){var t=e.changedTouches[0];g.dx=t.clientX-g.x;g.dy=t.clientY-g.y;}var age=performance.now()-g.lastTime,velocity=age<100?g.velocity:0;
-      var commit=g.lock==='x'&&!selected()&&Math.abs(g.dx)>Math.abs(g.dy)*1.6&&(Math.abs(g.dx)>Math.max(60,g.width*.2)||Math.abs(g.dx)>32&&Math.abs(velocity)>.45);
-      gesture=null;g.el.classList.remove('motion-dragging');g.el.style.removeProperty('will-change');
-      if(commit){g.el.style.removeProperty('transform');phoneStep(g.dx<0?1:-1);Motion.run(g.el,[{opacity:.75},{opacity:1}]);}else Motion.snap(g.el,g.shown);
-    },{passive:true});document.addEventListener('touchcancel',abort,{passive:true});window.addEventListener('reader-layout',abort);window.addEventListener('blur',abort);
+    function selected(){var sel=getSelection();return sel&&!sel.isCollapsed;}
     // Native vertical scrolling is unchanged. The small pull hint only exists
     // outside a volume edge and commits on release, never during normal scrolling.
     var sc=$('rscroll'),inner=$('rinner'),pull=null,cool=0,paint=Motion.rafThrottle(function(){if(!pull)return;inner.style.transform='translate3d(0,'+Motion.rubberBand(pull.distance,18)+'px,0)';$('pullTop').style.opacity=pull.distance>0?Math.min(1,Math.abs(pull.distance)/90):0;$('pullBot').style.opacity=pull.distance<0?Math.min(1,Math.abs(pull.distance)/90):0;});
@@ -3131,4 +3137,44 @@ h1.jt{letter-spacing:0;text-wrap:wrap;line-height:1.4}
     check();window.addEventListener('online',check);document.addEventListener('visibilitychange',check);
   }).catch(function(e){console.warn('離線下載未完成，請保持網路後重新開啟。',e);});
 });
-</script></body></html>
+</script><style>/* v1.53: retain the original palette and paragraph layout. */
+.reading-volume{display:flow-root;overflow-anchor:none;scroll-margin-top:70px}
+.reading-volume+.reading-volume{border-top:1px solid var(--rule);padding-top:24px;margin-top:24px}
+.volume-edge{height:1px;pointer-events:none}
+.reading-volume h1{scroll-snap-align:start}
+.books-tools #railClose,.books-tools #panelClose{display:inline-flex!important;align-items:center;justify-content:center;width:36px!important;min-width:36px!important;height:36px!important;padding:0!important;border:0;background:transparent;border-radius:10px;color:var(--muted)}
+.books-tools button svg{width:22px;height:22px}.book-size-button{font-family:-apple-system,BlinkMacSystemFont,sans-serif!important;font-size:19px!important;font-weight:500!important;letter-spacing:-1px}
+#panelPin{display:none!important}.book-colors{display:none!important}
+#panel .pbar .page-jump{position:absolute;right:14px;bottom:12px;z-index:15;background:var(--paper);border-radius:7px;opacity:.72}
+.menu .mpop.settings-panel{border-radius:20px!important;padding:12px!important;width:260px!important;max-width:calc(100vw - 28px)!important;min-height:0!important}
+.settings-panel .mi{min-height:44px!important;border-radius:11px!important;padding:8px 11px!important;box-sizing:border-box}
+.settings-panel .settings-header{padding:2px 4px 9px!important;min-height:36px!important}
+.settings-panel .settings-body,.settings-panel .content-body{padding:4px!important}
+.layout-choices{display:flex!important;gap:8px;justify-content:center;padding:10px 0!important}
+.layout-choices .layout-choice{display:flex!important;flex:1;justify-content:center!important;position:relative;height:66px!important;min-width:0!important;padding:8px!important;background:rgba(118,118,128,.07);border-radius:14px!important}
+.layout-choices .layout-choice svg{width:30px!important;height:30px!important}.layout-choice>span:not(.layout-check){display:none!important}.layout-check{position:absolute;right:5px;bottom:4px;font-size:10px}#layoutLockedNote{display:none!important}
+:root[data-layout=iphone] #pzoom .ksheet{display:block!important;margin:0 auto 12px!important}
+:root[data-layout=iphone] #pzoom{display:flex!important;flex-direction:column!important;justify-content:flex-start!important;gap:0!important;padding:8px!important}
+:root[data-layout=iphone]{--nav-height:52px}
+:root[data-layout=iphone] .device-tabs{height:calc(52px + env(safe-area-inset-bottom,0px))!important;min-height:0!important;padding:2px 6px env(safe-area-inset-bottom,0px)!important;box-sizing:border-box;align-items:stretch;gap:0}
+:root[data-layout=iphone] .device-tabs button{flex:1;min-width:0;min-height:48px;height:48px!important;padding:3px 0!important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;touch-action:manipulation;pointer-events:auto;-webkit-tap-highlight-color:transparent}
+:root[data-layout=iphone] .device-tabs button svg{width:22px;height:22px}:root[data-layout=iphone] .device-tabs button span{font-size:11px;line-height:15px}
+:root[data-layout=iphone] .books-tools #railClose,:root[data-layout=iphone] .books-tools #panelClose{width:44px!important;min-width:44px!important;height:44px!important}
+html{scroll-snap-type:y proximity;scroll-padding-top:70px}
+:root[data-phone-locked=true] .settings-panel .layout-choices{display:flex!important}
+:root[data-phone-locked=true] .layout-choice:not([data-layout-choice=iphone]){opacity:.4;pointer-events:none}
+#panel>.page-jump{position:absolute;right:14px;bottom:12px;z-index:15;background:var(--paper);border-radius:7px;opacity:.72}
+:root[data-layout=iphone] #pzoom .ksheet{flex:none!important;width:var(--phone-sheet-width)!important;height:calc(var(--phone-sheet-width)*297/210)!important;max-width:none!important}
+:root:root:root .menu .mpop.settings-panel{width:260px!important;padding:10px!important;border-radius:20px!important}
+:root:root:root .settings-panel .mi{min-height:44px!important;padding:8px 10px!important;border-radius:10px!important}
+:root:root:root .settings-panel #optsTop .sw{min-height:44px!important;padding:8px 10px!important;font-size:15px}
+.settings-head{min-height:40px;margin:0 0 8px;top:-10px}.settings-panel .grp,.settings-panel .layout-choices{margin-bottom:10px!important}
+:root:root:root .settings-panel .layout-choice{height:66px!important;padding:8px!important;border-radius:14px!important;flex:1;width:auto;background:var(--bg)}
+:root:root:root .settings-panel .layout-choice svg{flex:0 0 30px}
+:root[data-layout=iphone]{--nav-height:calc(52px + env(safe-area-inset-bottom,0px))}
+:root:root:root .books-tools #railClose,:root:root:root .books-tools #panelClose{display:inline-flex!important;position:static!important;transform:none!important}
+#panel>.page-jump{bottom:34px;font-size:11px}
+:root:root:root .pbar{padding-right:10px!important;padding-left:10px!important}
+@media(prefers-reduced-motion:reduce){html{scroll-snap-type:none}}
+</style>
+</body></html>
