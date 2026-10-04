@@ -1,0 +1,16 @@
+/* v1.85 科判顏色：色塊靠左、旁邊「預設」；下方只留一個全部重置圓鈕 */
+:root:root:root:root .ftpop .grp.chart-color-settings{padding:0!important;min-height:0!important}
+:root:root:root:root .ftpop .chart-color-settings .settings-row{display:flex!important;justify-content:flex-start!important;align-items:center!important;gap:12px!important;padding:8px 12px!important;min-height:0!important}
+:root:root:root:root .ftpop .chart-color-settings .settings-row>span{min-width:4.5em}
+:root:root:root:root .ftpop #chartTitleColor{width:34px!important;height:24px!important;padding:0!important;border:1px solid var(--rule)!important;border-radius:7px!important;background:none!important;cursor:pointer}
+:root:root:root:root .ftpop #chartColorReset{all:unset;cursor:pointer;font:13px var(--ui);color:var(--muted);padding:3px 10px;border-radius:999px;background:var(--hover)}
+:root:root:root:root .ftpop #chartColorReset:hover{color:var(--fg);background:color-mix(in srgb,var(--acc) 22%,var(--bg))}
+:root:root:root:root .ftpop .gbtns{margin:6px 0 0!important;padding:0!important;display:flex!important;justify-content:flex-end!important}
+:root:root:root:root .ftpop #fsReset{width:auto!important;height:30px!important;min-height:0!important;padding:0 12px 0 10px!important;border-radius:999px!important;display:inline-flex!important;align-items:center!important;gap:5px!important;border:1px solid var(--rule)!important;background:var(--bg)!important;color:var(--fg)!important}
+:root:root:root:root .ftpop #fsReset svg{width:15px!important;height:15px!important}
+:root:root:root:root .ftpop #fsReset small{display:inline!important;font:12.5px var(--ui)!important}
+:root:root:root:root:root .ftpop #chartColorReset{all:unset;cursor:pointer!important;font:13px/1 var(--ui)!important;color:var(--muted)!important;padding:6px 12px!important;border-radius:999px!important;background:var(--hover)!important;border:1px solid var(--rule)!important}
+:root:root:root:root:root .settings-panel:not([data-settings-page=root])>#detailedTourBtn{display:none!important}
+:root:root:root:root:root .ftpop .gbtns{justify-content:center!important;margin:14px 0 4px!important}
+:root:root:root:root:root .ftpop #fsReset{justify-content:center!important;text-align:center!important;padding:0 16px!important;line-height:1!important}
+:root:root:root:root:root .ftpop #fsReset small{line-height:1!important;display:inline-block!important}
