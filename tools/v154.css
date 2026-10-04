@@ -1,0 +1,98 @@
+/* v1.54 — edition switch, touch dictionary chip, centred controls. Original palette and paragraph layout retained. */
+/* 版本 */
+.edition-settings{position:relative}
+.mi .mi-val{flex:none!important;font-style:normal;font-size:12.5px;color:var(--muted);margin-left:auto}
+.settings-panel[data-settings-page=root]>.edition-settings{display:block;margin:0!important;border-bottom:1px solid var(--rule);overflow:hidden;border-radius:14px 14px 0 0}
+:root:root:root .settings-panel[data-settings-page=root]>.content-settings{border-radius:0!important}
+.settings-panel[data-settings-page=root] .edition-body{display:none}
+.settings-panel:not([data-settings-page=root]):not([data-settings-page=edition])>.edition-settings{display:none!important}
+.settings-panel[data-settings-page=edition]>.edition-settings{display:block}
+.settings-panel[data-settings-page=edition] #editionBtn{display:none!important}
+.edition-body{display:grid;gap:10px;padding:2px 0 4px}
+.edition-choice{display:flex;align-items:center;gap:12px;width:100%;box-sizing:border-box;text-align:left;border:0;border-radius:14px;background:var(--bg);padding:14px 16px;min-height:66px;cursor:pointer;color:var(--fg);font:15px var(--ui);box-shadow:inset 0 0 0 1px var(--rule);transition:box-shadow var(--motion-fast,.12s) ease}
+.edition-choice .ed-t{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+.edition-choice b{font:600 16px var(--ui)}
+.edition-choice small{color:var(--muted);font:12px/1.45 var(--ui)}
+.edition-choice .ed-ck{flex:none;width:22px;text-align:center;opacity:0;color:var(--acc2);font:600 17px var(--ui)}
+.edition-choice[aria-checked=true]{box-shadow:inset 0 0 0 1.5px var(--acc)}
+.edition-choice[aria-checked=true] .ed-ck{opacity:1}
+.edition-note{margin:2px 4px 0;font:12.5px/1.6 var(--ui);color:var(--muted)}
+.edition-note:empty{display:none}
+:root[data-edition=zang] .notes-only,:root[data-edition=zang] .ex-kp,:root[data-edition=zang] .results .sopt{display:none!important}
+:root:root:root .menu .mpop.settings-panel[data-settings-page=dl],:root:root:root .menu .mpop.settings-panel[data-settings-page=edition]{width:var(--menu-width)!important;max-width:calc(100vw - 24px)!important}
+
+/* 字體大小：七段、預設置中；行距示意圖 */
+:root:root .fsz{gap:12px}
+:root:root .fsz .fa{font-family:"Times New Roman","Songti TC",serif;font-weight:600;color:var(--muted);width:28px;text-align:center}
+:root:root .fsz .fa.sm{font-size:14px}:root:root .fsz .fa.lg{font-size:27px}
+:root:root .fticks i{width:4px;height:4px}
+:root:root .fticks i.d{background:var(--fg);opacity:.7}
+#lsSeg{width:100%!important;max-width:none!important;flex:1 1 auto!important}
+#lsSeg button{display:grid;place-items:center;padding:5px 0;color:var(--muted)}
+#lsSeg button.on{color:var(--fg)}
+#lsSeg button svg{width:30px;height:24px;display:block}
+.settings-panel .grow{flex-wrap:nowrap!important}
+.settings-panel .grow>span{flex:none}
+
+/* 匯出：較寬、對齊的卡片 */
+:root:root:root .settings-panel .ex-panel{padding:0!important;background:none!important;box-shadow:none!important}
+:root:root:root .settings-panel .ex-panel .ex-hero{display:flex!important;align-items:center;gap:14px;width:100%;box-sizing:border-box;padding:16px!important;border:0;border-radius:16px!important;background:var(--bg)!important;color:var(--fg);text-align:left;cursor:pointer}
+:root:root:root .settings-panel .ex-hero svg{color:var(--acc2);flex:none}
+.ex-hero-t{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+:root:root:root .settings-panel .ex-hero b{font:600 16px var(--ui);text-decoration:none!important}
+:root:root:root .settings-panel .ex-hero small{font:12.5px var(--ui);color:var(--muted);margin:0}
+.ex-hero .chev{flex:none;font-style:normal;color:var(--muted);font-size:20px}
+.ex-card{background:var(--bg);border-radius:16px;padding:4px 16px 16px;margin:12px 0 0}
+:root:root:root .settings-panel .ex-card h5{margin:12px 0 2px!important;font:600 14px var(--ui)!important;color:var(--fg)!important}
+.ex-row{display:grid;grid-template-columns:2.6em minmax(0,1fr);align-items:center;column-gap:12px;padding:12px 0;border-top:.5px solid var(--hair)}
+.ex-card h5+.ex-row,.ex-card .ex-info+.ex-row{border-top:0}
+.ex-l{font:13px var(--ui);color:var(--muted);align-self:start;padding-top:7px}
+.ex-range{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font:14px var(--ui);color:var(--fg)}
+:root:root:root .settings-panel .ex-range input{width:4.4em!important;height:34px;box-sizing:border-box;border:0!important;border-radius:9px!important;background:rgba(118,118,128,.12)!important;text-align:center;font:15px var(--ui)!important;color:var(--fg);padding:0 4px!important}
+.ex-quick{display:inline-flex;gap:2px;margin-left:auto}
+:root:root:root .settings-panel .ex-quick .lk{padding:6px 8px;border-radius:8px;color:var(--link);font:13px var(--ui);background:none;border:0;cursor:pointer}
+:root:root:root .settings-panel .ex-card .cks{display:flex;flex-wrap:wrap;gap:8px}
+:root:root:root .settings-panel .ex-card .ck span{padding:6px 12px;font-size:13.5px}
+:root:root:root .settings-panel .ex-card .ex-go{display:block;width:100%;height:44px;margin:4px 0 0;padding:0!important;border-radius:12px!important;font:600 15px var(--ui)!important}
+:root:root:root .settings-panel .ex-info{font:12.5px/1.6 var(--ui);color:var(--muted);margin:0!important;padding:0!important}
+.ex-acts{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding-top:4px}
+:root:root:root .settings-panel .ex-acts .allbtn{display:inline-flex!important;width:auto!important;align-items:center;gap:6px;margin:0;border:0;background:rgba(118,118,128,.12)!important;color:var(--fg)!important;border-radius:10px;padding:0 14px;height:40px;font:13.5px var(--ui);cursor:pointer}
+:root:root:root .settings-panel .ex-acts .go{height:40px;padding:0 18px!important;margin:0;border-radius:10px!important;font:600 14px var(--ui)!important;flex:1 1 auto;max-width:180px}
+:root:root:root .settings-panel .ex-panel .msg{font:12.5px/1.5 var(--ui);color:var(--muted);margin:8px 2px 0;padding:0!important}
+:root:root:root .settings-panel .ex-panel .msg:empty{display:none}
+
+/* 兩側收合圖示 */
+.books-tools #railClose svg,.books-tools #panelClose svg,#railOpen svg,#panelOpen svg{width:22px;height:22px}
+
+/* 科判 100% 時不左右滑動 */
+.pview.fit-x{overflow-x:hidden!important}
+:root[data-layout=iphone] #pzoom{padding:8px 0!important}
+
+/* 手機／平板底部導覽：圖示與文字在框內正中 */
+:root[data-single-pane=true][data-single-pane] .device-tabs{padding:0 6px!important;align-items:stretch!important;gap:4px}
+:root[data-single-pane=true][data-single-pane] .device-tabs button{height:auto!important;min-height:0!important;margin:5px 0 max(5px,calc(env(safe-area-inset-bottom,0px) * .45));padding:0!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:12px}
+:root[data-single-pane=true][data-single-pane] .device-tabs button svg{width:22px;height:22px;flex:none}
+:root[data-single-pane=true][data-single-pane] .device-tabs button span{font-size:11px;line-height:14px}
+
+/* 手機卷目次：常駐展開鍵 */
+:root[data-layout=iphone] .rail h3{padding-right:10px}
+:root[data-layout=iphone] .jfold{min-height:36px!important;padding:0 10px 0 14px!important;border-radius:999px;background:rgba(118,118,128,.12);gap:6px!important;color:var(--fg);font:600 14px var(--ui);letter-spacing:.04em}
+:root[data-layout=iphone] .jfold em{opacity:1!important;max-width:none!important;color:var(--acc2)!important;font-weight:600}
+:root[data-layout=iphone] .jfold .chv{display:inline-block!important;opacity:.75;transition:transform var(--motion-fast,.12s) ease}
+:root[data-layout=iphone].phone-juan-open .jfold{background:color-mix(in srgb,var(--acc) 24%,transparent)}
+:root[data-layout=iphone].phone-juan-open .jfold .chv{transform:rotate(180deg)}
+
+/* 行動版：科判標題換行，不再形成橫向捲動區 */
+:root[data-mobile-ui=true][data-mobile-ui] .main .kh{overflow:visible!important;max-width:100%}
+:root[data-mobile-ui=true][data-mobile-ui] .main .kh .kl{width:auto!important;min-width:0!important;white-space:normal!important}
+:root[data-mobile-ui=true][data-mobile-ui] .main .kh .kn{display:inline!important;white-space:normal!important}
+
+/* 觸控查詞 */
+.dict-chip{position:fixed;left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100vw - 32px);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:170;display:flex;align-items:center;gap:7px;height:44px;box-sizing:border-box;padding:0 18px 0 14px;border:0;border-radius:999px;background:var(--fg);color:var(--bg);font:500 14px var(--ui);box-shadow:0 8px 26px rgba(0,0,0,.24);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation;cursor:pointer}
+.dict-chip[hidden]{display:none!important}
+.dict-chip svg{width:19px;height:19px;flex:none}
+.dict-chip b{font-family:var(--kai);font-weight:400;font-size:17px;max-width:11em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:root[data-single-pane=true] .dict-chip{bottom:calc(var(--nav-height) + 12px)}
+:root[data-layout=iphone] .term-preview,:root[data-layout=ipad] .term-preview{border-radius:18px}
+:root[data-layout=iphone][data-single-pane][data-single-pane] .device-tabs button[data-screen=search]{display:none!important}
+:root:root:root .settings-panel .ex-range input{font-size:16px!important}
