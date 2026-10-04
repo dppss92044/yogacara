@@ -1,0 +1,4 @@
+/* v1.81 */
+:root:root:root:root .settings-panel #tourBtn{display:none!important}
+:root:root:root .settings-panel[data-settings-page=root]>#detailedTourBtn{border-radius:0 0 14px 14px!important}
+:root[data-layout=ipad] .book-size.seg output{display:block!important;padding:0 9px;font:500 14px/34px var(--ui)}

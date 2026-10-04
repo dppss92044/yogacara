@@ -1,6 +1,6 @@
 /* 瑜伽師地論 PWA Service Worker
  * 線上有新版時優先新版；真正離線時才使用舊快取。
- *  - index.html／導覽：network-first（逾時或斷線才用快取）
+ *  - index.html／導覽：本版已下載就直接開啟；尚未下載才走網路（逾時或斷線用舊快取）
  *  - 其他靜態資源：依版本快取（cache-first），每個版本一個 Cache Storage
  *  - sw.js 本身不進 Cache Storage
  * 本檔由 tools/build_release.py 產生；改版請執行該工具，不要手改 VERSION／FILES。
@@ -73,6 +73,10 @@ async function digest(response) {
 
 async function networkFirstShell(request) {
   const cache = await caches.open(CACHE);
+  // 已下載的本版首頁直接開啟（不再每次重新下載 7MB 的 index.html）；
+  // 新版由瀏覽器檢查 sw.js 發現，安裝完成後頁面會在安全時機自動重新載入一次。
+  const ready = await cache.match(scopeURL(SHELL));
+  if (ready) return ready;
   try {
     const response = await Promise.race([
       fetch(request.mode === 'navigate' ? new Request(scopeURL(SHELL), { cache: 'no-cache', credentials: 'same-origin' }) : new Request(request, { cache: 'no-cache' })),
