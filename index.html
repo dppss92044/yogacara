@@ -896,13 +896,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
 </header>
 <button class="device-backdrop" id="deviceBackdrop" aria-label="關閉科判預覽" hidden></button><nav class="device-tabs" aria-label="主要導覽"><button data-screen="catalog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 3v18M12 8h6M12 12h6M12 16h6"/></svg><span>卷次</span></button><button data-screen="read" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h5c2 0 3 1 3 1s1-1 3-1h5v16h-5c-2 0-3 1-3 1s-1-1-3-1H4zM12 4v16"/></svg><span>正文</span></button><button data-screen="chart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3v18M6 6h12v12H6M12 6v12M12 10h6"/></svg><span>科判</span></button><button data-screen="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><span>搜尋</span></button></nav>
 <div class="ztip" id="ztip"></div>
-<button class="icb fic" id="railOpen" aria-label="顯示卷目次" title="顯示卷目次" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="2.6"/><line x1="7.5" y1="3.5" x2="7.5" y2="16.5"/></svg></button>
-<button class="icb fic" id="panelOpen" aria-label="顯示直書科判" title="顯示直書科判" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="2.6"/><line x1="12.5" y1="3.5" x2="12.5" y2="16.5"/></svg></button>
+<button class="icb fic" id="railOpen" aria-label="顯示卷目次" title="顯示卷目次" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="1.2"/><path d="M9.6 4.5v15"/></svg></button>
+<button class="icb fic" id="panelOpen" aria-label="顯示直書科判" title="顯示直書科判" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="1.2"/><path d="M14.4 4.5v15"/></svg></button>
 
 <div class="wrap with-panel" id="wrap">
   <aside class="rail" id="rail">
     <div class="rail-top">
-      <h3><button class="jfold" id="jFold" aria-expanded="true" title="收攏／展開卷號"><span>卷目次</span><em id="jCur"></em><svg class="chv" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button><span class="h3r"><span class="zc" data-z="r"><button data-zd="-1" aria-label="縮小">－</button><button class="zv" data-zd="0" title="點一下回到 100%">100%</button><button data-zd="1" aria-label="放大">＋</button></span><em id="railMode" hidden>內文</em><button class="icb" id="railClose" aria-label="隱藏卷目次" title="隱藏卷目次"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="2.6"/><line x1="7.5" y1="3.5" x2="7.5" y2="16.5"/></svg></button></span></h3>
+      <h3><button class="jfold" id="jFold" aria-expanded="true" title="收攏／展開卷號"><span>卷目次</span><em id="jCur"></em><svg class="chv" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button><span class="h3r"><span class="zc" data-z="r"><button data-zd="-1" aria-label="縮小">－</button><button class="zv" data-zd="0" title="點一下回到 100%">100%</button><button data-zd="1" aria-label="放大">＋</button></span><em id="railMode" hidden>內文</em><button class="icb" id="railClose" aria-label="隱藏卷目次" title="隱藏卷目次"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="1.2"/><path d="M9.6 4.5v15"/></svg></button></span></h3>
       <div class="juans" id="juans"></div>
     </div>
     <div class="rv" id="rv">
@@ -917,13 +917,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     <div class="menu" id="menu">
       <button class="mbtn" id="menuBtn" aria-label="選單：導覽、關於、匯出" aria-haspopup="menu"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="10" cy="10" r="8"/><circle cx="6.3" cy="10" r=".9" fill="currentColor" stroke="none"/><circle cx="10" cy="10" r=".9" fill="currentColor" stroke="none"/><circle cx="13.7" cy="10" r=".9" fill="currentColor" stroke="none"/></svg></button>
       <div class="mpop" role="menu"><div class="settings-head"><button id="settingsBack" type="button" aria-label="返回功能列表" hidden>‹</button><strong id="settingsTitle" aria-live="polite">功能</strong></div>
-        <div class="content-settings"><button class="mi" id="contentBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>內文</span><i class="chev">›</i></button><div class="content-body">        <div class="msw" id="optsTop" role="group" aria-labelledby="mswH">
+        <div class="edition-settings"><button class="mi" id="editionBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 5.5h6.5a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 0-1.5-1.5H4zM20 5.5h-6.5A1.5 1.5 0 0 0 12 7v12a1.5 1.5 0 0 1 1.5-1.5H20z"/></svg><span>版本</span><em class="mi-val" id="editionCur">韓清淨科判</em><i class="chev">›</i></button><div class="edition-body" role="radiogroup" aria-label="版本"><button type="button" class="edition-choice" data-edition="hk" role="radio" aria-checked="true"><span class="ed-t"><b>韓清淨科判</b><small>科句披尋記本・可開披尋記與常柏法師釋</small></span><span class="ed-ck" aria-hidden="true">✓</span></button><button type="button" class="edition-choice" data-edition="zang" role="radio" aria-checked="false"><span class="ed-t"><b>藏經科判</b><small>大藏經原文・藏經科判表</small></span><span class="ed-ck" aria-hidden="true">✓</span></button><p class="edition-note" id="editionMsg" role="status"></p></div></div><div class="content-settings"><button class="mi" id="contentBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>內文</span><i class="chev">›</i></button><div class="content-body">        <div class="msw" id="optsTop" role="group" aria-labelledby="mswH">
           <div class="mh" id="mswH">內文</div>
           <div class="grp">
           <label class="sw kp"><span class="nm">科判</span><input type="checkbox" id="optKp" role="switch" checked><span class="tr" aria-hidden="true"></span></label>
           <label class="sw dict"><span class="nm">辭典</span><input type="checkbox" id="optDict" role="switch" checked><span class="tr" aria-hidden="true"></span></label>
-          <label class="sw px"><span class="nm">披尋記</span><input type="checkbox" id="optPx" role="switch"><span class="tr" aria-hidden="true"></span></label>
-          <label class="sw cb"><span class="nm">常柏法師釋</span><input type="checkbox" id="optCb" role="switch"><span class="tr" aria-hidden="true"></span></label>
+          <label class="sw px notes-only"><span class="nm">披尋記</span><input type="checkbox" id="optPx" role="switch"><span class="tr" aria-hidden="true"></span></label>
+          <label class="sw cb notes-only"><span class="nm">常柏法師釋</span><input type="checkbox" id="optCb" role="switch"><span class="tr" aria-hidden="true"></span></label>
           </div>
         </div>
 </div></div>
@@ -943,37 +943,35 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
 </div>
         <h5>字體大小</h5>
         <div class="fbox grp">
-          <div class="fsz"><button class="fa sm" id="fsDn" aria-label="字體縮小">A</button><div class="frng"><input type="range" id="fsR" min="0" max="15" step="1" value="5" aria-label="字體大小"><div class="fticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i class="d"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="fdef" aria-hidden="true">預設</div></div><button class="fa lg" id="fsUp" aria-label="字體放大">A</button></div>
+          <div class="fsz"><button class="fa sm" id="fsDn" aria-label="字體縮小">T</button><div class="frng"><input type="range" id="fsR" min="0" max="6" step="1" value="3" aria-label="字體大小"><div class="fticks" aria-hidden="true"><i></i><i></i><i></i><i class="d"></i><i></i><i></i><i></i></div><div class="fdef" aria-hidden="true">預設</div></div><button class="fa lg" id="fsUp" aria-label="字體放大">T</button></div>
         </div>
         <h5>版面</h5>
-        <div class="grp"><div class="grow"><span>行距</span><div class="seg" id="lsSeg" role="radiogroup" aria-label="行距"><button data-l="0.85" role="radio">緊湊</button><button data-l="1" role="radio">標準</button><button data-l="1.25" role="radio">寬鬆</button></div></div></div>
+        <div class="grp"><div class="grow"><span>行距</span><div class="seg" id="lsSeg" role="radiogroup" aria-label="行距"><button data-l="0.85" role="radio" aria-label="緊湊" title="緊湊"><svg viewBox="0 0 28 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 8.8h18"/><path d="M5 12.0h18"/><path d="M5 15.2h18"/></svg></button><button data-l="1" role="radio" aria-label="標準" title="標準"><svg viewBox="0 0 28 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 7.0h18"/><path d="M5 12.0h18"/><path d="M5 17.0h18"/></svg></button><button data-l="1.25" role="radio" aria-label="寬鬆" title="寬鬆"><svg viewBox="0 0 28 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 5.0h18"/><path d="M5 12.0h18"/><path d="M5 19.0h18"/></svg></button></div></div></div>
         <div class="gbtns"><button class="font-reset" id="fsReset" aria-label="恢復預設"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9a8 8 0 1 1 0 6M4 3v6h6"/></svg><small>恢復預設</small></button></div>
       </div>
     </div>
 
     <div class="dl">
       <button class="mi" id="dlBtn" role="menuitem" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v9.5M6 9l4 4 4-4M3.5 15.5v1.5h13v-1.5"/></svg><span>匯出</span><i class="chev" aria-hidden="true">›</i></button>
-      <div class="dlpop" id="dlPop" hidden>
-          <div class="grp">
-          <button class="one" id="exOne"><svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2.8h7l3.5 3.5v10.9H5z"/><path d="M12 2.8v3.5h3.5M10 9v5M7.8 11.8 10 14l2.2-2.2"/></svg><span><b>一鍵匯出內文與科判</b><small>卷一至卷一百・PDF</small></span></button>
+      <div class="dlpop ex-panel" id="dlPop" hidden>
+          <button class="one ex-hero" id="exOne"><svg width="26" height="26" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2.8h7l3.5 3.5v10.9H5z"/><path d="M12 2.8v3.5h3.5M10 9v5M7.8 11.8 10 14l2.2-2.2"/></svg><span class="ex-hero-t"><b>一鍵匯出全書</b><small>卷一至卷一百・內文與科判・PDF</small></span><i class="chev" aria-hidden="true">›</i></button>
           <div class="msg" id="oneMsg"></div>
-          </div>
-          <h5>自訂匯出</h5>
-          <div class="grp">
-          <div class="exs"><div class="exl">卷次</div><div class="rg">卷 <input id="exFrom" type="number" min="1" max="100" value="1"> 至 <input id="exTo" type="number" min="1" max="100" value="1"><button class="lk" id="exThis">本卷</button><button class="lk" id="exAll">全部</button></div></div>
-          <div class="exs"><div class="exl">內容</div><div class="cks"><label class="ck"><input type="checkbox" id="exText" checked><span>內文</span></label><label class="ck"><input type="checkbox" id="exKp" checked><span>科判</span></label><label class="ck"><input type="checkbox" id="exPx"><span>披尋記</span></label><label class="ck"><input type="checkbox" id="exCb"><span>常柏法師釋</span></label></div></div>
-          <div class="exs"><div class="exl">格式</div><div class="cks"><label class="ck"><input type="checkbox" id="exF_pdf" checked><span>PDF</span></label><label class="ck"><input type="checkbox" id="exF_docx"><span>Word</span></label><label class="ck"><input type="checkbox" id="exF_html"><span>HTML</span></label><label class="ck"><input type="checkbox" id="exF_md"><span>Markdown</span></label><label class="ck"><input type="checkbox" id="exF_txt"><span>TXT</span></label></div></div>
-          <div class="exs"><div class="exl">方式</div><div class="cks"><label class="ck"><input type="radio" id="exSep" name="exm" checked><span>個別匯出</span></label><label class="ck"><input type="radio" id="exZip" name="exm"><span>打包成 ZIP</span></label></div></div>
-          <div class="acts"><button class="go" id="exGo">匯出</button></div>
-          <div class="msg" id="exMsg"></div>
-          </div>
-          <h5>直書科判表 PDF</h5>
-          <div class="grp">
-          <p id="dlInfo">選擇要匯出的頁碼範圍。</p>
-          <div class="rg"><span>第</span><input id="dlFrom" type="number" min="1"><span>至</span><input id="dlTo" type="number" min="1"><span>頁</span><button class="go sm" id="dlGo">匯出</button><button id="dlCancel" hidden></button></div>
-          <button class="allbtn" id="dlAll"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v9.5M6 9l4 4 4-4M3.5 15.5v1.5h13v-1.5"/></svg>匯出整本科判表</button>
-          <div class="msg" id="dlMsg"></div>
-          </div>
+          <section class="ex-card">
+            <h5>自訂匯出</h5>
+            <div class="ex-row"><span class="ex-l">卷次</span><div class="ex-c ex-range"><span>卷</span><input id="exFrom" type="number" min="1" max="100" value="1" aria-label="起始卷"><span>至</span><input id="exTo" type="number" min="1" max="100" value="1" aria-label="結束卷"><span class="ex-quick"><button class="lk" id="exThis">本卷</button><button class="lk" id="exAll">全部</button></span></div></div>
+            <div class="ex-row"><span class="ex-l">內容</span><div class="cks"><label class="ck"><input type="checkbox" id="exText" checked><span>內文</span></label><label class="ck"><input type="checkbox" id="exKp" checked><span>科判</span></label><label class="ck notes-only"><input type="checkbox" id="exPx"><span>披尋記</span></label><label class="ck notes-only"><input type="checkbox" id="exCb"><span>常柏法師釋</span></label></div></div>
+            <div class="ex-row"><span class="ex-l">格式</span><div class="cks"><label class="ck"><input type="checkbox" id="exF_pdf" checked><span>PDF</span></label><label class="ck"><input type="checkbox" id="exF_docx"><span>Word</span></label><label class="ck"><input type="checkbox" id="exF_html"><span>HTML</span></label><label class="ck"><input type="checkbox" id="exF_md"><span>Markdown</span></label><label class="ck"><input type="checkbox" id="exF_txt"><span>TXT</span></label></div></div>
+            <div class="ex-row"><span class="ex-l">方式</span><div class="cks"><label class="ck"><input type="radio" id="exSep" name="exm" checked><span>個別檔案</span></label><label class="ck"><input type="radio" id="exZip" name="exm"><span>打包 ZIP</span></label></div></div>
+            <button class="go ex-go" id="exGo">匯出</button>
+            <div class="msg" id="exMsg"></div>
+          </section>
+          <section class="ex-card ex-kp">
+            <h5>直書科判表 PDF</h5>
+            <p class="ex-info" id="dlInfo">選擇要匯出的頁碼範圍。</p>
+            <div class="ex-row"><span class="ex-l">頁碼</span><div class="ex-c ex-range"><span>第</span><input id="dlFrom" type="number" min="1" aria-label="起始頁"><span>至</span><input id="dlTo" type="number" min="1" aria-label="結束頁"><span>頁</span></div></div>
+            <div class="ex-acts"><button class="allbtn" id="dlAll"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v9.5M6 9l4 4 4-4M3.5 15.5v1.5h13v-1.5"/></svg>整本科判表</button><button class="go" id="dlGo">匯出所選頁</button><button id="dlCancel" hidden></button></div>
+            <div class="msg" id="dlMsg"></div>
+          </section>
         </div>
     </div>
     <div class="about" id="about">
@@ -982,8 +980,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src">內文、分卷、科判、披尋記與常柏法師釋，全部依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷皆照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<br>原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.53</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
-<button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button></div><div id="versionHistory"><button class="version-row" data-version="1.53"><span>v1.53</span><span>›</span></button><button class="version-row" data-version="1.52"><span>v1.52</span><span>›</span></button><button class="version-row" data-version="1.51"><span>v1.51</span><span>›</span></button><button class="version-row" data-version="1.50"><span>v1.50</span><span>›</span></button><button class="version-row" data-version="1.49"><span>v1.49</span><span>›</span></button><button class="version-row" data-version="1.48"><span>v1.48</span><span>›</span></button><button class="version-row" data-version="1.47"><span>v1.47</span><span>›</span></button><button class="version-row" data-version="1.46"><span>v1.46</span><span>›</span></button><button class="version-row" data-version="1.45"><span>v1.45</span><span>›</span></button><button class="version-row" data-version="1.44"><span>v1.44</span><span>›</span></button><button class="version-row" data-version="1.43"><span>v1.43</span><span>›</span></button><button class="version-row" data-version="1.42"><span>v1.42</span><span>›</span></button><button class="version-row" data-version="1.41"><span>v1.41</span><span>›</span></button><button class="version-row" data-version="1.40"><span>v1.40</span><span>›</span></button><button class="version-row" data-version="1.39"><span>v1.39</span><span>›</span></button><button class="version-row" data-version="1.38"><span>v1.38</span><span>›</span></button><button class="version-row" data-version="1.37"><span>v1.37</span><span>›</span></button><button class="version-row" data-version="1.36"><span>v1.36</span><span>›</span></button><button class="version-row" data-version="1.35"><span>v1.35</span><span>›</span></button><button class="version-row" data-version="1.34"><span>v1.34</span><span>›</span></button><button class="version-row" data-version="1.33"><span>v1.33</span><span>›</span></button><button class="version-row" data-version="1.32"><span>v1.32</span><span>›</span></button><button class="version-row" data-version="1.31"><span>v1.31</span><span>›</span></button><button class="version-row" data-version="1.30"><span>v1.30</span><span>›</span></button><button class="version-row" data-version="1.29"><span>v1.29</span><span>›</span></button><button class="version-row" data-version="1.28"><span>v1.28</span><span>›</span></button><button class="version-row" data-version="1.27"><span>v1.27</span><span>›</span></button></div><div id="versionDetail"><b></b><p></p></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.54</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-04">2026-10-04</time></span></div></div>
+<button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button></div><div id="versionHistory"><button class="version-row" data-version="1.54"><span>v1.54</span><span>›</span></button><button class="version-row" data-version="1.53"><span>v1.53</span><span>›</span></button><button class="version-row" data-version="1.52"><span>v1.52</span><span>›</span></button><button class="version-row" data-version="1.51"><span>v1.51</span><span>›</span></button><button class="version-row" data-version="1.50"><span>v1.50</span><span>›</span></button><button class="version-row" data-version="1.49"><span>v1.49</span><span>›</span></button><button class="version-row" data-version="1.48"><span>v1.48</span><span>›</span></button><button class="version-row" data-version="1.47"><span>v1.47</span><span>›</span></button><button class="version-row" data-version="1.46"><span>v1.46</span><span>›</span></button><button class="version-row" data-version="1.45"><span>v1.45</span><span>›</span></button><button class="version-row" data-version="1.44"><span>v1.44</span><span>›</span></button><button class="version-row" data-version="1.43"><span>v1.43</span><span>›</span></button><button class="version-row" data-version="1.42"><span>v1.42</span><span>›</span></button><button class="version-row" data-version="1.41"><span>v1.41</span><span>›</span></button><button class="version-row" data-version="1.40"><span>v1.40</span><span>›</span></button><button class="version-row" data-version="1.39"><span>v1.39</span><span>›</span></button><button class="version-row" data-version="1.38"><span>v1.38</span><span>›</span></button><button class="version-row" data-version="1.37"><span>v1.37</span><span>›</span></button><button class="version-row" data-version="1.36"><span>v1.36</span><span>›</span></button><button class="version-row" data-version="1.35"><span>v1.35</span><span>›</span></button><button class="version-row" data-version="1.34"><span>v1.34</span><span>›</span></button><button class="version-row" data-version="1.33"><span>v1.33</span><span>›</span></button><button class="version-row" data-version="1.32"><span>v1.32</span><span>›</span></button><button class="version-row" data-version="1.31"><span>v1.31</span><span>›</span></button><button class="version-row" data-version="1.30"><span>v1.30</span><span>›</span></button><button class="version-row" data-version="1.29"><span>v1.29</span><span>›</span></button><button class="version-row" data-version="1.28"><span>v1.28</span><span>›</span></button><button class="version-row" data-version="1.27"><span>v1.27</span><span>›</span></button></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
     </div>
@@ -999,7 +997,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   <div class="gut" id="gutR" role="separator" aria-label="調整科判欄寬度"></div>
   <aside class="panel" id="panel" aria-label="並列直書科判">
     <button class="upnav" id="upNav" hidden><span class="ua" aria-hidden="true">↑</span><span class="ut"></span></button>
-    <div class="pbar"><span class="page-jump"><button id="pageJump" aria-label="輸入科判頁碼" title="跳頁"><span id="pageCurrent">2</span>/<span id="pageTotal">2018</span></button><input id="pNum" type="number" min="2" aria-label="科判頁碼" hidden></span><span class="zc" data-z="p"><button data-zd="-1" aria-label="縮小">－</button><button class="zv" data-zd="0" title="點一下回到 100%">100%</button><button data-zd="1" aria-label="放大">＋</button></span><button class="icb" id="panelPin" aria-label="釘選科判" aria-pressed="true" title="取消釘選科判"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8M9 3v7l-3 4v2h12v-2l-3-4V3M12 16v6"/></svg></button><button class="icb" id="panelClose" aria-label="隱藏直書科判" title="隱藏直書科判"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="2.6"/><line x1="12.5" y1="3.5" x2="12.5" y2="16.5"/></svg></button></div>
+    <div class="pbar"><span class="page-jump"><button id="pageJump" aria-label="輸入科判頁碼" title="跳頁"><span id="pageCurrent">2</span>/<span id="pageTotal">2018</span></button><input id="pNum" type="number" min="2" aria-label="科判頁碼" hidden></span><span class="zc" data-z="p"><button data-zd="-1" aria-label="縮小">－</button><button class="zv" data-zd="0" title="點一下回到 100%">100%</button><button data-zd="1" aria-label="放大">＋</button></span><button class="icb" id="panelPin" aria-label="釘選科判" aria-pressed="true" title="取消釘選科判"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8M9 3v7l-3 4v2h12v-2l-3-4V3M12 16v6"/></svg></button><button class="icb" id="panelClose" aria-label="隱藏直書科判" title="隱藏直書科判"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="1.2"/><path d="M14.4 4.5v15"/></svg></button></div>
     <div class="pview" id="pview"><div class="pzoom" id="pzoom"></div></div><span class="pj" id="pJuan"></span>
   </aside>
 </div>
@@ -1064,6 +1062,27 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     await loadScript("https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js");
     return JSON.parse(window.pako.ungzip(u8, { to: "string" }));
   }
+  async function gunzipB64(b64) {
+    var b = atob(b64), u8 = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u8[i] = b.charCodeAt(i);
+    if (window.DecompressionStream) return JSON.parse(await new Response(new Blob([u8]).stream().pipeThrough(new DecompressionStream("gzip"))).text());
+    await loadScript("https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js");
+    return JSON.parse(window.pako.ungzip(u8, { to: "string" }));
+  }
+  // v1.54: two editions share one reader. Only the data set changes.
+  var EDITION = "hk", EDATA = {};
+  try { EDITION = localStorage.getItem("hk-edition-v154") === "zang" ? "zang" : "hk"; } catch (e) {}
+  document.documentElement.dataset.edition = EDITION;
+  var ZANG_PROMISE = null;
+  function loadEdition(ed) {
+    if (EDATA[ed]) return Promise.resolve(EDATA[ed]);
+    if (ed === "hk") return unpack().then(function (d) { return (EDATA.hk = d); });
+    if (!ZANG_PROMISE) ZANG_PROMISE = new Promise(function (res, rej) {
+      window.HKZANG = function (b64) { res(b64); };
+      var sc = document.createElement("script"); sc.src = "data/zang.js"; sc.onerror = function () { ZANG_PROMISE = null; rej(new Error("zang")); }; document.head.appendChild(sc);
+    }).then(gunzipB64).then(function (d) { return (EDATA.zang = d); });
+    return ZANG_PROMISE;
+  }
+  function posKey() { return EDITION === "zang" ? "hk-reading-position-zang-v154" : "hk-reading-position-v149"; }
   var CN = "〇一二三四五六七八九";
   function cn(n) { if (n < 10) return CN[n]; if (n < 20) return "十" + (n % 10 ? CN[n % 10] : ""); if (n < 100) return CN[Math.floor(n / 10)] + "十" + (n % 10 ? CN[n % 10] : ""); return "一百"; }
 
@@ -1073,7 +1092,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   if (deviceLayout === "iphone") S.panel = false;
   try { var sp = localStorage.getItem("hk3-panel"); if (sp === "0") S.panel = false; if (sp === "1" && deviceLayout !== "iphone") S.panel = true; } catch (e) {}
 
-  function lab(i) { return N[i][5] + "、"; }
+  function lab(i) { return N[i][5] ? N[i][5] + "、" : ""; }
   function full(i) { return lab(i) + N[i][0]; }
   function pathOf(i) { var p = []; while (i >= 0) { p.unshift(i); i = N[i][4]; } return p; }
   var JL = {}, INS = {}, NOTES = {}, OPT = { px: false, cb: false };
@@ -1163,11 +1182,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     fitP();
   }
   function fitP() {
+    if (typeof Z === "undefined") return;
     if(phoneMode()){
-      var pv=$('pview'),w=Math.max(40,pv.clientWidth-16)*(Z?Z.p*FT.s:1);
+      var pv=$('pview'),w=Math.max(40,pv.clientWidth-16)*(Z?Z.p*FT.s:1);pv.classList.toggle('fit-x',!Z||Z.p*FT.s<=1);
       if(pv.clientWidth){$('pzoom').style.setProperty('--phone-sheet-width',w+'px');pv.style.setProperty('--pks',w/(210*96/25.4));}return;
     }
-    var any = $("pzoom").querySelector(".ksheet");
+    var any = $("pzoom").querySelector(".ksheet");$("pview").classList.toggle("fit-x", !Z || Z.p * FT.s <= 1);
     if (any && any.clientWidth) $("pview").style.setProperty("--pks", any.clientWidth / (210 * 96 / 25.4));
   }
   window.addEventListener("resize", fitP);
@@ -1205,9 +1225,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   // ---------- left rail: 卷 + its 干支科判 (rubber band into adjacent 卷) ----------
   function renderRail(j) {
     S.railJuan = j;
-    var list = JL[j] || [], out = [];
+    var carried = !JL[j] && CARRY[j] != null, list = JL[j] || (carried ? pathOf(CARRY[j]) : []), out = [];
     out.push('<div class="rhead">卷第' + cn(j) + "</div>");
-    out.push('<div class="rsub">本卷 ' + list.length + " 科</div><div class=\"rol\">");
+    out.push('<div class="rsub">' + (carried ? "本卷承接前卷科判" : "本卷 " + list.length + " 科") + "</div><div class=\"rol\">");
     var minD = 99; list.forEach(function (i) { minD = Math.min(minD, N[i][3]); });
     var dl = list.map(function (k) { return N[k][3] - minD; });
     var maxD = 1; dl.forEach(function (d) { if (d > maxD) maxD = d; });
@@ -1397,12 +1417,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       return pre + x[2].replace(/^\s*《披》\s*/, "").split(/\n+/).filter(function (l) { return l.trim(); }).map(function (l, li) { l = l.trim(); return '<p ' + (li ? "" : 'id="nt' + x.ix + '" ') + 'class="' + cls + nind(l) + '" title="' + ttl + '">' + (li || !showTag ? "" : tag) + vt(l) + "</p>"; }).join("");
     };
     var flush = function (pos) { (nb[pos] || []).forEach(function (x) { out.push(note(x)); }); };
-    var fy = t[1].findIndex(function (b) { return b[0] === "y"; }); if (fy < 0) fy = 1e9;
+    var fy = t[1].findIndex(function (b) { return /^[yvn]$/.test(b[0]); }); if (fy < 0) fy = 1e9;
     t[1].forEach(function (b, k) {
       flush(k);
       var ty = b[0], v = b[1];
       if (ty === "k") { closeG(); out.push(kh(v)); }
       else if (ty === "y") { closeG(); tagKind = null; out.push('<p id="b' + k + '">' + v.split("\n").map(function (l) { return vt(l); }).join("<br>") + "</p>"); }
+      else if (ty === "v") { closeG(); tagKind = null; out.push('<p class="v" id="b' + k + '">' + vt(v) + "</p>"); }
+      else if (ty === "n") { closeG(); tagKind = null; out.push('<div class="pin" id="b' + k + '">' + vt(v) + "</div>"); }
       else if (ty === "r") { closeG(); tagKind = null; out.push('<p class="' + (k < fy ? "au" : "rq") + '">' + esc(v.trim()) + "</p>"); }
       else if (ty === "e") { closeG(); out.push('<p class="je">' + esc(v) + "</p>"); }
       else if (ty === "a") out.push('<a class="pgm" id="pg' + esc(v) + '" aria-hidden="true"></a>');
@@ -1581,7 +1603,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     function g(j) { return G[j] || (G[j] = { k: [], t: [], p: [], c: [] }); }
     function snip(s2, p) { return s2.slice(Math.max(0, p - 28), p + q.length + 28); }
     for (var i = 0; i < N.length; i++) { var x = N[i]; if ((x[0] + x[1] + x[2] + (x[7] || []).join("")).indexOf(q) >= 0) { cnt.k++; g(x[6]).k.push(i); } }
-    for (var j = 0; j < TXT.length; j++) TXT[j][1].forEach(function (b, k) { if (b[0] !== "y") return; var s2 = b[1], p = s2.indexOf(q); while (p >= 0) { cnt.t++; g(j + 1).t.push([j + 1, k, snip(s2, p)]); p = s2.indexOf(q, p + q.length); } });
+    for (var j = 0; j < TXT.length; j++) TXT[j][1].forEach(function (b, k) { if (!/^[yvn]$/.test(b[0])) return; var s2 = b[1], p = s2.indexOf(q); while (p >= 0) { cnt.t++; g(j + 1).t.push([j + 1, k, snip(s2, p)]); p = s2.indexOf(q, p + q.length); } });
     var wantN = SOPT.p || SOPT.c;
     for (var jj0 = 1; wantN && jj0 <= 100; jj0++) {
       if (!NOTES[jj0]) { notesReady = false; continue; }
@@ -1653,7 +1675,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
   // one 卷 -> flat list of typed items, built exactly the way 內文 is drawn on screen
   function exportModel(j, inc) {
-    var t = TXT[j - 1], items = [{ t: "jt", s: t[0] }], nb = {}, tagKind = null;
+    var t = TXT[j - 1], items = [{ t: "jt", s: t[0] }], nb = {}, tagKind = null, fy0 = t[1].findIndex(function (b) { return /^[yvn]$/.test(b[0]); });
     if (inc.px || inc.cb) (NOTES[j] || []).forEach(function (x) { if ((x[0] === "p" && inc.px) || (x[0] === "c" && inc.cb)) (nb[x[1]] = nb[x[1]] || []).push(x); });
     function note(x) {
       var kind = x[0] === "p" ? "px" : "cb", show = kind === "px" && tagKind !== "p";
@@ -1671,18 +1693,20 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var ty = b[0], v = b[1];
       if (ty === "k") { if (inc.kp) heads(v); }
       else if (ty === "y") { tagKind = null; if (inc.text) v.split("\n").forEach(function (l) { if (l.trim()) items.push({ t: "p", s: l.replace(/\s+$/, "") }); }); }
+      else if (ty === "v") { tagKind = null; if (inc.text) items.push({ t: "v", s: v }); }
+      else if (ty === "n") { tagKind = null; if (inc.text) items.push({ t: "pin", s: v }); }
       else if (ty === "r") { tagKind = null; if (inc.text) items.push({ t: k < fy ? "au" : "rq", s: v.trim() }); }
       else if (ty === "e") { if (inc.text) items.push({ t: "je", s: v }); }
     });
     flush(t[1].length);
-
+    void fy0;
     return items;
   }
   var FW = "　";
   function rep(s, n) { var o = ""; while (n-- > 0) o += s; return o; }
   function xesc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function tStamp() { var d = new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
-  var DOC_TITLE = "瑜伽師地論（韓清淨科判）";
+  var DOC_TITLE = EDITION === "zang" ? "瑜伽師地論（藏經科判）" : "瑜伽師地論（韓清淨科判）";
 
   // ---- TXT ----
   function toTXT(models) {
@@ -1935,7 +1959,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var models = []; for (var j = a; j <= b; j++) { var model=exportModel(j, inc); if(inc.text || inc.kp || inc.px || inc.cb || model.length>1) models.push(model); }
       if(!models.length) { msg.textContent="所選卷次沒有可匯出的內容。"; return; }
       var parts = []; if (inc.text) parts.push("內文"); if (inc.kp) parts.push("科判"); if (inc.px) parts.push("披尋記"); if (inc.cb) parts.push("常柏法師釋");
-      var base = "瑜伽師地論_" + (a === b ? "卷" + a : "卷" + a + "-" + b) + "_" + parts.join("、");
+      var base = (EDITION === "zang" ? "瑜伽師地論藏經科判_" : "瑜伽師地論_") + (a === b ? "卷" + a : "卷" + a + "-" + b) + "_" + parts.join("、");
       var te = new TextEncoder(), files = [];
       for (var k = 0; k < fm.length; k++) {
         var f = fm[k]; msg.textContent = "正在產生 " + f.toUpperCase() + "…"; await new Promise(function (r) { setTimeout(r, 20); });
@@ -2015,7 +2039,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
 
   // ---------- init ----------
-  function init(D) {
+  var CARRY = {};
+  function setData(D) {
+    JL = {}; INS = {};
     N = D.nodes; PAGES = D.pages; APPEAR = D.appear; OWN = D.own; TXT = D.text; JU = {};
     for (var ni = 0; ni < N.length; ni++) {
       var jn = N[ni][6]; (JL[jn] = JL[jn] || []).push(ni);
@@ -2025,7 +2051,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if (last && last[0] === of) last[1].push(ni); else arr.push([of, [ni]]);
     }
     Object.keys(INS).forEach(function (jn) { Object.keys(INS[jn]).forEach(function (bk) { INS[jn][bk].sort(function (a, b) { return a[0] - b[0]; }); }); });
-    for (var jj0 = 1; jj0 <= 100; jj0++) JU[jj0] = [(JL[jj0] || [0])[0], ""];
+    CARRY = {}; var lastN = 0; for (var jj0 = 1; jj0 <= 100; jj0++) { if (JL[jj0]) { JU[jj0] = [JL[jj0][0], ""]; lastN = JL[jj0][JL[jj0].length - 1]; } else { JU[jj0] = [lastN, ""]; CARRY[jj0] = lastN; } }
     NPDF = PAGES.length + 1;
     // page -> 卷 (first real node on the page), 卷 -> first page
     PJ = {}; JFIRSTPAGE = {};
@@ -2049,6 +2075,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       JRANGE[j2] = best || [JFIRSTPAGE[j2], JFIRSTPAGE[j2]];
       JFIRSTPAGE[j2] = Math.min(JFIRSTPAGE[j2], JRANGE[j2][0]) === JRANGE[j2][0] ? JRANGE[j2][0] : JFIRSTPAGE[j2];
     }
+  }
+  function init(D) {
+    setData(D);
     var jh = ""; for (var k = 1; k <= 100; k++) jh += '<a href="#j' + k + '" data-j="' + k + '" title="卷第' + cn(k) + '">' + k + "</a>";
     $("juans").innerHTML = jh;
     (function () {
@@ -2225,18 +2254,18 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     applyZoom();
     if (save) { try { localStorage.setItem("hk-font", JSON.stringify(FT)); } catch (e) {} setTimeout(function () { window.dispatchEvent(new Event("resize")); }, 30); }
   }
-  var FSTEPS = Array.from({length:16},function(_,i){return (50+i*10)/100;});
+  var FSTEPS = [0.7,0.8,0.9,1,1.15,1.3,1.5];
   function fsIdx(v) { var b = 0; FSTEPS.forEach(function (x, i) { if (Math.abs(x - v) < Math.abs(FSTEPS[b] - v)) b = i; }); return b; }
   function fsUI(v) {
     var r = $("fsR"), ix = fsIdx(v); if (+r.value !== ix) r.value = ix;
-    r.style.setProperty("--fp", (ix / 15 * 100) + "%");var defaultIx=5;document.querySelectorAll(".fticks i").forEach(function(t,i){t.classList.toggle("d",i===defaultIx);});document.querySelector(".fdef").style.left=(defaultIx/15*100)+"%";
+    r.style.setProperty("--fp", (ix / (FSTEPS.length-1) * 100) + "%");var defaultIx=3;document.querySelectorAll(".fticks i").forEach(function(t,i){t.classList.toggle("d",i===defaultIx);});document.querySelector(".fdef").style.left=(defaultIx/(FSTEPS.length-1)*100)+"%";
 
   }
   var fsT = null;
   $("fsR").addEventListener("input", function () { var v = FSTEPS[+this.value]; fsUI(v); clearTimeout(fsT); fsT = setTimeout(function () { setFont(v, null, 0); }, 140); });
   $("fsR").addEventListener("change", function () { clearTimeout(fsT); setFont(FSTEPS[+this.value], null, true); });
   $("fsDn").onclick = function () { setFont(FSTEPS[Math.max(0, fsIdx(Z.m) - 1)], null, true); };
-  $("fsUp").onclick = function () { setFont(FSTEPS[Math.min(15, fsIdx(Z.m) + 1)], null, true); };
+  $("fsUp").onclick = function () { setFont(FSTEPS[Math.min(FSTEPS.length-1, fsIdx(Z.m) + 1)], null, true); };
   $("lsSeg").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) setFont(null, +b.dataset.l, true); });
   $("fsReset").onclick = function () { setFont(1, 1, true); resetSourceFont(); };
   function openFt(on) { if(lockedSub && (lockedSub!=="ft" || !on))return; $("ftWrap").classList.toggle("open", on); if (on) { $("about").classList.remove("open"); document.querySelector(".menu .dl").classList.remove("on"); openDl(false); } }
@@ -2542,7 +2571,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     },true);
     document.addEventListener('dblclick',function(e){if(phoneMode()&&hitNode(e.target)){e.preventDefault();e.stopImmediatePropagation();if(Date.now()-lastDouble>350){if(queuedTap){clearTimeout(queuedTap.timer);queuedTap=null;}doubleNode(hitNode(e.target),ReaderUI.screen);}}},true);
     var originalFold=$('jFold').onclick;
-    $('jFold').onclick=function(e){if(!phoneMode()){originalFold.call(this,e);return;}var root=document.documentElement,juans=$('juans'),on=root.classList.contains('phone-juan-open')&&juans.style.pointerEvents!=='none';this.setAttribute('aria-expanded',String(!on));if(on)Motion.close(juans,function(){root.classList.remove('phone-juan-open');});else{root.classList.add('phone-juan-open');Motion.open(juans);}};
+    $('jFold').onclick=function(e){if(!phoneMode()){originalFold.call(this,e);return;}e.stopPropagation();var root=document.documentElement,juans=$('juans'),on=root.classList.contains('phone-juan-open')&&juans.style.pointerEvents!=='none';this.setAttribute('aria-expanded',String(!on));if(on)Motion.close(juans,function(){root.classList.remove('phone-juan-open');});else{root.classList.add('phone-juan-open');Motion.open(juans);}};
     document.addEventListener('pointerdown',function(e){if(phoneMode()&&!e.target.closest('.rail-top')){if(document.documentElement.classList.contains('phone-juan-open'))Motion.close($('juans'),function(){document.documentElement.classList.remove('phone-juan-open');});$('jFold').setAttribute('aria-expanded','false');}});
     $('juans').addEventListener('click',function(){if(phoneMode()){if(document.documentElement.classList.contains('phone-juan-open'))Motion.close($('juans'),function(){document.documentElement.classList.remove('phone-juan-open');});$('jFold').setAttribute('aria-expanded','false');}});
     window.addEventListener('reader-phone-dictionary',function(){suppressClickUntil=Date.now()+700;if(queuedTap){clearTimeout(queuedTap.timer);queuedTap=null;}});
@@ -2553,14 +2582,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var longPressActive=false,holdTimer=null,holdPoint=null,pendingHeld=null,touchCount=0,releasePending=false,activePointers=new Set();
     function mobileDictionary(){return deviceLayout!=='mac'||navigator.maxTouchPoints>1;}
     function selectingNow(){return releasePending||touchCount>0||activePointers.size>0||dragging;}
-    function queueSelection(){clearTimeout(selectionTimer);if(mobileDictionary())return;if(mobileDictionary()&&selectingNow())return;selectionTimer=setTimeout(function(){if(mobileDictionary()&&selectingNow())return;showSelection();},mobileDictionary()?750:120);}
+    function queueSelection(){clearTimeout(selectionTimer);if(mobileDictionary()){touchQueue();return;}if(mobileDictionary()&&selectingNow())return;selectionTimer=setTimeout(function(){if(mobileDictionary()&&selectingNow())return;showSelection();},mobileDictionary()?750:120);}
     article.addEventListener('contextmenu',function(){clearTimeout(selectionTimer);});
     main.addEventListener('scroll',function(){clearTimeout(holdTimer);holdPoint=null;pendingHeld=null;},{passive:true});
     var pop=$('termPreview'),enabled=true,selectionTimer=null,waitTimer=null,currentTerm='',activeRange=null,dragging=false,generation=0,frames=new Map(),dismissedSelection='';
     try{enabled=localStorage.getItem('hk-dict-preview')!=='0';}catch(e){}$('optDict').checked=enabled;
     var knownTerms=("阿賴耶識 阿頼耶識 阿陀那識 末那識 一切種子識 有餘依涅槃 無餘依涅槃 無自性性 三摩呬多 三摩鉢底 三摩地 三摩耶 三摩呬多地 非三摩呬多地 有尋有伺 無尋唯伺 無尋無伺 如來藏 阿羅漢 辟支佛 摩訶薩 菩提薩埵 瑜伽師 瑜伽 菩薩 聲聞 獨覺 如來 菩提 涅槃 般若 波羅蜜多 波羅蜜 緣起 因緣 無明 行識 名色 六處 六入 十二處 十八界 十二因緣 六識 八識 眼識 耳識 鼻識 舌識 身識 意識 眼根 耳根 鼻根 舌根 身根 意根 五根 五力 四諦 苦諦 集諦 滅諦 道諦 八正道 四念處 四正勤 四神足 七覺支 五蘊 色蘊 受蘊 想蘊 行蘊 識蘊 五陰 色法 心法 心所法 心所 不相應行 無為法 有為法 無為 有為 無常 無我 苦空 真如 法性 法界 法身 自性 空性 不二 煩惱 所知障 煩惱障 種子 習氣 現行 轉依 熏習 俱生 分別 作意 觸受 思慧 想思 善法 不善法 無記 貪瞋癡 貪欲 瞋恚 愚癡 慢疑 惡見 正見 正思惟 正語 正業 正命 正精進 正念 正定 奢摩他 毘鉢舍那 毗鉢舍那 止觀 禪定 等持 等至 等引 靜慮 初禪 二禪 三禪 四禪 四靜慮 欲界 色界 無色界 三界 三業 身業 語業 意業 業力 業果 業報 因果 異熟 等流 增上 勝解 念根 精進 正知 正念 善巧 方便 慈悲 喜捨 慈無量 悲無量 喜無量 捨無量 四無量心 法住 法爾 佛法 僧伽 苾芻 比丘 比丘尼 優婆塞 優婆夷 三寶 四眾 六度 持戒 布施 忍辱 戒定慧 戒律 解脫 律儀 根境 四大 地水火風 地界 水界 火界 風界 極微 識住 中有 生有 死有 本有 地獄 傍生 餓鬼 天人 非天 阿修羅 輪迴 生死 出離 攝受 攝藏 隨眠 結使 纏縛 斷惑 聖道 見道 修道 無學道 有學 無學 凡夫 聖者 佛陀 三藏 名相 法相 法數 法門 五事 五法 三性 遍計所執 依他起 圓成實 圓成實性 所緣 能緣 能取 所取 有漏 無漏 漏盡 有情 無情 心識 心意識 本地分 攝決擇分 攝釋分 攝異門分 攝事分").split(/\s+/).filter(Boolean).sort(function(a,b){return b.length-a.length;});
     function hidePreview(){longPressActive=false;dismissedSelection=String(getSelection()||'');if(window.CSS&&CSS.highlights)CSS.highlights.delete('dict-term');clearTimeout(selectionTimer);clearTimeout(waitTimer);generation++;if(!pop.hidden)Motion.close(pop,function(){pop.hidden=true;});currentTerm='';activeRange=null;}
-    function placePreview(){if(pop.hidden||!activeRange)return;var v=viewportBox(),bounds=overlayBounds(),rects=Array.from(activeRange.getClientRects()),r=rects.find(function(x){return x.bottom>bounds.top&&x.top<bounds.bottom;})||activeRange.getBoundingClientRect(),w=Math.max(80,Math.min(430,v.width-24));pop.style.setProperty('--dict-width',w+'px');pop.style.setProperty('--dict-maxheight',Math.max(60,bounds.bottom-bounds.top)+'px');var h=Math.min(pop.offsetHeight,bounds.bottom-bounds.top),x=Math.max(v.left+12,Math.min(v.left+v.width-w-12,r.left)),y=r.bottom+10;if(y+h>bounds.bottom)y=r.top-h-10;y=Math.max(bounds.top,Math.min(bounds.bottom-h,y));pop.style.setProperty('--dict-left',x+'px');pop.style.setProperty('--dict-top',y+'px');}
+    function placePreview(){if(pop.hidden||!activeRange)return;if(mobileDictionary()){var vb=viewportBox(),bb=overlayBounds(),sw=Math.min(560,vb.width-16);pop.style.setProperty('--dict-width',sw+'px');pop.style.setProperty('--dict-maxheight',Math.max(160,Math.min(vb.height*.62,bb.bottom-bb.top-8))+'px');pop.style.setProperty('--dict-left',(vb.left+(vb.width-sw)/2)+'px');pop.style.setProperty('--dict-top',Math.max(bb.top,bb.bottom-pop.offsetHeight)+'px');return;}var v=viewportBox(),bounds=overlayBounds(),rects=Array.from(activeRange.getClientRects()),r=rects.find(function(x){return x.bottom>bounds.top&&x.top<bounds.bottom;})||activeRange.getBoundingClientRect(),w=Math.max(80,Math.min(430,v.width-24));pop.style.setProperty('--dict-width',w+'px');pop.style.setProperty('--dict-maxheight',Math.max(60,bounds.bottom-bounds.top)+'px');var h=Math.min(pop.offsetHeight,bounds.bottom-bounds.top),x=Math.max(v.left+12,Math.min(v.left+v.width-w-12,r.left)),y=r.bottom+10;if(y+h>bounds.bottom)y=r.top-h-10;y=Math.max(bounds.top,Math.min(bounds.bottom-h,y));pop.style.setProperty('--dict-left',x+'px');pop.style.setProperty('--dict-top',y+'px');}
     function showPreview(term,range){
       term=term.trim();if(!enabled || !term || term.length>40)return;activeRange=range;if(window.CSS&&CSS.highlights&&window.Highlight)CSS.highlights.set('dict-term',new Highlight(range));
       if(currentTerm===term && !pop.hidden){placePreview();return;}currentTerm=term;var token=++generation;
@@ -2582,6 +2611,33 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       showPreview(term,sel.getRangeAt(0).cloneRange());
       var choices=$('termChoices');choices.replaceChildren();matches.filter(function(t,i,all){return !all.slice(0,i).some(function(longer){return longer.includes(t);});}).slice(0,20).forEach(function(t){var b=document.createElement('button');b.textContent=t;b.onclick=function(){if(activeRange)showPreview(t,activeRange.cloneRange());};choices.appendChild(b);});
     }
+    // Touch: the native selection menu stays untouched. After the finger lifts,
+    // a small chip appears at the bottom edge; tapping it opens the dictionary sheet.
+    var chip=document.createElement('button');chip.type='button';chip.className='dict-chip';chip.hidden=true;chip.setAttribute('aria-label','查佛學辭典');
+    chip.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h10.5A2.5 2.5 0 0 1 18 7v12.5H7.5A2.5 2.5 0 0 1 5 17z"/><path d="M5 17a2.5 2.5 0 0 1 2.5-2.5H18"/></svg><span>查辭典</span><b></b>';
+    document.body.appendChild(chip);var chipTerm='',chipRange=null,chipMatches=[];
+    function hideChip(){if(!chip.hidden)Motion.close(chip,function(){chip.hidden=true;});}
+    function touchQueue(){selectionTimer=setTimeout(function(){if(selectingNow()){touchQueue();return;}showChip();},420);}
+    function showChip(){
+      if(!enabled){hideChip();return;}
+      var sel=getSelection();if(!sel||!sel.rangeCount||sel.isCollapsed){hideChip();return;}
+      if(!article.contains(sel.anchorNode)||!article.contains(sel.focusNode)){hideChip();return;}
+      var selected=sel.toString().replace(/\s+/g,'').trim();if(!selected){hideChip();return;}
+      chipMatches=knownTerms.filter(function(t){return selected.includes(t);});
+      chipTerm=selected.length<=12?selected:(chipMatches[0]||'');if(!chipTerm){hideChip();return;}
+      chipRange=sel.getRangeAt(0).cloneRange();chip.querySelector('b').textContent=chipTerm;
+      if(chip.hidden){chip.hidden=false;Motion.open(chip);}
+    }
+    chip.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();});
+    chip.addEventListener('touchstart',function(e){e.stopPropagation();},{passive:true});
+    chip.addEventListener('click',function(e){
+      e.preventDefault();e.stopPropagation();if(!chipTerm||!chipRange)return;
+      var term=chipTerm,range=chipRange,matches=chipMatches;chip.hidden=true;
+      try{getSelection().removeAllRanges();}catch(er){}
+      dismissedSelection='';showPreview(term,range);
+      var choices=$('termChoices');choices.replaceChildren();matches.filter(function(t,i,all){return t!==term&&!all.slice(0,i).some(function(longer){return longer.includes(t);});}).slice(0,12).forEach(function(t){var b=document.createElement('button');b.textContent=t;b.onclick=function(){if(activeRange)showPreview(t,activeRange.cloneRange());};choices.appendChild(b);});
+      requestAnimationFrame(placePreview);
+    });
     var lastTap=null,tapStart=null,lastLookup=0;
     function wordAt(x,y){
       if(!enabled||performance.now()-lastLookup<250)return;
@@ -2596,25 +2652,25 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       lastLookup=performance.now();$('termChoices').replaceChildren();showPreview(term,range);window.dispatchEvent(new Event('reader-phone-dictionary'));
     }
     article.addEventListener('touchstart',function(e){if(!mobileDictionary()||e.touches.length!==1||e.target.closest('.kh,button,a,input')){tapStart=null;return;}var sel=getSelection();if(sel&&!sel.isCollapsed){tapStart=null;lastTap=null;return;}var t=e.touches[0];tapStart={x:t.clientX,y:t.clientY,time:performance.now()};},{passive:true});
-    article.addEventListener('touchend',function(e){if(!tapStart||!e.changedTouches.length)return;var t=e.changedTouches[0],now=performance.now(),start=tapStart;tapStart=null;if(now-start.time>250||Math.hypot(t.clientX-start.x,t.clientY-start.y)>12){lastTap=null;return;}if(lastTap&&now-lastTap.time<350&&Math.hypot(t.clientX-lastTap.x,t.clientY-lastTap.y)<20){e.preventDefault();lastTap=null;wordAt(t.clientX,t.clientY);}else lastTap={x:t.clientX,y:t.clientY,time:now};},{passive:false});
+    article.addEventListener('touchend',function(e){if(!tapStart||!e.changedTouches.length)return;var t=e.changedTouches[0],now=performance.now(),start=tapStart;tapStart=null;if(now-start.time>250||Math.hypot(t.clientX-start.x,t.clientY-start.y)>12){lastTap=null;return;}lastTap={x:t.clientX,y:t.clientY,time:now};},{passive:true});
     article.addEventListener('touchcancel',function(){tapStart=null;lastTap=null;},{passive:true});
-    article.addEventListener('dblclick',function(e){if(mobileDictionary()&&!e.target.closest('.kh')){e.preventDefault();wordAt(e.clientX,e.clientY);}});
+    void wordAt;
     // Selection stays visible while the user moves into the popup or its external link.
-    document.addEventListener('selectionchange',function(){if(mobileDictionary()&&selectingNow()){if(!pop.hidden)hidePreview();dismissedSelection='';}queueSelection();});
-    document.addEventListener('pointerdown',function(e){if(pop.contains(e.target))return;if(mobileDictionary()){releasePending=true;activePointers.add(e.pointerId);}else if(article.contains(e.target))dragging=true;clearTimeout(selectionTimer);});
+    document.addEventListener('selectionchange',function(){if(mobileDictionary()){var sl=getSelection();if(!sl||sl.isCollapsed){clearTimeout(selectionTimer);hideChip();return;}if(selectingNow()){hideChip();if(!pop.hidden)hidePreview();}}queueSelection();});
+    document.addEventListener('pointerdown',function(e){if(pop.contains(e.target)||chip.contains(e.target))return;if(mobileDictionary()){releasePending=true;activePointers.add(e.pointerId);}else if(article.contains(e.target))dragging=true;clearTimeout(selectionTimer);});
     document.addEventListener('pointerup',function(e){activePointers.delete(e.pointerId);if(!activePointers.size&&!touchCount)releasePending=false;dragging=false;clearTimeout(holdTimer);holdPoint=null;if(!pop.contains(e.target))queueSelection();});
     document.addEventListener('pointercancel',function(e){activePointers.delete(e.pointerId);dragging=false;clearTimeout(holdTimer);clearTimeout(selectionTimer);holdPoint=null;pendingHeld=null;});
-    document.addEventListener('touchstart',function(e){if(!mobileDictionary()||pop.contains(e.target))return;releasePending=true;touchCount=e.touches.length;clearTimeout(selectionTimer);if(touchCount>1){clearTimeout(holdTimer);holdPoint=null;pendingHeld=null;}},{passive:true});
+    document.addEventListener('touchstart',function(e){if(!mobileDictionary()||pop.contains(e.target)||chip.contains(e.target))return;releasePending=true;touchCount=e.touches.length;clearTimeout(selectionTimer);if(touchCount>1){clearTimeout(holdTimer);holdPoint=null;pendingHeld=null;}},{passive:true});
     document.addEventListener('touchmove',function(e){if(!mobileDictionary()||pop.contains(e.target))return;touchCount=e.touches.length;clearTimeout(selectionTimer);},{passive:true});
     document.addEventListener('touchend',function(e){touchCount=e.touches.length;if(!touchCount&&!activePointers.size)releasePending=false;if(!pop.contains(e.target))queueSelection();},{passive:true});
     document.addEventListener('touchcancel',function(){touchCount=0;activePointers.clear();clearTimeout(selectionTimer);clearTimeout(holdTimer);holdPoint=null;pendingHeld=null;},{passive:true});
     window.addEventListener('blur',function(){releasePending=false;touchCount=0;activePointers.clear();pendingHeld=null;clearTimeout(selectionTimer);clearTimeout(holdTimer);});
     $('termPreviewClose').onclick=hidePreview;
-    $('optDict').onchange=function(){enabled=this.checked;try{localStorage.setItem('hk-dict-preview',enabled?'1':'0');}catch(e){}hidePreview();};
+    $('optDict').onchange=function(){enabled=this.checked;hideChip();try{localStorage.setItem('hk-dict-preview',enabled?'1':'0');}catch(e){}hidePreview();};
 
-    document.addEventListener('pointerdown',function(e){if(!pop.hidden && !pop.contains(e.target)){hidePreview();if(article.contains(e.target))dismissedSelection='';}});
+    document.addEventListener('pointerdown',function(e){if(!pop.hidden && !pop.contains(e.target)&&!chip.contains(e.target)){hidePreview();if(article.contains(e.target))dismissedSelection='';}});
     document.addEventListener('keydown',function(e){if(e.key==='Escape')hidePreview();});
-    window.addEventListener('scroll',function(){var selected=getSelection();if(selected&&!selected.isCollapsed)queuePreview();else hidePreview();},{passive:true});var queuePreview=Motion.rafThrottle(placePreview);window.addEventListener('resize',queuePreview);window.addEventListener('reader-viewport',queuePreview);if(window.visualViewport)window.visualViewport.addEventListener('resize',queuePreview);
+    window.addEventListener('scroll',function(){if(mobileDictionary()){if(!pop.hidden)queuePreview();return;}var selected=getSelection();if(selected&&!selected.isCollapsed)queuePreview();else hidePreview();},{passive:true});var queuePreview=Motion.rafThrottle(placePreview);window.addEventListener('resize',queuePreview);window.addEventListener('reader-viewport',queuePreview);if(window.visualViewport)window.visualViewport.addEventListener('resize',queuePreview);
     new MutationObserver(function(){if(activeRange&&article.contains(activeRange.startContainer)){queuePreview();return;}hidePreview();}).observe(article,{childList:true,subtree:true});
   }
 
@@ -2675,11 +2731,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function saveReadingPosition(){
     var b=ReaderUI.single&&ReaderUI.screen!=='read'&&ReaderUI.screen!=='search'?ReaderUI.bookmark:captureReading();
     if(!b)return;b.hash=location.hash;
-    try{localStorage.setItem('hk-reading-position-v149',JSON.stringify(b));}catch(e){}
+    try{localStorage.setItem(posKey(),JSON.stringify(b));}catch(e){}
   }
   function resumeReadingPosition(){
     try{
-      var b=JSON.parse(localStorage.getItem('hk-reading-position-v149')||'null');
+      var b=JSON.parse(localStorage.getItem(posKey())||'null');
       var explicit=location.hash.match(/^#(?:j|n|v)(\d+)/);
       if(!b||b.juan<1||b.juan>100||explicit&&location.hash!==b.hash&&location.hash!=='#j'+b.juan)return;
       openText(b.juan);if(N[b.cur]&&N[b.cur][6]===b.juan){S.cur=b.cur;linkedPage=b.page||APPEAR[b.cur];railFocus(b.cur);if($('k'+b.cur))$('k'+b.cur).classList.add('on');}
@@ -2765,28 +2821,28 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
 
   var settingsPage='root',versionBack='about';
-  var versionSummaries={"1.27": "建立手機、平板、電腦三種自適應介面與偏好記憶。", "1.28": "新增學習模式、筆記保存與多格式匯出，完善 iPad 科判釘選。", "1.29": "新增佛學名相辭典，支援原文查詞與外部詞條預覽。", "1.30": "學習筆記改為段落內直接編輯，增加筆記樣式、篩選與反白查詞。", "1.31": "新增原文／筆記自由組合顯示、完整列印與小冊子功能。", "1.32": "新增內文與科判左右置換，並保存使用者偏好。", "1.33": "學習模式改為右鍵／長按叫出註釋、心得、提問，精簡常駐介面並擴充列印紙張。", "1.34": "目前缺少更新紀錄。", "1.35": "目前缺少更新紀錄。", "1.36": "還原串文原有縮排、間距與連接線，統一介面風格並重新整理功能列表。", "1.37": "功能列表改為分層選單，大幅移除書寫與筆記功能，保留核心閱讀功能。", "1.38": "辭典取消懸浮與點按自動查詞，只保留反白選取查詞。", "1.39": "重整大導覽與功能提示，搜尋簡化成單一放大鏡。", "1.40": "電腦版內文與科判預設 1：1，重新整理內文與恢復預設功能。", "1.41": "移除上方常駐功能列，功能列表可由點擊外部或空白鍵關閉。", "1.42": "簡化科判頁碼顯示，修正平板欄位排列並保留閱讀位置。", "1.43": "平板加入可保存的拖曳欄寬，功能列表固定時不再影響正文版面。", "1.44": "微調搜尋欄提示文字、縮排與輸入位置。", "1.45": "確立平板橫向三欄、直向單欄的閱讀架構。", "1.46": "全面修正手機／平板搜尋、選單、科判溢出與裝置自動偵測等響應式問題。", "1.47": "完成目次、正文、科判位置連動，改善觸控反白查詞與辭典邊界，手機／平板功能列表改為小型懸浮視窗。", "1.48": "加入 App 自動更新功能。", "1.49": "統一閱讀位置與欄位狀態；修正行動版欄寬、旋轉、搜尋與浮窗定位；更新後保存閱讀位置。", "1.50": "目次保持橫書並自動對焦；行動版保留完整科判縮排；手機新增雙擊連動、邊緣翻頁、A4 單頁科判及 125% 預設倍率。", "1.51": "反白查字典改為放開後顯示；功能列表改為分組子頁；手機自動鎖定介面；移除行動版欄位收起圖示；增加電腦閱讀留白與科判灰底；加入版本紀錄。", "1.53":"恢復原有白底配色；大小預設100%、每次10%；正文跨卷連續上下閱讀、科判連續捲動；精簡工具與功能面板，行動版改為雙擊查詞。", "1.52": "統一輕量動效、按鍵回饋、浮窗進出與拖曳節流；改善手機滑動和卷次邊界提醒；保留原生反白、放開後查詞；縮放改為 25% 級距（50%～200%）；新增四種閱讀底色、大小／搜尋控制及獨立版本摘要。"};
+  var versionSummaries={"1.54":"新增「版本」：可在韓清淨科判與藏經科判之間切換，排版、卷次目錄與直書科判沿用同一介面；手機／平板改為反白後由底部「查辭典」開啟辭典，不再與系統選取選單重疊；科判 100% 時不左右滑動；字體大小改為七段、預設置中，行距改用示意圖；匯出面板加寬重排；側欄圖示更新；手機底部導覽置中；行動版科判標題改為換行，捲動更順，只在換卷時保留輕微吸附。","1.53":"還原原有白底與字色；三欄預設 100%，10% 級距；正文跨卷連續閱讀；手機與平板雙擊查詞；精簡功能面板。","1.27": "建立手機、平板、電腦三種自適應介面與偏好記憶。", "1.28": "新增學習模式、筆記保存與多格式匯出，完善 iPad 科判釘選。", "1.29": "新增佛學名相辭典，支援原文查詞與外部詞條預覽。", "1.30": "學習筆記改為段落內直接編輯，增加筆記樣式、篩選與反白查詞。", "1.31": "新增原文／筆記自由組合顯示、完整列印與小冊子功能。", "1.32": "新增內文與科判左右置換，並保存使用者偏好。", "1.33": "學習模式改為右鍵／長按叫出註釋、心得、提問，精簡常駐介面並擴充列印紙張。", "1.34": "目前缺少更新紀錄。", "1.35": "目前缺少更新紀錄。", "1.36": "還原串文原有縮排、間距與連接線，統一介面風格並重新整理功能列表。", "1.37": "功能列表改為分層選單，大幅移除書寫與筆記功能，保留核心閱讀功能。", "1.38": "辭典取消懸浮與點按自動查詞，只保留反白選取查詞。", "1.39": "重整大導覽與功能提示，搜尋簡化成單一放大鏡。", "1.40": "電腦版內文與科判預設 1：1，重新整理內文與恢復預設功能。", "1.41": "移除上方常駐功能列，功能列表可由點擊外部或空白鍵關閉。", "1.42": "簡化科判頁碼顯示，修正平板欄位排列並保留閱讀位置。", "1.43": "平板加入可保存的拖曳欄寬，功能列表固定時不再影響正文版面。", "1.44": "微調搜尋欄提示文字、縮排與輸入位置。", "1.45": "確立平板橫向三欄、直向單欄的閱讀架構。", "1.46": "全面修正手機／平板搜尋、選單、科判溢出與裝置自動偵測等響應式問題。", "1.47": "完成目次、正文、科判位置連動，改善觸控反白查詞與辭典邊界，手機／平板功能列表改為小型懸浮視窗。", "1.48": "加入 App 自動更新功能。", "1.49": "統一閱讀位置與欄位狀態；修正行動版欄寬、旋轉、搜尋與浮窗定位；更新後保存閱讀位置。", "1.50": "目次保持橫書並自動對焦；行動版保留完整科判縮排；手機新增雙擊連動、邊緣翻頁、A4 單頁科判及 125% 預設倍率。", "1.51": "反白查字典改為放開後顯示；功能列表改為分組子頁；手機自動鎖定介面；移除行動版欄位收起圖示；增加電腦閱讀留白與科判灰底；加入版本紀錄。", "1.53":"恢復原有白底配色；大小預設100%、每次10%；正文跨卷連續上下閱讀、科判連續捲動；精簡工具與功能面板，行動版改為雙擊查詞。", "1.52": "統一輕量動效、按鍵回饋、浮窗進出與拖曳節流；改善手機滑動和卷次邊界提醒；保留原生反白、放開後查詞；縮放改為 25% 級距（50%～200%）；新增四種閱讀底色、大小／搜尋控制及獨立版本摘要。"};
   function showSettingsPage(page){
     settingsPage=page;var menu=$('menu'),panel=menu.querySelector('.mpop');
     panel.dataset.settingsPage=page;panel.scrollTop=0;
-    var names={root:'功能',content:'內文',layout:'介面',ft:'字體',dl:'匯出',about:'關於',history:'版本紀錄',version:'更新摘要'};
+    var names={root:'功能',edition:'版本',content:'內文',layout:'介面',ft:'字體',dl:'匯出',about:'關於',history:'版本紀錄',version:'更新摘要'};
     $('settingsTitle').textContent=names[page]||'功能';$('settingsBack').hidden=page==='root';$('settingsBack').setAttribute('aria-label',page==='history'?'返回關於':'返回功能列表');
     $('ftWrap').classList.toggle('open',page==='ft');$('about').classList.toggle('open',page==='about'||page==='history'||page==='version');
     document.querySelector('.menu .dl').classList.toggle('on',page==='dl');$('dlPop').hidden=page!=='dl';
     document.querySelector('.learning-settings').open=page==='layout';
-    lockedSub=page==='root'?null:page==='content'?'content':page==='history'||page==='version'?'about':page;
+    lockedSub=page==='root'?null:page==='edition'?'edition':page==='content'?'content':page==='history'||page==='version'?'about':page;
     if(page!=='root'){menuPinned=true;menu.classList.add('pinned');$('menuBtn').setAttribute('aria-pressed','true');}
     positionSubmenus();if(menu.classList.contains("open"))Motion.run(panel,[{opacity:.75},{opacity:1}]);
   }
   function setupSettingsNavigation(){
     var panel=$('menu').querySelector('.mpop');
     function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent='v'+v;$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
-    $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){versionPage('1.53','about');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();versionPage('1.53','about');}};
+    $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){versionPage('1.54','about');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();versionPage('1.54','about');}};
     $('versionHistory').onclick=function(e){var b=e.target.closest('[data-version]');if(b)versionPage(b.dataset.version,'history');};
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     $('settingsBack').onclick=function(){showSettingsPage(settingsPage==='version'?versionBack:settingsPage==='history'?'about':'root');};
-    panel.addEventListener('click',function(e){var target=e.target.closest('#contentBtn,#ftBtn,#dlBtn,#aboutBtn,.learning-settings summary,#versionHistoryBtn');if(!target)return;e.preventDefault();e.stopImmediatePropagation();var page=target.id==='contentBtn'?'content':target.id==='ftBtn'?'ft':target.id==='dlBtn'?'dl':target.id==='aboutBtn'?'about':target.id==='versionHistoryBtn'?'history':'layout';showSettingsPage(page);openMenu();},true);
+    panel.addEventListener('click',function(e){var target=e.target.closest('#editionBtn,#contentBtn,#ftBtn,#dlBtn,#aboutBtn,.learning-settings summary,#versionHistoryBtn');if(!target)return;e.preventDefault();e.stopImmediatePropagation();var page=target.id==='editionBtn'?'edition':target.id==='contentBtn'?'content':target.id==='ftBtn'?'ft':target.id==='dlBtn'?'dl':target.id==='aboutBtn'?'about':target.id==='versionHistoryBtn'?'history':'layout';showSettingsPage(page);openMenu();},true);
     // Keep child navigation intentional rather than expanding while passing a row.
     panel.addEventListener('mouseenter',function(e){if(e.target.closest('#ftBtn,#dlBtn,#aboutBtn,.learning-settings'))e.stopImmediatePropagation();},true);
     document.querySelector('.learning-settings').addEventListener('toggle',function(){if(settingsPage==='layout'&&!this.open)this.open=true;});
@@ -2816,22 +2872,53 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function placeSearch(){if($('q').hidden)return;var v=viewportBox(),r=$('searchButton').getBoundingClientRect(),w=Math.max(80,Math.min(320,v.width-24)),h=48,b=overlayBounds();var x=Math.max(v.left+12,Math.min(v.left+v.width-w-12,r.right-w)),y=Math.max(b.top,Math.min(b.bottom-h,r.bottom+10));$('q').style.setProperty('--search-left',x+'px');$('q').style.setProperty('--search-top',y+'px');$('q').style.setProperty('--search-width',w+'px');}
   function positionSubmenus(){
     var v=viewportBox(),menu=$('menu').querySelector('.mpop'),anchor=$('menuBtn').getBoundingClientRect(),b=overlayBounds();
-    var inset=v.width<500?16:24,width=Math.max(80,Math.min(380,v.width-inset*2));
+    var inset=v.width<500?12:24,width=Math.max(80,Math.min(settingsPage==='dl'?460:settingsPage==='edition'?320:380,v.width-inset*2));
     var x=Math.max(v.left+inset,Math.min(v.left+v.width-width-inset,anchor.left));
     var y=Math.max(b.top+8,Math.min(b.bottom-96,anchor.bottom+10));
     if(menu.classList.contains('menus-stacked'))menu.classList.remove('menus-stacked');if(menu.classList.contains('submenus-left'))menu.classList.remove('submenus-left');
     menu.style.setProperty('--menu-width',width+'px');menu.style.setProperty('--menu-left',x+'px');menu.style.setProperty('--menu-top',y+'px');menu.style.setProperty('--menu-height',Math.max(40,b.bottom-y-8)+'px');
   }
-  var queueFloating=Motion.rafThrottle(function(){placeSearch();positionSubmenus();});window.addEventListener('resize',queueFloating);window.addEventListener('scroll',queueFloating,{passive:true});
+  var queueFloating=Motion.rafThrottle(function(){placeSearch();positionSubmenus();});window.addEventListener('resize',queueFloating);window.addEventListener('scroll',function(){if($('menu').classList.contains('open')||!$('q').hidden)queueFloating();},{passive:true});
   if(window.visualViewport){visualViewport.addEventListener('resize',queueFloating);visualViewport.addEventListener('scroll',queueFloating);}
+  function editionUI(){
+    var zang=EDITION==='zang';document.documentElement.dataset.edition=EDITION;
+    DOC_TITLE=zang?'瑜伽師地論（藏經科判）':'瑜伽師地論（韓清淨科判）';
+    $('editionCur').textContent=zang?'藏經科判':'韓清淨科判';
+    document.querySelectorAll('.edition-choice').forEach(function(b){b.setAttribute('aria-checked',String(b.dataset.edition===EDITION));});
+    var src=$('about').querySelector('.src');if(src){if(!src.dataset.hk)src.dataset.hk=src.innerHTML;src.innerHTML=zang?'藏經科判：原文、分卷與科判依所附大藏經版本整理（唐玄奘譯，一百卷），本頁僅重新排版，排版、卷次目錄與直書科判沿用同一介面。<br><br>'+src.dataset.hk:src.dataset.hk;}
+  }
+  function switchEdition(ed){
+    if(ed===EDITION)return Promise.resolve(false);
+    var j=S.view==='v'?(PJ[S.vpage]||S.railJuan||1):(S.juan||1),msg=$('editionMsg');
+    saveReadingPosition();if(msg)msg.textContent='正在載入'+(ed==='zang'?'藏經科判':'韓清淨科判')+'…';
+    return loadEdition(ed).then(function(D){
+      EDITION=ed;try{localStorage.setItem('hk-edition-v154',ed);}catch(e){}
+      setData(D);
+      if(ed==='zang'){OPT.px=false;OPT.cb=false;$('optPx').checked=false;$('optCb').checked=false;SOPT.p=false;SOPT.c=false;}
+      $('optKp').checked=true;article.classList.remove('nokp');
+      if(!$('optDict').checked){$('optDict').checked=true;$('optDict').onchange();}
+      if(pio)pio.disconnect();pvis.clear();pBuilt=false;$('pzoom').innerHTML='';panelJuan=0;S.ppage=2;
+      if(io)io.disconnect();vis.clear();
+      S.cur=null;S.hl=null;linkedPage=null;ReaderUI.bookmark=null;$('upNav').hidden=true;
+      streamGeneration++;streamBusy=false;if(streamObserver)streamObserver.disconnect();article.replaceChildren();
+      S.railJuan=0;S.juan=0;editionUI();
+      nav('#j'+j);window.scrollTo(0,0);
+      if(msg)msg.textContent='';
+      return true;
+    }).catch(function(){if(msg)msg.textContent='版本資料無法載入，請確認 data／zang.js 存在或連網後再試。';return false;});
+  }
+  function setupEdition(){
+    editionUI();
+    document.querySelectorAll('.edition-choice').forEach(function(b){b.onclick=function(e){e.stopPropagation();switchEdition(b.dataset.edition).then(function(changed){if(changed)dismissMenu();});};});
+  }
   function dictionaryTourExample(){
     if(!$('optDict').checked)return;
     var walker=document.createTreeWalker(article,NodeFilter.SHOW_TEXT),n;
     while(n=walker.nextNode()){var match=n.textContent.match(/阿賴耶識|菩薩|無明|瑜伽師|涅槃/);if(match){var r=document.createRange();r.setStart(n,Math.max(0,match.index-4));r.setEnd(n,Math.min(n.length,match.index+match[0].length+8));var sel=getSelection();sel.removeAllRanges();sel.addRange(r);document.dispatchEvent(new Event('selectionchange'));break;}}
   }
 
-  unpack().then(function (D) {
-    init(D);
+  loadEdition(EDITION).catch(function () { EDITION = "hk"; document.documentElement.dataset.edition = "hk"; return loadEdition("hk"); }).then(function (D) {
+    init(D);setupEdition();
     setupDeviceUI();
     setupSourceFonts();
 
@@ -2844,7 +2931,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     function update(){ $('bookPercent').textContent=Math.round(Z[key]*100)+'%'; }
     function place(){if(popup.hidden||!anchor)return;var b=overlayBounds(),v=viewportBox(),r=anchor.getBoundingClientRect(),w=popup.offsetWidth,h=popup.offsetHeight;popup.style.left=Math.max(v.left+12,Math.min(v.left+v.width-w-12,r.right-w))+'px';popup.style.top=Math.max(b.top,Math.min(b.bottom-h,r.bottom+8))+'px';popup.style.maxHeight=Math.max(60,b.bottom-b.top)+'px';popup.style.overflowY='auto';}
     function hide(){if(!popup.hidden)Motion.close(popup,function(){popup.hidden=true;anchor=null;});}
-    document.querySelectorAll('.zc').forEach(function(zc){var tools=document.createElement('span');tools.className='books-tools';tools.dataset.z=zc.dataset.z;tools.innerHTML='<button class="book-size-button" aria-label="閱讀大小" aria-haspopup="dialog">aA</button><button class="book-search-button" aria-label="搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button>';zc.after(tools);tools.firstChild.onclick=function(){key=zc.dataset.z;anchor=this;popup.hidden=false;update();place();Motion.open(popup);};if(zc.dataset.z==='m'){tools.lastChild.replaceWith($('searchForm'));}else {var close=zc.dataset.z==='r'?$('railClose'):$('panelClose');close.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16M12 9l-3 3 3 3"/></svg>';close.setAttribute('aria-label','收起視窗');tools.lastChild.replaceWith(close);}});
+    document.querySelectorAll('.zc').forEach(function(zc){var tools=document.createElement('span');tools.className='books-tools';tools.dataset.z=zc.dataset.z;tools.innerHTML='<button class="book-size-button" aria-label="閱讀大小" aria-haspopup="dialog">aA</button><button class="book-search-button" aria-label="搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button>';zc.after(tools);tools.firstChild.onclick=function(){key=zc.dataset.z;anchor=this;popup.hidden=false;update();place();Motion.open(popup);};if(zc.dataset.z==='m'){tools.lastChild.replaceWith($('searchForm'));}else {var close=zc.dataset.z==='r'?$('railClose'):$('panelClose');close.innerHTML=zc.dataset.z==='r'?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="1.2"/><path d="M9.6 4.5v15"/></svg>':'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15" rx="1.2"/><path d="M14.4 4.5v15"/></svg>';close.setAttribute('aria-label','收起視窗');tools.lastChild.replaceWith(close);}});
     var pageBadge=document.querySelector('#panel .page-jump');if(pageBadge)panel.appendChild(pageBadge);
     popup.addEventListener('click',function(e){var b=e.target.closest('[data-size]');if(b){zoomBy(key,+b.dataset.size);update();}});
     popup.querySelector('.book-font').onclick=function(){hide();showSettingsPage('ft');openMenu();};
@@ -3176,5 +3263,104 @@ html{scroll-snap-type:y proximity;scroll-padding-top:70px}
 #panel>.page-jump{bottom:34px;font-size:11px}
 :root:root:root .pbar{padding-right:10px!important;padding-left:10px!important}
 @media(prefers-reduced-motion:reduce){html{scroll-snap-type:none}}
+</style>
+<style id="v154">/* v1.54 — edition switch, touch dictionary chip, centred controls. Original palette and paragraph layout retained. */
+/* 版本 */
+.edition-settings{position:relative}
+.mi .mi-val{flex:none!important;font-style:normal;font-size:12.5px;color:var(--muted);margin-left:auto}
+.settings-panel[data-settings-page=root]>.edition-settings{display:block;margin:0!important;border-bottom:1px solid var(--rule);overflow:hidden;border-radius:14px 14px 0 0}
+:root:root:root .settings-panel[data-settings-page=root]>.content-settings{border-radius:0!important}
+.settings-panel[data-settings-page=root] .edition-body{display:none}
+.settings-panel:not([data-settings-page=root]):not([data-settings-page=edition])>.edition-settings{display:none!important}
+.settings-panel[data-settings-page=edition]>.edition-settings{display:block}
+.settings-panel[data-settings-page=edition] #editionBtn{display:none!important}
+.edition-body{display:grid;gap:10px;padding:2px 0 4px}
+.edition-choice{display:flex;align-items:center;gap:12px;width:100%;box-sizing:border-box;text-align:left;border:0;border-radius:14px;background:var(--bg);padding:14px 16px;min-height:66px;cursor:pointer;color:var(--fg);font:15px var(--ui);box-shadow:inset 0 0 0 1px var(--rule);transition:box-shadow var(--motion-fast,.12s) ease}
+.edition-choice .ed-t{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+.edition-choice b{font:600 16px var(--ui)}
+.edition-choice small{color:var(--muted);font:12px/1.45 var(--ui)}
+.edition-choice .ed-ck{flex:none;width:22px;text-align:center;opacity:0;color:var(--acc2);font:600 17px var(--ui)}
+.edition-choice[aria-checked=true]{box-shadow:inset 0 0 0 1.5px var(--acc)}
+.edition-choice[aria-checked=true] .ed-ck{opacity:1}
+.edition-note{margin:2px 4px 0;font:12.5px/1.6 var(--ui);color:var(--muted)}
+.edition-note:empty{display:none}
+:root[data-edition=zang] .notes-only,:root[data-edition=zang] .ex-kp,:root[data-edition=zang] .results .sopt{display:none!important}
+:root:root:root .menu .mpop.settings-panel[data-settings-page=dl],:root:root:root .menu .mpop.settings-panel[data-settings-page=edition]{width:var(--menu-width)!important;max-width:calc(100vw - 24px)!important}
+
+/* 字體大小：七段、預設置中；行距示意圖 */
+:root:root .fsz{gap:12px}
+:root:root .fsz .fa{font-family:"Times New Roman","Songti TC",serif;font-weight:600;color:var(--muted);width:28px;text-align:center}
+:root:root .fsz .fa.sm{font-size:14px}:root:root .fsz .fa.lg{font-size:27px}
+:root:root .fticks i{width:4px;height:4px}
+:root:root .fticks i.d{background:var(--fg);opacity:.7}
+#lsSeg{width:100%!important;max-width:none!important;flex:1 1 auto!important}
+#lsSeg button{display:grid;place-items:center;padding:5px 0;color:var(--muted)}
+#lsSeg button.on{color:var(--fg)}
+#lsSeg button svg{width:30px;height:24px;display:block}
+.settings-panel .grow{flex-wrap:nowrap!important}
+.settings-panel .grow>span{flex:none}
+
+/* 匯出：較寬、對齊的卡片 */
+:root:root:root .settings-panel .ex-panel{padding:0!important;background:none!important;box-shadow:none!important}
+:root:root:root .settings-panel .ex-panel .ex-hero{display:flex!important;align-items:center;gap:14px;width:100%;box-sizing:border-box;padding:16px!important;border:0;border-radius:16px!important;background:var(--bg)!important;color:var(--fg);text-align:left;cursor:pointer}
+:root:root:root .settings-panel .ex-hero svg{color:var(--acc2);flex:none}
+.ex-hero-t{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+:root:root:root .settings-panel .ex-hero b{font:600 16px var(--ui);text-decoration:none!important}
+:root:root:root .settings-panel .ex-hero small{font:12.5px var(--ui);color:var(--muted);margin:0}
+.ex-hero .chev{flex:none;font-style:normal;color:var(--muted);font-size:20px}
+.ex-card{background:var(--bg);border-radius:16px;padding:4px 16px 16px;margin:12px 0 0}
+:root:root:root .settings-panel .ex-card h5{margin:12px 0 2px!important;font:600 14px var(--ui)!important;color:var(--fg)!important}
+.ex-row{display:grid;grid-template-columns:2.6em minmax(0,1fr);align-items:center;column-gap:12px;padding:12px 0;border-top:.5px solid var(--hair)}
+.ex-card h5+.ex-row,.ex-card .ex-info+.ex-row{border-top:0}
+.ex-l{font:13px var(--ui);color:var(--muted);align-self:start;padding-top:7px}
+.ex-range{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font:14px var(--ui);color:var(--fg)}
+:root:root:root .settings-panel .ex-range input{width:4.4em!important;height:34px;box-sizing:border-box;border:0!important;border-radius:9px!important;background:rgba(118,118,128,.12)!important;text-align:center;font:15px var(--ui)!important;color:var(--fg);padding:0 4px!important}
+.ex-quick{display:inline-flex;gap:2px;margin-left:auto}
+:root:root:root .settings-panel .ex-quick .lk{padding:6px 8px;border-radius:8px;color:var(--link);font:13px var(--ui);background:none;border:0;cursor:pointer}
+:root:root:root .settings-panel .ex-card .cks{display:flex;flex-wrap:wrap;gap:8px}
+:root:root:root .settings-panel .ex-card .ck span{padding:6px 12px;font-size:13.5px}
+:root:root:root .settings-panel .ex-card .ex-go{display:block;width:100%;height:44px;margin:4px 0 0;padding:0!important;border-radius:12px!important;font:600 15px var(--ui)!important}
+:root:root:root .settings-panel .ex-info{font:12.5px/1.6 var(--ui);color:var(--muted);margin:0!important;padding:0!important}
+.ex-acts{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding-top:4px}
+:root:root:root .settings-panel .ex-acts .allbtn{display:inline-flex!important;width:auto!important;align-items:center;gap:6px;margin:0;border:0;background:rgba(118,118,128,.12)!important;color:var(--fg)!important;border-radius:10px;padding:0 14px;height:40px;font:13.5px var(--ui);cursor:pointer}
+:root:root:root .settings-panel .ex-acts .go{height:40px;padding:0 18px!important;margin:0;border-radius:10px!important;font:600 14px var(--ui)!important;flex:1 1 auto;max-width:180px}
+:root:root:root .settings-panel .ex-panel .msg{font:12.5px/1.5 var(--ui);color:var(--muted);margin:8px 2px 0;padding:0!important}
+:root:root:root .settings-panel .ex-panel .msg:empty{display:none}
+
+/* 兩側收合圖示 */
+.books-tools #railClose svg,.books-tools #panelClose svg,#railOpen svg,#panelOpen svg{width:22px;height:22px}
+
+/* 科判 100% 時不左右滑動 */
+.pview.fit-x{overflow-x:hidden!important}
+:root[data-layout=iphone] #pzoom{padding:8px 0!important}
+
+/* 手機／平板底部導覽：圖示與文字在框內正中 */
+:root[data-single-pane=true][data-single-pane] .device-tabs{padding:0 6px!important;align-items:stretch!important;gap:4px}
+:root[data-single-pane=true][data-single-pane] .device-tabs button{height:auto!important;min-height:0!important;margin:5px 0 max(5px,calc(env(safe-area-inset-bottom,0px) * .45));padding:0!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:12px}
+:root[data-single-pane=true][data-single-pane] .device-tabs button svg{width:22px;height:22px;flex:none}
+:root[data-single-pane=true][data-single-pane] .device-tabs button span{font-size:11px;line-height:14px}
+
+/* 手機卷目次：常駐展開鍵 */
+:root[data-layout=iphone] .rail h3{padding-right:10px}
+:root[data-layout=iphone] .jfold{min-height:36px!important;padding:0 10px 0 14px!important;border-radius:999px;background:rgba(118,118,128,.12);gap:6px!important;color:var(--fg);font:600 14px var(--ui);letter-spacing:.04em}
+:root[data-layout=iphone] .jfold em{opacity:1!important;max-width:none!important;color:var(--acc2)!important;font-weight:600}
+:root[data-layout=iphone] .jfold .chv{display:inline-block!important;opacity:.75;transition:transform var(--motion-fast,.12s) ease}
+:root[data-layout=iphone].phone-juan-open .jfold{background:color-mix(in srgb,var(--acc) 24%,transparent)}
+:root[data-layout=iphone].phone-juan-open .jfold .chv{transform:rotate(180deg)}
+
+/* 行動版：科判標題換行，不再形成橫向捲動區 */
+:root[data-mobile-ui=true][data-mobile-ui] .main .kh{overflow:visible!important;max-width:100%}
+:root[data-mobile-ui=true][data-mobile-ui] .main .kh .kl{width:auto!important;min-width:0!important;white-space:normal!important}
+:root[data-mobile-ui=true][data-mobile-ui] .main .kh .kn{display:inline!important;white-space:normal!important}
+
+/* 觸控查詞 */
+.dict-chip{position:fixed;left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100vw - 32px);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:170;display:flex;align-items:center;gap:7px;height:44px;box-sizing:border-box;padding:0 18px 0 14px;border:0;border-radius:999px;background:var(--fg);color:var(--bg);font:500 14px var(--ui);box-shadow:0 8px 26px rgba(0,0,0,.24);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation;cursor:pointer}
+.dict-chip[hidden]{display:none!important}
+.dict-chip svg{width:19px;height:19px;flex:none}
+.dict-chip b{font-family:var(--kai);font-weight:400;font-size:17px;max-width:11em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+:root[data-single-pane=true] .dict-chip{bottom:calc(var(--nav-height) + 12px)}
+:root[data-layout=iphone] .term-preview,:root[data-layout=ipad] .term-preview{border-radius:18px}
+:root[data-layout=iphone][data-single-pane][data-single-pane] .device-tabs button[data-screen=search]{display:none!important}
+:root:root:root .settings-panel .ex-range input{font-size:16px!important}
 </style>
 </body></html>
