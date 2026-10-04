@@ -1,0 +1,16 @@
+/* v1.64 */
+/* 正文欄的科判標題：淡灰色（標號仍為朱色） */
+:root:root .txt .kn,:root:root .kn{color:color-mix(in srgb,var(--fg) 46%,var(--bg))}
+:root:root .kn .sm{color:color-mix(in srgb,var(--fg) 40%,var(--bg))}
+
+/* 卷次：副標題與全部科判一起縮排 */
+:root:root:root #rinner .rsub,:root:root:root #rinner .rol{margin-inline-start:14px!important}
+
+/* 介面：點下去釘住右側三個圖示，不另開頁 */
+:root:root:root:root .menu .mpop.settings-panel[data-settings-page=root][data-pin]{overflow:visible!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-pin]>:not(.settings-head){position:static!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-pin=layout] .learning-settings{position:static!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-pin=layout] .settings-body{display:block!important;position:absolute!important;left:calc(100% + 8px)!important;right:auto!important;top:var(--fly-top,0px)!important;width:216px!important;max-width:calc(100vw - 24px)!important;margin:0!important;padding:8px!important;box-sizing:border-box;background:var(--rail)!important;border:1px solid var(--rule)!important;border-radius:20px!important;box-shadow:0 14px 44px rgba(0,0,0,.18)!important;z-index:5}
+:root:root:root:root .settings-panel[data-settings-page=root][data-pin=layout].fly-left .settings-body{left:auto!important;right:calc(100% + 8px)!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-pin=layout].fly-inline .settings-body{position:static!important;width:auto!important;max-width:none!important;padding:2px 6px 8px!important;background:transparent!important;border:0!important;box-shadow:none!important}
+:root:root:root:root .settings-panel[data-settings-page=root][data-pin=layout] .learning-settings summary .chev{transform:none}
