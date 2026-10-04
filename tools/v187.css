@@ -1,0 +1,12 @@
+/* v1.87 */
+:root:root:root:root .ftpop .font-default{display:none!important}
+:root:root:root:root .ftpop select{text-align:center!important;text-align-last:center!important}
+:root:root:root:root .ftpop .chart-color-row{display:flex;align-items:center;gap:12px;padding:10px 14px}
+:root:root:root:root:root .ftpop #fsReset{position:relative;width:34px!important;height:34px!important;padding:0!important;justify-content:center!important;border-radius:999px!important}
+:root:root:root:root:root .ftpop #fsReset small{display:none!important}
+:root:root:root:root:root .ftpop #fsReset svg{width:16px!important;height:16px!important}
+.ftpop #fsReset::after{content:"全部重置";position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);white-space:nowrap;font:12px var(--ui);color:var(--fg);background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:3px 8px;box-shadow:0 4px 12px rgba(0,0,0,.08);opacity:0;pointer-events:none;transition:opacity .15s}
+.ftpop #fsReset:hover::after,.ftpop #fsReset:focus-visible::after{opacity:1}
+:root:root:root:root:root:root .ftpop .gbtns{justify-content:flex-end!important;margin:12px 4px 4px!important}
+:root:root:root:root:root .ftpop .chart-color-row{justify-content:space-between!important}
+.ftpop #fsReset::after{left:auto!important;right:0!important;transform:none!important}
