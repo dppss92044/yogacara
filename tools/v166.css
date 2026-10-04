@@ -1,0 +1,17 @@
+/* v1.66 */
+/* 科標改到科判欄左上角；功能列表不再列出 */
+:root:root:root:root .settings-panel .label-settings{display:none!important}
+.lab-badge{position:absolute;left:14px;top:14px;z-index:30;border:0;background:none;padding:0 4px;height:32px;font:400 16px/32px var(--kai);color:var(--muted);opacity:.5;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.lab-badge:hover{opacity:.9}
+:root:not([data-edition=zang]) .lab-badge{display:none!important}
+/* 正文右上：電腦顯示「藏版／韓版」，手機平板只一字 */
+:root[data-mobile-ui=true] .ed-badge .v{display:none}
+/* 字體：移除卷次／科判大小列 */
+:root:root:root .ftpop .font-pane-tools{display:none!important}
+/* 卷次縮圖鈕不被工具列蓋住 */
+:root:root #railOpen{z-index:130!important}
+/* 浮出子選單：列與浮窗之間的空隙也算在內，滑過去不會收起 */
+@media (hover:hover) and (pointer:fine){
+.settings-panel[data-hover] :is(.edition-body,.content-body,.settings-body,.ftpop,.dlpop,.apop,.label-body)::before{content:"";position:absolute;top:-10px;bottom:-10px;left:-14px;width:16px}
+.settings-panel.fly-left[data-hover] :is(.edition-body,.content-body,.settings-body,.ftpop,.dlpop,.apop,.label-body)::before{left:auto;right:-14px}
+}
