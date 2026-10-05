@@ -327,7 +327,7 @@
 - 狀態：**確定（施工中，未驗收）**
 
 ### D052　payload v4（擴充 D045）
-- 決定：payload `{v:4,id,o,s,d,m,t,f,s(state),r,nd,q,k,x,hv}`；v2 仍接受、v1 丟棄；嚴格結構允許清單（多餘欄位 400）、Registry 內容驗證（未登錄功能／維度丟棄）；上限：body ≤8KB、f≤60、狀態≤40、r≤30、nd≤40 節點／2 個 ns、q.t≤10、q.rp≤5、k.*≤10、x≤5、hv≤5。
+- 決定：payload `{v:4,id,o,s,d,m,t,f,ss,r,nd,q,k,x,hv}`（頂層 `ss`＝設定狀態時間 `[[dim,val,sec]…]`；最終規格範例中兩個 `s` 重複，施工時改名 `ss`，2026-10-05）；v2 仍接受、v1 丟棄；嚴格結構允許清單（多餘欄位 400）、Registry 內容驗證（未登錄功能／維度丟棄）；上限：body ≤8KB、f≤60、狀態≤40、r≤30、nd≤40 節點／2 個 ns、q.t≤10、q.rp≤5、k.*≤10、x≤5、hv≤5。
 - 目前規則：不傳 App 版本之外的環境資料；不傳時間點與順序。
 - 取代：D045 的 payload 形狀（「不傳 App 版本」仍有效）。
 - 來源：q 於 2026-10-05（W001 Analytics v2 最終規格 `/mnt/project-files/W001/W001-analytics-v2-final-spec.md`，「批准施工。」）。

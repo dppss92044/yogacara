@@ -1,0 +1,27 @@
+# 僅供本機量測（wrangler dev --local）：把正式 Worker 包一層，統計 D1 回傳的 meta.rows_written。永遠不部署。
+# 值都是測試用假值（非 secret）；使用本機模擬的 D1（不連線上資料庫）。
+name = "yogacara-stats-meter-local"
+main = "meter.js"
+compatibility_date = "2026-10-01"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.sql"]
+fallthrough = true
+
+[vars]
+ALLOWED_ORIGIN = "https://dppss92044.github.io"
+PEPPER = "local-test-pepper"
+ADMIN_TOKEN = "local-test-token"
+RETENTION_DAYS = "180"
+DAILY_RETENTION_DAYS = "60"
+K_MIN = "5"
+K_TERM = "3"
+PRESENCE = "on"
+PRESENCE_TIMEOUT = "75"
+PRESENCE_INTERVAL = "30"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "yogacara-stats-local"
+database_id = "00000000-0000-0000-0000-000000000000"   # 本機模擬用，不對應任何線上資料庫

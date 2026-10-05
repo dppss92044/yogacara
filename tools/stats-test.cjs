@@ -135,10 +135,11 @@ async function t(name, fn) {
     const nd = Object.keys(a.ss).filter(k => !k.startsWith('orient=')); assert.ok(nd.some(k => k.startsWith('zoom.')), JSON.stringify(a.ss));
     assert.ok(!Object.keys(a.ss).some(k => k.startsWith('edition=')), '預設值不應上傳'); noErr(x); await x.c.close();
   });
-  await t('T08 閱讀歸屬：r 列有版本、卷、秒數；60 秒無閱讀互動即停止', async () => {
+  await t('T08 閱讀歸屬：r 列有版本、卷、秒數；最後一次閱讀互動 60 秒後即停止累計', async () => {
     const x = await boot({ clock: true }); await x.run(4000, true);
-    await x.p.mouse.wheel(0, 100); await x.run(30000, false); await flushNow(x); const a1 = sum(x);
-    assert.ok(a1.r.length >= 1 && a1.r[0][0] === 'z' && a1.r[0][3] >= 1, JSON.stringify(a1.r));
+    await x.p.mouse.wheel(0, 100); await x.run(30000, true); await flushNow(x); const a1 = sum(x);
+    assert.ok(a1.r.length >= 1 && a1.r[0][0] === 'z' && a1.r[0][3] >= 1, JSON.stringify(a1.r)); const s1 = a1.r.reduce((t, r) => t + r[4], 0); assert.ok(s1 >= 25 && s1 <= 40, 's1=' + s1);
+    await x.run(200000, false); await flushNow(x); const s2 = sum(x).r.reduce((t, r) => t + r[4], 0); assert.ok(s2 - s1 <= 40, '60 秒無閱讀互動後應停止累計，增加了 ' + (s2 - s1));
     noErr(x); await x.c.close();
   });
   await t('T09 離線補送；端點故障（500／abort／hang）保留、5 分鐘後才重試', async () => {
@@ -166,8 +167,10 @@ async function t(name, fn) {
     await x.p.click('#menuBtn'); await x.p.evaluate(() => window.dispatchEvent(new CustomEvent('hk-analytics-control', { detail: { mode: 'basic' } }))); await x.run(30000, true); await flushNow(x);
     const bs = x.vbodies().filter(b => b.t === 'b'); assert.ok(bs.length >= 1); for (const b of bs) for (const k of Object.keys(b)) assert.ok(['v', 'id', 'o', 's', 'd', 'm', 't'].includes(k), 'basic 不得含 ' + k);
     assert.notStrictEqual((await x.state()).id, id, 'off 後重開為新編號'); noErr(x); await x.c.close();
-    x = await boot({ clock: true }); await x.p.evaluate(() => window.dispatchEvent(new CustomEvent('hk-analytics-control', { detail: { mode: 'off' } })));
-    await x.c.setOffline(true); await x.p.clock.runFor(1000); assert.ok(await x.ls('hk-analytics-forget-v1') === null || true);
+    x = await boot({ clock: true }); await x.run(4000, true); await x.c.setOffline(true);
+    await x.p.evaluate(() => window.dispatchEvent(new CustomEvent('hk-analytics-control', { detail: { mode: 'off' } }))); await x.p.clock.runFor(1000);
+    assert.ok(JSON.parse(await x.ls('hk-analytics-forget-v1')).id, '離線 off：留下墓碑待補送'); assert.strictEqual(await x.ls('hk-anon-stat-v1'), null);
+    await x.c.setOffline(false); await x.run(70000, true); assert.strictEqual(x.reqs.filter(r => /\/forget$/.test(r.url)).length, 1, '恢復連線後補送 forget'); assert.strictEqual(await x.ls('hk-analytics-forget-v1'), null);
     await x.c.close();
   });
   await t('T12 匿名 ID 滿 180 天輪替；未送資料留給新編號', async () => {

@@ -4117,32 +4117,38 @@
   {
    "selector": "#settingsBack",
    "what": "設定頁「返回」",
-   "reason": "純介面導覽，無產品問題"
+   "reason": "純介面導覽，無產品問題",
+   "css": "#settingsBack"
   },
   {
    "selector": "#deviceBackdrop",
    "what": "科判預覽遮罩關閉",
-   "reason": "純介面動作；科判預覽本身以 kepan.* 統計"
+   "reason": "純介面動作；科判預覽本身以 kepan.* 統計",
+   "css": "#deviceBackdrop"
   },
   {
    "selector": "#reportText",
    "what": "問題回報內容輸入框",
-   "reason": "私人內容，永不蒐集；只計 report.send.ok／fail"
+   "reason": "私人內容，永不蒐集；只計 report.send.ok／fail",
+   "css": "#reportText"
   },
   {
    "selector": "#q（搜尋輸入框內容）",
    "what": "輸入過程",
-   "reason": "只在送出時處理，輸入過程與逐字都不記"
+   "reason": "只在送出時處理，輸入過程與逐字都不記",
+   "css": "#q"
   },
   {
    "selector": "#exFrom、#exTo、#dlFrom、#dlTo、#pNum、#kNum、頁碼數字鍵",
    "what": "數字輸入過程",
-   "reason": "只記送出結果（export.*、nav.page_jump），不記輸入過程"
+   "reason": "只記送出結果（export.*、nav.page_jump），不記輸入過程",
+   "css": "#exFrom,#exTo,#dlFrom,#dlTo,#pNum,#kNum"
   },
   {
    "selector": "#exText、#exKp、#exPx、#exCb、#exF_*、#exSep、#exZip、#kplGz、#kplZj",
    "what": "匯出選項核取框／單選",
-   "reason": "逐次勾選無價值，匯出時的選擇由 export.custom 的 x 摘要記錄"
+   "reason": "逐次勾選無價值，匯出時的選擇由 export.custom 的 x 摘要記錄",
+   "css": "#exText,#exKp,#exPx,#exCb,[id^=\"exF_\"],#exSep,#exZip,#kplGz,#kplZj"
   },
   {
    "selector": ".fticks、.fdef、.zv 顯示文字等非互動元件",
