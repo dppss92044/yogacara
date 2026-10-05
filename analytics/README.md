@@ -21,3 +21,6 @@
 6. 設定 secret `PEPPER`、`ADMIN_TOKEN`（`ADMIN_TOKEN` 同時存入 macOS 鑰匙圈 `yoga-stats-admin`）。
 7. 驗證：`/health`、一筆測試 POST、`/admin/stats`、無 token 應為 401；在儀表板確認 Logs 關閉、未設 Logpush。
 8. 上線前清空測試資料。
+
+## 查詢（Mac）
+`analytics/cli/yoga_stats.py`：`瑜伽統計 今天｜本週｜本月｜回訪 [期間]｜地區 [期間]`（`--json`、`--date`）。token 預設從鑰匙圈 `yoga-stats-admin` 讀取。`./analytics/cli/install-mac.sh` 會在 `~/.zshrc` 加入指令（不寫 token）。測試：`python3 -m unittest discover analytics/cli`。
