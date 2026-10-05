@@ -58,6 +58,7 @@ function inPage() {
     return bad;
   };
   const visible = el => { if (!el) return false; const r = el.getBoundingClientRect(); return r.height > 0 && r.bottom > 0 && r.top < innerHeight; };
+  const visibleInPanel = el => { const r = el.getBoundingClientRect(), pv = $('pview').getBoundingClientRect(); return r.height > 0 && r.bottom > pv.top && r.top < pv.bottom && r.right > pv.left && r.left < pv.right; };
   const targets = (p) => {
     const el = $('pp' + p); if (!el.firstChild) g.fillPage(el, p);
     return [...el.querySelectorAll('.nd.tt[data-id], .head span[data-id]')].filter(e => +e.dataset.id >= 0);
@@ -81,14 +82,15 @@ function inPage() {
           let bad = checkSync(id, st, why);
           if (st.ppage !== p) bad.push(why + ' 單擊後科判欄換頁：' + p + ' → ' + st.ppage);
           if (!bad.length && vis && (n % vis === 0)) {
-            await raf(); visN++;
+            await wait(220); visN++;
             const h = (document.querySelector('#article .kn.on')); if (!visible(h)) bad.push(why + ' 正文標題不在可見區');
             const pe = document.querySelector('#pp' + p + ' [data-id="' + id + '"]'); if (pe && !visible(pe)) bad.push(why + ' 科判欄標示不在可見區');
           }
           bad.forEach(b => fails.push(b));
         }
+        $('pp' + p).innerHTML = '';
       }
-      return { clicks: n, distinctNodes: hit.size, visChecked: visN, fails };
+      return { clicks: n, ids: [...hit], visChecked: visN, fails };
     },
     // 雙擊契約：雙擊後科判欄標示的節點＝依既有設計的「上一層」，且正文／卷次同步
     async dblSweep(pages, step) {
@@ -106,6 +108,7 @@ function inPage() {
           const st = state(); const bad = checkSync(dest, st, why);
           bad.forEach(b => fails.push(b));
         }
+        $('pp' + p).innerHTML = '';
       }
       return { dblclicks: n, skippedTopLevel: tops, fails };
     },
@@ -120,13 +123,19 @@ function inPage() {
           const el = $('pp' + p).querySelectorAll('[data-go]')[k]; if (!el) continue;
           const gid = +el.dataset.go; const why = `[（分N） p${p} go${gid} ${N[gid][5]}${N[gid][0]}]`;
           let dest, destPage;
-          if (OWN[gid]) { dest = gid; destPage = OWN[gid]; } else { let c = gid + 1; for (; c < N.length; c++) if (N[c][4] === gid) break; if (c >= N.length) { fails.push(why + ' 找不到子科'); continue; } dest = c; destPage = AP[c]; }
+          if (OWN[gid]) { dest = gid; destPage = OWN[gid]; } else { let c = gid + 1; for (; c < N.length; c++) if (N[c][4] === gid) break; if (c >= N.length) { dest = gid; destPage = null; } else { dest = c; destPage = AP[c]; } } // 無子科、無自己一頁（旁注小字）：goSub 退回標示該節點本身
           click(el); n++;
-          await raf();
+          await wait(220);
           const st = state(); const bad = checkSync(dest, st, why);
-          if (st.ppage !== destPage) bad.push(why + ' 科判欄應進入第 ' + destPage + ' 頁，實際 ' + st.ppage);
+          // 頁碼標籤（S.ppage）會跟著捲動位置微調，邊界頁可能差一頁；以「目的節點在目的頁且在可見區」為準
+          // 同一節點在同一頁可能畫兩次（母枝幹裡一次、本頁 ◎ 根標題一次）；任一在科判欄可見區即可
+          const des = destPage ? [...document.querySelectorAll('#pp' + destPage + ' [data-id="' + dest + '"]')] : [];
+          const de = destPage ? (des.find(visibleInPanel) || des[0]) : true;
+          if (!de) bad.push(why + ' 科判欄第 ' + destPage + ' 頁找不到節點 ' + dest + '（S.ppage=' + st.ppage + '）');
+          else if (de !== true && !visibleInPanel(de)) bad.push(why + ' 目的節點在第 ' + destPage + ' 頁但不在可見區（S.ppage=' + st.ppage + '）');
           bad.forEach(b => fails.push(b));
         }
+        $('pp' + p).innerHTML = '';
       }
       return { goClicks: n, fails };
     },
@@ -175,11 +184,28 @@ function inPage() {
           R.fixtures.push({ name: c.name, pass: !r.length, fails: r });
         }
       }
-      R.single = await p.evaluate(async ([pg, st, v]) => __t.singleSweep(pg, st, v), [pages, STEP, ed === 'zang' ? 7 : 997]);
-      if (DBL) {
-        R.double = await p.evaluate(async ([pg, st]) => __t.dblSweep(pg, st), [pages, STEP]);
-        R.go = await p.evaluate(async ([pg, st]) => __t.goSweep(pg, st), [pages, Math.max(1, Math.floor(STEP / 3))]);
+      // 分塊執行並寫檢查點（--ckpt 檔）；重新執行時略過已完成的塊，不重跑
+      const CH = +arg('chunk', 25), ck = arg('ckpt', null), done = {};
+      if (ck && fs.existsSync(ck)) fs.readFileSync(ck, 'utf8').split('\n').filter(Boolean).forEach(l => { const o = JSON.parse(l); done[o.key] = o; });
+      const acc = { single: { clicks: 0, ids: new Set(), visChecked: 0, fails: [] }, double: { dblclicks: 0, skippedTopLevel: 0, fails: [] }, go: { goClicks: 0, fails: [] } };
+      for (let c = 0; c < pages.length; c += CH) {
+        const sub = pages.slice(c, c + CH), key = ed + ':' + shI + '/' + shN + ':' + sub[0] + '-' + sub[sub.length - 1] + ':' + STEP + ':' + DBL;
+        let o = done[key];
+        if (!o) {
+          o = { key, single: await p.evaluate(async ([pg, st, v]) => __t.singleSweep(pg, st, v), [sub, STEP, ed === 'zang' ? 7 : 997]) };
+          if (DBL) {
+            o.double = await p.evaluate(async ([pg, st]) => __t.dblSweep(pg, st), [sub, STEP]);
+            o.go = await p.evaluate(async ([pg, st]) => __t.goSweep(pg, st), [sub, Math.max(1, Math.floor(STEP / 3))]);
+          }
+          if (ck) fs.appendFileSync(ck, JSON.stringify(o) + '\n');
+        } else console.error('略過已完成塊 ' + key);
+        o.single.ids.forEach(x => acc.single.ids.add(x)); acc.single.clicks += o.single.clicks; acc.single.visChecked += o.single.visChecked; acc.single.fails.push(...o.single.fails);
+        if (o.double) { acc.double.dblclicks += o.double.dblclicks; acc.double.skippedTopLevel += o.double.skippedTopLevel; acc.double.fails.push(...o.double.fails); }
+        if (o.go) { acc.go.goClicks += o.go.goClicks; acc.go.fails.push(...o.go.fails); }
+        console.error('進度 ' + ed + ' 分片' + shI + '/' + shN + '：' + Math.min(c + CH, pages.length) + '/' + pages.length + ' 頁，單擊 ' + acc.single.clicks + '，失敗 ' + (acc.single.fails.length + acc.double.fails.length + acc.go.fails.length));
       }
+      R.single = { clicks: acc.single.clicks, distinctNodes: acc.single.ids.size, visChecked: acc.single.visChecked, fails: acc.single.fails };
+      if (DBL) { R.double = acc.double; R.go = acc.go; }
       R.pageErrors = errors;
       const nf = (R.fixtures || []).filter(x => !x.pass).length + R.single.fails.length + (R.double ? R.double.fails.length : 0) + (R.go ? R.go.fails.length : 0) + errors.length;
       R.failCount = nf; if (nf) exit = 1;

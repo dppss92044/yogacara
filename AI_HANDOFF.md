@@ -32,7 +32,7 @@
 
 - 根因（見 `docs/nav-contract.md`）：科判欄點節點時卷次取自 `PJ[頁]`（該頁多數節點所屬卷）而非節點自己的卷 `N[i][6]`；`nodeJuan()`／`localNode()` 的「後代在該卷就當成此節點在該卷」備援因此把祖先節點帶去錯的卷；`pageInJuan()` 又改寫被點的頁；雙擊只動科判欄、沒同步正文與卷次。
 - 修正：`index.html` `focusNode()`（新增 `panelsync` 來源、科判欄來源改用節點自己的卷、帶頁碼就停在該頁）與 `#pzoom` 的 `dblclick`（換位後同步正文與卷次）。共約 20 行；未改 CSS、DOM 結構、UI、文案。
-- 測試：`tools/nav-contract-w002.cjs` ＋ `tools/fixtures/w002-nav-cases.json`；結果見下。
+- 測試：`tools/nav-contract-w002.cjs` ＋ `tools/fixtures/w002-nav-cases.json`；藏版、韓版全量 0 失敗（見「測試結果」）。
 - 契約文件：`docs/nav-contract.md`。
 
 ## 正在進行
@@ -64,7 +64,15 @@
 
 ## 測試結果
 
-見 `CHANGELOG.md`「Unreleased／W002」與 `docs/nav-contract.md`。這是 Chromium（Playwright）模擬，不能取代實機。修前（v1.91 基底）藏版全量單擊 944／2,552 次失敗；修後藏版全量 0 失敗（細節見回報）。
+測試針對 **v1.91 基底＋W002**（`tools/nav-contract-w002.cjs`、`tools/fixtures/w002-nav-cases.json`）；Chromium（Playwright）模擬，**不能取代 Safari／iPhone／iPad 實機**。視窗 1440×900（電腦版面）。
+
+- fixtures 3 個（案例1、案例2、案例2b）：通過。
+- 藏版全量：單擊 2,552 次（1,970 節點全覆蓋）、雙擊 2,547 次、（分N）193 次，0 失敗。
+- 韓版全量（4 分片、2,017 頁）：單擊 63,178 次（46,769 節點全覆蓋）、雙擊 63,173 次、（分N）4,186 次，0 失敗；頁面錯誤 0。
+- 修前基底（v1.91）同一套測試：藏版單擊 944／2,552 次失敗（258 次卷次錯、169 次科判欄換頁、其餘為正文標示不符）、雙擊 7,573 筆不同步、fixtures 3 個全失敗。韓版修前**未跑**。
+- 測試過程的誤報（腳本問題，已修正並重跑確認，非 App 錯誤）：（分N）檢查曾用「頁碼標籤」與「第一個同 id 元素是否可見」，同一節點同頁常畫兩次（母枝幹＋本頁 ◎ 根標題），改為「任一份在科判欄可見區即可」；無子科的旁注小字（`data-go` 指向葉節點）改為預期標示該節點本身。
+- **沒有測**：Safari／iPhone／iPad 實機；觸控流程（手機／iPad 的 `singleNode`／`doubleNode`、雙擊切換畫面）；窄視窗（手機／iPad 直向）版面；深色模式；列印／PDF 匯出；左欄卷次科判清單（rail）的點擊（只驗證 `railFocus` 標示集合）。
+- 共用邏輯影響檢查（AGENTS.md §5）：改動只在 `focusNode()` 與電腦科判欄 `dblclick`；電腦（模擬）、藏版、韓版已測；iPad／手機／藏版韓版的觸控路徑經由同一個 `focusNode()`，**程式上**不再受 `PJ` 影響，但**未實測**。
 
 ## 不得破壞的既有行為
 
@@ -85,15 +93,12 @@
 
 ## 最後 commit
 
-- App 正式版本 v1.91 的基底：`db77e11`。
-- 第二階段文件：PR #1 已 merge（merge commit `c022988`），8 份永久文件已進入 `main`；其後 PR #2 merge（`f4734fc`）校正本檔狀態。**本次現況校正前的 repository main HEAD = `f4734fc`**（此為校正前快照，非永久的「目前 main HEAD」）。
-- `f4734fc` 相較 `db77e11` 多出的 commit（`c022988`、`f4734fc`）屬文件／流程文件變更，**不代表 App 本體升版**；App 正式版本仍為 **v1.91**（`appVer`／`sw.js` `VERSION` 未動），App 程式基底仍為 `db77e11`。
-- 目前沒有進行中的 W；下一個可用編號仍為 **W001**。
-- 2026-10-05：本檔狀態校正（文件現況校正，非 W 工作，不增加版本號）。校正目的：區分「App v1.91 程式基底 commit `db77e11`」與「repository main HEAD」，並註明本次校正前 main HEAD 為 `f4734fc`，避免再把 App 程式基底誤寫成 repository main HEAD。同步校正 `PROJECT_STATE.md` §1；不建立 W、不新增 MASTER_HISTORY H 編號、不升版。
+- W002 工作分支 `claude/kepan-nav-fix-ryczgd`：修正 commit `c333106`；其後有「測試腳本修正」commit（以 `git log` 為準）。基底 `origin/main` = `e4a365f`；App 程式基底 v1.91 = `db77e11`。
+- 與 W001（分支 `claude/project-thread-3ws881`）互不相含。
 
 ## 是否已正式發布
 
-- 無進行中的工作，無待發布項目。
+- **否**。W002 尚未滿足 `AGENTS.md` §3.4（完成＋測試＋q 確認）。`appVer`、`sw.js` 的 `VERSION` 都未動。
 
 ---
 
