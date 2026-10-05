@@ -11,9 +11,9 @@
 |---|---|
 | 正式版本 | **v1.91**（`index.html` 的 `appVer`＝v1.91；`sw.js` 的 `VERSION`＝"1.91"） |
 | App 程式基底 commit | **`db77e11`**（「更新至 v1.91」，2026-10-05 11:16 +0800）；App 本體（`index.html`、`sw.js`、`data/` 等）自此未修改。本次現況校正前的 repository main HEAD 為 **`f4734fc`**（校正前快照）；`db77e11` 之後的 commit 只涉及文件／流程文件，不代表 App 本體升版 |
-| 下一正式版本候選 | **v1.92**（尚未開始；W001 未發布、未升版） |
-| 目前工作編號 | **W001｜匿名 App Analytics（Analytics v2，2026-10-05 q 批准施工；App 內無統計 UI，D049–D060）**（分支 `work/W001-anonymous-analytics`）；2026-10-05 施工步驟 ①–⑦ 完成，等 q 驗收（見 AI_HANDOFF.md）|
-| 進行中的程式修改 | W001（僅工作分支，未發布）：`index.html` 內嵌匿名統計客戶端與關於頁開關；`sw.js` 未動、版本仍 v1.91 |
+| 下一正式版本候選 | **v1.92**（尚未開始；W001、W002 均未發布、未升版） |
+| 目前工作編號 | **W001**（匿名 App Analytics v2，D049–D060；施工完成待驗收）與 **W002**（科判導航／同步 Bug 修正，D100；已修正、q 已裁定雙擊方向，待實機驗收）。兩者已合併於整合驗收分支，尚未進 main |
+| 進行中的程式修改 | W001：`index.html` 內嵌匿名統計客戶端；W002：`index.html` 的 `focusNode()`、`#pzoom` 雙擊（見 `docs/nav-contract.md`）。皆未發布；`sw.js` 未動、版本仍 v1.91 |
 | v1.91 與外部更新檔 | v1.91 更新檔 zip 的 7 個檔與 HEAD 逐檔相同（已比對） |
 | 部署 | GitHub Pages：`https://dppss92044.github.io/yogacara/`（使用者端以「更新app」指令從下載資料夾複製並 push；此流程詳情見 MASTER_HISTORY H103，腳本不在 repo） |
 
