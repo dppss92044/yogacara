@@ -172,7 +172,7 @@ test('管理端點：實例清單只回 6 碼短代號；排序、limit、期間
     assert.equal(j.total, 1); assert.equal(j.instances[0].opens, 11); assert.equal(j.instances[0].device, 'phone');
     j = await (await g('?range=week')).json();
     assert.equal(j.total, 3); assert.deepEqual(j.instances.map(x => x.opens), [18, 2, 1]);
-    for (const x of j.instances) { assert.match(x.code, /^[0-9A-F]{6}$/); assert.deepEqual(Object.keys(x).sort(), ['active_seconds', 'city', 'code', 'device', 'first_day', 'last_day', 'mode', 'opens', 'read_seconds']); }
+    for (const x of j.instances) { assert.match(x.code, /^[0-9A-F]{6}$/); assert.deepEqual(Object.keys(x).sort(), ['active_seconds', 'city', 'code', 'device', 'dict_total', 'first_day', 'last_day', 'mode', 'opens', 'read_seconds', 'search_total'].sort()); }
     const hs = db.prepare('SELECT h FROM instances').all().map(r => r.h);
     assert.ok(!JSON.stringify(j).toLowerCase().includes(hs[0]), '回應不得含完整 hash');
     j = await (await g('?range=week&sort=opens&limit=2')).json(); assert.equal(j.instances.length, 2); assert.equal(j.total, 3);

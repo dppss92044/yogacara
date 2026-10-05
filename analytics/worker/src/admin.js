@@ -228,10 +228,10 @@ async function instances(url, env) {
   const order = url.searchParams.get('sort') === 'opens' ? 'opens DESC, sec DESC' : 'sec DESC, opens DESC';
   const total = await env.DB.prepare('SELECT COUNT(DISTINCT h) AS n FROM instance_days WHERE day BETWEEN ? AND ?').bind(r.start, r.end).first();
   const rows = (await env.DB.prepare(
-    'SELECT d.h AS h, i.city AS city, i.device AS device, i.mode AS mode, i.first_day AS first_day, i.last_day AS last_day, SUM(d.opens) AS opens, SUM(d.active_sec) AS sec, SUM(d.read_sec) AS rsec ' +
+    'SELECT d.h AS h, i.city AS city, i.device AS device, i.mode AS mode, i.first_day AS first_day, i.last_day AS last_day, i.search_total AS stot, i.dict_total AS dtot, SUM(d.opens) AS opens, SUM(d.active_sec) AS sec, SUM(d.read_sec) AS rsec ' +
     'FROM instance_days d JOIN instances i ON i.h = d.h WHERE d.day BETWEEN ? AND ? GROUP BY d.h ORDER BY ' + order + ' LIMIT ?').bind(r.start, r.end, limit).all()).results || [];
   return json({ range: r.range, period: periodOut(r), total: total ? total.n : 0, limit,
-    instances: rows.map(x => ({ code: shortCode(x.h), city: x.city || '未知', device: x.device || null, mode: x.mode || null, first_day: x.first_day, last_day: x.last_day, opens: x.opens, active_seconds: x.sec, read_seconds: x.rsec })) });
+    instances: rows.map(x => ({ code: shortCode(x.h), city: x.city || '未知', device: x.device || null, mode: x.mode || null, first_day: x.first_day, last_day: x.last_day, opens: x.opens, active_seconds: x.sec, read_seconds: x.rsec, search_total: x.stot, dict_total: x.dtot })) });
 }
 async function instanceDetail(url, env) {
   const code = url.searchParams.get('code') || '';

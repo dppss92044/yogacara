@@ -1,0 +1,6266 @@
+{
+ "overview": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "k_min": 5,
+  "dev": null,
+  "instances": 6,
+  "new": 6,
+  "returning": 0,
+  "returning_rate": 0,
+  "opens": 12,
+  "active_seconds": 5400,
+  "read_seconds": 4200,
+  "avg_active_seconds_per_open": 450,
+  "frequency": {
+   "1": 0,
+   "2-5": 6,
+   "6-20": 0,
+   "20+": 0
+  },
+  "cities": [
+   {
+    "city": "其他",
+    "active": 6,
+    "new": 6
+   }
+  ],
+  "devices": [
+   {
+    "d": "desktop",
+    "n": 2
+   },
+   {
+    "d": "phone",
+    "n": 2
+   },
+   {
+    "d": "tablet",
+    "n": 2
+   }
+  ],
+  "modes": [
+   {
+    "m": "pwa",
+    "n": 3
+   },
+   {
+    "m": "web",
+    "n": 3
+   }
+  ],
+  "top_juan": [
+   {
+    "juan": 12,
+    "u": 6,
+    "sec": 2400
+   },
+   {
+    "juan": 3,
+    "u": 6,
+    "sec": 1800
+   }
+  ],
+  "features_total": 150,
+  "features_used": 13,
+  "search_total": 12,
+  "dict_total": 18,
+  "registry_total": 152
+ },
+ "instances": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "total": 6,
+  "limit": 5,
+  "instances": [
+   {
+    "code": "131844",
+    "city": "桃園",
+    "device": "tablet",
+    "mode": "pwa",
+    "first_day": "2026-10-05",
+    "last_day": "2026-10-05",
+    "opens": 2,
+    "active_seconds": 900,
+    "read_seconds": 700,
+    "search_total": 2,
+    "dict_total": 3
+   },
+   {
+    "code": "5073AD",
+    "city": "桃園",
+    "device": "desktop",
+    "mode": "pwa",
+    "first_day": "2026-10-05",
+    "last_day": "2026-10-05",
+    "opens": 2,
+    "active_seconds": 900,
+    "read_seconds": 700,
+    "search_total": 2,
+    "dict_total": 3
+   },
+   {
+    "code": "6DB91E",
+    "city": "台北",
+    "device": "desktop",
+    "mode": "web",
+    "first_day": "2026-10-05",
+    "last_day": "2026-10-05",
+    "opens": 2,
+    "active_seconds": 900,
+    "read_seconds": 700,
+    "search_total": 2,
+    "dict_total": 3
+   },
+   {
+    "code": "A79AA7",
+    "city": "台北",
+    "device": "phone",
+    "mode": "web",
+    "first_day": "2026-10-05",
+    "last_day": "2026-10-05",
+    "opens": 2,
+    "active_seconds": 900,
+    "read_seconds": 700,
+    "search_total": 2,
+    "dict_total": 3
+   },
+   {
+    "code": "CA4E6A",
+    "city": "台北",
+    "device": "tablet",
+    "mode": "web",
+    "first_day": "2026-10-05",
+    "last_day": "2026-10-05",
+    "opens": 2,
+    "active_seconds": 900,
+    "read_seconds": 700,
+    "search_total": 2,
+    "dict_total": 3
+   }
+  ]
+ },
+ "instance": {
+  "code": "131844",
+  "city": "桃園",
+  "device": "tablet",
+  "mode": "pwa",
+  "first_day": "2026-10-05",
+  "last_day": "2026-10-05",
+  "opens_total": 2,
+  "active_seconds_total": 900,
+  "read_seconds_total": 700,
+  "search_total": 2,
+  "dict_total": 3,
+  "periods": {
+   "today": {
+    "start": "2026-10-05",
+    "end": "2026-10-05",
+    "opens": 2,
+    "active_seconds": 900,
+    "read_seconds": 700
+   },
+   "week": {
+    "start": "2026-10-05",
+    "end": "2026-10-11",
+    "opens": 2,
+    "active_seconds": 900,
+    "read_seconds": 700
+   },
+   "month": {
+    "start": "2026-10-01",
+    "end": "2026-10-31",
+    "opens": 2,
+    "active_seconds": 900,
+    "read_seconds": 700
+   }
+  },
+  "day": {
+   "day": "2026-10-05",
+   "opens": 2,
+   "active_seconds": 900,
+   "read_seconds": 700,
+   "reading": [
+    {
+     "e": "h",
+     "juan": 12,
+     "sec": 400,
+     "opens": 1
+    },
+    {
+     "e": "z",
+     "juan": 3,
+     "sec": 300,
+     "opens": 1
+    }
+   ],
+   "features": [
+    {
+     "feature": "nav.juan_open.rail",
+     "n": 4
+    },
+    {
+     "feature": "dict.lookup.dbl",
+     "n": 3
+    },
+    {
+     "feature": "kepan.click.rail",
+     "n": 3
+    },
+    {
+     "feature": "kepan.node_click",
+     "n": 3
+    },
+    {
+     "feature": "dict.hit",
+     "n": 2
+    },
+    {
+     "feature": "font.size.up",
+     "n": 2
+    },
+    {
+     "feature": "search.submit",
+     "n": 2
+    },
+    {
+     "feature": "content.px.on",
+     "n": 1
+    },
+    {
+     "feature": "dict.miss",
+     "n": 1
+    },
+    {
+     "feature": "edition.select.h",
+     "n": 1
+    },
+    {
+     "feature": "export.custom",
+     "n": 1
+    },
+    {
+     "feature": "search.ok",
+     "n": 1
+    },
+    {
+     "feature": "search.zero",
+     "n": 1
+    }
+   ],
+   "search": {
+    "submit": 2,
+    "ok": 1,
+    "zero": 1
+   },
+   "dict": {
+    "lookup": 3,
+    "miss": 1
+   },
+   "nodes": {
+    "distinct": 2,
+    "max_repeat": 2
+   }
+  }
+ },
+ "reading": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "dev": null,
+  "by": "juan",
+  "instances": 6,
+  "k": 3,
+  "juans": [
+   {
+    "juan": 12,
+    "u": 6,
+    "opens": 6,
+    "sec": 2400,
+    "avg": 400,
+    "rep": 0
+   },
+   {
+    "juan": 3,
+    "u": 6,
+    "opens": 6,
+    "sec": 1800,
+    "avg": 300,
+    "rep": 0
+   }
+  ],
+  "other": {
+   "juans": 0,
+   "u": 0,
+   "sec": 0
+  },
+  "zero_juans": [
+   1,
+   2,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   48,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60,
+   61,
+   62,
+   63,
+   64,
+   65,
+   66,
+   67,
+   68,
+   69,
+   70,
+   71,
+   72,
+   73,
+   74,
+   75,
+   76,
+   77,
+   78,
+   79,
+   80,
+   81,
+   82,
+   83,
+   84,
+   85,
+   86,
+   87,
+   88,
+   89,
+   90,
+   91,
+   92,
+   93,
+   94,
+   95,
+   96,
+   97,
+   98,
+   99,
+   100
+  ]
+ },
+ "reading_edition": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "dev": null,
+  "by": "edition",
+  "instances": 6,
+  "editions": [
+   {
+    "e": "h",
+    "u": 6
+   },
+   {
+    "e": "z",
+    "u": 6
+   }
+  ],
+  "rows": [
+   {
+    "e": "h",
+    "src": 1,
+    "sec": 2400,
+    "opens": 6,
+    "u": 6
+   },
+   {
+    "e": "z",
+    "src": 0,
+    "sec": 1800,
+    "opens": 6,
+    "u": 6
+   }
+  ],
+  "both_instances": 6
+ },
+ "nodes": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "dev": null,
+  "k": 3,
+  "nodes": [
+   {
+    "ns": "h64432c",
+    "node": 20233,
+    "n": 12,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "ns": "h64432c",
+    "node": 20240,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ],
+  "other": {
+   "nodes": 0,
+   "n": 0
+  }
+ },
+ "features_kepan": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "dev": null,
+  "instances": 6,
+  "registry_total": 152,
+  "used_total": 13,
+  "features": [
+   {
+    "id": "kepan.click.rail",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.node_click",
+    "name": "點科判節點（穩定節點 ID）",
+    "model": "N",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.body",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.chart",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.down",
+    "name": "往下一層（點「(分N)」）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.longpress_parent",
+    "name": "手機長按標題跟隨父層",
+    "model": "A",
+    "devices": "手機",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.show.off",
+    "name": "正文科判顯示／隱藏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.show.on",
+    "name": "正文科判顯示／隱藏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.up.btn",
+    "name": "往上一層（雙擊標題／↑鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.up.dbl",
+    "name": "往上一層（雙擊標題／↑鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.xref",
+    "name": "別表跳轉（雙擊小字）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ]
+ },
+ "features_edition": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "dev": null,
+  "instances": 6,
+  "registry_total": 152,
+  "used_total": 13,
+  "features": [
+   {
+    "id": "edition.select.h",
+    "name": "切換到藏經版／韓版",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.entry.badge",
+    "name": "版本切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.entry.menu",
+    "name": "版本切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.select.z",
+    "name": "切換到藏經版／韓版",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.switch_back",
+    "name": "切換後 60 秒內切回",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ]
+ },
+ "features": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "dev": null,
+  "instances": 6,
+  "registry_total": 152,
+  "used_total": 13,
+  "features": [
+   {
+    "id": "nav.juan_open.rail",
+    "name": "選卷（卷次欄／正文卷名／手機卷浮窗）",
+    "model": "N",
+    "devices": "全部",
+    "verify": null,
+    "n": 24,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.lookup.dbl",
+    "name": "查詞（反白／雙擊／長按＋查詞鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.rail",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.node_click",
+    "name": "點科判節點（穩定節點 ID）",
+    "model": "N",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.hit",
+    "name": "辭典命中／未命中",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 12,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.up",
+    "name": "字體大小調大／調小",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 12,
+    "u": 6,
+    "rep": 4,
+    "rep_days": 0
+   },
+   {
+    "id": "search.submit",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 12,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "content.px.on",
+    "name": "披尋記開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.miss",
+    "name": "辭典命中／未命中",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.select.h",
+    "name": "切換到藏經版／韓版",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.custom",
+    "name": "自訂匯出（格式／部分／範圍／封裝）",
+    "model": "X",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.ok",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.zero",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ]
+ },
+ "features_all": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "dev": null,
+  "instances": 6,
+  "registry_total": 152,
+  "used_total": 13,
+  "features": [
+   {
+    "id": "nav.juan_open.rail",
+    "name": "選卷（卷次欄／正文卷名／手機卷浮窗）",
+    "model": "N",
+    "devices": "全部",
+    "verify": null,
+    "n": 24,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.lookup.dbl",
+    "name": "查詞（反白／雙擊／長按＋查詞鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.rail",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.node_click",
+    "name": "點科判節點（穩定節點 ID）",
+    "model": "N",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.hit",
+    "name": "辭典命中／未命中",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 12,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.up",
+    "name": "字體大小調大／調小",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 12,
+    "u": 6,
+    "rep": 4,
+    "rep_days": 0
+   },
+   {
+    "id": "search.submit",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 12,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "content.px.on",
+    "name": "披尋記開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.miss",
+    "name": "辭典命中／未命中",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.select.h",
+    "name": "切換到藏經版／韓版",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.custom",
+    "name": "自訂匯出（格式／部分／範圍／封裝）",
+    "model": "X",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.ok",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.zero",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "about.source_link",
+    "name": "點外部來源連結",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "about.source_open",
+    "name": "展開內容來源",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "about.version_click",
+    "name": "點版本號",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "app.offline_open",
+    "name": "離線狀態下開啟（連線後補報）",
+    "model": "S",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "app.update_reload",
+    "name": "版本更新後自動重載",
+    "model": "S",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.cb.off",
+    "name": "常柏法師釋開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.cb.on",
+    "name": "常柏法師釋開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.dict.off",
+    "name": "辭典功能開／關",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.dict.on",
+    "name": "辭典功能開／關",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.px.off",
+    "name": "披尋記開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.choice_switch",
+    "name": "多詞切換",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.close.esc",
+    "name": "關閉辭典（×／Esc／點外面）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.close.outside",
+    "name": "關閉辭典（×／Esc／點外面）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.close.x",
+    "name": "關閉辭典（×／Esc／點外面）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.lookup.long",
+    "name": "查詞（反白／雙擊／長按＋查詞鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.lookup.sel",
+    "name": "查詞（反白／雙擊／長按＋查詞鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.open_full",
+    "name": "開啟完整詞條（外部）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "early.font_size",
+    "name": "首次開啟 5 分鐘內就調整字級／正文縮放",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "early.zoom_m",
+    "name": "首次開啟 5 分鐘內就調整字級／正文縮放",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.entry.badge",
+    "name": "版本切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.entry.menu",
+    "name": "版本切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.select.z",
+    "name": "切換到藏經版／韓版",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.switch_back",
+    "name": "切換後 60 秒內切回",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.fail",
+    "name": "匯出失敗",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.kepan_cancel",
+    "name": "取消科判表匯出",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.kepan_pdf",
+    "name": "直書科判表 PDF",
+    "model": "X",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.one_click",
+    "name": "一鍵匯出全書",
+    "model": "X",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.shortcut.all",
+    "name": "匯出範圍快捷（本卷／全部）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.shortcut.this",
+    "name": "匯出範圍快捷（本卷／全部）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.jhenghei",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.kai",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.noto",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.notoSerif",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.pingfang",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.song",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.system",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.kepan_color.changed",
+    "name": "科標顏色變更／恢復預設",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.kepan_color.reset",
+    "name": "科標顏色變更／恢復預設",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.line.loose",
+    "name": "行距（0.85／1／1.25）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.line.normal",
+    "name": "行距（0.85／1／1.25）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.line.tight",
+    "name": "行距（0.85／1／1.25）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.reset_all",
+    "name": "全部重置",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.down",
+    "name": "字體大小調大／調小",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.via.btn",
+    "name": "字體大小操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.via.slider",
+    "name": "字體大小操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.300",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.400",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.500",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.600",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.700",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.brief.start",
+    "name": "導覽：概略／完整開始、完成、略過",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.complete",
+    "name": "導覽：概略／完整開始、完成、略過",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.full.start",
+    "name": "導覽：概略／完整開始、完成、略過",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.skip",
+    "name": "導覽：概略／完整開始、完成、略過",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.step_max.b1",
+    "name": "導覽到達最遠步數分桶（1–3／4–10／11–20／21+）",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.step_max.b2",
+    "name": "導覽到達最遠步數分桶（1–3／4–10／11–20／21+）",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.step_max.b3",
+    "name": "導覽到達最遠步數分桶（1–3／4–10／11–20／21+）",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.step_max.b4",
+    "name": "導覽到達最遠步數分桶（1–3／4–10／11–20／21+）",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "history.detail",
+    "name": "開啟版本詳情（記版本號，只入聚合）",
+    "model": "N",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "history.open",
+    "name": "開啟版本紀錄",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.body",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.chart",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.down",
+    "name": "往下一層（點「(分N)」）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.longpress_parent",
+    "name": "手機長按標題跟隨父層",
+    "model": "A",
+    "devices": "手機",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.show.off",
+    "name": "正文科判顯示／隱藏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.show.on",
+    "name": "正文科判顯示／隱藏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.up.btn",
+    "name": "往上一層（雙擊標題／↑鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.up.dbl",
+    "name": "往上一層（雙擊標題／↑鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.xref",
+    "name": "別表跳轉（雙擊小字）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.entry.badge",
+    "name": "科標切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.entry.menu",
+    "name": "科標切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.gz",
+    "name": "科標：干支／章節（藏版）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.zj",
+    "name": "科標：干支／章節（藏版）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.bar.hide",
+    "name": "收起／展開頂部功能列",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.bar.show",
+    "name": "收起／展開頂部功能列",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.mode.auto",
+    "name": "介面選擇（平板／電腦；回到自動）",
+    "model": "C",
+    "devices": "電腦／iPad",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.mode.ipad",
+    "name": "介面選擇（平板／電腦；回到自動）",
+    "model": "C",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.mode.mac",
+    "name": "介面選擇（平板／電腦；回到自動）",
+    "model": "C",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.pane_resize",
+    "name": "拖曳調整欄寬",
+    "model": "A",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.panel_pin.off",
+    "name": "釘選科判",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.panel_pin.on",
+    "name": "釘選科判",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.rail_pin.off",
+    "name": "固定卷次（iPad）",
+    "model": "T",
+    "devices": "iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.rail_pin.on",
+    "name": "固定卷次（iPad）",
+    "model": "T",
+    "devices": "iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.swap.off",
+    "name": "左右置換",
+    "model": "T",
+    "devices": "電腦",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.swap.on",
+    "name": "左右置換",
+    "model": "T",
+    "devices": "電腦",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "menu.open.click",
+    "name": "功能選單（只計點擊開啟）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_fold.off",
+    "name": "卷目次收攏／展開",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_fold.on",
+    "name": "卷目次收攏／展開",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_open.header",
+    "name": "選卷（卷次欄／正文卷名／手機卷浮窗）",
+    "model": "N",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_open.phone",
+    "name": "選卷（卷次欄／正文卷名／手機卷浮窗）",
+    "model": "N",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.page_jump",
+    "name": "跳頁",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.panel.hide",
+    "name": "顯示／隱藏科判欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.panel.show",
+    "name": "顯示／隱藏科判欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.rail.hide",
+    "name": "顯示／隱藏卷次欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.rail.show",
+    "name": "顯示／隱藏卷次欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.top.double",
+    "name": "回上方（單擊／雙擊）／直書科判表「總表」",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.top.single",
+    "name": "回上方（單擊／雙擊）／直書科判表「總表」",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.top.total",
+    "name": "回上方（單擊／雙擊）／直書科判表「總表」",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.catalog",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.chart",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.read",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.search",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "report.open",
+    "name": "開啟問題回報",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "report.send.fail",
+    "name": "問題回報送出成敗（不收內容）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "report.send.ok",
+    "name": "問題回報送出成敗（不收內容）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.abandoned",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.juan_chip",
+    "name": "結果頁卷跳轉",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.open",
+    "name": "開啟搜尋框／搜尋分頁",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opened",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_cb.off",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_cb.on",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_px.off",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_px.on",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.recovered",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.result.kepan",
+    "name": "點開的搜尋結果類型",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.result.notes",
+    "name": "點開的搜尋結果類型",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.result.text",
+    "name": "點開的搜尋結果類型",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.about",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.content",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.edition",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.export",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.font",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.label",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.layout",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "view.tab.t",
+    "name": "內文／直書科判表分頁",
+    "model": "C",
+    "devices": "窄螢幕",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "view.tab.v",
+    "name": "內文／直書科判表分頁",
+    "model": "C",
+    "devices": "窄螢幕",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.m.in",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.m.out",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.m.reset",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.p.in",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.p.out",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.p.reset",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.r.in",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.r.out",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.r.reset",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.btn",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.kbd",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.pinch",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.wheel",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ]
+ },
+ "features_unused": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "dev": null,
+  "instances": 6,
+  "registry_total": 152,
+  "used_total": 13,
+  "features": [
+   {
+    "id": "about.source_link",
+    "name": "點外部來源連結",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "about.source_open",
+    "name": "展開內容來源",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "about.version_click",
+    "name": "點版本號",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "app.offline_open",
+    "name": "離線狀態下開啟（連線後補報）",
+    "model": "S",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "app.update_reload",
+    "name": "版本更新後自動重載",
+    "model": "S",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.cb.off",
+    "name": "常柏法師釋開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.cb.on",
+    "name": "常柏法師釋開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.dict.off",
+    "name": "辭典功能開／關",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.dict.on",
+    "name": "辭典功能開／關",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.px.off",
+    "name": "披尋記開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.choice_switch",
+    "name": "多詞切換",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.close.esc",
+    "name": "關閉辭典（×／Esc／點外面）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.close.outside",
+    "name": "關閉辭典（×／Esc／點外面）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.close.x",
+    "name": "關閉辭典（×／Esc／點外面）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.lookup.long",
+    "name": "查詞（反白／雙擊／長按＋查詞鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.lookup.sel",
+    "name": "查詞（反白／雙擊／長按＋查詞鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.open_full",
+    "name": "開啟完整詞條（外部）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "early.font_size",
+    "name": "首次開啟 5 分鐘內就調整字級／正文縮放",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "early.zoom_m",
+    "name": "首次開啟 5 分鐘內就調整字級／正文縮放",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.entry.badge",
+    "name": "版本切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.entry.menu",
+    "name": "版本切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.select.z",
+    "name": "切換到藏經版／韓版",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "edition.switch_back",
+    "name": "切換後 60 秒內切回",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.fail",
+    "name": "匯出失敗",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.kepan_cancel",
+    "name": "取消科判表匯出",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.kepan_pdf",
+    "name": "直書科判表 PDF",
+    "model": "X",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.one_click",
+    "name": "一鍵匯出全書",
+    "model": "X",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.shortcut.all",
+    "name": "匯出範圍快捷（本卷／全部）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.shortcut.this",
+    "name": "匯出範圍快捷（本卷／全部）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.jhenghei",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.kai",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.noto",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.notoSerif",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.pingfang",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.song",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.system",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.kepan_color.changed",
+    "name": "科標顏色變更／恢復預設",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.kepan_color.reset",
+    "name": "科標顏色變更／恢復預設",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.line.loose",
+    "name": "行距（0.85／1／1.25）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.line.normal",
+    "name": "行距（0.85／1／1.25）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.line.tight",
+    "name": "行距（0.85／1／1.25）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.reset_all",
+    "name": "全部重置",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.down",
+    "name": "字體大小調大／調小",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.via.btn",
+    "name": "字體大小操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.via.slider",
+    "name": "字體大小操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.300",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.400",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.500",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.600",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.700",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.brief.start",
+    "name": "導覽：概略／完整開始、完成、略過",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.complete",
+    "name": "導覽：概略／完整開始、完成、略過",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.full.start",
+    "name": "導覽：概略／完整開始、完成、略過",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.skip",
+    "name": "導覽：概略／完整開始、完成、略過",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.step_max.b1",
+    "name": "導覽到達最遠步數分桶（1–3／4–10／11–20／21+）",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.step_max.b2",
+    "name": "導覽到達最遠步數分桶（1–3／4–10／11–20／21+）",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.step_max.b3",
+    "name": "導覽到達最遠步數分桶（1–3／4–10／11–20／21+）",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "guide.step_max.b4",
+    "name": "導覽到達最遠步數分桶（1–3／4–10／11–20／21+）",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "history.detail",
+    "name": "開啟版本詳情（記版本號，只入聚合）",
+    "model": "N",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "history.open",
+    "name": "開啟版本紀錄",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.body",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.chart",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.down",
+    "name": "往下一層（點「(分N)」）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.longpress_parent",
+    "name": "手機長按標題跟隨父層",
+    "model": "A",
+    "devices": "手機",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.show.off",
+    "name": "正文科判顯示／隱藏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.show.on",
+    "name": "正文科判顯示／隱藏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.up.btn",
+    "name": "往上一層（雙擊標題／↑鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.up.dbl",
+    "name": "往上一層（雙擊標題／↑鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.xref",
+    "name": "別表跳轉（雙擊小字）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.entry.badge",
+    "name": "科標切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.entry.menu",
+    "name": "科標切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.gz",
+    "name": "科標：干支／章節（藏版）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.zj",
+    "name": "科標：干支／章節（藏版）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.bar.hide",
+    "name": "收起／展開頂部功能列",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.bar.show",
+    "name": "收起／展開頂部功能列",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.mode.auto",
+    "name": "介面選擇（平板／電腦；回到自動）",
+    "model": "C",
+    "devices": "電腦／iPad",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.mode.ipad",
+    "name": "介面選擇（平板／電腦；回到自動）",
+    "model": "C",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.mode.mac",
+    "name": "介面選擇（平板／電腦；回到自動）",
+    "model": "C",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.pane_resize",
+    "name": "拖曳調整欄寬",
+    "model": "A",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.panel_pin.off",
+    "name": "釘選科判",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.panel_pin.on",
+    "name": "釘選科判",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.rail_pin.off",
+    "name": "固定卷次（iPad）",
+    "model": "T",
+    "devices": "iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.rail_pin.on",
+    "name": "固定卷次（iPad）",
+    "model": "T",
+    "devices": "iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.swap.off",
+    "name": "左右置換",
+    "model": "T",
+    "devices": "電腦",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.swap.on",
+    "name": "左右置換",
+    "model": "T",
+    "devices": "電腦",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "menu.open.click",
+    "name": "功能選單（只計點擊開啟）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_fold.off",
+    "name": "卷目次收攏／展開",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_fold.on",
+    "name": "卷目次收攏／展開",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_open.header",
+    "name": "選卷（卷次欄／正文卷名／手機卷浮窗）",
+    "model": "N",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_open.phone",
+    "name": "選卷（卷次欄／正文卷名／手機卷浮窗）",
+    "model": "N",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.page_jump",
+    "name": "跳頁",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.panel.hide",
+    "name": "顯示／隱藏科判欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.panel.show",
+    "name": "顯示／隱藏科判欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.rail.hide",
+    "name": "顯示／隱藏卷次欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.rail.show",
+    "name": "顯示／隱藏卷次欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.top.double",
+    "name": "回上方（單擊／雙擊）／直書科判表「總表」",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.top.single",
+    "name": "回上方（單擊／雙擊）／直書科判表「總表」",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.top.total",
+    "name": "回上方（單擊／雙擊）／直書科判表「總表」",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.catalog",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.chart",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.read",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.search",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "report.open",
+    "name": "開啟問題回報",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "report.send.fail",
+    "name": "問題回報送出成敗（不收內容）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "report.send.ok",
+    "name": "問題回報送出成敗（不收內容）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.abandoned",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.juan_chip",
+    "name": "結果頁卷跳轉",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.open",
+    "name": "開啟搜尋框／搜尋分頁",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opened",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_cb.off",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_cb.on",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_px.off",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_px.on",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.recovered",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.result.kepan",
+    "name": "點開的搜尋結果類型",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.result.notes",
+    "name": "點開的搜尋結果類型",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.result.text",
+    "name": "點開的搜尋結果類型",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.about",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.content",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.edition",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.export",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.font",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.label",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "settings.page.layout",
+    "name": "設定選單進入各頁（點擊）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "view.tab.t",
+    "name": "內文／直書科判表分頁",
+    "model": "C",
+    "devices": "窄螢幕",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "view.tab.v",
+    "name": "內文／直書科判表分頁",
+    "model": "C",
+    "devices": "窄螢幕",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.m.in",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.m.out",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.m.reset",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.p.in",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.p.out",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.p.reset",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.r.in",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.r.out",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.r.reset",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.btn",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.kbd",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.pinch",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.wheel",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ]
+ },
+ "notes": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "features": [
+   {
+    "id": "content.px.on",
+    "name": "披尋記開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.cb.off",
+    "name": "常柏法師釋開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.cb.on",
+    "name": "常柏法師釋開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.dict.off",
+    "name": "辭典功能開／關",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.dict.on",
+    "name": "辭典功能開／關",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "content.px.off",
+    "name": "披尋記開／關（韓版）",
+    "model": "T",
+    "devices": "韓版",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_cb.off",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_cb.on",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_px.off",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_px.on",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ],
+  "dims": [
+   {
+    "dim": "kp",
+    "name": "正文科判顯示",
+    "basis": "reading",
+    "default": "show",
+    "total_sec": 4200,
+    "values": [
+     {
+      "val": "show",
+      "sec": 4200,
+      "u": 6
+     },
+     {
+      "val": "hide",
+      "sec": 0,
+      "u": 0
+     }
+    ]
+   },
+   {
+    "dim": "dict",
+    "name": "辭典功能",
+    "basis": "reading",
+    "default": "on",
+    "total_sec": 4200,
+    "values": [
+     {
+      "val": "on",
+      "sec": 4200,
+      "u": 6
+     },
+     {
+      "val": "off",
+      "sec": 0,
+      "u": 0
+     }
+    ]
+   },
+   {
+    "dim": "px",
+    "name": "披尋記",
+    "basis": "reading",
+    "default": "off",
+    "total_sec": 4200,
+    "values": [
+     {
+      "val": "off",
+      "sec": 1800,
+      "u": 6
+     },
+     {
+      "val": "on",
+      "sec": 2400,
+      "u": 6
+     }
+    ]
+   },
+   {
+    "dim": "cb",
+    "name": "常柏法師釋",
+    "basis": "reading",
+    "default": "off",
+    "total_sec": 4200,
+    "values": [
+     {
+      "val": "off",
+      "sec": 4200,
+      "u": 6
+     },
+     {
+      "val": "on",
+      "sec": 0,
+      "u": 0
+     }
+    ]
+   }
+  ],
+  "instances": 6
+ },
+ "nav": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "features": [
+   {
+    "id": "nav.juan_open.rail",
+    "name": "選卷（卷次欄／正文卷名／手機卷浮窗）",
+    "model": "N",
+    "devices": "全部",
+    "verify": null,
+    "n": 24,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_fold.off",
+    "name": "卷目次收攏／展開",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_fold.on",
+    "name": "卷目次收攏／展開",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_open.header",
+    "name": "選卷（卷次欄／正文卷名／手機卷浮窗）",
+    "model": "N",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.juan_open.phone",
+    "name": "選卷（卷次欄／正文卷名／手機卷浮窗）",
+    "model": "N",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.page_jump",
+    "name": "跳頁",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.panel.hide",
+    "name": "顯示／隱藏科判欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.panel.show",
+    "name": "顯示／隱藏科判欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.rail.hide",
+    "name": "顯示／隱藏卷次欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.rail.show",
+    "name": "顯示／隱藏卷次欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.top.double",
+    "name": "回上方（單擊／雙擊）／直書科判表「總表」",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.top.single",
+    "name": "回上方（單擊／雙擊）／直書科判表「總表」",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.top.total",
+    "name": "回上方（單擊／雙擊）／直書科判表「總表」",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.catalog",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.chart",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.read",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "phone.screen.search",
+    "name": "手機底部分頁",
+    "model": "C",
+    "devices": "手機",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "view.tab.t",
+    "name": "內文／直書科判表分頁",
+    "model": "C",
+    "devices": "窄螢幕",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "view.tab.v",
+    "name": "內文／直書科判表分頁",
+    "model": "C",
+    "devices": "窄螢幕",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.rail",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.node_click",
+    "name": "點科判節點（穩定節點 ID）",
+    "model": "N",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.body",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.click.chart",
+    "name": "科判節點點擊入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.down",
+    "name": "往下一層（點「(分N)」）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.longpress_parent",
+    "name": "手機長按標題跟隨父層",
+    "model": "A",
+    "devices": "手機",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.show.off",
+    "name": "正文科判顯示／隱藏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.show.on",
+    "name": "正文科判顯示／隱藏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.up.btn",
+    "name": "往上一層（雙擊標題／↑鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.up.dbl",
+    "name": "往上一層（雙擊標題／↑鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "kepan.xref",
+    "name": "別表跳轉（雙擊小字）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.pane_resize",
+    "name": "拖曳調整欄寬",
+    "model": "A",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ],
+  "dims": [
+   {
+    "dim": "phone.screen",
+    "name": "手機分頁",
+    "basis": "active",
+    "default": "read",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "view.tab",
+    "name": "內文／科判表分頁",
+    "basis": "active",
+    "default": "t",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   }
+  ],
+  "instances": 6
+ },
+ "display": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "features": [
+   {
+    "id": "nav.rail.hide",
+    "name": "顯示／隱藏卷次欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.rail.show",
+    "name": "顯示／隱藏卷次欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.panel.hide",
+    "name": "顯示／隱藏科判欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "nav.panel.show",
+    "name": "顯示／隱藏科判欄",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.bar.hide",
+    "name": "收起／展開頂部功能列",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.bar.show",
+    "name": "收起／展開頂部功能列",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.mode.auto",
+    "name": "介面選擇（平板／電腦；回到自動）",
+    "model": "C",
+    "devices": "電腦／iPad",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.mode.ipad",
+    "name": "介面選擇（平板／電腦；回到自動）",
+    "model": "C",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.mode.mac",
+    "name": "介面選擇（平板／電腦；回到自動）",
+    "model": "C",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.pane_resize",
+    "name": "拖曳調整欄寬",
+    "model": "A",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.panel_pin.off",
+    "name": "釘選科判",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.panel_pin.on",
+    "name": "釘選科判",
+    "model": "T",
+    "devices": "電腦／iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.rail_pin.off",
+    "name": "固定卷次（iPad）",
+    "model": "T",
+    "devices": "iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.rail_pin.on",
+    "name": "固定卷次（iPad）",
+    "model": "T",
+    "devices": "iPad",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.swap.off",
+    "name": "左右置換",
+    "model": "T",
+    "devices": "電腦",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "layout.swap.on",
+    "name": "左右置換",
+    "model": "T",
+    "devices": "電腦",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "menu.open.click",
+    "name": "功能選單（只計點擊開啟）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ],
+  "dims": [
+   {
+    "dim": "layout.mode",
+    "name": "介面",
+    "basis": "active",
+    "default": "auto",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "layout.swap",
+    "name": "左右置換",
+    "basis": "active",
+    "default": "0",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "layout.panel_pin",
+    "name": "釘選科判",
+    "basis": "active",
+    "default": "pinned",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "layout.rail_pin",
+    "name": "固定卷次",
+    "basis": "active",
+    "default": "floating",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "layout.pane",
+    "name": "欄寬",
+    "basis": "active",
+    "default": "equal",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "rail.visible",
+    "name": "卷次欄可見",
+    "basis": "active",
+    "default": {
+     "mac": "visible",
+     "ipad": "hidden",
+     "iphone": "hidden"
+    },
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "panel.visible",
+    "name": "科判欄可見",
+    "basis": "active",
+    "default": {
+     "mac": "visible",
+     "ipad": "hidden",
+     "iphone": "hidden"
+    },
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "bar.visible",
+    "name": "頂部功能列",
+    "basis": "active",
+    "default": "visible",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "jfold",
+    "name": "卷目次收攏",
+    "basis": "active",
+    "default": "fold",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "orient",
+    "name": "螢幕方向",
+    "basis": "active",
+    "default": null,
+    "default_sec": null,
+    "total_sec": 5400,
+    "values": [
+     {
+      "val": "landscape",
+      "sec": 2400,
+      "u": 6
+     }
+    ]
+   }
+  ],
+  "instances": 6
+ },
+ "font": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "features": [
+   {
+    "id": "font.size.up",
+    "name": "字體大小調大／調小",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 12,
+    "u": 6,
+    "rep": 4,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.jhenghei",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.kai",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.noto",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.notoSerif",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.pingfang",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.song",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.family.system",
+    "name": "原文字體",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.kepan_color.changed",
+    "name": "科標顏色變更／恢復預設",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.kepan_color.reset",
+    "name": "科標顏色變更／恢復預設",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.line.loose",
+    "name": "行距（0.85／1／1.25）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.line.normal",
+    "name": "行距（0.85／1／1.25）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.line.tight",
+    "name": "行距（0.85／1／1.25）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.reset_all",
+    "name": "全部重置",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.down",
+    "name": "字體大小調大／調小",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.via.btn",
+    "name": "字體大小操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.size.via.slider",
+    "name": "字體大小操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.300",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.400",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.500",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.600",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "font.weight.700",
+    "name": "原文粗細",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.m.in",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.m.out",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.m.reset",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.p.in",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.p.out",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.p.reset",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.r.in",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.r.out",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.r.reset",
+    "name": "三窗格縮放（卷次 r／正文 m／科判 p）",
+    "model": "K",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.btn",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.kbd",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.pinch",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "zoom.via.wheel",
+    "name": "縮放操作方式",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "early.font_size",
+    "name": "首次開啟 5 分鐘內就調整字級／正文縮放",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "early.zoom_m",
+    "name": "首次開啟 5 分鐘內就調整字級／正文縮放",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ],
+  "dims": [
+   {
+    "dim": "font.family",
+    "name": "原文字體",
+    "basis": "active",
+    "default": "kai",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "font.weight",
+    "name": "原文粗細",
+    "basis": "active",
+    "default": "400",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "font.size",
+    "name": "字體大小級距",
+    "basis": "active",
+    "default": "1",
+    "default_sec": 3600,
+    "total_sec": 5400,
+    "values": [
+     {
+      "val": "1.3",
+      "sec": 1800,
+      "u": 6
+     }
+    ]
+   },
+   {
+    "dim": "font.line",
+    "name": "行距",
+    "basis": "active",
+    "default": "1",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "zoom.r",
+    "name": "卷次欄縮放",
+    "basis": "active",
+    "default": {
+     "mac": "120",
+     "ipad": "100",
+     "iphone": "100"
+    },
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "zoom.m",
+    "name": "正文縮放",
+    "basis": "active",
+    "default": {
+     "mac": "120",
+     "ipad": "100",
+     "iphone": "100"
+    },
+    "default_sec": 4200,
+    "total_sec": 5400,
+    "values": [
+     {
+      "val": "150",
+      "sec": 1200,
+      "u": 6
+     }
+    ]
+   },
+   {
+    "dim": "zoom.p",
+    "name": "科判縮放",
+    "basis": "active",
+    "default": "100",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   },
+   {
+    "dim": "kepan.color",
+    "name": "科標顏色是否自訂",
+    "basis": "active",
+    "default": "default",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   }
+  ],
+  "instances": 6
+ },
+ "label": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "features": [
+   {
+    "id": "label.entry.badge",
+    "name": "科標切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.entry.menu",
+    "name": "科標切換入口",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.gz",
+    "name": "科標：干支／章節（藏版）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "label.zj",
+    "name": "科標：干支／章節（藏版）",
+    "model": "C",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ],
+  "dims": [
+   {
+    "dim": "label",
+    "name": "科標",
+    "basis": "active",
+    "default": "gz",
+    "default_sec": 5400,
+    "total_sec": 5400,
+    "values": []
+   }
+  ],
+  "instances": 6
+ },
+ "search": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "k": 3,
+  "features": [
+   {
+    "id": "search.submit",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 12,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "search.ok",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.zero",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.abandoned",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.juan_chip",
+    "name": "結果頁卷跳轉",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.open",
+    "name": "開啟搜尋框／搜尋分頁",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opened",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_cb.off",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_cb.on",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_px.off",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.opt_px.on",
+    "name": "「一併搜尋」披尋記／常柏",
+    "model": "T",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.recovered",
+    "name": "搜尋次數／成功／零結果／點開結果／修正成功／放棄",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.result.kepan",
+    "name": "點開的搜尋結果類型",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.result.notes",
+    "name": "點開的搜尋結果類型",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "search.result.text",
+    "name": "點開的搜尋結果類型",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ],
+  "terms": [
+   {
+    "term": "般若",
+    "n": 6,
+    "u": 6
+   },
+   {
+    "term": "阿賴耶",
+    "n": 6,
+    "u": 6
+   }
+  ],
+  "terms_other": {
+   "terms": 0,
+   "n": 0
+  },
+  "zero_terms": [
+   {
+    "term": "阿賴耶",
+    "n": 6,
+    "u": 6
+   }
+  ],
+  "zero_other": {
+   "terms": 0,
+   "n": 0
+  },
+  "recovered": [
+   {
+    "from_term": "阿賴耶",
+    "to_term": "阿賴耶識",
+    "n": 6
+   }
+  ],
+  "note": "u 為各日使用實例之和（人日），不是期間內不重複人數"
+ },
+ "dict": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "k": 3,
+  "features": [
+   {
+    "id": "dict.lookup.dbl",
+    "name": "查詞（反白／雙擊／長按＋查詞鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 18,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.hit",
+    "name": "辭典命中／未命中",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 12,
+    "u": 6,
+    "rep": 6,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.miss",
+    "name": "辭典命中／未命中",
+    "model": "F",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.choice_switch",
+    "name": "多詞切換",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.close.esc",
+    "name": "關閉辭典（×／Esc／點外面）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.close.outside",
+    "name": "關閉辭典（×／Esc／點外面）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.close.x",
+    "name": "關閉辭典（×／Esc／點外面）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.lookup.long",
+    "name": "查詞（反白／雙擊／長按＋查詞鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.lookup.sel",
+    "name": "查詞（反白／雙擊／長按＋查詞鈕）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "dict.open_full",
+    "name": "開啟完整詞條（外部）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ],
+  "hit": [
+   {
+    "term": "阿賴耶識",
+    "n": 6,
+    "u": 6
+   }
+  ],
+  "hit_other": {
+   "terms": 0,
+   "n": 0
+  },
+  "miss": [
+   {
+    "term": "無此詞",
+    "n": 6,
+    "u": 6
+   }
+  ],
+  "miss_other": {
+   "terms": 0,
+   "n": 0
+  },
+  "juans": [
+   {
+    "juan": 12,
+    "n": 18
+   }
+  ],
+  "note": "u 為各日使用實例之和（人日）；未命中含查詢失敗"
+ },
+ "export": {
+  "range": "today",
+  "period": {
+   "type": "d",
+   "key": "2026-10-05",
+   "start": "2026-10-05",
+   "end": "2026-10-05"
+  },
+  "features": [
+   {
+    "id": "export.custom",
+    "name": "自訂匯出（格式／部分／範圍／封裝）",
+    "model": "X",
+    "devices": "全部",
+    "verify": null,
+    "n": 6,
+    "u": 6,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.fail",
+    "name": "匯出失敗",
+    "model": "A",
+    "devices": "全部",
+    "verify": "待以實際 DOM／行為核對",
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.kepan_cancel",
+    "name": "取消科判表匯出",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.kepan_pdf",
+    "name": "直書科判表 PDF",
+    "model": "X",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.one_click",
+    "name": "一鍵匯出全書",
+    "model": "X",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.shortcut.all",
+    "name": "匯出範圍快捷（本卷／全部）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   },
+   {
+    "id": "export.shortcut.this",
+    "name": "匯出範圍快捷（本卷／全部）",
+    "model": "A",
+    "devices": "全部",
+    "verify": null,
+    "n": 0,
+    "u": 0,
+    "rep": 0,
+    "rep_days": 0
+   }
+  ],
+  "total": 6,
+  "failed": 0,
+  "groups": {
+   "kind": {
+    "custom": 6
+   },
+   "fmt": {
+    "md": 6,
+    "pdf": 6
+   },
+   "pack": {
+    "zip": 6
+   },
+   "parts": {
+    "kp+text": 6
+   },
+   "label": {}
+  },
+  "top_juans": [
+   {
+    "i": 1,
+    "n": 6
+   },
+   {
+    "i": 2,
+    "n": 6
+   },
+   {
+    "i": 3,
+    "n": 6
+   }
+  ],
+  "top_pages": []
+ },
+ "trend": {
+  "days": 7,
+  "rows": [
+   {
+    "day": "2026-09-29",
+    "active": 0,
+    "new": 0,
+    "opens": 0,
+    "sec": 0
+   },
+   {
+    "day": "2026-09-30",
+    "active": 0,
+    "new": 0,
+    "opens": 0,
+    "sec": 0
+   },
+   {
+    "day": "2026-10-01",
+    "active": 0,
+    "new": 0,
+    "opens": 0,
+    "sec": 0
+   },
+   {
+    "day": "2026-10-02",
+    "active": 0,
+    "new": 0,
+    "opens": 0,
+    "sec": 0
+   },
+   {
+    "day": "2026-10-03",
+    "active": 0,
+    "new": 0,
+    "opens": 0,
+    "sec": 0
+   },
+   {
+    "day": "2026-10-04",
+    "active": 0,
+    "new": 0,
+    "opens": 0,
+    "sec": 0
+   },
+   {
+    "day": "2026-10-05",
+    "active": 6,
+    "new": 6,
+    "opens": 12,
+    "sec": 5400
+   }
+  ]
+ },
+ "size": {
+  "tables": [
+   {
+    "table": "instances",
+    "rows": 6
+   },
+   {
+    "table": "instance_days",
+    "rows": 6
+   },
+   {
+    "table": "instance_day_feature",
+    "rows": 78
+   },
+   {
+    "table": "instance_day_state",
+    "rows": 18
+   },
+   {
+    "table": "instance_day_reading",
+    "rows": 12
+   },
+   {
+    "table": "instance_day_node",
+    "rows": 12
+   },
+   {
+    "table": "roll",
+    "rows": 15
+   },
+   {
+    "table": "export_agg",
+    "rows": 3
+   },
+   {
+    "table": "term_agg",
+    "rows": 5
+   },
+   {
+    "table": "term_seen",
+    "rows": 30
+   },
+   {
+    "table": "recover_agg",
+    "rows": 1
+   },
+   {
+    "table": "presence",
+    "rows": 6
+   },
+   {
+    "table": "agg",
+    "rows": 12
+   },
+   {
+    "table": "agg_vol",
+    "rows": 2
+   }
+  ],
+  "estimated_bytes": 13460,
+  "note": "估計值（每列平均位元組 × 列數），含索引會更大；D1 儀表板的容量為準"
+ },
+ "registry": {
+  "version": 2,
+  "features": 152,
+  "active": 152,
+  "by_model": {
+   "N": 5,
+   "T": 26,
+   "A": 62,
+   "C": 28,
+   "F": 15,
+   "K": 11,
+   "X": 3,
+   "S": 2
+  },
+  "states": 26,
+  "excluded": 11,
+  "rules": 92,
+  "verify_pending": [
+   "nav.juan_open.header",
+   "layout.mode.auto",
+   "kepan.down",
+   "kepan.xref",
+   "kepan.longpress_parent",
+   "settings.page.content",
+   "dict.lookup.long",
+   "export.fail",
+   "guide.complete",
+   "guide.skip",
+   "history.detail"
+  ]
+ },
+ "presence": {
+  "server_time": "2026-10-05T04:00:00.000Z",
+  "timeout": 75,
+  "mode": "on",
+  "interval": 30,
+  "online": [
+   {
+    "code": "131844",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   },
+   {
+    "code": "5073AD",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   },
+   {
+    "code": "6DB91E",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   },
+   {
+    "code": "A79AA7",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   },
+   {
+    "code": "CA4E6A",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   },
+   {
+    "code": "F02DF6",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   }
+  ],
+  "active_5m": 6,
+  "active_15m": 6,
+  "recent": [
+   {
+    "code": "131844",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   },
+   {
+    "code": "5073AD",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   },
+   {
+    "code": "6DB91E",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   },
+   {
+    "code": "A79AA7",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   },
+   {
+    "code": "CA4E6A",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   },
+   {
+    "code": "F02DF6",
+    "device": "phone",
+    "mode": "web",
+    "city": "桃園",
+    "ago": 0
+   }
+  ],
+  "today_used": 6,
+  "note": "在線＝最近有送心跳且在前景互動；5／15 分鐘活躍只涵蓋有送心跳的實例，與長期統計不可混用"
+ }
+}
