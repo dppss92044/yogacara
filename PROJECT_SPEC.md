@@ -104,6 +104,7 @@
 
 - 顯示版本、最後更新日、版本摘要；內容來源（見 §7）。【現行・未驗收】
 - 問題回報：直接開啟郵件（`dppss92044@gmail.com`）。【現行・未驗收】（H112）關於頁聯絡文字（來信、複製信箱、三寶弟子敬啟）的取捨【待使用者確認】（H054 未實作；repo 內該段 0 處）。
+- **【W001 未發布・施工中，待 q 驗收】匿名 App 分析（Analytics v2）**（D049–D060；取代 D040–D048 中關於 App 內開關、告知文案與 v2 payload 的部分）：**App 內沒有任何統計 UI**（無開關、無告知文字、不改關於頁與導覽；D059）。客戶端（`tools/stats-client.js`，由 `tools/patch-w001-stats.py` 注入 `index.html`）只收 `analytics/registry.json` 白名單內的操作：單一委派監聽器、`isTrusted`、不讀 UA／定位／既有資料；不是全域 click logger（滑過、按鍵、捲動、未登錄的點擊一律丟棄）。內容：功能使用次數、設定狀態時間（只記非預設值）、閱讀歸屬（版本×卷×秒數）、科判節點計次（穩定節點 ID）、搜尋／辭典詞（客戶端與伺服器雙重過濾：僅 CJK、≤16 字）、匯出／回報摘要、版本紀錄詳情；另有 presence 心跳（`POST /p`，約 30 秒、僅前景且近期有操作、離開送 leave、間隔由伺服器標頭 `x-p` 控制）。模式 `off｜basic｜full`＋presence 開關由 `window` 事件 `hk-analytics-control` 控制，鍵 `hk-analytics-mode-v2`；`off` 會停止、丟棄未送資料、送 `/forget`、刪除本機 ID。預設值（開發與 P5 用）為 full＋presence 開，**正式預設與告知／控制介面須由 q 定稿後才可發布**。DNT／GPC 一律停用。伺服器端為自建 Cloudflare Worker＋D1（city 僅由 `request.cf` 推算，不讀 IP／UA）；查詢介面為 Mac CLI `瑜伽統計`。有效時間、30 分鐘新開啟、3 小時上限、180 天 ID 輪替、保存期限（instance_day_* 60 天、節點 40 天、term_seen 7 天、recover 30 天、term_agg 90 天、roll 日 400 天、instances 180 天）見 `analytics/README.md`。故障、離線、請求失敗一律靜默；不經過 Service Worker。
 
 ## 14. PWA
 
