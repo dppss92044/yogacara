@@ -15,7 +15,7 @@
 
 - **W002｜科判導航／同步 Bug 修正**（q，2026-10-05；與 W001 平行，**獨立分支**，不得混入 W001）
 - 工作分支：`claude/kepan-nav-fix-ryczgd`（基底 `origin/main` = `e4a365f`；App 程式基底仍是 v1.91 `db77e11`）
-- 狀態：**修正與測試已完成，等待 q 驗收／裁定；尚未發布、未升版、未開 PR、未 merge、未 deploy**
+- 狀態：**修正與測試已完成、雙擊方向已由 q 裁定（D100）；W002 可進入後續整合階段（整合＝與 W001 合併、實機驗收、發布裁定，皆由 q 決定）；尚未發布、未升版、未開 PR、未 merge、未 deploy**
 - W001（匿名使用統計）在另一分支 `claude/project-thread-3ws881` 施工，**不在 main**；本分支不含 W001 任何內容。下一個可用編號：**W003**。
 - 下一正式版本候選：v1.92（W001、W002 誰先發布誰用；發布需 `AGENTS.md` §3.4 三條件）。
 
@@ -48,19 +48,19 @@
 ## 修改檔案
 
 - `index.html`（`focusNode`、`#pzoom` dblclick；兩處，另加註解）
-- 新增：`tools/nav-contract-w002.cjs`、`tools/fixtures/w002-nav-cases.json`、`docs/nav-contract.md`
+- 新增：`tools/nav-contract-w002.cjs`、`tools/fixtures/w002-nav-cases.json`、`docs/nav-contract.md`；`DECISIONS.md` 新增 D100
 - 文件：`AI_HANDOFF.md`、`CHANGELOG.md`（Unreleased）、`PROJECT_STATE.md`
 - **未動**：`AGENTS.md`、`sw.js`、`manifest.webmanifest`、`icon-*.png`、`data/`、既有 `tools/*-results.json`、歷史說明檔。
 
 ## 已知 bug
 
 - 見 `PROJECT_STATE.md` §6（與本 W 無關者不處理）。
-- 韓版／藏版的「（分N）」「雙擊上一層」現行設計沿用；`PROJECT_SPEC.md` §5 寫「點兩下＝往上一層」，q 這次描述為「進入該標題的子分支；或依目前位置／既有設計進行相應的母／子分支導航」→ **以既有設計（往上一層）實作，如 q 要的是雙擊進子枝幹請告知**（見本檔「待 q 裁定」）。
+- 韓版／藏版的「（分N）」「雙擊上一層」現行設計沿用；`PROJECT_SPEC.md` §5 寫「點兩下＝往上一層」，q 這次描述為「進入該標題的子分支；或依目前位置／既有設計進行相應的母／子分支導航」→ q 已於 2026-10-05 18:44 裁定維持現行（雙擊＝往上一層），見本檔「q 的裁定」與 D100。
 
-## 待 q 裁定
+## q 的裁定（已完成）
 
-1. 雙擊標題的方向：現行（SPEC §5、程式）＝往上一層（母枝幹）；q 的描述同時提到「進入子分支」。本 W 維持現行，只補上正文／卷次同步。
-2. `.head` 路徑標題單擊：現行＝選取該祖先節點並同步正文／卷次（停在原頁）；雙擊＝科判欄換到它在母枝幹中的位置並同步。
+1. **雙擊標題的方向（q，2026-10-05 18:44）**：維持現行規格——雙擊＝往上一層／母枝幹；進入子枝幹仍由（分N）負責。已記錄為 `DECISIONS.md` D100 與 `docs/nav-contract.md`。
+2. `.head` 路徑標題：單擊＝選取該祖先節點並同步正文／卷次（停在原頁）；雙擊＝科判欄換到它在母枝幹中的位置並同步。屬同一契約，q 未另有異議。
 
 ## 測試結果
 
@@ -89,7 +89,7 @@
 
 1. 讀完 `AGENTS.md` §1 的七份文件與 `docs/nav-contract.md`。
 2. `git log`／`git status` 核對本檔「最後 commit」。
-3. 向 q 取得驗收結果；若要發布，與 W001 的發布順序一起裁定（§3.4 三條件）。
+3. 與 W001 的整合順序、實機驗收、發布，皆待 q 指示（§3.4 三條件）；不得自行合併或升版。
 
 ## 最後 commit
 
