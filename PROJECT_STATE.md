@@ -12,7 +12,7 @@
 | 正式版本 | **v1.91**（`index.html` 的 `appVer`＝v1.91；`sw.js` 的 `VERSION`＝"1.91"） |
 | App 程式基底 commit | **`db77e11`**（「更新至 v1.91」，2026-10-05 11:16 +0800）；App 本體（`index.html`、`sw.js`、`data/` 等）自此未修改。本次現況校正前的 repository main HEAD 為 **`f4734fc`**（校正前快照）；`db77e11` 之後的 commit 只涉及文件／流程文件，不代表 App 本體升版 |
 | 下一正式版本候選 | **v1.92**（尚未開始；W001 未發布、未升版） |
-| 目前工作編號 | **W001｜隱私優先的匿名使用統計系統**（第一階段：登記＋設計，待 q 裁定；分支 `work/W001-anonymous-analytics`） |
+| 目前工作編號 | **W001｜匿名 App Analytics（Analytics v2，2026-10-05 q 批准施工；App 內無統計 UI，D049–D060）**（分支 `work/W001-anonymous-analytics`） |
 | 進行中的程式修改 | W001（僅工作分支，未發布）：`index.html` 內嵌匿名統計客戶端與關於頁開關；`sw.js` 未動、版本仍 v1.91 |
 | v1.91 與外部更新檔 | v1.91 更新檔 zip 的 7 個檔與 HEAD 逐檔相同（已比對） |
 | 部署 | GitHub Pages：`https://dppss92044.github.io/yogacara/`（使用者端以「更新app」指令從下載資料夾複製並 push；此流程詳情見 MASTER_HISTORY H103，腳本不在 repo） |
