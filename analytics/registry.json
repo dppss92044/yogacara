@@ -685,11 +685,14 @@
    "dim": null,
    "status": "active",
    "note": "雙擊只記 1 次，不記 2 次節點點擊",
-   "src": "rule",
+   "src": "special",
    "why": "往上一層（雙擊標題／↑鈕）",
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
-   "raw": false
+   "raw": false,
+   "fn": [
+    "kepanUpDbl"
+   ]
   },
   {
    "id": "kepan.up.btn",
@@ -703,11 +706,14 @@
    "dim": null,
    "status": "active",
    "note": "雙擊只記 1 次，不記 2 次節點點擊",
-   "src": "rule",
+   "src": "special",
    "why": "往上一層（雙擊標題／↑鈕）",
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
-   "raw": false
+   "raw": false,
+   "fn": [
+    "kepanUpDbl"
+   ]
   },
   {
    "id": "kepan.down",
@@ -721,15 +727,11 @@
    "dim": null,
    "status": "active",
    "note": "",
-   "src": "special",
+   "src": "rule",
    "why": "往下一層（點「(分N)」）",
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
-   "raw": false,
-   "verify": "待以實際 DOM／行為核對",
-   "fn": [
-    "kepanDown"
-   ]
+   "raw": false
   },
   {
    "id": "kepan.xref",
@@ -743,15 +745,11 @@
    "dim": null,
    "status": "active",
    "note": "",
-   "src": "special",
+   "src": "rule",
    "why": "別表跳轉（雙擊小字）",
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
-   "raw": false,
-   "verify": "待以實際 DOM／行為核對",
-   "fn": [
-    "kepanXref"
-   ]
+   "raw": false
   },
   {
    "id": "kepan.longpress_parent",
@@ -901,7 +899,7 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "editionChoice"
+    "editionWatch"
    ]
   },
   {
@@ -922,7 +920,7 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "editionChoice"
+    "editionWatch"
    ]
   },
   {
@@ -979,7 +977,7 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "editionChoice"
+    "editionWatch"
    ]
   },
   {
@@ -1516,8 +1514,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn",
-    "zoomOther"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1538,8 +1536,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn",
-    "zoomOther"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1560,8 +1558,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn",
-    "zoomOther"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1582,8 +1580,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn",
-    "zoomOther"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1604,8 +1602,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn",
-    "zoomOther"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1626,8 +1624,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn",
-    "zoomOther"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1648,8 +1646,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn",
-    "zoomOther"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1670,8 +1668,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn",
-    "zoomOther"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1692,8 +1690,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn",
-    "zoomOther"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1714,7 +1712,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1735,7 +1734,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1756,7 +1756,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1777,7 +1778,8 @@
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
    "fn": [
-    "zoomBtn"
+    "zoomInput",
+    "zoomWatch"
    ]
   },
   {
@@ -1874,8 +1876,7 @@
    "why": "設定選單進入各頁（點擊）",
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
-   "raw": false,
-   "verify": "待以實際 DOM／行為核對"
+   "raw": false
   },
   {
    "id": "settings.page.layout",
@@ -1979,11 +1980,14 @@
    "dim": null,
    "status": "active",
    "note": "",
-   "src": "rule",
+   "src": "special",
    "why": "開啟搜尋框／搜尋分頁",
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
-   "raw": false
+   "raw": false,
+   "fn": [
+    "searchOpen"
+   ]
   },
   {
    "id": "search.submit",
@@ -2457,6 +2461,7 @@
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
+   "verify": "待以實際 DOM／行為核對",
    "fn": [
     "dictEsc",
     "dictOutside"
@@ -2479,6 +2484,7 @@
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
+   "verify": "待以實際 DOM／行為核對",
    "fn": [
     "dictEsc",
     "dictOutside"
@@ -2618,7 +2624,6 @@
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
-   "verify": "待以實際 DOM／行為核對",
    "fn": [
     "exportRun"
    ]
@@ -2682,7 +2687,6 @@
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
-   "verify": "待以實際 DOM／行為核對",
    "fn": [
     "tourWatch"
    ]
@@ -2704,7 +2708,6 @@
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
-   "verify": "待以實際 DOM／行為核對",
    "fn": [
     "tourWatch"
    ]
@@ -2882,7 +2885,6 @@
    "privacy": "只存次數；不存時間點、順序與內容",
    "retention": "實例層級 60 天；聚合長期；無 raw event",
    "raw": false,
-   "verify": "待以實際 DOM／行為核對",
    "fn": [
     "historyDetail"
    ]
@@ -3138,7 +3140,7 @@
    "group": "nav.top.{o}"
   },
   {
-   "sel": ".rol a[data-n],.kn[data-kn],#pzoom [data-id],#kview [data-id]",
+   "sel": ".rol a[data-n],.kn[data-kn],#pzoom .nd[data-id],#kview .nd[data-id]",
    "on": "click",
    "kind": "special",
    "fn": "nodeClick",
@@ -3152,10 +3154,10 @@
    "group": "kepan.up.{o}"
   },
   {
-   "sel": "#pzoom [data-id],#kview [data-id]",
+   "sel": "#pzoom .nd[data-id],#kview .nd[data-id]",
    "on": "dblclick",
-   "kind": "fixed",
-   "emit": "kepan.up.dbl",
+   "kind": "special",
+   "fn": "kepanUpDbl",
    "group": "kepan.up.{o}"
   },
   {
@@ -3191,10 +3193,10 @@
    "group": "label.entry.{o}"
   },
   {
-   "sel": ".edition-choice[data-edition]",
-   "on": "click",
+   "sel": "html",
+   "on": "observe",
    "kind": "special",
-   "fn": "editionChoice",
+   "fn": "editionWatch",
    "group": "edition.select.{o}"
   },
   {
@@ -3306,21 +3308,28 @@
    "sel": ".zc [data-zd]",
    "on": "click",
    "kind": "special",
-   "fn": "zoomBtn",
+   "fn": "zoomInput",
    "group": "zoom.{p}.{o}"
   },
   {
    "sel": "window",
-   "on": "keydown,wheel,gesturechange,touchmove",
+   "on": "reader-zoom",
    "kind": "special",
-   "fn": "zoomOther",
+   "fn": "zoomWatch",
    "group": "zoom.{p}.{o}"
   },
   {
    "sel": ".zc [data-zd]",
    "on": "click",
    "kind": "special",
-   "fn": "zoomBtn",
+   "fn": "zoomInput",
+   "group": "zoom.via.{o}"
+  },
+  {
+   "sel": "window",
+   "on": "reader-zoom",
+   "kind": "special",
+   "fn": "zoomWatch",
    "group": "zoom.via.{o}"
   },
   {
@@ -3382,8 +3391,8 @@
   {
    "sel": "#searchButton,[data-screen=\"search\"]",
    "on": "click",
-   "kind": "fixed",
-   "emit": "search.open",
+   "kind": "special",
+   "fn": "searchOpen",
    "group": "search.open"
   },
   {
@@ -3513,6 +3522,20 @@
    "group": "export.fail"
   },
   {
+   "sel": "#reportMsg",
+   "on": "observe",
+   "kind": "special",
+   "fn": "reportSend",
+   "group": "report.send.{o}"
+  },
+  {
+   "sel": "#reportSend",
+   "on": "click",
+   "kind": "special",
+   "fn": "reportSend",
+   "group": "report.send.{o}"
+  },
+  {
    "sel": "#tourBtn",
    "on": "click",
    "kind": "fixed",
@@ -3569,8 +3592,8 @@
    "group": "history.open"
   },
   {
-   "sel": "#versionHistory [data-version],#versionHistory details > summary",
-   "on": "click",
+   "sel": "#versionDetail",
+   "on": "observe",
    "kind": "special",
    "fn": "historyDetail",
    "group": "history.detail"
@@ -3581,13 +3604,6 @@
    "kind": "fixed",
    "emit": "report.open",
    "group": "report.open"
-  },
-  {
-   "sel": "#reportSend",
-   "on": "click",
-   "kind": "special",
-   "fn": "reportSend",
-   "group": "report.send.{o}"
   },
   {
    "sel": "window",
@@ -3614,49 +3630,7 @@
    "sel": "-",
    "on": "-",
    "kind": "special",
-   "fn": "kepanDown",
-   "group": "kepan.down"
-  },
-  {
-   "sel": ".rol a.sub.more, .kh .sm",
-   "on": "click",
-   "kind": "special",
-   "fn": "kepanDown",
-   "group": "kepan.down"
-  },
-  {
-   "sel": "-",
-   "on": "-",
-   "kind": "special",
-   "fn": "kepanXref",
-   "group": "kepan.xref"
-  },
-  {
-   "sel": "#pzoom [data-page],#kview [data-page]",
-   "on": "dblclick",
-   "kind": "special",
-   "fn": "kepanXref",
-   "group": "kepan.xref"
-  },
-  {
-   "sel": "-",
-   "on": "-",
-   "kind": "special",
-   "fn": "kepanLong",
-   "group": "kepan.longpress_parent"
-  },
-  {
-   "sel": "#pview",
-   "on": "contextmenu,pointerdown",
-   "kind": "special",
-   "fn": "kepanLong",
-   "group": "kepan.longpress_parent"
-  },
-  {
-   "sel": "-",
-   "on": "-",
-   "kind": "special",
-   "fn": "editionChoice",
+   "fn": "editionWatch",
    "group": "edition.switch_back"
   },
   {
@@ -3665,6 +3639,27 @@
    "kind": "special",
    "fn": "early",
    "group": "early.{o}"
+  },
+  {
+   "sel": "#pzoom .nd.nt[data-go],#kview .nd.nt[data-go]",
+   "on": "click",
+   "kind": "fixed",
+   "emit": "kepan.down",
+   "group": "kepan.down"
+  },
+  {
+   "sel": "#pzoom [data-page],#kview [data-page]",
+   "on": "dblclick",
+   "kind": "fixed",
+   "emit": "kepan.xref",
+   "group": "kepan.xref"
+  },
+  {
+   "sel": "#pzoom .nd[data-id],#kview .nd[data-id]",
+   "on": "pointerdown",
+   "kind": "special",
+   "fn": "kepanLong",
+   "group": "kepan.longpress_parent"
   }
  ],
  "states": [
