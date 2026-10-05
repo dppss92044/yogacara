@@ -9,7 +9,11 @@ workers_dev = true
 ALLOWED_ORIGIN = "https://dppss92044.github.io"
 RETENTION_DAYS = "180"        # instances 實例摘要：最後出現後保留天數（D048）
 DAILY_RETENTION_DAYS = "60"   # instance_days 每日明細保留天數（D048）
-K_MIN = "5"
+K_MIN = "5"                   # 城市：期間內少於此數併為「其他」
+K_TERM = "3"                  # 詞、節點、按卷排行：使用實例少於此數併入「其他」（D058）
+PRESENCE = "on"               # on｜watch（只有 CLI 監看期間才寫 D1）｜off（x-p: 0，客戶端停止）（D060）
+PRESENCE_TIMEOUT = "75"       # 判定在線的預設秒數（CLI --timeout 可調 30–300）
+PRESENCE_INTERVAL = "30"      # 回應標頭 x-p：客戶端心跳間隔秒數（客戶端限制在 20–300）
 
 # 不啟用 Workers Logs（避免請求中繼資料含 IP 被記錄）。部署後請在儀表板再核對一次，也不要設 Logpush。
 [observability]
@@ -20,6 +24,6 @@ binding = "DB"
 database_name = "yogacara-stats"
 database_id = "2b7b1fe0-02a2-4c52-8455-27c348b98f59"   # D1 database_id（非 secret）
 
-# 每天 03:10（Asia/Taipei）清除超過保存期限的匿名實例列。
+# 每天 03:10（Asia/Taipei）結算 roll、清除超過保存期限的資料；每小時整點清除過期的 presence。
 [triggers]
-crons = ["10 19 * * *"]
+crons = ["10 19 * * *", "0 * * * *"]

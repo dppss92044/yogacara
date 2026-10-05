@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import worker, { cityLabel, weekKey, periodRange, cleanup } from '../src/index.js';
 
 const ORIGIN = 'https://dppss92044.github.io';
@@ -34,10 +34,10 @@ test('收件：成功 204；資料庫只有短識別雜湊、最新城市與裝�
   assert.equal(res.headers.get('Access-Control-Allow-Origin'), ORIGIN);
   const inst = db.prepare('SELECT * FROM instances').all();
   assert.equal(inst.length, 1);
-  assert.deepEqual(Object.keys(inst[0]).sort(), ['active_sec', 'city', 'device', 'first_day', 'h', 'last_day', 'opens_total']);
+  assert.deepEqual(Object.keys(inst[0]).sort(), ['active_sec', 'city', 'device', 'dict_total', 'first_day', 'h', 'last_day', 'mode', 'opens_total', 'read_sec', 'search_total', 'tier']);
   assert.match(inst[0].h, /^[0-9a-f]{16}$/); assert.equal(inst[0].city, '桃園'); assert.equal(inst[0].device, 'phone');
   const days = db.prepare('SELECT * FROM instance_days').all();
-  assert.equal(days.length, 1); assert.deepEqual(Object.keys(days[0]).sort(), ['active_sec', 'day', 'h', 'opens'], '每日明細不得含城市或裝置');
+  assert.equal(days.length, 1); assert.deepEqual(Object.keys(days[0]).sort(), ['active_sec', 'day', 'h', 'opens', 'read_sec'], '每日明細不得含城市或裝置');
   const dump = JSON.stringify([inst, days, db.prepare('SELECT * FROM agg').all(), db.prepare('SELECT * FROM agg_vol').all()]);
   assert.ok(!dump.includes(ID(1).slice(0, 8)), '不得存原始 ID');
   assert.ok(db.prepare("SELECT 1 FROM agg WHERE city='桃園'").get());
@@ -50,10 +50,10 @@ test('驗證：錯誤來源／格式／大小／方法', async () => {
   for (const bad of [{ v: 3, id: ID(1), o: 1, s: 1, d: 'phone' }, { v: 2, id: 'abc', o: 1, s: 1, d: 'phone' }, { v: 2, id: ID(1), o: 99, s: 1, d: 'phone' },
     { v: 2, id: ID(1), o: 1, s: 99999, d: 'phone' }, { v: 2, id: ID(1), o: 0, s: 0, d: 'phone' }, { v: 2, id: ID(1), o: 1.5, s: 1, d: 'phone' },
     { v: 2, id: ID(1), o: 1, s: 1 }, { v: 2, id: ID(1), o: 1, s: 1, d: 'iphone' }, { v: 2, id: ID(1), o: 1, s: 1, d: 'phone', av: '1.91' },
-    { v: 1, id: ID(1), o: 1, s: 1, d: 'phone' }, { v: 1, id: ID(1), o: 1, s: 1, av: '1.91' }, { v: 2, id: ID(1), o: 1, s: 1, d: 'phone', ua: 'x' }, [1, 2]]) {
+    { v: 1, id: ID(1), o: 1, s: 1, d: 'phone' }, { v: 1, id: ID(1), o: 1, s: 1, av: '1.91' }, { v: 4, id: ID(1), o: 1, s: 1, d: 'phone', av: '1' }, { v: 4, id: ID(1), o: 1, s: 1 }, { v: 2, id: ID(1), o: 1, s: 1, d: 'phone', ua: 'x' }, [1, 2]]) {
     assert.equal((await post(env, bad)).status, 400, JSON.stringify(bad));
   }
-  assert.equal((await post(env, null, { raw: 'x'.repeat(600) })).status, 413);
+  assert.equal((await post(env, null, { raw: 'x'.repeat(9000) })).status, 413);
   assert.equal((await post(env, null, { raw: 'not json' })).status, 400);
   assert.equal((await post(env, null, { method: 'GET' })).status, 405);
   assert.equal(db.prepare('SELECT COUNT(*) c FROM instances').get().c, 0);
@@ -141,14 +141,14 @@ test('城市標籤與週／月區間', () => {
   assert.deepEqual(periodRange('m', '2026-02-10'), ['2026-02-01', '2026-02-28']);
 });
 
-test('最新城市覆寫、不留城市歷史；舊版 v1 不覆蓋裝置；每日明細累加', async () => {
+test('最新城市覆寫、不留城市歷史；v2／v4 混用；每日明細累加', async () => {
   const { env, db } = makeEnv(); const realNow = Date.now;
   try {
     Date.now = () => Date.parse('2026-10-05T04:00:00Z');
     await post(env, { v: 2, id: ID(1), o: 1, s: 60, d: 'tablet' }, { cf: { country: 'TW', city: 'Hsinchu' } });
     Date.now = () => Date.parse('2026-10-06T04:00:00Z');
     await post(env, { v: 2, id: ID(1), o: 2, s: 120, d: 'tablet' }, { cf: { country: 'TW', city: 'Hualien' } });
-    await post(env, { v: 1, id: ID(1), o: 1, s: 30 }, { cf: { country: 'TW', city: 'Hualien' } });
+    await post(env, { v: 4, id: ID(1), o: 1, s: 30, d: 'tablet', m: 'web' }, { cf: { country: 'TW', city: 'Hualien' } });
     const i = db.prepare('SELECT * FROM instances').get();
     assert.equal(i.city, '花蓮'); assert.equal(i.device, 'tablet'); assert.equal(i.opens_total, 4); assert.equal(i.active_sec, 210);
     assert.equal(db.prepare('SELECT COUNT(*) c FROM instances').get().c, 1);
@@ -172,7 +172,7 @@ test('管理端點：實例清單只回 6 碼短代號；排序、limit、期間
     assert.equal(j.total, 1); assert.equal(j.instances[0].opens, 11); assert.equal(j.instances[0].device, 'phone');
     j = await (await g('?range=week')).json();
     assert.equal(j.total, 3); assert.deepEqual(j.instances.map(x => x.opens), [18, 2, 1]);
-    for (const x of j.instances) { assert.match(x.code, /^[0-9A-F]{6}$/); assert.deepEqual(Object.keys(x).sort(), ['active_seconds', 'city', 'code', 'device', 'opens']); }
+    for (const x of j.instances) { assert.match(x.code, /^[0-9A-F]{6}$/); assert.deepEqual(Object.keys(x).sort(), ['active_seconds', 'city', 'code', 'device', 'first_day', 'last_day', 'mode', 'opens', 'read_seconds']); }
     const hs = db.prepare('SELECT h FROM instances').all().map(r => r.h);
     assert.ok(!JSON.stringify(j).toLowerCase().includes(hs[0]), '回應不得含完整 hash');
     j = await (await g('?range=week&sort=opens&limit=2')).json(); assert.equal(j.instances.length, 2); assert.equal(j.total, 3);
@@ -208,8 +208,8 @@ test('清理：每日明細 60 天、實例摘要 180 天；聚合保留', async
 });
 
 test('靜態檢查：程式不讀取網路位址／轉發標頭／User-Agent，不輸出日誌，不含經緯度；每日明細表沒有城市或裝置欄位', () => {
-  const src = readFileSync(new URL('../src/index.js', import.meta.url), 'utf8').replace(/\/\/.*$/gm, '');
-  for (const re of [/connecting-ip/i, /x-forwarded/i, /x-real-ip/i, /\bconsole\./, /latitude|longitude/i, /user-agent/i, /request\.headers\.get\((?!'Origin'|'Authorization')/])
+  const src = readdirSync(new URL('../src/', import.meta.url)).map(f => readFileSync(new URL('../src/' + f, import.meta.url), 'utf8')).join('\n').replace(/\/\/.*$/gm, '');
+  for (const re of [/connecting-ip/i, /x-forwarded/i, /x-real-ip/i, /\bconsole\./, /latitude|longitude/i, /user-agent/i, /request\.headers\.get\((?!'Origin'|'Authorization')/, /\bsetItem|\blocalStorage/])
     assert.ok(!re.test(src), String(re));
   const sql = readFileSync(new URL('../schema.sql', import.meta.url), 'utf8').replace(/--.*$/gm, '');
   const days = sql.slice(sql.indexOf('CREATE TABLE IF NOT EXISTS instance_days'), sql.indexOf('CREATE INDEX IF NOT EXISTS instance_days_day'));
@@ -217,11 +217,14 @@ test('靜態檢查：程式不讀取網路位址／轉發標頭／User-Agent，�
   assert.ok(!/\bip\b|user_?agent|lat|lon/i.test(sql), '資料表不得有 IP、UA、經緯度欄位');
 });
 
-test('遷移檔：舊資料庫套用後與 schema.sql 欄位一致', () => {
+test('遷移檔：舊資料庫套用 0002、0003 後與 schema.sql 欄位一致（所有資料表）', () => {
   const old = new DatabaseSync(':memory:');
   old.exec("CREATE TABLE instances (h TEXT PRIMARY KEY, first_day TEXT NOT NULL, last_day TEXT NOT NULL, opens_total INTEGER NOT NULL DEFAULT 0, active_sec INTEGER NOT NULL DEFAULT 0)");
   old.exec(readFileSync(new URL('../migrations/0002-instance-level.sql', import.meta.url), 'utf8'));
   const fresh = new DatabaseSync(':memory:'); fresh.exec(schema);
   const cols = (d, t) => d.prepare(`PRAGMA table_info(${t})`).all().map(c => c.name).sort();
-  for (const t of ['instances', 'instance_days']) assert.deepEqual(cols(old, t), cols(fresh, t), t);
+  old.exec("CREATE TABLE agg (period_type TEXT NOT NULL, period_key TEXT NOT NULL, city TEXT NOT NULL, metric TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (period_type, period_key, city, metric)); CREATE TABLE agg_vol (day TEXT NOT NULL, city TEXT NOT NULL, opens INTEGER NOT NULL DEFAULT 0, active_sec INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, city))");
+  old.exec(readFileSync(new URL('../migrations/0003-analytics-v2.sql', import.meta.url), 'utf8'));
+  const tables = d => d.prepare("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name").all().map(r => r.name);
+  for (const t of tables(fresh)) assert.deepEqual(cols(old, t), cols(fresh, t), t);
 });
