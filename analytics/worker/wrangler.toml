@@ -17,7 +17,7 @@ enabled = false
 [[d1_databases]]
 binding = "DB"
 database_name = "yogacara-stats"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"   # 建立資料庫後由 q 填入（非 secret）
+database_id = "2b7b1fe0-02a2-4c52-8455-27c348b98f59"   # D1 database_id（非 secret）
 
 # 每天 03:10（Asia/Taipei）清除超過保存期限的匿名實例列。
 [triggers]
