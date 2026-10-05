@@ -12,8 +12,8 @@
 | 正式版本 | **v1.91**（`index.html` 的 `appVer`＝v1.91；`sw.js` 的 `VERSION`＝"1.91"） |
 | App 程式基底 commit | **`db77e11`**（「更新至 v1.91」，2026-10-05 11:16 +0800）；App 本體（`index.html`、`sw.js`、`data/` 等）自此未修改。本次現況校正前的 repository main HEAD 為 **`f4734fc`**（校正前快照）；`db77e11` 之後的 commit 只涉及文件／流程文件，不代表 App 本體升版 |
 | 下一正式版本候選 | **v1.92**（尚未開始） |
-| 目前工作編號 | **尚無**（目前無進行中的 W） |
-| 進行中的程式修改 | 無 |
+| 目前工作編號 | **W002**（科判導航／同步 Bug 修正；分支 `claude/kepan-nav-fix-ryczgd`；已修正、待 q 驗收，未發布）。W001（匿名使用統計）在另一分支進行，不在 main |
+| 進行中的程式修改 | W002：`index.html` 的 `focusNode()`、`#pzoom` 雙擊（見 `docs/nav-contract.md`）；尚未進 main |
 | v1.91 與外部更新檔 | v1.91 更新檔 zip 的 7 個檔與 HEAD 逐檔相同（已比對） |
 | 部署 | GitHub Pages：`https://dppss92044.github.io/yogacara/`（使用者端以「更新app」指令從下載資料夾複製並 push；此流程詳情見 MASTER_HISTORY H103，腳本不在 repo） |
 

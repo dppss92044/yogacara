@@ -1457,7 +1457,10 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
   function focusNode(i, from, pg, contextJuan) {
     readerTracking=true;ReaderUI.bookmark=null;
-    var scope=contextJuan||(from==='rail'?S.railJuan:from==='text'?S.juan:from==='panel'||from==='panelhead'?PJ[pg||S.ppage]:null),j=nodeJuan(i,scope);readingTargetJuan=j;jumpUntil=0;linkedPage=pageInJuan(i,j,pg || (from==='panel'?S.ppage:null));
+    // W002: 科判欄（panel／panelhead／panelsync）點到的節點，正文與卷次一律依該節點自己的卷（N[i][6]）定位；
+    // 不再用「該頁多數節點屬於哪一卷」推測（PJ），那會把祖先節點誤帶到後面卷次的後代處。
+    var panelPick=from==='panel'||from==='panelhead'||from==='panelsync',explicitPage=(panelPick||from==='go')&&pg>=2;
+    var scope=panelPick?null:contextJuan||(from==='rail'?S.railJuan:from==='text'?S.juan:null),j=nodeJuan(i,scope);readingTargetJuan=j;jumpUntil=0;linkedPage=explicitPage?pg:pageInJuan(i,j,pg || (from==='panel'?S.ppage:null));
     if(narrowNow() && from==='rail'){setPanel(false);setRail(false);}
     railFocus(i,j);
     if (S.view === "v") {
@@ -1465,8 +1468,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if (from !== "v") goPage(pg || APPEAR[i] || 2, i);
       return;
     }
-    var targetPage=linkedPage;if (S.view !== "t" || S.juan !== j) { noPin = true; if (from === "panel" || from === "panelhead" || from === "go") panelJuan = j; openText(j); noPin = false; }panelHold = from === "panel" || from === "panelhead" || from === "go";linkedPage=targetPage;railFocus(i,j);
-    panelJuan = j; panelPage(linkedPage, i, j, from === "go");
+    var targetPage=linkedPage;if (S.view !== "t" || S.juan !== j) { noPin = true; if (panelPick || from === "go") panelJuan = j; openText(j); noPin = false; }panelHold = panelPick || from === "go";linkedPage=targetPage;railFocus(i,j);
+    panelJuan = j; if (from === "panelsync") markIn($("pzoom"), i); else panelPage(linkedPage, i, j, from === "go");
     article.querySelectorAll(".kn.on").forEach(function (x) { x.classList.remove("on"); });
     var el=readerHeading(i,j),localId=localNode(i,j);
     if (el) {
@@ -1475,7 +1478,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       reveal("k" + localId);
     }
     S.cur = i;readingTargetJuan=j;S.juan=j;updateVolumeLabel();try{history.replaceState(null,"","#j"+j);}catch(e){}if(narrowNow() && from==="rail")restoreLinkedPane("read");
-    if (from === "panel" || from === "panelhead" || from === "go" || from === "rail") updUp(i); else $("upNav").hidden = true;
+    if (panelPick || from === "go" || from === "rail") updUp(i); else $("upNav").hidden = true;
   }
   // 此卷沒有新科判（承接前卷）：留在此卷卷首，科判欄標出承接的那一科
   function carryFocus(i, j) {
@@ -1492,13 +1495,15 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     pz.addEventListener("dblclick", function (e) {
       var t = e.target; if (!(t instanceof Element)) return;
       var h = t.closest(".head [data-id]");
-      if (h) { e.preventDefault(); chartJumpTo(+h.dataset.id, false); return; }
+      // W002: 雙擊讓科判欄換到母枝幹後，正文與卷次要同步到科判欄現在標示的那一科（不得只有科判欄自己跳）
+      function chartSync(id, pg) { if (id >= 0 && N[id]) focusNode(id, "panelsync", pg || APPEAR[id] || OWN[id]); }
+      if (h) { e.preventDefault(); var hid = +h.dataset.id; chartJumpTo(hid, false); chartSync(hid); return; }
       var nd = t.closest(".nd.tt[data-id]"); if (!nd) return;
       e.preventDefault(); var id = +nd.dataset.id; if (!(id >= 0) || !N[id]) return;
-      if (nd.classList.contains("rt")) { chartJumpTo(id, false); return; }
+      if (nd.classList.contains("rt")) { chartJumpTo(id, false); chartSync(id); return; }
       var pid = N[id][4], sheet = nd.closest(".ksheet"), pe = pid >= 0 && sheet && (sheet.querySelector('.nd.tt[data-id="' + pid + '"]:not(.rt)') || sheet.querySelector('.nd.tt[data-id="' + pid + '"]'));
-      if (pe) { markIn(pz, pid); panelHold = true; chartCenter(pe, pid, +sheet.dataset.p, pe.classList.contains("rt")); }
-      else if (pid >= 0) chartJumpTo(pid, false);
+      if (pe) { markIn(pz, pid); panelHold = true; chartCenter(pe, pid, +sheet.dataset.p, pe.classList.contains("rt")); chartSync(pid, +sheet.dataset.p); }
+      else if (pid >= 0) { chartJumpTo(pid, false); chartSync(pid); }
       try { getSelection().removeAllRanges(); } catch (er) {}
     });
   }, 0);
