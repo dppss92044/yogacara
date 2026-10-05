@@ -12,6 +12,16 @@
 - App 程式基底 commit：**`db77e11`**（「更新至 v1.91」；App 本體最後一次修改）
 - W001 工作分支起點：`origin/main` = `e4a365f`（`db77e11` 之後只有文件變更）
 
+## W001＋W002 整合驗收（2026-10-05；整合分支 `claude/project-thread-7xwf2g`）
+
+- 範圍：只做整合與驗證。**未** PR、未 merge main、未 deploy、未升 v1.92、未改 `sw.js`／`appVer`（仍 v1.91）、未動兩個原分支。
+- 來源：W001 `claude/project-thread-3ws881` @ `e97f6d6`（24 commits）；W002 `claude/kepan-nav-fix-ryczgd` @ `03b36f5`（3 commits）；兩者基底皆為 `origin/main` = `e4a365f`，彼此互不相含。順序：先 merge W001，再 merge W002（皆 `--no-ff` merge，無 rebase）。
+- 衝突處理：`AI_HANDOFF.md`、`CHANGELOG.md`、`PROJECT_STATE.md`、`DECISIONS.md` 人工合併、兩邊內容全數保留（W002 章節以分隔標題並列；下一個可用 W 編號改為 W003）。D099（W001）→ D100（W002）不撞號。`index.html` 自動合併無衝突；已用 diff 核對「整合後相對 W001 的變動」＝「W002 相對 e4a365f 的變動」，W002 修正完整保留、未重新產生。
+- 整合後實際測試（Chromium／Node 模擬，非實機）：W001 Worker 32/32、CLI 17/17、`tools/stats-test.cjs` 16/16、`tools/check-analytics-registry.cjs` 0 失敗（65 通過、91 不適用、3 手動）；W002 `tools/nav-contract-w002.cjs --dbl`：藏版 fixtures 3/3、單擊 2,552、雙擊 2,547、（分N）193，0 失敗；韓版（4 分片、2,017 頁）單擊 63,178、雙擊 63,173、（分N）4,186，0 失敗、頁面錯誤 0。數字與 W002 單獨分支的結果完全一致。
+- **未驗證**：Safari／iPhone／iPad 實機、觸控流程、窄視窗；W001 的 Worker 線上、真實 SW 離線；統計客戶端（W001 capture 監聽 click／dblclick）與 W002 `focusNode` 在實機的互動；`ALLOWED_ORIGIN` 仍須由 q 還原為 `https://dppss92044.github.io`（見 W001 章節）。W001 資料量偏高、告知／控制 UI 待定稿等原有未決事項不變。
+- 發布前提醒：`index.html` 已改但 `sw.js` 雜湊仍是 v1.91；發布須走 `tools/build_release.py`（`AGENTS.md` §3.4，需 q 確認）。W001 需先完成 migration 0003 與 Worker 部署，且 q 定稿告知／控制介面後才能發布。
+- 最後 commit：以 `git log` 為準（整合 merge commit 與本節文件更新 commit）。
+
 ## 目前工作編號
 
 - **W001｜隱私優先的匿名使用統計系統**（2026-10-05 由 q 正式建立；階段：**P1 已部署並驗證完成；P2（Mac 查詢工具）已由 q 於 Mac 實機驗證；**P3＋P4 已實作並由 q 確認；匿名實例層級調整（D046–D048）程式已完成，等 q 在 Mac 遷移 D1／重新部署 Worker 後驗證**；q 已於 2026-10-05 裁定設計 §13 六項決定，已寫入 `DECISIONS.md` D040–D043**）
