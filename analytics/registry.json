@@ -3660,6 +3660,13 @@
    "kind": "special",
    "fn": "kepanLong",
    "group": "kepan.longpress_parent"
+  },
+  {
+   "sel": ".rhead[data-juan-go]",
+   "on": "click",
+   "kind": "special",
+   "fn": "juanOpen",
+   "group": "nav.juan_open.{o}"
   }
  ],
  "states": [
@@ -4174,6 +4181,36 @@
    "selector": "接卷／橡皮筋拉動、閱讀位置還原",
    "what": "系統行為",
    "reason": "不記；跨卷閱讀已由閱讀聯合列涵蓋"
+  },
+  {
+   "selector": ".book-size-button",
+   "css": ".book-size-button",
+   "what": "「閱讀大小」開啟鈕",
+   "reason": "只是開啟縮放面板；縮放操作本身由 zoom.* 統計"
+  },
+  {
+   "selector": ".edition-choice[data-edition]",
+   "css": ".edition-choice[data-edition]",
+   "what": "版本選項按鈕",
+   "reason": "選擇結果由 editionWatch 觀察 html[data-edition]，計入 edition.select.*"
+  },
+  {
+   "selector": ".phone-juan-button",
+   "css": ".phone-juan-button",
+   "what": "手機「選擇卷次」開啟鈕",
+   "reason": "只是開啟卷浮窗；選卷結果由 nav.juan_open.phone 統計"
+  },
+  {
+   "selector": ".smore[data-sm]",
+   "css": ".smore[data-sm]",
+   "what": "搜尋結果「顯示本卷其餘 N 處」",
+   "reason": "展開動作，無獨立產品問題；點開結果仍由 search.result.* 統計"
+  },
+  {
+   "selector": "button[aria-label=\"關閉說明\"]",
+   "css": "button[aria-label=\"關閉說明\"]",
+   "what": "關閉說明按鈕",
+   "reason": "純介面關閉；導覽流程由 guide.* 統計"
   }
  ]
 }

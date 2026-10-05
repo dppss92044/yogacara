@@ -39,6 +39,16 @@
 - 線上現況（q 回報）：D1 為舊 v2 實例層級 schema（空資料）；Worker 的 `ALLOWED_ORIGIN` 暫為 `http://192.168.0.12:8000`，P5 結束後須以 `wrangler deploy` 還原為 `https://dppss92044.github.io`。
 - 測試只針對 v1.91 基底＋W001 補丁；Chromium 模擬不能取代 Safari／iPhone／iPad 實機（實機屬後續 P5）。實際跑過與未跑的項目於各階段完成後填寫於此。
 
+### Analytics v2 施工進度與測試結果（2026-10-05；步驟 ①–⑦ 完成，等 q 驗收，尚未做步驟 ⑧ 之後的 Mac 遷移／部署）
+- commit：995188d（文件）→ a860c51（Registry＋Worker）→ 4dd1274（CLI）→ e27df2a（客戶端、補丁、index.html、測試）→ b25a693（完整性檢查、模擬、README、隱私草稿、規格文件）→ 之後的 commit 以 `git log` 為準。基底 e4a365f（App v1.91，`appVer` 未改；`sw.js`、`data/`、`manifest`、`icon-*`、`AGENTS.md` 未動）。`index.html` 以 `git show e4a365f:index.html > index.html && python3 tools/patch-w001-stats.py index.html index.html` 產生。
+- **實際跑過（針對 v1.91 基底＋本補丁）**：Worker 32 個單元測試（node:sqlite 模擬 D1）全過；CLI 17 個測試（假伺服器）全過；`tools/stats-test.cjs` T01–T15（Chromium：預設值在 mac／iPad／iPhone 三種版面零事件、payload 形狀、負面測試、isTrusted、搜尋詞過濾、科判 ns、狀態秒數、閱讀歸屬、離線補送與端點故障、DNT／GPC、off＋forget＋離線墓碑補送、basic、ID 輪替、presence 計時／x-p／leave／背景、presence 關閉）16/16 通過；`tools/check-analytics-registry.cjs`：靜態 0 失敗；控制項掃描 0 個未登錄控制項（含補上的 5 條排除與 1 條規則）；動態走訪 65 通過、0 失敗、91 項因該版面看不到元素列為「不適用」、3 項（原生色彩選擇器）手動。
+- **本機 D1 實測**（wrangler dev --local，workerd 的本機 D1；用 `analytics/worker/test/meter` 包裝層統計 `meta.rows_written`）：presence 新增 1 列、30 秒後更新 1 列、10 秒內重複 0 列、leave 1 列 → **每次心跳 ≤1 列，與估計相符**。
+- **資料量模擬（合成流量，非實測）**：50 日活每日約 15k 列、200 日活約 58k＋cron 約 17k、700 日活約 204k＋cron 約 20k（D1 計入索引列）。**每次 /v 平均約 87 列（最大約 136）**，高於規格 14.7 的估計（約 50 列／次、總計約 41k／143k／205k 的 200／700／1000 日活），主因是 `instance_day_feature`／`node`／`state` 新增列各寫表、主鍵索引與 day 索引三列；200 日活每日總寫入約為估計的 1.8 倍，免費額度（10 萬列／日）約撐到 260 日活，而非估計的 480。未改任何需求；可能的減量方案（待 q 決定）：改 `WITHOUT ROWID`（日期在前）或移除 `day` 次要索引、降低 flush 次數。節點查詢、presence 以外的寫入量為假設流量，實際以上線後量測為準。
+- **未跑／不能代表**：真實 Safari、iPhone、iPad 實機（P5）；真實線上 D1／Worker（只在本機 workerd 與 node:sqlite 驗證，未對線上 D1 執行任何 migration 或部署）；真實 Service Worker 離線情境（temp 副本測試**未做**）；辭典預覽、匯出面板完整流程、導覽步驟的端對端點擊（登錄規則靜態＋部分動態驗證，`dict.*`／`export.*`／`guide.*` 的細節未逐項 Chromium 走訪）；iPad 橫向、手機橫向、韓版與藏版介面只在 T06（版本切換）與預設值測試涵蓋，未做完整逐版面走訪；`VERIFY_PENDING` 的 selector（`nav.juan_open.header`、`kepan.longpress_parent`、`layout.mode.auto`、`dict.lookup.long`、`dict.close.esc`、`dict.close.outside`）尚未在實機確認。
+- 已知注意：term_agg 的 `u` 單位是「人·日」；客戶端詞過濾與 Worker 過濾相同；`orient` 為持續記錄的情境維度。
+- 部署程序（待 q 同意後**一次一個階段**）：①備份目前 D1（空資料，可略）②對遠端 D1 套用 `migrations/0003-analytics-v2.sql` ③`wrangler deploy`（`ALLOWED_ORIGIN` 還原為 `https://dppss92044.github.io`）④驗證 `/p` 與 `x-p`、管理端點 ⑤才合併與發布（發布前需 q 定稿告知／控制介面並同意）。回滾：舊 Worker 版本可回復；0003 只加表與欄位。
+- 尚未完成（後續，不在本階段）：恢復線上 `ALLOWED_ORIGIN`、P5 實機驗證、告知／控制介面與 `privacy.html`（草稿 `analytics/PRIVACY-DRAFT.md` 未發布）。
+
 ## 需求變更（W001，q，2026-10-05 11:04，P3＋P4 完成後）
 
 q 明確確認新決定：增加「匿名實例層級統計」——可查每個匿名實例的短代號、城市、裝置大類（手機／平板／電腦）、每日開啟次數、每日有效使用時間、首次／最後出現日期；CLI 增加 `瑜伽統計 使用者 今天|本週|本月` 與單一實例累計查詢；告知文案須同步改寫；保存期限須重新檢討。此新決定**取代**先前的「城市不與匿名 ID 關聯」「第一版不記裝置類型」（保留歷史，見 `DECISIONS.md` D046；D040、D041 已加註「部分被 D046 取代」）。**保留**兩份原始需求，以最新為準。

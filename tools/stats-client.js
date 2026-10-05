@@ -293,7 +293,7 @@
     }
     // ---- 特殊處理 ----
     var pendingNodes = [];
-    FN.juanOpen = function () { ev(layoutKey() === 'iphone' ? 'nav.juan_open.phone' : 'nav.juan_open.rail'); };
+    FN.juanOpen = function (el) { if (el && el.classList && el.classList.contains('rhead')) { ev('nav.juan_open.header'); return; } ev(layoutKey() === 'iphone' ? 'nav.juan_open.phone' : 'nav.juan_open.rail'); };
     FN.layoutChoice = function () { setTimeout(function () { var lm = fetchKey('hk-device-layout-v146'); ev(lm === 'ipad' ? 'layout.mode.ipad' : lm === 'mac' ? 'layout.mode.mac' : 'layout.mode.auto'); }, 50); };
     var topTimer = 0;
     FN.chartTop = function (el, e) {
@@ -535,11 +535,12 @@
     }
 
     // ---- forget 與控制（D057）----
+    var forgetTimer = 0;
     function retryForget() {
       try {
         var raw = fetchKey(FORGET_KEY); if (!raw || navigator.onLine === false || dnt()) return;
         var j = JSON.parse(raw); if (!j || !/^[0-9a-f-]{32,36}$/.test(j.id)) { store(FORGET_KEY, null); return; }
-        post('/forget', { id: j.id }, function (success) { if (success) store(FORGET_KEY, null); });    // 成功才刪除本機的編號副本
+        post('/forget', { id: j.id }, function (success) { if (success) { store(FORGET_KEY, null); clearInterval(forgetTimer); forgetTimer = 0; } });    // 成功才刪除本機的編號副本
       } catch (e) { store(FORGET_KEY, null); }
     }
     function control(d) {
@@ -551,7 +552,7 @@
         if (m === 'off') {
           var id = st ? st.id : (function () { try { var j = JSON.parse(fetchKey(KEY)); return j && j.id; } catch (e) { return null; } })();
           beatLeave(); stop(); store(KEY, null); store(MODE_KEY, JSON.stringify({ m: 'off', p: false }));
-          if (id && !dnt()) { store(FORGET_KEY, JSON.stringify({ id: id })); retryForget(); }     // 立即停止、丟棄未送資料、送 forget、刪除本機編號；離線留墓碑待補送
+          if (id && !dnt()) { store(FORGET_KEY, JSON.stringify({ id: id })); retryForget(); if (!forgetTimer) forgetTimer = setInterval(retryForget, 60000); }     // 立即停止、丟棄未送資料、送 forget、刪除本機編號；離線留墓碑待補送
           return;
         }
         store(MODE_KEY, JSON.stringify({ m: m, p: p })); store(OFF, null);

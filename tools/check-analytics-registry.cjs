@@ -102,7 +102,7 @@ async function scanAll() {
     const where = new Map();
     for (const chain of CHAINS) {
       const x = await open(nm, vp, touch, chain); if (!x.ok) { await x.c.close(); continue; }
-      for (const r of testable) if (!where.has(r) && !manual.has(r.sel) && await x.p.locator(r.sel).first().isVisible().catch(() => false)) where.set(r, chain);
+      for (const r of testable) if (!where.has(r) && !manual.has(r.sel) && await x.p.locator(r.sel).first().evaluate(e => { const b = e.getBoundingClientRect(); if (b.width <= 0 || b.height <= 0) return false; const t = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2); return !!t && (t === e || e.contains(t) || t.contains(e)); }, null, { timeout: 300 }).catch(() => false)) where.set(r, chain);
       await x.c.close();
     }
     for (const r of testable) {
