@@ -107,6 +107,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 - 登記 commit：`6176d73`（分支 `claude/project-thread-3ws881`，等同 `work/W001-anonymous-analytics`）
 - P1 後端 commit：`ebb5276`（之後的 commit 以 `git log` 為準）
 - P3＋P4 commit：`ca45c74`（之後的 commit 以 `git log` 為準）
+- 匿名實例層級調整 commit：`3a4ac55`（之後的 commit 以 `git log` 為準）
 - D1 已由 q 建立（yogacara-stats，APAC）；`database_id` 已寫入 `wrangler.toml`（非 secret）。尚未建表、尚未部署、secret 尚未設定。
 
 ## 是否已正式發布
