@@ -1,0 +1,44 @@
+/* v1.91 功能面板：標題與第一列距離縮短 */
+:root .settings-panel>.settings-head{height:30px!important;min-height:0!important;margin-bottom:0!important}
+:root .settings-panel>#settingsSection0{margin-top:4px!important}
+/* 科判欄：右下頁碼、左下回上方 —— 對稱橢圓膠囊 */
+:root:root #pJuan{display:none!important}
+:root:root:root:root #panel>.page-jump,:root:root:root:root #panel .pbar .page-jump{position:absolute!important;right:14px!important;left:auto!important;top:auto!important;bottom:14px!important;z-index:45!important;opacity:1!important;
+  display:flex!important;align-items:center;justify-content:center;box-sizing:border-box;height:30px;min-width:62px;padding:0 12px!important;margin:0!important;
+  background:#fff!important;border-radius:999px!important;box-shadow:0 1px 4px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.05);font:13px var(--ui)}
+:root:root:root #pageJump{all:unset;display:block;cursor:pointer;font:13px/1 var(--ui);font-variant-numeric:tabular-nums;color:var(--fg);opacity:.8;text-align:center;white-space:nowrap}
+:root:root:root #pageJump:hover{opacity:1}
+:root:root:root #pageJump[hidden]{display:none!important}
+:root:root:root #pNum:not([hidden]){all:unset;box-sizing:content-box!important;width:var(--page-ch,2ch)!important;min-width:1ch;max-width:4ch;padding:0!important;font:13px/1 var(--ui)!important;font-variant-numeric:tabular-nums;color:var(--fg)!important;text-align:right;caret-color:#c0392b;background:none!important}
+:root:root:root #pNum[hidden],.page-jump .pj-tot[hidden]{display:none!important}
+.page-jump .pj-tot{font:13px/1 var(--ui);font-variant-numeric:tabular-nums;color:var(--muted)}
+#pKeypad{position:absolute;right:-4px;bottom:calc(100% + 8px);display:grid;grid-template-columns:repeat(3,30px);gap:6px;padding:8px;background:#fff;border-radius:16px;box-shadow:0 6px 22px rgba(0,0,0,.14),0 0 0 1px rgba(0,0,0,.05);z-index:60}
+#pKeypad[hidden]{display:none!important}
+#pKeypad button{all:unset;box-sizing:border-box;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:14px var(--ui);font-variant-numeric:tabular-nums;color:var(--fg);background:rgba(118,118,128,.1);cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+#pKeypad button:hover{background:rgba(118,118,128,.18)}
+#pKeypad button:active{background:rgba(118,118,128,.3)}
+#pKeypad button.go{background:#c0392b;color:#fff;font-size:11px}
+#pKeypad button.del{font-size:14px}
+:root:root:root:root:root:not([data-layout=iphone]) .chart-top,:root:root:root:root:root[data-layout=iphone] .chart-top{position:absolute!important;left:14px!important;right:auto!important;top:auto!important;bottom:14px!important;z-index:45!important;
+  width:auto!important;min-width:62px;height:30px!important;padding:0 12px!important;border-radius:999px!important;box-sizing:border-box;display:flex!important;align-items:center;justify-content:center;
+  background:var(--ct-bg,#f6f6f6)!important;color:var(--muted)!important;border:1px solid transparent!important;box-shadow:none!important;opacity:.55!important;transition:opacity .15s,background .15s,box-shadow .15s,color .15s}
+:root:root:root:root:root .chart-top:hover,:root:root:root:root:root .chart-top:focus-visible{opacity:1!important;background:#fff!important;color:var(--fg)!important;box-shadow:0 1px 4px rgba(0,0,0,.1)!important;border-color:rgba(0,0,0,.05)!important}
+:root:root:root:root:root .chart-top svg{display:none!important}
+:root:root:root:root:root .chart-top .t{display:block!important;font:13px/1 var(--ui)!important;letter-spacing:0!important;text-align:center}
+:root:root:root:root:root .chart-top[data-off]{display:none!important}
+/* 滑鼠停留兩秒：小說明框 */
+.hovtip{position:fixed;z-index:100000;max-width:240px;padding:5px 9px;border-radius:5px;background:rgba(36,36,38,.94);color:#fff;font:12px/1.45 var(--ui);pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.18);opacity:0;transition:opacity .15s}
+.hovtip.on{opacity:1}
+.hovtip[hidden]{display:none}
+/* 選取標題的黃底：微圓角 */
+:root:root #panel .nd.on,:root:root .pview .nd.on{border-radius:4px!important}
+:root:root .kn.on{border-radius:5px!important}
+:root:root .head span.on{border-radius:5px!important}
+@media (prefers-color-scheme: dark){
+:root:root:root:root:root:root:not([data-theme=light]) #panel>.page-jump,:root:root:root:root:root:root:not([data-theme=light]) #panel .pbar .page-jump{background:#2a2a2c!important;border-color:rgba(255,255,255,.08);box-shadow:none}
+:root:root:root:root:root:root:not([data-theme=light]) #pKeypad{background:#2a2a2c;box-shadow:0 6px 22px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.08)}
+:root:root:root:root:root:root:not([data-theme=light]) #pKeypad button:not(.go){background:rgba(255,255,255,.1)}
+:root:root:root:root:root:root:not([data-theme=light]) .chart-top:hover{background:#2a2a2c!important;color:#eee!important;border-color:rgba(255,255,255,.08)!important}
+.hovtip{background:rgba(235,235,238,.96);color:#111}
+}
+@media (hover:none){:root:root:root:root:root:root .chart-top{opacity:.8!important}}
