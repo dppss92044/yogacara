@@ -57,7 +57,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 
 ## 正在進行
 
-- q 在 Mac：①（已完成）`git pull`；②（已完成）D1 遷移；③（已完成）重新部署 Worker；④（已完成，2026-10-05）線上驗證：/health→ok、無 token 查實例→401、錯誤 Origin→403、舊欄位 av→400、合法 payload→204；CLI `使用者 今天` 顯示 1 個測試實例（桃園｜手機｜1 次｜5 分）。鏈路 Worker→Cloudflare 城市→D1→管理端點→CLI 已通（此為 q 回報，我未獨立驗證）。⑤清除人工測試資料（進行中，僅 DELETE，不動 schema／migration／secret）。完成並回報前不得進 P5。
+- q 在 Mac：①（已完成）`git pull`；②（已完成）D1 遷移；③（已完成）重新部署 Worker；④（已完成，2026-10-05）線上驗證：/health→ok、無 token 查實例→401、錯誤 Origin→403、舊欄位 av→400、合法 payload→204；CLI `使用者 今天` 顯示 1 個測試實例（桃園｜手機｜1 次｜5 分）。鏈路 Worker→Cloudflare 城市→D1→管理端點→CLI 已通（此為 q 回報，我未獨立驗證）。⑤（已完成，2026-10-05）清除人工測試資料：q 回報 DELETE 四表 Executed 4 commands，再查 instances／instance_days／agg／agg_vol 皆為 0。目前線上 D1＝新 schema、空資料；Worker 為新版（Version 1ede1d64）。完成並回報前不得進 P5。
 
 ## 尚未完成
 
