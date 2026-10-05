@@ -1,11 +1,13 @@
-// W001 匿名使用統計接收端（Cloudflare Worker + D1）。決定見 DECISIONS.md D040–D043。
-// 原則：只收 {v,id,o,s,av}；城市由伺服器端依 request.cf 取得；不讀取、不儲存、不記錄任何網路位址、
-// 標頭或請求內容；不使用任何日誌輸出。
+// W001 匿名使用統計接收端（Cloudflare Worker + D1）。決定見 DECISIONS.md D040–D048。
+// 原則：只收 {v,id,o,s,d}（允許清單，其他欄位一律拒絕）；城市由伺服器端依 request.cf 取得，
+// 只存「最新一次」的粗略城市；裝置只存大類（phone／tablet／desktop），由客戶端分類；
+// 不讀取、不儲存、不記錄任何網路位址、User-Agent、其他標頭或請求內容；不使用任何日誌輸出。
 
 const TZ_OFFSET_MS = 8 * 3600 * 1000;           // Asia/Taipei，無日光節約
 const MAX_BODY = 512;
 const MAX_OPENS = 20;
 const MAX_SECONDS = 3 * 3600;
+const DEVICES = ['phone', 'tablet', 'desktop'];
 
 // 台灣城市白名單（key 為 request.cf 的英文名稱，已小寫並去掉 city/county/district 字尾）。
 const TW = {
@@ -78,11 +80,13 @@ const isInt = (n, max) => Number.isInteger(n) && n >= 0 && n <= max;
 
 function parsePayload(text) {
   let j; try { j = JSON.parse(text); } catch (_) { return null; }
-  if (!j || typeof j !== 'object' || j.v !== 1) return null;
+  if (!j || typeof j !== 'object' || Array.isArray(j)) return null;
+  const allowed = j.v === 2 ? ['v', 'id', 'o', 's', 'd'] : j.v === 1 ? ['v', 'id', 'o', 's'] : null;
+  if (!allowed || Object.keys(j).some(k => !allowed.includes(k))) return null;      // 嚴格允許清單
   if (typeof j.id !== 'string' || !/^[0-9a-fA-F-]{32,36}$/.test(j.id)) return null;
   if (!isInt(j.o, MAX_OPENS) || !isInt(j.s, MAX_SECONDS) || (j.o === 0 && j.s === 0)) return null;
-  if (j.av !== undefined && !(typeof j.av === 'string' && /^\d{1,3}(\.\d{1,3}){0,2}$/.test(j.av))) return null;
-  return { id: j.id.toLowerCase(), o: j.o, s: j.s };
+  if (j.v === 2 && !DEVICES.includes(j.d)) return null;
+  return { id: j.id.toLowerCase(), o: j.o, s: j.s, d: j.v === 2 ? j.d : null };
 }
 
 // ---- 收件 ----
@@ -105,14 +109,18 @@ async function collect(request, env) {
   const stmts = [];
   if (!row) {
     for (const t of ['d', 'w', 'm']) { stmts.push(incAgg(t, 'new')); stmts.push(incAgg(t, 'active')); }
-    stmts.push(env.DB.prepare('INSERT INTO instances (h, first_day, last_day, opens_total, active_sec) VALUES (?, ?, ?, ?, ?)').bind(h, today, today, p.o, p.s));
+    stmts.push(env.DB.prepare('INSERT INTO instances (h, first_day, last_day, opens_total, active_sec, city, device) VALUES (?, ?, ?, ?, ?, ?, ?)').bind(h, today, today, p.o, p.s, city, p.d));
   } else {
     const last = row.last_day;
     if (last !== today) stmts.push(incAgg('d', 'active'));
     if (weekKey(last) !== weekKey(today)) stmts.push(incAgg('w', 'active'));
     if (monthKey(last) !== monthKey(today)) stmts.push(incAgg('m', 'active'));
-    stmts.push(env.DB.prepare('UPDATE instances SET last_day = ?, opens_total = opens_total + ?, active_sec = active_sec + ? WHERE h = ?').bind(today, p.o, p.s, h));
+    // city、device 只覆寫為「最新一次」的值，不保留歷史。
+    stmts.push(env.DB.prepare('UPDATE instances SET last_day = ?, opens_total = opens_total + ?, active_sec = active_sec + ?, city = ?, device = COALESCE(?, device) WHERE h = ?').bind(today, p.o, p.s, city, p.d, h));
   }
+  stmts.push(env.DB.prepare(
+    'INSERT INTO instance_days (h, day, opens, active_sec) VALUES (?, ?, ?, ?) ' +
+    'ON CONFLICT(h, day) DO UPDATE SET opens = opens + excluded.opens, active_sec = active_sec + excluded.active_sec').bind(h, today, p.o, p.s));
   stmts.push(env.DB.prepare(
     'INSERT INTO agg_vol (day, city, opens, active_sec) VALUES (?, ?, ?, ?) ' +
     'ON CONFLICT(day, city) DO UPDATE SET opens = opens + excluded.opens, active_sec = active_sec + excluded.active_sec').bind(today, city, p.o, p.s));
@@ -159,11 +167,55 @@ async function stats(url, env) {
 }
 const json = (o, status = 200) => new Response(JSON.stringify(o), { status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' } });
 
+// ---- 匿名實例查詢（管理端點）：只回 6 碼短代號，不回完整 hash；沒有任何 IP／UA／內容 ----
+const shortCode = h => h.slice(0, 6).toUpperCase();
+function rangeOf(url) {
+  const range = url.searchParams.get('range') || 'today';
+  const type = { today: 'd', week: 'w', month: 'm' }[range];
+  if (!type) return null;
+  const date = url.searchParams.get('date');
+  const day = date && /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : taipeiDay(Date.now());
+  const [start, end] = periodRange(type, day);
+  return { range, type, key: keyOf(type, day), start, end };
+}
+async function instances(url, env) {
+  const r = rangeOf(url); if (!r) return json({ error: 'range 須為 today、week 或 month' }, 400);
+  const limit = Math.max(1, Math.min(200, parseInt(url.searchParams.get('limit') || '30', 10) || 30));
+  const order = url.searchParams.get('sort') === 'opens' ? 'opens DESC, sec DESC' : 'sec DESC, opens DESC';
+  const total = await env.DB.prepare('SELECT COUNT(DISTINCT h) AS n FROM instance_days WHERE day BETWEEN ? AND ?').bind(r.start, r.end).first();
+  const rows = (await env.DB.prepare(
+    'SELECT d.h AS h, i.city AS city, i.device AS device, SUM(d.opens) AS opens, SUM(d.active_sec) AS sec ' +
+    'FROM instance_days d JOIN instances i ON i.h = d.h WHERE d.day BETWEEN ? AND ? GROUP BY d.h ORDER BY ' + order + ' LIMIT ?').bind(r.start, r.end, limit).all()).results || [];
+  return json({
+    range: r.range, period: { type: r.type, key: r.key, start: r.start, end: r.end }, total: total ? total.n : 0, limit,
+    instances: rows.map(x => ({ code: shortCode(x.h), city: x.city || '未知', device: x.device || null, opens: x.opens, active_seconds: x.sec })),
+  });
+}
+async function instanceDetail(url, env) {
+  const code = url.searchParams.get('code') || '';
+  if (!/^[0-9a-fA-F]{4,8}$/.test(code)) return json({ error: '短代號須為 4 到 8 碼十六進位' }, 400);
+  const rows = (await env.DB.prepare('SELECT h, city, device, first_day, last_day, opens_total, active_sec FROM instances WHERE h LIKE ? LIMIT 6')
+    .bind(code.toLowerCase() + '%').all()).results || [];
+  if (rows.length === 0) return json({ error: '找不到這個短代號' }, 404);
+  if (rows.length > 1) return json({ error: '短代號對到多個實例，請多給幾碼（最多 8 碼）', ambiguous: rows.length }, 409);
+  const i = rows[0], today = taipeiDay(Date.now()), periods = {};
+  for (const [name, type] of [['today', 'd'], ['week', 'w'], ['month', 'm']]) {
+    const [start, end] = periodRange(type, today);
+    const v = await env.DB.prepare('SELECT COALESCE(SUM(opens),0) AS opens, COALESCE(SUM(active_sec),0) AS sec FROM instance_days WHERE h = ? AND day BETWEEN ? AND ?').bind(i.h, start, end).first();
+    periods[name] = { start, end, opens: v.opens, active_seconds: v.sec };
+  }
+  return json({ code: shortCode(i.h), city: i.city || '未知', device: i.device || null, first_day: i.first_day, last_day: i.last_day,
+    opens_total: i.opens_total, active_seconds_total: i.active_sec, periods });
+}
+
 // ---- 清理 ----
 export async function cleanup(env) {
-  const days = parseInt(env.RETENTION_DAYS || '180', 10);
-  const cutoff = taipeiDay(Date.now() - days * 86400000);
-  await env.DB.prepare('DELETE FROM instances WHERE last_day < ?').bind(cutoff).run();
+  const now = Date.now();
+  const cutoffDays = taipeiDay(now - parseInt(env.DAILY_RETENTION_DAYS || '60', 10) * 86400000);
+  const cutoffInst = taipeiDay(now - parseInt(env.RETENTION_DAYS || '180', 10) * 86400000);
+  await env.DB.prepare('DELETE FROM instance_days WHERE day < ?').bind(cutoffDays).run();
+  await env.DB.prepare('DELETE FROM instance_days WHERE h IN (SELECT h FROM instances WHERE last_day < ?)').bind(cutoffInst).run();
+  await env.DB.prepare('DELETE FROM instances WHERE last_day < ?').bind(cutoffInst).run();
 }
 
 export default {
@@ -183,6 +235,12 @@ export default {
         const auth = request.headers.get('Authorization') || '';
         if (!env.ADMIN_TOKEN || !auth.startsWith('Bearer ') || !(await sameSecret(auth.slice(7), env.ADMIN_TOKEN))) return new Response(null, { status: 401 });
         return await stats(url, env);
+      }
+      if (url.pathname === '/admin/instances' || url.pathname === '/admin/instance') {
+        if (request.method !== 'GET') return new Response(null, { status: 405 });
+        const auth = request.headers.get('Authorization') || '';
+        if (!env.ADMIN_TOKEN || !auth.startsWith('Bearer ') || !(await sameSecret(auth.slice(7), env.ADMIN_TOKEN))) return new Response(null, { status: 401 });
+        return url.pathname === '/admin/instances' ? await instances(url, env) : await instanceDetail(url, env);
       }
       return new Response(null, { status: 404 });
     } catch (_) {

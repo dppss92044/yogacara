@@ -7,7 +7,8 @@ workers_dev = true
 
 [vars]
 ALLOWED_ORIGIN = "https://dppss92044.github.io"
-RETENTION_DAYS = "180"
+RETENTION_DAYS = "180"        # instances 實例摘要：最後出現後保留天數（D048）
+DAILY_RETENTION_DAYS = "60"   # instance_days 每日明細保留天數（D048）
 K_MIN = "5"
 
 # 不啟用 Workers Logs（避免請求中繼資料含 IP 被記錄）。部署後請在儀表板再核對一次，也不要設 Logpush。

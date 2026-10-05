@@ -1,4 +1,4 @@
-// W001 匿名使用統計客戶端測試。針對 App v1.91 基底＋W001 補丁（tools/patch-w001-stats.py）新寫。
+// W001 匿名使用統計客戶端測試（D040–D048，匿名實例層級版）。針對 App v1.91 基底＋W001 補丁（tools/patch-w001-stats.py）新寫。
 // 執行：node tools/stats-test.cjs   （需 Playwright 與 Chromium；僅 Chromium 模擬，不能取代 Safari／iPhone／iPad 實機）
 const fs = require('fs'), http = require('http'), path = require('path'), assert = require('assert'), { execSync } = require('child_process');
 const { chromium } = require(process.env.PLAYWRIGHT_PATH || '/opt/node22/lib/node_modules/playwright');
@@ -18,7 +18,8 @@ const handler = (req, res) => {
 let server = http.createServer(handler);
 let browser, base, port;
 async function boot(o = {}) {
-  const c = await browser.newContext({ viewport: o.viewport || { width: 1440, height: 900 }, hasTouch: !!o.touch, isMobile: !!o.touch });
+  const vp = o.viewport || { width: 1440, height: 900 };
+  const c = await browser.newContext({ viewport: vp, screen: vp, hasTouch: !!o.touch, isMobile: !!o.touch });
   const ctx = { c, mode: o.mode || 'ok', reqs: [], errors: [], geo: 0 };
   await c.addInitScript(({ layout, init, dnt, gpc, edition }) => {
     try { localStorage.setItem('hk-tour', '9'); localStorage.setItem('hk-device-layout-v146', layout); if (edition) localStorage.setItem('hk-edition-v154', edition); } catch (e) {}
@@ -70,14 +71,14 @@ const openAbout = async p => { await p.click('#menuBtn'); await p.waitForTimeout
     const x = await boot({ clock: true }); await x.run(20000, true);
     assert.strictEqual(await x.p.evaluate(() => window.__geo), 0); noErr(x); await x.c.close();
   });
-  await t('02 payload 只有 v,id,o,s；text/plain；無 cookie／referer；無 preflight；首次約 3 秒後送出 o=1', async () => {
+  await t('02 payload 只有 v,id,o,s,d（v=2）；text/plain；無 cookie／referer；無 preflight；首次約 3 秒後送出 o=1', async () => {
     const x = await boot({ clock: true }); await x.run(2000, true); assert.strictEqual(x.reqs.length, 0, '3 秒前不得送出');
     await x.run(3000, true);
     assert.strictEqual(x.reqs.length, 1); const q = x.reqs[0];
     assert.strictEqual(q.method, 'POST'); assert.ok(/text\/plain/.test(q.headers['content-type']));
     assert.ok(!q.headers.cookie && !q.headers.referer, JSON.stringify(q.headers));
-    const b = JSON.parse(q.body); assert.deepStrictEqual(Object.keys(b), ['v', 'id', 'o', 's']);
-    assert.strictEqual(b.v, 1); assert.match(b.id, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/); assert.strictEqual(b.o, 1); assert.ok(b.s >= 0 && b.s <= 5);
+    const b = JSON.parse(q.body); assert.deepStrictEqual(Object.keys(b), ['v', 'id', 'o', 's', 'd']);
+    assert.strictEqual(b.v, 2); assert.strictEqual(b.d, 'desktop'); assert.match(b.id, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/); assert.strictEqual(b.o, 1); assert.ok(b.s >= 0 && b.s <= 5);
     assert.deepStrictEqual(await x.c.cookies(), []); assert.ok(!x.reqs.some(r => r.method === 'OPTIONS'));
     await x.c.close();
   });
@@ -138,16 +139,19 @@ const openAbout = async p => { await p.click('#menuBtn'); await p.waitForTimeout
     await x.p.clock.runFor(4000); const id2 = (await x.state()).id; assert.ok(id2 && id2 !== id1, '重新開啟應產生新編號');
     assert.ok(x.reqs.length > n); noErr(x); await x.c.close();
   });
-  await t('08 365 天輪替：超過 365 天換新編號，未滿則沿用', async () => {
+  await t('08 180 天輪替：超過 180 天換新編號，未滿則沿用', async () => {
     const T = Date.parse('2026-10-05T04:00:00Z'), mk = (age, id) => ({ 'hk-anon-stat-v1': JSON.stringify({ id, t: T - age * 864e5, o: 0, s: 0 }) });
     const idA = '11111111-1111-4111-8111-111111111111';
-    let x = await boot({ clock: true, time: T, init: mk(366, idA) }); await x.run(4000, true); assert.notStrictEqual((await x.state()).id, idA); await x.c.close();
-    x = await boot({ clock: true, time: T, init: mk(10, idA) }); await x.run(4000, true); assert.strictEqual((await x.state()).id, idA); await x.c.close();
+    let x = await boot({ clock: true, time: T, init: mk(181, idA) }); await x.run(4000, true); assert.notStrictEqual((await x.state()).id, idA); await x.c.close();
+    x = await boot({ clock: true, time: T, init: mk(170, idA) }); await x.run(4000, true); assert.strictEqual((await x.state()).id, idA); await x.c.close();
   });
-  await t('09 靜態檢查：客戶端不碰 cookie／IndexedDB／sendBeacon／UA／螢幕／語言／時區／定位；只用兩個 localStorage 鍵', async () => {
+  await t('09 靜態檢查：客戶端不碰 cookie／IndexedDB／sendBeacon／UA／語言／時區／定位／硬體資訊／頁面網址；螢幕與觸控判斷只出現在 deviceClass；只用兩個 localStorage 鍵', async () => {
     const js = fs.readFileSync(path.join(__dirname, 'stats-client.js'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
-    for (const re of [/document\.cookie/, /indexedDB/, /sendBeacon/, /userAgent/, /\bscreen\./, /navigator\.language/, /Intl\./, /getTimezoneOffset/, /geolocation/, /Math\.random/, /location\.(href|pathname|search)/, /document\.referrer/])
+    for (const re of [/document\.cookie/, /indexedDB/, /sendBeacon/, /userAgent/, /userAgentData/, /navigator\.language/, /Intl\./, /getTimezoneOffset/, /geolocation/, /hardwareConcurrency/, /deviceMemory/, /canvas/i, /getContext/, /fonts/, /Math\.random/, /location\.(href|pathname|search)/, /document\.referrer/, /platform/, /appVersion/])
       assert.ok(!re.test(js), String(re));
+    const a = js.indexOf('function deviceClass()'), e = js.indexOf('function ok(n, max)');
+    const rest = js.slice(0, a) + js.slice(e);
+    for (const re of [/\bscreen\b/, /matchMedia/, /maxTouchPoints/, /innerWidth/, /innerHeight/]) assert.ok(!re.test(rest), 'deviceClass 以外不得使用 ' + re);
     assert.deepStrictEqual([...new Set((js.match(/'hk-[a-z0-9-]+'/g) || []))].sort(), ["'hk-anon-stat-v1'", "'hk-stats-off-v1'"]);
   });
   await t('10 既有功能煙霧測試（端點故障時）：藏版／韓版載入、搜尋、關於頁、版本紀錄、問題回報頁、無頁面錯誤', async () => {
@@ -185,6 +189,16 @@ const openAbout = async p => { await p.click('#menuBtn'); await p.waitForTimeout
       await x.p.evaluate(() => { window.__vis = 'visible'; });
       noErr(x); await x.c.close();
     } finally { serveRoot = root; server = http.createServer(handler); await new Promise(r => server.listen(port, '127.0.0.1', r)); }
+  });
+  await t('14 裝置大類：只送 phone／tablet／desktop；電腦、手機直橫、平板直橫分類正確；不送其他資料', async () => {
+    const cases = [['desktop', { width: 1440, height: 900 }, false], ['phone', { width: 390, height: 844 }, true], ['phone', { width: 844, height: 390 }, true],
+      ['tablet', { width: 820, height: 1180 }, true], ['tablet', { width: 1180, height: 820 }, true], ['desktop', { width: 1180, height: 820 }, false]];
+    for (const [want, vp, touch] of cases) {
+      const x = await boot({ clock: true, viewport: vp, touch, layout: touch ? (vp.width < 600 || vp.height < 600 ? 'iphone' : 'ipad') : 'mac' });
+      await x.run(4000, true);
+      const b = x.bodies(); assert.ok(b.length >= 1); assert.strictEqual(b[0].d, want, `${vp.width}x${vp.height} touch=${touch}`);
+      assert.deepStrictEqual(Object.keys(b[0]), ['v', 'id', 'o', 's', 'd']); noErr(x); await x.c.close();
+    }
   });
   if (SHOTS) await t('13 關於頁截圖（電腦、iPad 直／橫、手機直／橫；開／關／DNT；藏版／韓版）', async () => {
     fs.mkdirSync(SHOTS, { recursive: true });

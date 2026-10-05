@@ -9,7 +9,9 @@
 
 ## 隱私重點
 - 程式不讀取、不儲存、不記錄 IP 或任何請求標頭（只讀 `Origin`、`Authorization`）；沒有 `console` 輸出；`wrangler.toml` 設 `observability.enabled = false`。
-- 城市由 Cloudflare 依連線在伺服器端推算（`request.cf`），瀏覽器不會被要求任何定位權限。
+- 城市由 Cloudflare 依連線在伺服器端推算（`request.cf`），瀏覽器不會被要求任何定位權限；只存實例「最新一次」的城市，不存每日城市歷史。
+- 裝置大類（手機／平板／電腦）由客戶端即時分類後才傳送；伺服器不存 User-Agent。
+- 保存期限（D048）：每日明細 60 天；實例摘要最後出現後 180 天；客戶端 ID 每 180 天輪替；無 ID 聚合長期保存。
 - 不能宣稱「完全不保存 IP」：GitHub Pages 與 Cloudflare 在基礎設施層本來就會處理 IP；我們自己的資料庫、程式與日誌不存。
 
 ## 部署（由 q 在 Mac 終端機操作）
@@ -23,4 +25,4 @@
 8. 上線前清空測試資料。
 
 ## 查詢（Mac）
-`analytics/cli/yoga_stats.py`：`瑜伽統計 今天｜本週｜本月｜回訪 [期間]｜地區 [期間]`（`--json`、`--date`）。token 預設從鑰匙圈 `yoga-stats-admin` 讀取。`./analytics/cli/install-mac.sh` 會在 `~/.zshrc` 加入指令（不寫 token）。測試：`python3 -m unittest discover analytics/cli`。
+`analytics/cli/yoga_stats.py`：`瑜伽統計 今天｜本週｜本月｜回訪 [期間]｜地區 [期間]｜使用者 [期間]｜實例 <短代號>`（`--json`、`--date`、`--limit`、`--sort`）。token 預設從鑰匙圈 `yoga-stats-admin` 讀取。`./analytics/cli/install-mac.sh` 會在 `~/.zshrc` 加入指令（不寫 token）。測試：`python3 -m unittest discover analytics/cli`。

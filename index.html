@@ -1018,7 +1018,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <p class="src">韓版：內文、分卷、科判、披尋記與常柏法師釋，全部依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷皆照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<br>原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></p>
         </div>
         <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.91</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-05">2026-10-05</time></span></div></div>
-<div class="grp stats-grp"><label class="sw stats"><span class="nm">匿名使用統計</span><input type="checkbox" id="optStats" role="switch" checked><span class="tr" aria-hidden="true"></span></label><p class="src stats-note">協助了解大約有多少人使用本 App。只記錄隨機產生的匿名識別、App 開啟次數與有效使用時間，並依網路連線粗略判斷所在城市（不使用定位）。不收集姓名、搜尋內容、筆記或閱讀內容，也不建立個人使用紀錄。離線時照常使用，可隨時關閉。</p><p class="rp-msg" id="statsMsg" role="status"></p></div>
+<div class="grp stats-grp"><label class="sw stats"><span class="nm">匿名使用統計</span><input type="checkbox" id="optStats" role="switch" checked><span class="tr" aria-hidden="true"></span></label><p class="src stats-note">協助了解 App 的使用情況。啟用後，本 App 會用一組隨機產生的匿名識別來區分不同的 App／瀏覽器，並記錄開啟次數、有效使用時間、裝置大類（手機、平板或電腦），以及依網路連線粗略判斷的城市（不使用 GPS 定位）。這些資料不包含你的姓名或帳號，也不記錄搜尋、筆記、反白或閱讀內容。每日使用紀錄最多保留約 2 個月。可隨時關閉；關閉後會停止傳送，並刪除本機的匿名識別。</p><p class="rp-msg" id="statsMsg" role="status"></p></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本紀錄</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><pre class="version-doc" id="versionDoc"></pre></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
@@ -4758,8 +4758,9 @@ input,select,textarea,button{border-radius:8px}
 })();
 </script>
 <script>
-/* W001 匿名使用統計客戶端（DECISIONS D040–D045）。
- * 只送 {"v":1,"id":"<隨機匿名編號>","o":<開啟次數>,"s":<有效使用秒數>}；不送任何其他資料。
+/* W001 匿名使用統計客戶端（DECISIONS D040–D048）。
+ * 只送 {"v":2,"id":"<隨機匿名編號>","o":<開啟次數>,"s":<有效使用秒數>,"d":"phone|tablet|desktop"}；不送任何其他資料。
+ * 裝置大類在本機即時分類，只送分類結果；不讀 User-Agent，分類用的量不傳送、不保存。
  * 不使用任何定位 API；不讀寫既有功能的任何資料；任何錯誤都靜默，不影響 App。
  * 來源檔：tools/stats-client.js；由 tools/patch-w001-stats.py 注入 index.html。 */
 (function () {
@@ -4767,7 +4768,7 @@ input,select,textarea,button{border-radius:8px}
   try {
     var EP = 'https://yogacara-stats.dppss92044.workers.dev/v';
     var KEY = 'hk-anon-stat-v1', OFF = 'hk-stats-off-v1';
-    var IDLE_MS = 90000, GAP_MS = 30 * 60000, CAP_S = 3 * 3600, ROTATE_MS = 365 * 864e5;
+    var IDLE_MS = 90000, GAP_MS = 30 * 60000, CAP_S = 3 * 3600, ROTATE_MS = 180 * 864e5;                  // D048：匿名 ID 每 180 天輪替
     var FLUSH_MS = 300000, RETRY_MS = 300000, START_MS = 3000, TIMEOUT_MS = 8000;
     var MAX_O = 20, MAX_S = 10800, KEEP_O = 1000, KEEP_S = 1000000;
     var MSG_OFF = '已關閉：不再傳送任何統計，本機的匿名編號也已刪除。';
@@ -4790,6 +4791,16 @@ input,select,textarea,button{border-radius:8px}
       var h = Array.prototype.map.call(b, function (x) { return (x < 16 ? '0' : '') + x.toString(16); }).join('');
       return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
     }
+    // 裝置大類（手機／平板／電腦）：只用「是否觸控」與「螢幕短邊」即時判斷，結果以外的量不外傳。
+    function deviceClass() {
+      try {
+        var touch = (navigator.maxTouchPoints || 0) > 0 && !!window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        if (!touch) return 'desktop';
+        var sw = window.screen && window.screen.width, sh = window.screen && window.screen.height;
+        var short = (sw > 0 && sh > 0) ? Math.min(sw, sh) : Math.min(window.innerWidth || 0, window.innerHeight || 0);
+        return short > 0 && short < 600 ? 'phone' : 'tablet';
+      } catch (e) { return 'desktop'; }
+    }
     function ok(n, max) { return typeof n === 'number' && isFinite(n) && n >= 0 && n <= max; }
 
     var st = null;                               // {id, t, o, s}：t＝編號建立時間（毫秒）
@@ -4803,7 +4814,7 @@ input,select,textarea,button{border-radius:8px}
       var valid = j && typeof j.id === 'string' && /^[0-9a-f-]{32,36}$/.test(j.id) && ok(j.t, now + 864e5) && ok(j.o, KEEP_O) && ok(j.s, KEEP_S);
       if (valid && now - j.t <= ROTATE_MS) return { id: j.id, t: j.t, o: j.o | 0, s: j.s | 0 };
       var id = newId(); if (!id) return null;            // 沒有密碼學亂數就不啟用
-      return { id: id, t: now, o: valid ? j.o | 0 : 0, s: valid ? j.s | 0 : 0 };   // 365 天自動換新編號
+      return { id: id, t: now, o: valid ? j.o | 0 : 0, s: valid ? j.s | 0 : 0 };   // 180 天自動換新編號
     }
     function save() { return store(KEY, JSON.stringify(st)); }
 
@@ -4825,7 +4836,7 @@ input,select,textarea,button{border-radius:8px}
         var ctl = typeof AbortController === 'function' ? new AbortController() : null;
         var to = ctl ? setTimeout(function () { try { ctl.abort(); } catch (e) {} }, TIMEOUT_MS) : 0;
         fetch(EP, {
-          method: 'POST', body: JSON.stringify({ v: 1, id: st.id, o: o, s: s }), keepalive: true, mode: 'cors',
+          method: 'POST', body: JSON.stringify({ v: 2, id: st.id, o: o, s: s, d: deviceClass() }), keepalive: true, mode: 'cors',
           credentials: 'omit', referrerPolicy: 'no-referrer', headers: { 'Content-Type': 'text/plain' }, signal: ctl ? ctl.signal : undefined
         }).then(function (r) { clearTimeout(to); done(r && r.ok); }, function () { clearTimeout(to); done(false); });
       } catch (e) { inFlight = false; }

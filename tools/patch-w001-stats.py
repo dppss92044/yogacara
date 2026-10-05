@@ -17,9 +17,10 @@ def rep(old, new, n=1):
     if c != n: raise SystemExit('count %d: %r' % (c, old[:90]))
     s = s.replace(old, new)
 
-NOTE = ('協助了解大約有多少人使用本 App。只記錄隨機產生的匿名識別、App 開啟次數與有效使用時間，'
-        '並依網路連線粗略判斷所在城市（不使用定位）。不收集姓名、搜尋內容、筆記或閱讀內容，也不建立個人使用紀錄。'
-        '離線時照常使用，可隨時關閉。')
+NOTE = ('協助了解 App 的使用情況。啟用後，本 App 會用一組隨機產生的匿名識別來區分不同的 App／瀏覽器，'
+        '並記錄開啟次數、有效使用時間、裝置大類（手機、平板或電腦），以及依網路連線粗略判斷的城市（不使用 GPS 定位）。'
+        '這些資料不包含你的姓名或帳號，也不記錄搜尋、筆記、反白或閱讀內容。每日使用紀錄最多保留約 2 個月。'
+        '可隨時關閉；關閉後會停止傳送，並刪除本機的匿名識別。')
 BLOCK = ('<div class="grp stats-grp"><label class="sw stats"><span class="nm">匿名使用統計</span>'
          '<input type="checkbox" id="optStats" role="switch" checked><span class="tr" aria-hidden="true"></span></label>'
          '<p class="src stats-note">' + NOTE + '</p><p class="rp-msg" id="statsMsg" role="status"></p></div>\n')

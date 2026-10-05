@@ -1,5 +1,6 @@
-/* W001 匿名使用統計客戶端（DECISIONS D040–D045）。
- * 只送 {"v":1,"id":"<隨機匿名編號>","o":<開啟次數>,"s":<有效使用秒數>}；不送任何其他資料。
+/* W001 匿名使用統計客戶端（DECISIONS D040–D048）。
+ * 只送 {"v":2,"id":"<隨機匿名編號>","o":<開啟次數>,"s":<有效使用秒數>,"d":"phone|tablet|desktop"}；不送任何其他資料。
+ * 裝置大類在本機即時分類，只送分類結果；不讀 User-Agent，分類用的量不傳送、不保存。
  * 不使用任何定位 API；不讀寫既有功能的任何資料；任何錯誤都靜默，不影響 App。
  * 來源檔：tools/stats-client.js；由 tools/patch-w001-stats.py 注入 index.html。 */
 (function () {
@@ -7,7 +8,7 @@
   try {
     var EP = 'https://yogacara-stats.dppss92044.workers.dev/v';
     var KEY = 'hk-anon-stat-v1', OFF = 'hk-stats-off-v1';
-    var IDLE_MS = 90000, GAP_MS = 30 * 60000, CAP_S = 3 * 3600, ROTATE_MS = 365 * 864e5;
+    var IDLE_MS = 90000, GAP_MS = 30 * 60000, CAP_S = 3 * 3600, ROTATE_MS = 180 * 864e5;                  // D048：匿名 ID 每 180 天輪替
     var FLUSH_MS = 300000, RETRY_MS = 300000, START_MS = 3000, TIMEOUT_MS = 8000;
     var MAX_O = 20, MAX_S = 10800, KEEP_O = 1000, KEEP_S = 1000000;
     var MSG_OFF = '已關閉：不再傳送任何統計，本機的匿名編號也已刪除。';
@@ -30,6 +31,16 @@
       var h = Array.prototype.map.call(b, function (x) { return (x < 16 ? '0' : '') + x.toString(16); }).join('');
       return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
     }
+    // 裝置大類（手機／平板／電腦）：只用「是否觸控」與「螢幕短邊」即時判斷，結果以外的量不外傳。
+    function deviceClass() {
+      try {
+        var touch = (navigator.maxTouchPoints || 0) > 0 && !!window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        if (!touch) return 'desktop';
+        var sw = window.screen && window.screen.width, sh = window.screen && window.screen.height;
+        var short = (sw > 0 && sh > 0) ? Math.min(sw, sh) : Math.min(window.innerWidth || 0, window.innerHeight || 0);
+        return short > 0 && short < 600 ? 'phone' : 'tablet';
+      } catch (e) { return 'desktop'; }
+    }
     function ok(n, max) { return typeof n === 'number' && isFinite(n) && n >= 0 && n <= max; }
 
     var st = null;                               // {id, t, o, s}：t＝編號建立時間（毫秒）
@@ -43,7 +54,7 @@
       var valid = j && typeof j.id === 'string' && /^[0-9a-f-]{32,36}$/.test(j.id) && ok(j.t, now + 864e5) && ok(j.o, KEEP_O) && ok(j.s, KEEP_S);
       if (valid && now - j.t <= ROTATE_MS) return { id: j.id, t: j.t, o: j.o | 0, s: j.s | 0 };
       var id = newId(); if (!id) return null;            // 沒有密碼學亂數就不啟用
-      return { id: id, t: now, o: valid ? j.o | 0 : 0, s: valid ? j.s | 0 : 0 };   // 365 天自動換新編號
+      return { id: id, t: now, o: valid ? j.o | 0 : 0, s: valid ? j.s | 0 : 0 };   // 180 天自動換新編號
     }
     function save() { return store(KEY, JSON.stringify(st)); }
 
@@ -65,7 +76,7 @@
         var ctl = typeof AbortController === 'function' ? new AbortController() : null;
         var to = ctl ? setTimeout(function () { try { ctl.abort(); } catch (e) {} }, TIMEOUT_MS) : 0;
         fetch(EP, {
-          method: 'POST', body: JSON.stringify({ v: 1, id: st.id, o: o, s: s }), keepalive: true, mode: 'cors',
+          method: 'POST', body: JSON.stringify({ v: 2, id: st.id, o: o, s: s, d: deviceClass() }), keepalive: true, mode: 'cors',
           credentials: 'omit', referrerPolicy: 'no-referrer', headers: { 'Content-Type': 'text/plain' }, signal: ctl ? ctl.signal : undefined
         }).then(function (r) { clearTimeout(to); done(r && r.ok); }, function () { clearTimeout(to); done(false); });
       } catch (e) { inFlight = false; }

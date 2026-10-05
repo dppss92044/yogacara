@@ -14,7 +14,7 @@
 
 ## 目前工作編號
 
-- **W001｜隱私優先的匿名使用統計系統**（2026-10-05 由 q 正式建立；階段：**P1 已部署並驗證完成；P2（Mac 查詢工具）已由 q 於 Mac 實機驗證；**P3＋P4 已合併實作完成（僅工作分支、未發布），等 q 審核畫面與測試結果**；q 已於 2026-10-05 裁定設計 §13 六項決定，已寫入 `DECISIONS.md` D040–D043**）
+- **W001｜隱私優先的匿名使用統計系統**（2026-10-05 由 q 正式建立；階段：**P1 已部署並驗證完成；P2（Mac 查詢工具）已由 q 於 Mac 實機驗證；**P3＋P4 已實作並由 q 確認；匿名實例層級調整（D046–D048）程式已完成，等 q 在 Mac 遷移 D1／重新部署 Worker 後驗證**；q 已於 2026-10-05 裁定設計 §13 六項決定，已寫入 `DECISIONS.md` D040–D043**）
 - 工作分支：`work/W001-anonymous-analytics`（因 session 指定，實際推送到 `claude/project-thread-3ws881`；內容相同，q 若要求再改名）
 - 下一個可用編號：**W002**
 - 下一正式版本候選：v1.92（**尚未發布、尚未升版**；W001 完成＋測試＋q 確認後才發布）
@@ -34,10 +34,12 @@
 
 q 明確確認新決定：增加「匿名實例層級統計」——可查每個匿名實例的短代號、城市、裝置大類（手機／平板／電腦）、每日開啟次數、每日有效使用時間、首次／最後出現日期；CLI 增加 `瑜伽統計 使用者 今天|本週|本月` 與單一實例累計查詢；告知文案須同步改寫；保存期限須重新檢討。此新決定**取代**先前的「城市不與匿名 ID 關聯」「第一版不記裝置類型」（保留歷史，見 `DECISIONS.md` D046；D040、D041 已加註「部分被 D046 取代」）。**保留**兩份原始需求，以最新為準。
 
-- 目前狀態：已記錄 D046；**停止依舊資料模型繼續**；方案提案見 `/mnt/project-files/W001/W001-instance-level-proposal.md`，**等 q 確認**（資料模型、D1 schema、payload、CLI、告知文案、retention）後才改 Worker／D1／CLI／客戶端／測試。
-- 因此下方「已完成」的 P1／P2／P3＋P4 中，與新規格衝突的部分（Worker 與 D1 的「實例表不含城市」資料模型、聚合表為唯一城市來源、CLI 無個別實例查詢、payload `{v,id,o,s}`、告知文案、`stats-test.cjs` 與 `worker.test.mjs` 中對應斷言）將被修改，**目前線上已部署版本仍是舊模型（資料庫為空）**。
+- 目前狀態：q 已於 2026-10-05 確認方案並裁定細節；已記錄 D046（實例層級）、D047（新告知文案、payload v2 含 `d`、6 碼短代號與 CLI、預設開啟維持）、D048（保存期限：每日明細 60 天、實例摘要 180 天、ID 180 天輪替）；D040／D041／D044／D045 已加註「部分被取代」，原文保留。**程式已依新規格調整完成（Worker、D1 schema＋遷移檔、CLI、客戶端、測試），待 q 在 Mac 執行 D1 遷移並重新部署 Worker**（線上目前仍是舊版 Worker＋舊 schema，資料庫為空）。
+- 部署順序（重要）：先執行 `migrations/0002-instance-level.sql`（只加欄位與新表，舊 Worker 不受影響），再 `wrangler deploy`。若先部署新 Worker 而未遷移，寫入會失敗（Worker 回 500，客戶端靜默處理）。
 
 ## 已完成
+
+- **匿名實例層級調整（2026-10-05，D046–D048）**：Worker（嚴格允許清單 `{v,id,o,s,d}`、`instances.city/device` 只存最新、`instance_days` 每日明細、`/admin/instances`、`/admin/instance`、清理 60／180 天）；`schema.sql` 與 `migrations/0002-instance-level.sql`；CLI `使用者`／`實例`；客戶端 `v:2`＋`d`（本機分類）＋180 天輪替；告知文案改為 D047；測試與文件同步。**未改** `sw.js`、`appVer`。最終 payload：`{"v":2,"id":"<隨機匿名編號>","o":<次數>,"s":<秒>,"d":"phone|tablet|desktop"}`。
 
 - **P3＋P4（2026-10-05，q 裁定後實作）**：`index.html` 內嵌統計客戶端＋「關於」頁「匿名使用統計」開關與告知＋導覽「關於」描述更新；補丁 `tools/patch-w001-stats.py`（來源 `tools/stats-client.js`）；測試 `tools/stats-test.cjs`；`DECISIONS.md` 新增 D044（預設開啟＋告知開關＋DNT／GPC）、D045（payload 不傳 `av`，取代 D041 該句）；`PROJECT_SPEC.md` §13、`UI_SPEC.md` 加註。**未改** `sw.js`、`appVer`（仍 v1.91）、`versionSummaries`。
 - 實際 payload：`{"v":1,"id":"<隨機匿名編號>","o":<開啟次數>,"s":<有效秒數>}`。
@@ -53,7 +55,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 
 ## 正在進行
 
-- 等 q 審核 P3＋P4（關於頁畫面：`/mnt/project-files/W001/screens/`；測試結果見下）。審核前不得進 P5。
+- 等 q 在 Mac：①`git pull`；②對遠端 D1 執行 `migrations/0002-instance-level.sql`；③重新部署 Worker；④用 CLI 驗證。完成並回報前不得進 P5。
 
 ## 尚未完成
 
@@ -65,6 +67,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 - Markdown：`AI_HANDOFF.md`、`CHANGELOG.md`、`PROJECT_STATE.md`、`DECISIONS.md`（D040–D045）、`PROJECT_SPEC.md`（§13）、`UI_SPEC.md`（A2）。
 - App：`index.html`（內嵌統計 `<script>`、關於頁區塊、導覽一句、少量 CSS；由 `tools/patch-w001-stats.py` 對 v1.91 的 `index.html` 套用）。
 - 新增 `tools/stats-client.js`、`tools/patch-w001-stats.py`、`tools/stats-test.cjs`。
+- 匿名實例層級調整另改：`analytics/worker/{src/index.js,schema.sql,wrangler.toml,test/worker.test.mjs}`、新增 `analytics/worker/migrations/0002-instance-level.sql`、`analytics/cli/{yoga_stats.py,test_yoga_stats.py}`、`analytics/README.md`，以及 `index.html`（告知文案與客戶端，已由補丁對 v1.91 原檔重新套用）。
 - 新增 `analytics/`：`README.md`、`worker/src/index.js`、`worker/schema.sql`、`worker/wrangler.toml`、`worker/.gitignore`、`worker/test/worker.test.mjs`；`analytics/cli/`：`yoga_stats.py`、`test_yoga_stats.py`、`install-mac.sh`。
 - **未修改**：`sw.js`、`tools/sw-template.js`、`tools/build_release.py`、`manifest.webmanifest`、`icon-*.png`、`data/`、`tools/` 其他檔、`PROJECT_SPEC.md`、`UI_SPEC.md`、`docs/history/MASTER_HISTORY.md`。
 
@@ -74,7 +77,8 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 
 ## 測試結果
 
-- P1 後端：`node --test analytics/worker/test/worker.test.mjs` 9 項全過（Node 內建 sqlite 模擬 D1；涵蓋驗證、CORS 來源、401、聚合、回訪、時區邊界、保存期限清理、城市白名單與 k<5、靜態檢查無 IP／標頭／console）。另用 `wrangler dev --local`（真 workerd＋本機 D1）手動打過 /health、POST /v、/admin/stats（含 401）皆正常；`wrangler deploy --dry-run` 設定驗證通過。**未部署、未在真實 Cloudflare 上測過**；`request.cf` 城市在本機只能用假值測，真實城市準確度須部署後觀察。- P3＋P4：`node tools/stats-test.cjs`（針對 v1.91 基底＋W001 補丁新寫；Playwright 1.56／Chromium 模擬）16 組全通過：不使用定位（0 次呼叫、無權限對話、`index.html` 無 geolocation 字串）、payload 只含 v,id,o,s 且 text/plain 無 cookie／referer／preflight、有效時間規則（前景＋90 秒互動、背景不計、離開 >30 分鐘算新開啟）、離線與恢復補送、端點 500／中止／無回應時靜默且 ≥5 分鐘才重試、DNT／GPC、關閉開關流程（含重開新 ID）、365 天輪替、靜態檢查、藏版／韓版煙霧測試（載入、搜尋、關於、版本紀錄）、`sw.js` 等檔與基底無差異且仍為 v1.91、真實 Service Worker 安裝後關閉本機伺服器離線重載仍可閱讀、關於頁截圖（電腦、iPad 直／橫、手機直／橫；開／關／DNT；藏／韓）。**只做 Chromium 模擬；尚待 Safari／iPhone／iPad 實機**（原生開關外觀、`pagehide` 補送、主畫面 PWA 前後景、iOS 儲存限制）；測試只是煙霧等級，不是完整回歸套件。
+- P1 後端：`node --test analytics/worker/test/worker.test.mjs` 9 項全過（Node 內建 sqlite 模擬 D1；涵蓋驗證、CORS 來源、401、聚合、回訪、時區邊界、保存期限清理、城市白名單與 k<5、靜態檢查無 IP／標頭／console）。另用 `wrangler dev --local`（真 workerd＋本機 D1）手動打過 /health、POST /v、/admin/stats（含 401）皆正常；`wrangler deploy --dry-run` 設定驗證通過。**未部署、未在真實 Cloudflare 上測過**；`request.cf` 城市在本機只能用假值測，真實城市準確度須部署後觀察。- **匿名實例層級調整後（最新）**：`node --test analytics/worker/test/worker.test.mjs` 13 項全過（Node 內建 sqlite 模擬 D1：允許清單 payload、最新城市覆寫且無城市歷史、每日明細無城市／裝置、短代號 6 碼且回應不含完整 hash、409／404／400、清理 60／180 天、遷移檔與 schema.sql 欄位一致、靜態檢查無 IP／UA／console）；`python3 -m unittest discover analytics/cli` 8 項全過（`使用者`、`實例`、錯誤處理）；`node tools/stats-test.cjs` 17 組全過（新增 14 裝置分類：電腦／手機直橫／平板直橫；08 改 180 天輪替；02 payload 含 `d`；09 靜態檢查限制螢幕／觸控判斷只在 deviceClass；其餘同前）。另用 `wrangler dev --local`（真 workerd＋本機 D1）＋真實客戶端（Playwright 三種裝置）＋CLI 做了端到端：三個實例分別被分類為電腦／手機／平板，`使用者 今天`、`使用者 本週 --sort 次數`、`實例 <短代號>`、`地區 今天` 輸出正確。**只做 Chromium 模擬與本機 workerd；尚未部署新版 Worker、尚未在線上或 Safari／iPhone／iPad 實機驗證**（本機 workerd 無法提供真實 Cloudflare 城市，端到端中城市為模擬值 US）。
+- P3＋P4：`node tools/stats-test.cjs`（針對 v1.91 基底＋W001 補丁新寫；Playwright 1.56／Chromium 模擬）16 組全通過：不使用定位（0 次呼叫、無權限對話、`index.html` 無 geolocation 字串）、payload 只含 v,id,o,s 且 text/plain 無 cookie／referer／preflight、有效時間規則（前景＋90 秒互動、背景不計、離開 >30 分鐘算新開啟）、離線與恢復補送、端點 500／中止／無回應時靜默且 ≥5 分鐘才重試、DNT／GPC、關閉開關流程（含重開新 ID）、365 天輪替、靜態檢查、藏版／韓版煙霧測試（載入、搜尋、關於、版本紀錄）、`sw.js` 等檔與基底無差異且仍為 v1.91、真實 Service Worker 安裝後關閉本機伺服器離線重載仍可閱讀、關於頁截圖（電腦、iPad 直／橫、手機直／橫；開／關／DNT；藏／韓）。**只做 Chromium 模擬；尚待 Safari／iPhone／iPad 實機**（原生開關外觀、`pagehide` 補送、主畫面 PWA 前後景、iOS 儲存限制）；測試只是煙霧等級，不是完整回歸套件。
 - P2：`python3 -m unittest discover analytics/cli` 6 項通過（假伺服器）；另以 `wrangler dev --local` 真 workerd＋本機 D1 灌 6 筆資料，用 CLI 查「今天」與錯誤 token（回 401 訊息、結束碼 1）皆符合。**未在 macOS／zsh 實測**（本環境無 zsh，僅在 bash 驗證中文函式名可用）；**未對線上 Worker 實測**。客戶端與 App 尚無程式。
 - 先前（登記階段）僅讀碼與靜態檢查（`index.html` 無 `geolocation`、無 CSP、無既有統計；既有跨站請求只有辭典 API 與 formsubmit.co 問題回報）。
 - 既有測試結果檔僅針對 v1.61–v1.63、v1.76–v1.79；v1.80–v1.91 無入庫測試（見 `PROJECT_STATE.md` §9）。W001 實作階段需新建測試，計畫見設計文件 §12。
