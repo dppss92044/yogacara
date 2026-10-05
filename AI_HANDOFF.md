@@ -34,8 +34,9 @@
 
 q 明確確認新決定：增加「匿名實例層級統計」——可查每個匿名實例的短代號、城市、裝置大類（手機／平板／電腦）、每日開啟次數、每日有效使用時間、首次／最後出現日期；CLI 增加 `瑜伽統計 使用者 今天|本週|本月` 與單一實例累計查詢；告知文案須同步改寫；保存期限須重新檢討。此新決定**取代**先前的「城市不與匿名 ID 關聯」「第一版不記裝置類型」（保留歷史，見 `DECISIONS.md` D046；D040、D041 已加註「部分被 D046 取代」）。**保留**兩份原始需求，以最新為準。
 
-- 目前狀態：q 已於 2026-10-05 確認方案並裁定細節；已記錄 D046（實例層級）、D047（新告知文案、payload v2 含 `d`、6 碼短代號與 CLI、預設開啟維持）、D048（保存期限：每日明細 60 天、實例摘要 180 天、ID 180 天輪替）；D040／D041／D044／D045 已加註「部分被取代」，原文保留。**程式已依新規格調整完成（Worker、D1 schema＋遷移檔、CLI、客戶端、測試）；D1 遷移已完成，待 q 在 Mac 重新部署 Worker**（線上 Worker 目前仍是舊版，資料庫已是新 schema 且為空）。
+- 目前狀態：q 已於 2026-10-05 確認方案並裁定細節；已記錄 D046（實例層級）、D047（新告知文案、payload v2 含 `d`、6 碼短代號與 CLI、預設開啟維持）、D048（保存期限：每日明細 60 天、實例摘要 180 天、ID 180 天輪替）；D040／D041／D044／D045 已加註「部分被取代」，原文保留。**程式已依新規格調整完成（Worker、D1 schema＋遷移檔、CLI、客戶端、測試）；D1 遷移與新版 Worker 部署已完成，待線上驗證**。
 - **D1 遷移已完成（q 於 2026-10-05 在 Mac 實機回報）**：`Processed 4 queries. Executed 4 queries in 3.81ms；23 rows read, 6 rows written；Database size: 0.05 MB`，未重複執行（此為 q 的回報，我未獨立驗證遠端資料庫）。下一步：重新部署新版 Worker；尚未部署。
+- **新版 Worker 已部署（q 於 2026-10-05 在 Mac 實機回報）**：Total Upload 15.47 KiB／gzip 4.91 KiB；Bindings `env.DB=yogacara-stats`、`ALLOWED_ORIGIN=https://dppss92044.github.io`、`RETENTION_DAYS=180`、`DAILY_RETENTION_DAYS=60`、`K_MIN=5`；排程 `10 19 * * *`；Version ID `1ede1d64-070b-42ef-ac8a-cf2fe19356b1`（此為 q 的回報）。**尚未做線上功能驗證**（下一步：curl 與 CLI 驗證，之後清除測試資料）。
 - 部署順序（重要）：先執行 `migrations/0002-instance-level.sql`（只加欄位與新表，舊 Worker 不受影響），再 `wrangler deploy`。若先部署新 Worker 而未遷移，寫入會失敗（Worker 回 500，客戶端靜默處理）。
 
 ## 已完成
