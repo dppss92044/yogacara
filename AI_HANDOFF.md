@@ -81,7 +81,7 @@
 ### W001 commit 紀錄
 
 - 起點：`origin/main` `e4a365f`。
-- 登記 commit：（見 `git log work/W001-anonymous-analytics`；hash 於登記後補記在此行）
+- 登記 commit：`6176d73`（分支 `claude/project-thread-3ws881`，等同 `work/W001-anonymous-analytics`）
 
 ## 是否已正式發布
 
