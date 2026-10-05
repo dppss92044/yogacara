@@ -1,0 +1,24 @@
+# W001 匿名使用統計接收端（D040）。本檔不含任何 secret。
+# secret（PEPPER、ADMIN_TOKEN）只用 `wrangler secret put` 設定，不得寫進 repository。
+name = "yogacara-stats"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGIN = "https://dppss92044.github.io"
+RETENTION_DAYS = "180"
+K_MIN = "5"
+
+# 不啟用 Workers Logs（避免請求中繼資料含 IP 被記錄）。部署後請在儀表板再核對一次，也不要設 Logpush。
+[observability]
+enabled = false
+
+[[d1_databases]]
+binding = "DB"
+database_name = "yogacara-stats"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"   # 建立資料庫後由 q 填入（非 secret）
+
+# 每天 03:10（Asia/Taipei）清除超過保存期限的匿名實例列。
+[triggers]
+crons = ["10 19 * * *"]
