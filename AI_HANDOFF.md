@@ -9,7 +9,7 @@
 ## 正式基底
 
 - 正式版本：**v1.91**
-- commit：**`db77e11`**（`main`）
+- App 程式基底 commit：**`db77e11`**（「更新至 v1.91」；App 本體最後一次修改）
 
 ## 目前工作編號
 
@@ -66,11 +66,11 @@
 
 ## 最後 commit
 
-- 正式主線：`db77e11`（v1.91）。
-- 第二階段文件：PR #1 已 merge，8 份永久文件已進入 `main`；`main` 最新 commit 為 **`c022988`**（Merge pull request #1）。
-- App 本體沒有因這次文件合併而修改；App 正式版本仍為 **v1.91**（`appVer`／`sw.js` `VERSION` 未動，app 程式 commit 仍為 `db77e11`）。
+- App 正式版本 v1.91 的基底：`db77e11`。
+- 第二階段文件：PR #1 已 merge（merge commit `c022988`），8 份永久文件已進入 `main`；其後 PR #2 merge（`f4734fc`）校正本檔狀態。**本次現況校正前的 repository main HEAD = `f4734fc`**（此為校正前快照，非永久的「目前 main HEAD」）。
+- `f4734fc` 相較 `db77e11` 多出的 commit（`c022988`、`f4734fc`）屬文件／流程文件變更，**不代表 App 本體升版**；App 正式版本仍為 **v1.91**（`appVer`／`sw.js` `VERSION` 未動），App 程式基底仍為 `db77e11`。
 - 目前沒有進行中的 W；下一個可用編號仍為 **W001**。
-- 2026-10-05：本檔狀態校正（文件現況校正，非 W 工作，不增加版本號）。
+- 2026-10-05：本檔狀態校正（文件現況校正，非 W 工作，不增加版本號）。校正目的：區分「App v1.91 程式基底 commit `db77e11`」與「repository main HEAD」，並註明本次校正前 main HEAD 為 `f4734fc`，避免再把 App 程式基底誤寫成 repository main HEAD。同步校正 `PROJECT_STATE.md` §1；不建立 W、不新增 MASTER_HISTORY H 編號、不升版。
 
 ## 是否已正式發布
 
