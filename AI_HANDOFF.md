@@ -10,71 +10,82 @@
 
 - 正式版本：**v1.91**
 - App 程式基底 commit：**`db77e11`**（「更新至 v1.91」；App 本體最後一次修改）
+- W001 工作分支起點：`origin/main` = `e4a365f`（`db77e11` 之後只有文件變更）
 
 ## 目前工作編號
 
-- **無**（目前沒有進行中的 W 工作）
-- 下一個可用編號：**W001**
-- 下一正式版本候選：v1.92
+- **W001｜隱私優先的匿名使用統計系統**（2026-10-05 由 q 正式建立；階段：**第一階段＝只做登記與設計，等 q 裁定架構**）
+- 工作分支：`work/W001-anonymous-analytics`（因 session 指定，實際推送到 `claude/project-thread-3ws881`；內容相同，q 若要求再改名）
+- 下一個可用編號：**W002**
+- 下一正式版本候選：v1.92（**尚未發布、尚未升版**；W001 完成＋測試＋q 確認後才發布）
+- 備註：先前有一份「首次載入／SW 快取」草案曾暫稱 W001（`/mnt/project-files/W001/W001-plan.md`），**q 從未批准或登記**；該主題若要做，將使用之後的 W 編號（W002），與本 W001 無關。
 
-## 本輪使用者原始需求
+## 本輪使用者原始需求（W001，q，2026-10-05）
 
-- 無進行中的程式需求。
-- 最近一輪（非程式）：第二階段「建立專案永久記憶與跨 AI 接力制度」——新增 `AGENTS.md`、`PROJECT_STATE.md`、`PROJECT_SPEC.md`、`UI_SPEC.md`、`DECISIONS.md`、`CHANGELOG.md`、`AI_HANDOFF.md`、`docs/history/MASTER_HISTORY.md`。
+為《瑜伽師地論》App 建立**自己的匿名使用統計系統**。目的不是辨識真實身分，而是知道：(1) 大約多少不同「匿名使用實例」；(2) 大約位於哪個**城市**；(3) 同一實例是否回訪；(4) 每實例開啟 App 幾次；(5) 每次大約用多久；(6) 累計用多久；(7) 新／回訪比例；(8) 可依今天、本週、本月看統計。主要透過 q 自己 Mac 終端機查詢（`瑜伽統計 今天／本週／本月／回訪／地區`），不要登入 Google Analytics、Cloudflare Analytics、Plausible 等第三方網站。
+
+隱私原則（最高優先）：A 不要求 GPS／Geolocation，不觸發位置提示；B 不取精確經緯度；C 不蒐集姓名、Email、電話、帳號等身分資料；D 不蒐集搜尋文字、筆記、反白內容、閱讀的具體佛典段落、其他輸入；E 不做裝置指紋；F 只用客戶端隨機產生的匿名實例 ID（不由 IP／UA／硬體推算，不宣稱等於一個自然人）；G 城市只作粗略統計，原始 IP 不得寫入統計資料庫、log 或任何長期資料，並須先確認部署平台是否自動產生含 IP 的 access log（有就必須說明，不得宣稱「完全不保存 IP」）；H 資料最小化，要「桃園有多少實例」而不是「匿名 A 在桃園的逐次軌跡」；I 使用時間只算合理的 active／engagement，不把背景分頁當閱讀；J 離線能力不得破壞，統計失敗不得影響閱讀、搜尋、註釋、PDF、科判等既有功能。
+
+偏好：不用第三方 Analytics、程式與資料格式自己控制、成本 0 或極低、維護簡單、隱私優先、Mac 用 Python／Terminal 查詢、不建使用者帳號。
+
+**本輪限制**：只做 (1) 讀規範與 v1.91 架構 (2) 依 W 流程登記 W001 (3) 檢查是否碰到待確認事項 (4–13) 完整技術設計（含資料存哪、城市如何取得且不觸發 GPS、ID 生命週期、active time、保存期限、隱私風險、預計修改檔案、對 SW／離線／首次載入影響、分階段與測試計畫）。**禁止**：修改 App 功能程式、發布、升版、改 Service Worker 行為、建立 release、merge 到 main。有架構選項先列優缺點與推薦，等 q 確認後停止。
 
 ## 已完成
 
-- 第一階段：歷史考證與版本線重建（使用者已確認）。
-- 第二階段：上述 8 份文件已建立（H155），並已透過 PR #1 合併進 `main`（merge commit `c022988`）。
+- 登記 W001（本檔、`CHANGELOG.md` Unreleased、`PROJECT_STATE.md`）。
+- 設計文件：`/mnt/project-files/W001/W001-anonymous-analytics-design.md`（含選項、推薦、待 q 決定事項）。
+- 檢查：W001 **沒有**碰到 `DECISIONS.md` D090–D098／`PROJECT_SPEC.md` §21 T1–T12 的待確認事項；會**新增**需 q 同意的決定（見設計文件 §13），**尚未寫入 DECISIONS.md**。
 - **App 本體沒有任何修改。**
 
 ## 正在進行
 
-- 無。
+- 無（等待 q 審核設計並裁定架構選項）。
 
 ## 尚未完成
 
-- 沒有進行中的程式工作。
-- 文件中標為「待使用者確認」的項目尚未裁定（見 `PROJECT_SPEC.md` §21、`UI_SPEC.md` §C、`DECISIONS.md` D090–D098）。
+- q 裁定資料接收端／儲存方案與設計文件 §13 的決定事項。
+- 之後各階段（後端、查詢 CLI、客戶端、關於頁告知與關閉開關、測試、實機驗證）——**全部尚未開始**。
 
 ## 修改檔案
 
-- 本輪只新增／修改 Markdown：`AGENTS.md`、`PROJECT_STATE.md`、`PROJECT_SPEC.md`、`UI_SPEC.md`、`DECISIONS.md`、`CHANGELOG.md`、`AI_HANDOFF.md`、`docs/history/MASTER_HISTORY.md`。
-- **未修改**：`index.html`、`sw.js`、`manifest.webmanifest`、`icon-*.png`、`data/`、`tools/`。
+- 本輪只修改 Markdown：`AI_HANDOFF.md`、`CHANGELOG.md`、`PROJECT_STATE.md`。
+- **未修改**：`index.html`、`sw.js`、`tools/sw-template.js`、`tools/build_release.py`、`manifest.webmanifest`、`icon-*.png`、`data/`、`tools/` 其他檔、`DECISIONS.md`、`PROJECT_SPEC.md`、`UI_SPEC.md`、`docs/history/MASTER_HISTORY.md`。
 
 ## 已知 bug
 
-- 見 `PROJECT_STATE.md` §6（HINTS 雙擊文字不一致、hover 說明框移除原生 `title`、數字鍵未納入 SW `busy()`、韓版 998 頁未確認、辭典 API 僅 mock 驗證）。
+- 見 `PROJECT_STATE.md` §6。W001 尚未寫任何程式，無新增 bug。
 
 ## 測試結果
 
-- 本輪無程式修改，無需測試。
-- 既有測試結果檔僅針對 v1.61–v1.63、v1.76–v1.79 的當時版本；v1.80–v1.91 無入庫測試。詳見 `PROJECT_STATE.md` §9。
+- 本輪無程式修改，無需測試；僅讀碼與靜態檢查（`index.html` 無 `geolocation`、無 CSP、無既有統計；既有跨站請求只有辭典 API 與 formsubmit.co 問題回報）。
+- 既有測試結果檔僅針對 v1.61–v1.63、v1.76–v1.79；v1.80–v1.91 無入庫測試（見 `PROJECT_STATE.md` §9）。W001 實作階段需新建測試，計畫見設計文件 §12。
 
 ## 不得破壞的既有行為
 
-- 見 `DECISIONS.md`（D010–D039 為不得改回去的決定）、`PROJECT_SPEC.md`（【現行】項）、`UI_SPEC.md` §A。
-- 特別注意：不恢復 hover 自動辭典、書寫／筆記編輯、四種閱讀底色、25% 級距、概略導覽、全部重置置中、回上方跟隨紙面、縮圖鈕隱藏。
-- 不得自行增加正式版本號；不得改歷史（見 `AGENTS.md` §3.5）。
+- `DECISIONS.md` D032：不得改回 network-first 抓大檔；SW fetch 內不得呼叫 `registration.update()`。
+- 離線可讀、偏好只存 localStorage、`sw.js` activate 不碰 localStorage／IndexedDB。
+- D005／AGENTS §4：最小修改、不擅自改 UI（關於頁加告知或開關屬 UI 變更，須 q 同意）。
+- 統計永遠是非核心、可失敗的附加功能；不得影響閱讀、搜尋、註釋、PDF、科判。
+- 不得自行增加正式版本號；不得改歷史（`AGENTS.md` §3.5）。
 
 ## 下一個 AI 第一件應做的事
 
-1. 讀完 `AGENTS.md` §1 列的七份文件。
-2. 執行 `git status`、`git log -3`，確認與本檔「最後 commit」一致。
-3. 等使用者提出需求；有需求時：在本檔登記 **W001**（基底 v1.91 `db77e11`、使用者原始需求），再動手。
-4. 若需求觸及「待使用者確認」項目，先向使用者確認。
+1. 讀完 `AGENTS.md` §1 七份文件與設計文件 `/mnt/project-files/W001/W001-anonymous-analytics-design.md`。
+2. `git status`、`git log -3`，確認與下方「最後 commit」一致。
+3. 看 q 對設計文件 §13 的裁定；**未裁定前不寫程式**。裁定後先把決定寫入 `DECISIONS.md`（新條目），再依階段 P1 開始。
 
 ## 最後 commit
 
-- App 正式版本 v1.91 的基底：`db77e11`。
-- 第二階段文件：PR #1 已 merge（merge commit `c022988`），8 份永久文件已進入 `main`；其後 PR #2 merge（`f4734fc`）校正本檔狀態。**本次現況校正前的 repository main HEAD = `f4734fc`**（此為校正前快照，非永久的「目前 main HEAD」）。
-- `f4734fc` 相較 `db77e11` 多出的 commit（`c022988`、`f4734fc`）屬文件／流程文件變更，**不代表 App 本體升版**；App 正式版本仍為 **v1.91**（`appVer`／`sw.js` `VERSION` 未動），App 程式基底仍為 `db77e11`。
-- 目前沒有進行中的 W；下一個可用編號仍為 **W001**。
-- 2026-10-05：本檔狀態校正（文件現況校正，非 W 工作，不增加版本號）。校正目的：區分「App v1.91 程式基底 commit `db77e11`」與「repository main HEAD」，並註明本次校正前 main HEAD 為 `f4734fc`，避免再把 App 程式基底誤寫成 repository main HEAD。同步校正 `PROJECT_STATE.md` §1；不建立 W、不新增 MASTER_HISTORY H 編號、不升版。
+- 見下方「W001 commit 紀錄」。
+
+### W001 commit 紀錄
+
+- 起點：`origin/main` `e4a365f`。
+- 登記 commit：（見 `git log work/W001-anonymous-analytics`；hash 於登記後補記在此行）
 
 ## 是否已正式發布
 
-- 無進行中的工作，無待發布項目。
+- 否。W001 尚在第一階段（登記＋設計）；未發布、未升版（`appVer`／`sw.js` `VERSION` 仍為 v1.91）。
 
 ---
 
