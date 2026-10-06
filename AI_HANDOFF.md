@@ -31,6 +31,8 @@
 - 發布前剩餘工作（必要／可選）：
   - 必要：①（`ALLOWED_ORIGIN` 已恢復，見上）對遠端 D1 套用 0003 並部署新版 Worker（先對遠端 D1 套用 `migrations/0003-analytics-v2.sql`，再 `wrangler deploy`，驗證 LAN origin 回 403、github.io 回 204／`x-p`）；②q 定稿「告知／控制介面」（D059 App 內零統計 UI 與發布閘門衝突待裁定）並同意發布；③q 裁定 D099（文件與程式四項差異）；④q 決定資料量方案（每次 /v 約 87 列，免費額度約撐 260 日活）；⑤補測 PWA 與 iPad 實機（q 若要求）；⑥整理 W001＋W002 的 DECISIONS 編號與文件；⑦走 `AGENTS.md` §3.4 發布流程（`tools/build_release.py`、`appVer`、`versionSummaries`、`sw.js`、`CHANGELOG`、`MASTER_HISTORY` H156 起），需 q 明確確認。
   - 可選：iPad／PWA／HTTPS 實機補測、韓版藏版實機完整走訪、`privacy.html` 發布、presence 資料量調整（`WITHOUT ROWID`／移除 day 索引）、清理本機 `.dev.vars`／`.wrangler/`。
+- **q 的裁定（2026-10-06，D101）**：W001＋W002 一起發布為 v1.92；**App 內零統計 UI 維持（D059）**，不新增告知／開關／模式選項／彈窗，先前「關於頁極簡告知＋控制＋預設基本」提案已取消；D099 只修文件（#1、#2 依現況、#3、#4 已查程式並更新，未做實機逐項確認；#3 與 H140「只留一個導覽入口」歷史要求不一致，待 q 另決）；資料量不改 schema，上線首週量測。尚未 migration、部署、升版、merge、release。
+- **取消統計 UI 後，v1.92 發布前必要步驟（依序，每項需 q 同意／操作）**：①對遠端 D1 套用 `migrations/0003-analytics-v2.sql`（先確認遠端現況、只讀）；②`wrangler deploy` 新版 Worker（`ALLOWED_ORIGIN`＝github.io；核對 secrets、Logs 關閉、`/p`、`/v`、LAN origin 的 POST 回 403）；③ q 要求開 PR → q 自行 merge；④發布動作一次完成：`tools/build_release.py 1.92`（只更新 meta 與 `sw.js`）＋手動更新 `appVer`、最後更新日、`versionSummaries`（**不得**重跑 `patch-w001-stats.py` 或用 `git show e4a365f:index.html` 重產 `index.html`，否則會覆蓋 W002）；⑤更新 `CHANGELOG`（Unreleased→v1.92）、`PROJECT_STATE`、本檔、`MASTER_HISTORY` H156 起；⑥發布後實機驗證 SW 更新、`/v`／`/p` 寫入、W002 導航；⑦ q 明確確認發布（§3.4 第 3 條）。
 - 最後 commit：以 `git log` 為準（整合 merge commit 與本節文件更新 commit）。
 
 ## 目前工作編號

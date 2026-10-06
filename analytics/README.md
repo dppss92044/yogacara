@@ -3,7 +3,7 @@
 決定依據：`DECISIONS.md` D049–D060（取代 D040–D048 中 App 內開關、告知文案與 v2 payload 的部分）。最終規格：`/mnt/project-files/W001/W001-analytics-v2-final-spec.md`。
 狀態：**施工中，未驗收，未發布**。**本目錄程式碼可公開；任何 secret（`PEPPER`、`ADMIN_TOKEN`）都不得進 repository**，只能用 `wrangler secret put` 設定。
 
-> **App 內沒有任何統計 UI**（D059）：無開關、無告知文字、關於頁與導覽不變。告知與控制介面由 q 另行定稿；定稿前 Analytics v2 不得正式發布（見 `AI_HANDOFF.md`）。
+> **App 內沒有任何統計 UI**（D059）：無開關、無告知文字、關於頁與導覽不變。【2026-10-06 D101】q 裁定維持 App 內零統計 UI，不再以新增告知／控制介面作為發布條件。
 
 ## 目錄
 | 路徑 | 內容 |
@@ -19,7 +19,7 @@
 | `worker/test/meter/` | 本機量測用包裝 Worker（回報 D1 的 `meta.rows_written`），**永遠不部署** |
 
 ## 蒐集什麼（與不蒐集什麼）
-- 模式：`off`｜`basic`（只有開啟次數、有效秒數、裝置大類、web／pwa）｜`full`（再加以下）。presence 另有開關。控制方式：`window` 事件 `hk-analytics-control`，`detail:{mode,presence}`；鍵 `hk-analytics-mode-v2`。**正式預設與介面待 q 定稿**；目前預設（僅供開發與 P5）為 full＋presence 開。
+- 模式：`off`｜`basic`（只有開啟次數、有效秒數、裝置大類、web／pwa）｜`full`（再加以下）。presence 另有開關。控制方式：`window` 事件 `hk-analytics-control`，`detail:{mode,presence}`；鍵 `hk-analytics-mode-v2`。預設為 full＋presence 開（D101：q 裁定維持現行設計，不新增 UI）。
 - full：功能使用次數（Registry 內的 id）、設定狀態時間（**只記非預設值**，預設值秒數由伺服器用總有效時間推得）、閱讀歸屬（版本×來源×遮罩×卷×秒數×進入次數）、科判節點計次（穩定 ID，每次 ≤40 個）、搜尋詞與辭典詞（見下）、匯出／回報／版本詳情摘要。
 - **搜尋／辭典詞**：僅 CJK 與常見標點、1–16 字（NFKC、去空白）；含拉丁字母、`@`、網址、6 位以上數字者**客戶端就不送**，Worker 再濾一次。詞與實例分離：只以 7 天的雜湊判斷「不同人數 u」，詞表 90 天，月榜（u≥5 的前 200 名）保留在 roll。注意：`u` 的單位是「人·日」（同一實例跨日重複搜尋會各計一次），解讀時別當成不重複人數。
 - **永不蒐集**：筆記、反白、問題回報內容、輸入過程（逐字／逐鍵）、hover／mousemove／scroll、座標、未登錄元素的點擊、IP、User-Agent、GPS 定位、完整事件時間序列。城市只由 `request.cf` 推算（台灣白名單城市；海外只留國碼），伺服器不讀 IP／UA。
