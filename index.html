@@ -2894,6 +2894,24 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   $("fsDn").onclick = function () { setFont(FSTEPS[Math.max(0, fsIdx(Z.m) - 1)], null, true); };
   $("fsUp").onclick = function () { setFont(FSTEPS[Math.min(FSTEPS.length-1, fsIdx(Z.m) + 1)], null, true); };
   $("lsSeg").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) setFont(null, +b.dataset.l, true); });
+  // 手機：在空白處連點兩下，該欄放大；再連點兩下還原（文字、科判標題、按鈕上的雙擊維持原功能）
+  (function(){
+    var last=null,prev={};
+    document.addEventListener('touchend',function(e){
+      if(!phoneMode()||e.touches.length||!e.changedTouches.length)return;
+      var t=e.changedTouches[0],now=Date.now(),el=e.target;
+      if(!(el instanceof Element))return;
+      var k=el.closest('#pview')?'p':el.closest('#rail')?'r':el.closest('#main')?'m':null;
+      if(!k||el.closest('button,a,input,textarea,select,label,.kn,[data-id],[data-n],.kh,.menu,#pKeypad,.upd-notice,#tour')){last=null;return;}
+      if(!(last&&last.k===k&&now-last.t<320&&Math.abs(t.clientX-last.x)<30&&Math.abs(t.clientY-last.y)<30)){last={k:k,t:now,x:t.clientX,y:t.clientY,moved:false};return;}
+      last=null;
+      var onText=false;
+      try{var r=document.caretRangeFromPoint(t.clientX,t.clientY);if(r&&r.startContainer.nodeType===3){var n=r.startContainer,o=Math.min(r.startOffset,n.length-1),g=document.createRange();if(o>=0){g.setStart(n,o);g.setEnd(n,o+1);onText=[].some.call(g.getClientRects(),function(c){return t.clientX>=c.left-6&&t.clientX<=c.right+6&&t.clientY>=c.top-6&&t.clientY<=c.bottom+6;});}}}catch(er){}
+      if(onText)return;
+      if(prev[k]){Z[k]=prev[k];prev[k]=0;}else{prev[k]=Z[k];Z[k]=Math.min(2,Math.round(Z[k]*1.5*10)/10);}
+      applyZoom();
+    },{passive:true});
+  })();
   $("fsReset").onclick = function () { setFont(1, 1, true); resetSourceFont(); resetChartTitleColor();
     var rs=document.documentElement.style;['--rw','--pw','--ipad-rw','--ipad-pw','--th','--kw'].forEach(function(p){rs.removeProperty(p);});
     ['hk5-widths','hk-ipad-widths-v145','hk-vsizes','hk-pane-split-v140'].forEach(function(k){try{localStorage.removeItem(k);}catch(e){}});
@@ -5447,6 +5465,13 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .upd-card .upd-groups li{margin:0 0 12px!important;font:15px/1.75 var(--ui)!important}
 .upd-more{margin:6px 0 20px!important;padding-top:14px;border-top:.5px solid var(--hair,rgba(0,0,0,.12))}
 .upd-card .upd-ok{padding:13px 16px!important}
+
+/* 手機頁碼鍵盤：只佔畫面右下四分之一，不遮住頁面 */
+:root:root:root[data-layout=iphone] #pKeypad{left:auto;top:auto;right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(66px + env(safe-area-inset-bottom,0px));transform:none;grid-template-columns:repeat(3,48px);gap:8px;padding:10px 12px 12px;border-radius:18px;box-shadow:0 8px 28px rgba(0,0,0,.3),0 0 0 .5px rgba(0,0,0,.12)}
+:root:root:root[data-layout=iphone] #pKeypad button{width:48px;height:48px;font-size:21px}
+:root:root:root[data-layout=iphone] #pKeypad button.ok{font-size:15px}
+:root:root:root[data-layout=iphone] #pKeypad .pk-disp{font-size:17px;padding:0 0 4px}
+@media(max-height:520px){:root:root:root[data-layout=iphone] #pKeypad{grid-template-columns:repeat(3,36px);gap:5px;padding:6px 8px 8px;bottom:calc(54px + env(safe-area-inset-bottom,0px))}:root:root:root[data-layout=iphone] #pKeypad button{width:36px;height:36px;font-size:16px}:root:root:root[data-layout=iphone] #pKeypad button.ok{font-size:12px}:root:root:root[data-layout=iphone] #pKeypad .pk-disp{display:none}}
 </style>
 </body></html>
 <style>
