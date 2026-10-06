@@ -10,6 +10,7 @@
   裝置 [範圍]                 功能與狀態的手機／平板／電腦分布
   即時 [--timeout 秒] [--監看] [--最近]   目前在線（心跳）
   回訪｜地區 [範圍]｜趨勢 [7|30]｜資料量｜登錄
+  全部 [範圍]                 一次印出上面所有主題（未給範圍時：總覽三段＋各主題用本週）
   共用旗標：--date 日期  --from 日期 --to 日期  --裝置 手機|平板|電腦  --limit N  --sort …  --json
 
 刻意不提供（D058）：實例 --nodes、依設定組合搜尋或辨識實例、列出某實例的搜尋／辭典詞。
@@ -411,7 +412,7 @@ def render_registry(d):
 # ---- 主程式 ----
 def build_parser():
     ap = argparse.ArgumentParser(prog='瑜伽統計', description='查詢《瑜伽師地論》匿名 App 分析')
-    ap.add_argument('what', help='今天｜本週｜本月｜使用者｜實例｜閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標｜功能｜裝置｜即時｜回訪｜地區｜趨勢｜資料量｜登錄')
+    ap.add_argument('what', help='全部｜今天｜本週｜本月｜使用者｜實例｜閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標｜功能｜裝置｜即時｜回訪｜地區｜趨勢｜資料量｜登錄')
     ap.add_argument('period', nargs='?', help='範圍：今天｜本週｜本月；實例請給短代號；趨勢請給 7 或 30')
     ap.add_argument('--limit', type=int, default=30)
     ap.add_argument('--sort', default=None)
@@ -448,6 +449,23 @@ def main(argv=None, sleep=time.sleep):
         mtype = MODEL.get(a.type.lower() if a.type.isascii() else a.type, a.type.upper() if len(a.type) == 1 else None)
         if mtype not in MODEL_NAME:
             sys.exit('--類型 須為 action、toggle、choice、continuous、navigation、export、flow、system（或單字母 A/T/C/K/N/X/F/S）')
+    if a.what == '全部':
+        if a.json:
+            sys.exit('全部 不支援 --json；請分開查各主題')
+        if a.period and a.period not in RANGES:
+            sys.exit('範圍須為 今天、本週 或 本月')
+        extra = []
+        for flag, val in (('--date', a.date), ('--from', a.from_), ('--to', a.to), ('--裝置', a.dev)):
+            if val:
+                extra += [flag, val]
+        period = a.period or '本週'
+        for name in ('今天', '本週', '本月') if not a.period and not (a.date or a.from_) else (period,):
+            print('=' * 12, '總覽：' + name, '=' * 12); main([name] + extra, sleep)
+        for name in ('使用者', '閱讀', '科判', '版本', '註釋', '搜尋', '辭典', '匯出', '導航', '顯示', '字體', '科標', '功能', '裝置'):
+            print('\n' + '=' * 12, name, '=' * 12); main([name, period] + extra, sleep)
+        for name in ('趨勢', '資料量', '登錄', '即時'):
+            print('\n' + '=' * 12, name, '=' * 12); main([name] + (['7'] if name == '趨勢' else []), sleep)
+        return
     if a.what in RANGES:
         topic, rng = 'summary', RANGES[a.what]
     elif a.what in TOPICS:

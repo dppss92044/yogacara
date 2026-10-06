@@ -6,6 +6,11 @@
 
 ---
 
+## 進行中：W003（q 2026-10-06 09:07「做」）
+- 基底 v1.92（merge f08d811）。需求：`瑜伽統計` 要有一次看到所有主題的指令。
+- 做法：`analytics/cli/yoga_stats.py` 加 `全部 [範圍]`（逐一呼叫既有主題）；`test_yoga_stats.py` 加 `test_all`。`python3 -m unittest discover analytics/cli` 18/18 通過。未改 App、未改 sw.js／版本。
+- 另記後續：CodeRabbit 8 則意見（含手機「回上方」單擊 380ms 與雙擊 450ms 不一致）尚未處理。
+
 ## 正式基底
 
 - 正式版本：**v1.92（發布 commit 已在 PR 內，待 q merge）**；merge 前 main 仍是 v1.91。
