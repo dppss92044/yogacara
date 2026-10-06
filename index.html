@@ -4761,7 +4761,7 @@ input,select,textarea,button{border-radius:8px}
       if(k==='ok'){var v0=parseInt(n.value,10);if(v0)n.dispatchEvent(new Event('change',{bubbles:true}));n.blur();return;}
       if(k==='del'){if(s===t&&s>0)s--;n.value=v.slice(0,s)+v.slice(t);n.setSelectionRange(s,s);}
       else{if(v.length-(t-s)>=3)return;n.value=v.slice(0,s)+k+v.slice(t);n.setSelectionRange(s+1,s+1);}
-      size();n.focus();if(n.value)n.dispatchEvent(new Event('change',{bubbles:true}));});
+      size();n.focus();});
   }
   // ---- 回上方：底色跟隨科判欄 ----
   setInterval(function(){var p=$('panel');if(p)document.documentElement.style.setProperty('--ct-bg',getComputedStyle(p).backgroundColor);},800);
@@ -5438,6 +5438,15 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root[data-layout=iphone] #pKeypad button.ok{font-size:18px}
 .vc-item .vc-h{margin:10px 0 4px;padding:0 14px;font:600 14px var(--ui);color:var(--fg);letter-spacing:.04em}
 .vc .vc-item>ul{padding:0 14px 6px 32px!important}
+
+/* 更新通知：留白放寬 */
+.upd-card{width:min(360px,100%)!important;padding:30px 28px 24px!important}
+.upd-card h4{margin:0 0 22px!important;font:600 18px/1.3 var(--ui)!important}
+.upd-card .upd-groups h5{margin:0 0 10px!important;font:600 13px var(--ui)!important}
+.upd-card .upd-groups ul{margin:0 0 22px!important}
+.upd-card .upd-groups li{margin:0 0 12px!important;font:15px/1.75 var(--ui)!important}
+.upd-more{margin:6px 0 20px!important;padding-top:14px;border-top:.5px solid var(--hair,rgba(0,0,0,.12))}
+.upd-card .upd-ok{padding:13px 16px!important}
 </style>
 </body></html>
 <style>
