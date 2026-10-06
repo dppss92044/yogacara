@@ -189,6 +189,33 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 :root:root:root:root #labBadge{display:inline-flex;align-items:center;justify-content:center;line-height:1;padding-block:0;box-sizing:border-box}
 </style>
 <style id="v178">.kscale .chart-fit .nd,.kscale .chart-fit .ref{pointer-events:auto}.kscale{-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
+<style id="kmapCss">/* W004: 脈絡圖 */
+#kmap{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;background:var(--bg);color:var(--fg);font:14px/1.4 "PMingLiU","新細明體","MingLiU","Songti TC","STSong",var(--ui),serif;-webkit-user-select:none;user-select:none;touch-action:none;overscroll-behavior:none}
+#kmap[hidden]{display:none}
+#kmap .km-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:max(10px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) 10px max(14px,env(safe-area-inset-left));border-bottom:1px solid var(--rule);background:var(--bg)}
+#kmap .km-title{font-weight:600;font-size:17px;letter-spacing:.06em;margin:0 6px 0 2px}
+#kmap .km-sp{flex:1 1 auto}
+#kmap .km-bar button,#kmap .km-bar select{box-sizing:border-box;height:34px;padding:0 14px;border:1px solid var(--rule);border-radius:999px;background:var(--bg);color:var(--fg);font:inherit;font-size:14px;line-height:1;cursor:pointer;white-space:nowrap}
+#kmap .km-bar select{padding:0 10px;appearance:none;-webkit-appearance:none;text-align:center;text-align-last:center;max-width:110px}
+#kmap .km-bar button:hover,#kmap .km-bar select:hover{background:var(--card,rgba(0,0,0,.05))}
+#kmap .km-bar button:active{opacity:.7}
+#kmap .km-bar button:focus-visible,#kmap .km-bar select:focus-visible{outline:2px solid var(--acc2,#c99520);outline-offset:1px}
+#kmap .km-seg{display:inline-flex;border:1px solid var(--rule);border-radius:999px;overflow:hidden}
+#kmap .km-seg button{border:0;border-radius:0;height:32px}
+#kmap .km-seg button[aria-pressed=true]{background:var(--acc,#d9a62e);color:#1f1d1a}
+#kmap .km-depth{display:inline-flex;align-items:center;gap:4px}#kmap .km-depth button.km-ic{width:34px;padding:0;font-size:18px}#kmap .km-dl{min-width:64px;text-align:center;font-size:13px;color:var(--muted)}
+#kmap .km-zoom{display:inline-flex;align-items:center;gap:6px}
+#kmap .km-zoom button.km-ic{width:34px;padding:0;font-size:18px}
+#kmap .km-zoom .km-pct{min-width:58px;padding:0 8px;font-size:13px;color:var(--muted)}
+#kmap .km-stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden}
+#kmap canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#kmap canvas.km-drag{cursor:grabbing}
+#kmap canvas.km-hit{cursor:pointer}
+#kmap .km-hint{position:absolute;left:max(14px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));padding:6px 12px;border-radius:999px;background:var(--pop,rgba(246,246,246,.95));border:1px solid var(--rule);color:var(--muted);font-size:12.5px;pointer-events:none;max-width:calc(100% - 28px)}
+#kmap .km-tip{position:absolute;z-index:2;max-width:260px;padding:6px 10px;border-radius:10px;background:var(--pop,rgba(246,246,246,.98));border:1px solid var(--rule);box-shadow:0 6px 20px var(--shadow,rgba(0,0,0,.15));font-size:13px;pointer-events:none;white-space:pre-line}
+#kmap .km-msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:15px;pointer-events:none}
+@media (max-width:700px){#kmap .km-title{display:none}#kmap .km-zoom button.km-ic{display:none}#kmap .km-sp{display:none}#kmap .km-bar{gap:6px 8px;padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}#kmap .km-bar button,#kmap .km-bar select{padding:0 11px;font-size:13.5px}#kmap .km-zoom .km-pct{display:none}}
+</style>
 </head><body>
 <title>瑜伽師地論科判綱要</title>
 <style>
@@ -1013,6 +1040,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     </div>
     <div class="ver-menu-row">
       <button class="mi" id="versionBtn" role="menuitem"><em class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><i class="upd-dot" hidden></i></em><span>版本</span><i class="chev" aria-hidden="true">›</i></button>
+    </div>
+    <div class="ver-menu-row map-menu-row">
+      <button class="mi" id="mapBtn" role="menuitem"><em class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="9.5" width="5" height="5" rx="1.4"/><rect x="16.5" y="3.5" width="5" height="4.5" rx="1.4"/><rect x="16.5" y="16" width="5" height="4.5" rx="1.4"/><path d="M7.5 12h3.5M11 12V5.8h5.5M11 12v8.3h5.5"/></svg></em><span>脈絡圖</span><i class="chev" aria-hidden="true">›</i></button>
     </div>
     <div class="about" id="about">
       <button class="mi" id="aboutBtn" role="menuitem" aria-haspopup="true"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M10 9v5M10 6.3v.2"/></svg><span>關於</span><i class="chev" aria-hidden="true">›</i></button>
@@ -3623,7 +3653,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     (function(){var ver=$('about').querySelector('.ver'),hb=$('versionHistoryBtn');if(!ver||!hb)return;ver.setAttribute('role','button');ver.tabIndex=0;ver.setAttribute('aria-label','版本內容');var ch=document.createElement('i');ch.className='chev';ch.textContent='›';ver.appendChild(ch);ver.addEventListener('click',function(){hb.click();});ver.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hb.click();}});})();
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
-    var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn','#detailedTourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.ver-menu-row','.about']]];
+    var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn','#detailedTourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.ver-menu-row','.map-menu-row','.about']]];
     groups.forEach(function(g,index){var h=document.createElement('h5');h.className='settings-section';h.id='settingsSection'+index;h.textContent=g[0];panel.appendChild(h);g[1].forEach(function(sel,k){var row=panel.querySelector(sel);if(!row)return;row.dataset.settingsGroup=index;row.setAttribute('aria-describedby',h.id);if(k===0)row.classList.add('group-first');if(k===g[1].length-1)row.classList.add('group-last');panel.appendChild(row);});});
     $('settingsBack').onclick=function(){showSettingsPage(settingsPage==='version'?versionBack:settingsPage==='report'?'about':'root');};
     panel.addEventListener('click',function(e){if(e.target.closest('#reportBtn')){e.preventDefault();e.stopImmediatePropagation();var mv=(document.querySelector('meta[name=app-version]')||{}).content||'';location.href='mailto:dppss92044@gmail.com?subject='+encodeURIComponent('瑜伽師地論app用戶問題回報')+'&body='+encodeURIComponent('\n\n——\n版本 v'+mv+'\n'+navigator.userAgent);return;}if(e.target.closest('.learning-settings summary')&&settingsPage==='root'){e.preventDefault();e.stopImmediatePropagation();pinLayoutFly();return;}var target=e.target.closest('#labelBtn,#reportBtn,#editionBtn,#contentBtn,#ftBtn,#dlBtn,#aboutBtn,.learning-settings summary,#versionHistoryBtn');if(!target)return;e.preventDefault();e.stopImmediatePropagation();var page=target.id==='labelBtn'?'label':target.id==='reportBtn'?'report':target.id==='editionBtn'?'edition':target.id==='contentBtn'?'content':target.id==='ftBtn'?'ft':target.id==='dlBtn'?'dl':target.id==='aboutBtn'?'about':target.id==='versionHistoryBtn'?'history':'layout';showSettingsPage(page);openMenu();},true);
@@ -3761,7 +3791,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   setTimeout(setupRailManualX, 0);
   function setupMenuFlyouts(){
     var panel=$('menu').querySelector('.mpop'),fine=matchMedia('(hover:hover) and (pointer:fine)'),cur=null,timer=0,leaveT=0;
-    var rows=[['.edition-settings','edition','.edition-body'],['.label-settings','label','.label-body'],['.content-settings','content','.content-body'],['.learning-settings-list','layout','.settings-body'],['.ft','ft','.ftpop'],['.dl','dl','.dlpop'],['.ver-menu-row','version','.verpop'],['.about','about','.apop']];
+    var rows=[['.edition-settings','edition','.edition-body'],['.label-settings','label','.label-body'],['.content-settings','content','.content-body'],['.learning-settings-list','layout','.settings-body'],['.ft','ft','.ftpop'],['.dl','dl','.dlpop'],['.ver-menu-row','version','.verpop'],['.map-menu-row','map','.map-none'],['.about','about','.apop']];
     function clear(){
       delete panel.dataset.pin;panel.classList.remove('fly-inline');
       if(!cur)return;var was=cur;cur=null;delete panel.dataset.hover;panel.classList.remove('fly-left');
@@ -3946,6 +3976,201 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       setTimeout(show,900);
     })();
     
+    // W004: 脈絡圖（科判樹狀圖；本卷／全部卷次；滾輪縮放、拖曳移動、點科判前往正文）
+    (function(){
+      var btn=$('mapBtn');if(!btn)return;
+      var FONT='"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif',FS=14,ROW=26,PADX=9,BOXH=21,GAP=34,BAND=640,MINS=0.004,MAXS=4;
+      var box=null,cv,cx,stage,msgEl,tipEl,pctEl,selEl,segs={},model=null,scope=1,tx=0,ty=0,sc=1,W=0,H=0,dpr=1,raf=0,hover=-1,curI=-1,stamp=null,frame=0,buildSeq=0,opener=null,lastFocus=null;
+      var ptrs={},tap=null,pinch=null,gz0=1;
+      function pal(){var cs=getComputedStyle(box);return{fg:cs.color,bg:cs.backgroundColor,rule:cs.getPropertyValue('--rule').trim()||'#dcd7cd',acc:cs.getPropertyValue('--acc2').trim()||'#c99520',hl:cs.getPropertyValue('--hl').trim()||'#f4e2a4',muted:cs.getPropertyValue('--muted').trim()||'#6d675d'};}
+      var HUES=[8,34,48,150,205,262];
+      function build(sc0,md){
+        var n=N.length,inc=new Uint8Array(n),i,p,list=JL[sc0]||[];
+        if(!sc0){for(i=0;i<n;i++)if(N[i][3]<=md)inc[i]=1;}
+        else{
+          list.forEach(function(a){if(N[a][3]<=md)inc[a]=1;});
+          if(!list.length&&CARRY[sc0]!=null&&N[CARRY[sc0]][3]<=md)inc[CARRY[sc0]]=1;
+          for(i=0;i<n;i++)if(inc[i]===1){p=N[i][4];while(p>=0&&!inc[p]){inc[p]=2;p=N[p][4];}}
+        }
+        var ids=[],fc=new Int32Array(n).fill(-1),lc=new Int32Array(n).fill(-1),ns=new Int32Array(n).fill(-1),
+          x=new Float32Array(n),y=new Float32Array(n),w=new Float32Array(n),dep=new Uint8Array(n),txt=new Array(n);
+        var m=document.createElement('canvas').getContext('2d');m.font=FS+'px '+FONT;var wc={};
+        for(i=0;i<n;i++){if(!inc[i])continue;ids.push(i);
+          var t=full(i);txt[i]=t;var tw=wc[t];if(tw==null)tw=wc[t]=m.measureText(t).width;w[i]=Math.ceil(tw)+PADX*2;
+          p=N[i][4];if(p>=0&&inc[p]){if(lc[p]<0)fc[p]=i;else ns[lc[p]]=i;lc[p]=i;x[i]=x[p]+w[p]+GAP;dep[i]=dep[p]+1;}
+        }
+        var cur=0,first=true;
+        for(var a=0;a<ids.length;a++){i=ids[a];p=N[i][4];
+          if(!(p>=0&&inc[p])){if(!first)cur+=ROW*0.8;first=false;}
+          if(fc[i]<0){y[i]=cur;cur+=ROW;}
+        }
+        for(a=ids.length-1;a>=0;a--){i=ids[a];if(fc[i]>=0)y[i]=(y[fc[i]]+y[lc[i]])/2;}
+        var nb=Math.floor(cur/BAND)+2,bn=new Array(nb),be=new Array(nb),maxX=0;
+        for(a=0;a<ids.length;a++){i=ids[a];
+          var b=Math.floor(y[i]/BAND);(bn[b]=bn[b]||[]).push(i);if(x[i]+w[i]>maxX)maxX=x[i]+w[i];
+          p=N[i][4];
+          if(p>=0&&inc[p]){var lo=Math.floor(Math.min(y[p],y[i])/BAND),hi=Math.floor(Math.max(y[p],y[i])/BAND);for(var k=lo;k<=hi;k++)(be[k]=be[k]||[]).push(i);}
+        }
+        var focus=-1;for(a=0;a<ids.length;a++)if(inc[ids[a]]===1){focus=ids[a];break;}
+        var own=0;for(a=0;a<ids.length;a++)if(inc[ids[a]]===1)own++;
+        return{scope:sc0,md:md,own:own,ids:ids,inc:inc,x:x,y:y,w:w,dep:dep,txt:txt,bn:bn,be:be,width:maxX,height:cur,first:focus,n:ids.length,key:EDITION+'|'+LABEL};
+      }
+      function setStatus(t){msgEl.textContent=t||'';msgEl.hidden=!t;}
+      function fitScale(){if(!model||!model.n)return 1;return Math.min((W-48)/model.width,(H-48)/Math.max(model.height,1));}
+      function centerOn(i,s){if(i<0||!model||!model.inc[i])return;sc=s;tx=W/2-(model.x[i]+model.w[i]/2)*sc;ty=H/2-model.y[i]*sc;}
+      function shownCur(){var q=curI;while(q>=0&&model&&!model.inc[q])q=N[q][4];return q;}
+      function homeView(){
+        if(!model||!model.n)return;
+        var f=fitScale();
+        if(f>=0.75){sc=Math.min(f,1.4);tx=(W-model.width*sc)/2;ty=Math.max(16,(H-model.height*sc)/2);return;}
+        var q=shownCur(),fi=q>=0&&(model.scope===0||N[q][6]===model.scope)?q:model.first;
+        centerOn(fi,W<700?0.9:1);
+      }
+      function overview(){if(!model||!model.n)return;sc=Math.max(MINS,Math.min(fitScale(),1.4));tx=(W-model.width*sc)/2;ty=Math.max(16,(H-model.height*sc)/2);req();}
+      function toCurrent(){var q=shownCur();if(q>=0){centerOn(q,Math.max(sc,0.8));req();}}
+      function req(){if(!raf)raf=requestAnimationFrame(draw);}
+      function rr(c,X,Y,Wd,Hd,r){c.moveTo(X+r,Y);c.arcTo(X+Wd,Y,X+Wd,Y+Hd,r);c.arcTo(X+Wd,Y+Hd,X,Y+Hd,r);c.arcTo(X,Y+Hd,X,Y,r);c.arcTo(X,Y,X+Wd,Y,r);c.closePath();}
+      function draw(){
+        raf=0;if(!box||box.hidden||!model)return;
+        cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);
+        if(pctEl)pctEl.textContent=sc<0.01?'<1%':Math.round(sc*100)+'%';
+        if(!model.n)return;
+        var P=pal(),M=model,wx0=-tx/sc-80,wx1=(W-tx)/sc+80,wy0=-ty/sc-ROW,wy1=(H-ty)/sc+ROW;
+        var b0=Math.max(0,Math.floor(wy0/BAND)),b1=Math.min(M.bn.length-1,Math.floor(wy1/BAND));
+        var maxDep=sc<0.05?3:99,textOK=sc>=0.45,boxOK=sc>=0.12,i,a,L,curCur=shownCur();
+        if(!stamp||stamp.length!==N.length)stamp=new Int32Array(N.length);
+        frame++;
+        cx.save();cx.translate(tx,ty);cx.scale(sc,sc);
+        // 連線
+        cx.beginPath();
+        for(var b=b0;b<=b1;b++){L=M.be[b];if(!L)continue;
+          for(a=0;a<L.length;a++){i=L[a];if(stamp[i]===frame||M.dep[i]>maxDep)continue;stamp[i]=frame;var p=N[i][4];
+            var px=M.x[p]+M.w[p],py=M.y[p],qx=M.x[i],qy=M.y[i];if(qx<wx0||px>wx1)continue;
+            cx.moveTo(px,py);var mx=(px+qx)/2;cx.bezierCurveTo(mx,py,mx,qy,qx,qy);}}
+        cx.lineWidth=Math.max(1/sc,0.8/sc);cx.strokeStyle=P.rule;cx.globalAlpha=sc<0.12?0.9:1;cx.stroke();cx.globalAlpha=1;
+        // 節點
+        if(textOK){cx.font=FS+'px '+FONT;cx.textBaseline='middle';cx.textAlign='left';}
+        var hh=BOXH/2,bw=Math.max(1,1.2/sc);
+        for(b=Math.max(0,b0-1);b<=b1;b++){L=M.bn[b];if(!L)continue;
+          for(a=0;a<L.length;a++){i=L[a];if(M.dep[i]>maxDep)continue;
+            var X=M.x[i],Y=M.y[i]-hh,Wd=M.w[i];if(X>wx1||X+Wd<wx0||Y>wy1||Y+BOXH<wy0)continue;
+            var dd=M.dep[i],own=M.inc[i]===1,isCur=i===curCur,isHov=i===hover;
+            if(!boxOK){cx.fillStyle='hsla('+HUES[dd%6]+',48%,48%,'+(own?.7:.35)+')';cx.fillRect(X,Y,Wd,BOXH);continue;}
+            cx.beginPath();rr(cx,X,Y,Wd,BOXH,BOXH/2.6);
+            cx.fillStyle=isCur?P.hl:'hsla('+HUES[dd%6]+',50%,52%,'+(own?.16:.07)+')';cx.fill();
+            if(isCur||isHov){cx.lineWidth=(isCur?1.8:1.2)/Math.min(sc,1.5);cx.strokeStyle=isCur?P.acc:P.fg;cx.stroke();}
+            if(textOK){cx.globalAlpha=own?1:.55;cx.fillStyle=P.fg;cx.fillText(M.txt[i],X+PADX,M.y[i]+.5);cx.globalAlpha=1;}
+          }}
+        cx.restore();
+      }
+      function resize(){
+        if(!box||box.hidden)return;var r=stage.getBoundingClientRect(),nw=Math.max(1,Math.round(r.width)),nh=Math.max(1,Math.round(r.height));
+        var ndpr=Math.min(window.devicePixelRatio||1,3);if(nw===W&&nh===H&&ndpr===dpr)return;
+        var cxw=(W/2-tx)/sc,cyw=(H/2-ty)/sc,had=W>0;W=nw;H=nh;dpr=ndpr;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+        if(had){tx=W/2-cxw*sc;ty=H/2-cyw*sc;}req();
+      }
+      function zoomAt(f,px,py){var ns=Math.max(MINS,Math.min(MAXS,sc*f));if(ns===sc)return;var k=ns/sc;tx=px-(px-tx)*k;ty=py-(py-ty)*k;sc=ns;hideTip();req();}
+      function hit(px,py){
+        if(!model||!model.n)return-1;var wx=(px-tx)/sc,wy=(py-ty)/sc,b=Math.floor(wy/BAND),maxDep=sc<0.05?3:99,hh=BOXH/2+2/sc;
+        for(var d=-1;d<=1;d++){var L=model.bn[b+d];if(!L)continue;
+          for(var a=0;a<L.length;a++){var i=L[a];if(model.dep[i]>maxDep)continue;if(wx>=model.x[i]&&wx<=model.x[i]+model.w[i]&&Math.abs(wy-model.y[i])<=hh)return i;}}
+        return-1;
+      }
+      function hideTip(){if(tipEl)tipEl.hidden=true;}
+      function showTip(i,px,py){
+        if(i<0){hideTip();return;}
+        var parts=[],q=i;while(q>=0&&model.inc[q]){parts.unshift(model.txt[q]);q=N[q][4];}
+        tipEl.textContent=parts.slice(-5).join(' › ');tipEl.hidden=false;
+        var tw=tipEl.offsetWidth,th=tipEl.offsetHeight;tipEl.style.left=Math.max(6,Math.min(W-tw-6,px+14))+'px';tipEl.style.top=Math.max(6,Math.min(H-th-6,py+16))+'px';
+      }
+      var maxD=1,depthSel=0;
+      function depthLabel(){return depthSel>=maxD?'全部層':'到第 '+depthSel+' 層';}
+      function load(sc0,keepDepth){
+        scope=sc0;if(!keepDepth)depthSel=sc0?maxD:Math.min(3,maxD);dEl.textContent=depthLabel();var seq=++buildSeq;setStatus('整理中…');hover=-1;hideTip();
+        segs.one.setAttribute('aria-pressed',String(sc0!==0));segs.all.setAttribute('aria-pressed',String(sc0===0));selEl.hidden=sc0===0;if(sc0)selEl.value=String(sc0);
+        setTimeout(function(){
+          if(seq!==buildSeq||!box||box.hidden)return;
+          var key=EDITION+'|'+LABEL;
+          if(!(model&&model.scope===sc0&&model.key===key&&model.md===depthSel)){model=build(sc0,depthSel);}
+          setStatus(model.n?'':'此卷沒有科判');
+          hintEl.textContent=(window.matchMedia&&matchMedia('(pointer:coarse)').matches?'雙指縮放、拖曳移動、點科判前往正文':'滾輪縮放、拖曳移動、點科判前往正文')+(model.own?'　共 '+model.own+' 科':'');
+          homeView();req();
+        },30);
+      }
+      var hintEl,dEl;
+      function make(){
+        box=document.createElement('div');box.id='kmap';box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','脈絡圖');
+        var opts='';for(var k=1;k<=100;k++)opts+='<option value="'+k+'">第 '+k+' 卷</option>';
+        box.innerHTML='<div class="km-bar"><button type="button" class="km-close" aria-label="關閉脈絡圖">‹ 返回</button><span class="km-title">脈絡圖</span>'+
+          '<span class="km-seg" role="group" aria-label="範圍"><button type="button" data-sc="one" aria-pressed="true">本卷</button><button type="button" data-sc="all" aria-pressed="false">全部卷次</button></span>'+
+          '<select aria-label="選擇卷次">'+opts+'</select>'+
+          '<span class="km-depth"><button type="button" class="km-ic" data-d="-1" aria-label="少顯示一層">−</button><span class="km-dl" aria-live="polite"></span><button type="button" class="km-ic" data-d="1" aria-label="多顯示一層">＋</button></span><span class="km-sp"></span>'+
+          '<span class="km-zoom"><button type="button" class="km-ic" data-z="out" aria-label="縮小">−</button><button type="button" class="km-pct" data-z="reset" aria-label="回到起始大小">100%</button><button type="button" class="km-ic" data-z="in" aria-label="放大">＋</button><button type="button" data-z="fit">全覽</button><button type="button" data-z="cur">目前位置</button></span></div>'+
+          '<div class="km-stage"><canvas></canvas><div class="km-msg" hidden></div><div class="km-tip" hidden></div><div class="km-hint"></div></div>';
+        document.body.appendChild(box);
+        cv=box.querySelector('canvas');cx=cv.getContext('2d');stage=box.querySelector('.km-stage');msgEl=box.querySelector('.km-msg');tipEl=box.querySelector('.km-tip');hintEl=box.querySelector('.km-hint');
+        dEl=box.querySelector('.km-dl');box.querySelector('.km-depth').addEventListener('click',function(e){var b=e.target.closest('[data-d]');if(!b)return;var nd=Math.max(1,Math.min(maxD,depthSel+(+b.dataset.d)));if(nd===depthSel)return;depthSel=nd;load(scope,true);});
+        pctEl=box.querySelector('.km-pct');selEl=box.querySelector('select');segs.one=box.querySelector('[data-sc=one]');segs.all=box.querySelector('[data-sc=all]');
+        box.querySelector('.km-close').addEventListener('click',close);
+        segs.one.addEventListener('click',function(){load(+selEl.value||S.juan||1);});
+        segs.all.addEventListener('click',function(){load(0);});
+        selEl.addEventListener('change',function(){load(+selEl.value);});
+        box.querySelector('.km-zoom').addEventListener('click',function(e){var z=e.target.closest('[data-z]');if(!z)return;var k=z.dataset.z;
+          if(k==='in')zoomAt(1.3,W/2,H/2);else if(k==='out')zoomAt(1/1.3,W/2,H/2);else if(k==='reset'){var o=sc;homeView();if(sc===o)req();req();}else if(k==='fit')overview();else if(k==='cur')toCurrent();});
+        stage.addEventListener('wheel',function(e){e.preventDefault();var r=cv.getBoundingClientRect(),d=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?400:1);if(!d)d=e.deltaX;zoomAt(Math.exp(-d*(e.ctrlKey?0.012:0.0016)),e.clientX-r.left,e.clientY-r.top);},{passive:false});
+        cv.addEventListener('pointerdown',function(e){if(e.button>0)return;try{cv.setPointerCapture(e.pointerId);}catch(_){}ptrs[e.pointerId]={x:e.clientX,y:e.clientY};
+          var ids=Object.keys(ptrs);hideTip();
+          if(ids.length===1){tap={x:e.clientX,y:e.clientY,moved:false,id:e.pointerId};}
+          else if(ids.length===2){tap=null;var a=ptrs[ids[0]],b=ptrs[ids[1]];pinch={d:Math.hypot(a.x-b.x,a.y-b.y)||1,s:sc};}
+        });
+        cv.addEventListener('pointermove',function(e){
+          var pt=ptrs[e.pointerId],r=cv.getBoundingClientRect();
+          if(!pt){if(e.pointerType==='mouse'){var h=hit(e.clientX-r.left,e.clientY-r.top);if(h!==hover){hover=h;cv.classList.toggle('km-hit',h>=0);req();}if(h>=0)showTip(h,e.clientX-r.left,e.clientY-r.top);else hideTip();}return;}
+          var ids=Object.keys(ptrs);
+          if(ids.length>=2&&pinch){var a=ptrs[ids[0]],b=ptrs[ids[1]];pt.x=e.clientX;pt.y=e.clientY;var d=Math.hypot(a.x-b.x,a.y-b.y)||1,mx=(a.x+b.x)/2-r.left,my=(a.y+b.y)/2-r.top;zoomAt(Math.max(MINS,Math.min(MAXS,pinch.s*d/pinch.d))/sc,mx,my);return;}
+          var dx=e.clientX-pt.x,dy=e.clientY-pt.y;pt.x=e.clientX;pt.y=e.clientY;
+          if(tap&&!tap.moved&&Math.hypot(e.clientX-tap.x,e.clientY-tap.y)>6){tap.moved=true;cv.classList.add('km-drag');hideTip();}
+          if(!tap||tap.moved){tx+=dx;ty+=dy;req();}
+        });
+        function up(e){
+          var was=ptrs[e.pointerId];if(!was)return;delete ptrs[e.pointerId];cv.classList.remove('km-drag');
+          if(Object.keys(ptrs).length<2)pinch=null;
+          if(e.type==='pointerup'&&tap&&tap.id===e.pointerId&&!tap.moved){var r=cv.getBoundingClientRect(),h=hit(e.clientX-r.left,e.clientY-r.top);tap=null;if(h>=0)jump(h);return;}
+          if(!Object.keys(ptrs).length)tap=null;
+        }
+        cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+        cv.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse'&&hover>=0){hover=-1;cv.classList.remove('km-hit');hideTip();req();}});
+        cv.addEventListener('dblclick',function(e){e.preventDefault();var r=cv.getBoundingClientRect();if(hit(e.clientX-r.left,e.clientY-r.top)<0)zoomAt(1.6,e.clientX-r.left,e.clientY-r.top);});
+        if(!('ontouchstart' in window)&&'GestureEvent' in window){
+          box.addEventListener('gesturestart',function(e){e.preventDefault();gz0=sc;});
+          box.addEventListener('gesturechange',function(e){e.preventDefault();var r=cv.getBoundingClientRect();zoomAt(Math.max(MINS,Math.min(MAXS,gz0*e.scale))/sc,e.clientX-r.left,e.clientY-r.top);});
+        }
+        box.addEventListener('keydown',function(e){
+          if(e.key==='Escape'){e.preventDefault();e.stopPropagation();close();return;}
+          if(e.target.tagName==='SELECT')return;
+          var st=60;if(e.key==='+'||e.key==='='){zoomAt(1.3,W/2,H/2);}else if(e.key==='-'||e.key==='_'){zoomAt(1/1.3,W/2,H/2);}
+          else if(e.key==='ArrowLeft'){tx+=st;req();}else if(e.key==='ArrowRight'){tx-=st;req();}else if(e.key==='ArrowUp'){ty+=st;req();}else if(e.key==='ArrowDown'){ty-=st;req();}
+        });
+        window.addEventListener('resize',function(){resize();});
+        window.addEventListener('orientationchange',function(){setTimeout(resize,250);});
+      }
+      function jump(i){close(true);try{goNode(i);}catch(e){}}
+      function close(noFocus){
+        if(!box||box.hidden)return;box.hidden=true;buildSeq++;ptrs={};tap=null;pinch=null;hideTip();
+        if(!noFocus&&lastFocus&&lastFocus.focus&&document.contains(lastFocus))try{lastFocus.focus({preventScroll:true});}catch(e){}
+      }
+      function open(){
+        if(!box)make();
+        dismissMenu();
+        lastFocus=document.activeElement&&document.activeElement!==document.body?document.activeElement:$('menuBtn');
+        if(maxD<2||maxD!==N.reduce(function(m,r){return r[3]>m?r[3]:m;},0))maxD=N.reduce(function(m,r){return r[3]>m?r[3]:m;},0);
+        curI=S.cur!=null&&N[S.cur]?S.cur:-1;
+        box.hidden=false;W=H=0;resize();
+        box.tabIndex=-1;try{box.focus({preventScroll:true});}catch(e){}
+        load(S.juan>=1&&S.juan<=100?S.juan:1);
+      }
+      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open();});
+    })();
   }).catch(function () { article.innerHTML = '<div class="loading">資料無法載入。請改用最新版的 Chrome、Edge 或 Safari 開啟這個網頁。</div>'; });
 })();
 </script>

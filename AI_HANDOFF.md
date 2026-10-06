@@ -6,6 +6,12 @@
 
 ---
 
+## 進行中：W004（q 2026-10-06 11:19「脈絡圖」）
+- 基底 v1.92（main `4b7cac1`）。需求：到另一個介面看指定卷次或全部卷次的科判脈絡圖，滾輪縮放。工作分支 `claude/kepan-map-view-36by8y`；決定見 D107。
+- 做法：`index.html` 三處——功能列表「其他」加 `.ver-menu-row.map-menu-row`（`#mapBtn`，並入 settings 群組與 hover 列表）；`#kmapCss` 樣式；主 IIFE 結尾（`.catch` 之前）一段 W004 JS（`build()` 建樹與版面、canvas 繪製只畫可見區域、wheel／pointer／pinch、`goNode` 跳轉）。**未改版本號、`sw.js`、`data/`。**
+- 測試（Chromium 模擬，非實機）：藏版本卷／全部／層級／全覽；韓版 46,769 科全展開縮放循環約 16ms／幀（rAF 上限）；電腦點節點→正文 `#j5` 定位、Esc 關閉、拖曳；手機 390×844 版面與雙指縮放（合成 pointer 事件 90%→250%）。`tools/check-analytics-registry.cjs` 另跑，結果見下方補記。
+- **未測**：Safari／iPhone／iPad 實機、iPad 版面截圖、手機橫向、深色模式截圖、Mac 觸控板縮放手感、點節點後三欄同步的全面比對。
+
 ## 進行中：W003（q 2026-10-06 09:07「做」）
 - 基底 v1.92（merge f08d811）。需求：`瑜伽統計` 要有一次看到所有主題的指令。
 - 做法：`analytics/cli/yoga_stats.py` 加 `全部 [範圍]`（逐一呼叫既有主題）；`test_yoga_stats.py` 加 `test_all`。`python3 -m unittest discover analytics/cli` 18/18 通過。未改 App、未改 sw.js／版本。
