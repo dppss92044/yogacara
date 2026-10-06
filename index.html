@@ -220,6 +220,7 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-pop .row{display:flex;align-items:center;gap:10px;justify-content:center}
 #kmap .km-pop .row span{color:var(--muted)}
 #kmap .km-pop select{height:46px;min-width:112px;padding:0 14px;border:1px solid var(--rule);border-radius:14px;background:var(--bg);font-size:17px;text-align:center;text-align-last:center;appearance:none;-webkit-appearance:none}
+#kmap .km-pop .note{text-align:center;color:var(--muted);font-size:14px;max-width:300px}
 #kmap .km-pop .big{height:46px;border:1px solid var(--rule);border-radius:14px;background:var(--bg);font-size:17px;cursor:pointer}
 #kmap .km-pop .big[aria-pressed=true]{background:var(--acc,#d9a62e);color:#1f1d1a;border-color:var(--acc,#d9a62e)}
 #kmap .km-read{display:none;flex:1 1 0;min-width:0;min-height:0;flex-direction:column;overflow:hidden;border-left:1px solid var(--rule);background:var(--bg);touch-action:pan-y;-webkit-user-select:text;user-select:text}
@@ -4013,16 +4014,27 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var FONT_H='"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif',FONT_V='"TWKai","TWKai2","BiauKai","DFKai-SB","標楷體","Kaiti TC","STKaiti",serif';
       var FS_H=14,FS_V=16,ROW=24,COL=27,CH=17,PADH=7,PADV=5,GAP=32,BAND=640,MINS=0.004,MAXS=4,AUTO_N=800;
       var box,cv,cx,mapEl,readEl,rbEl,rhEl,msgEl,tipEl,hintEl,pctEl,dEl,selA,selB,allBtn,vBtn,sBtn,hBtn;
-      var NN,JLL,CRY,TXX,labx,fullx,edKey='',edBtns,selIds=null,readJ=0,sTimer=0,uiS=1,foldBtn,oBtn,rngBtn,depBtn,model=null,col=null,focusI=-1,lastTap=null,chipEl,ra=1,rb=1,md=1,maxD=1,vert=false,split=false,tx=0,ty=0,sc=1,W=0,H=0,dpr=1,raf=0,hover=-1,curI=-1,selI=-1,stamp=null,frame=0,buildSeq=0,lastFocus=null;
+      var NN,JLL,CRY,TXX,labx,fullx,edKey='',edBtns,selIds=null,readJ=0,sTimer=0,noteEl,uiS=1,foldBtn,oBtn,rngBtn,depBtn,model=null,col=null,focusI=-1,lastTap=null,chipEl,ra=1,rb=1,md=1,maxD=1,vert=false,split=false,tx=0,ty=0,sc=1,W=0,H=0,dpr=1,raf=0,hover=-1,curI=-1,selI=-1,stamp=null,frame=0,buildSeq=0,lastFocus=null;
       var ptrs={},tap=null,pinch=null,gz0=1,PUNC='、，。,.；：;:';
       var VMAP={'（':'︵','）':'︶','(':'︵',')':'︶','「':'﹁','」':'﹂','『':'﹃','』':'﹄','—':'︱','－':'︱','…':'︙'};
       function pal(){var cs=getComputedStyle(box);return{bg:cs.backgroundColor,fg:cs.color,rule:cs.getPropertyValue('--rule').trim()||'#dcd7cd',line:cs.getPropertyValue('--fg').trim()||'#1f1d1a',red:cs.getPropertyValue('--cinnabar').trim()||'#9a2c1e',acc:cs.getPropertyValue('--acc2').trim()||'#c99520',hl:cs.getPropertyValue('--hl').trim()||'#f4e2a4'};}
       function scan(a,b,fn){for(var j=a;j<=b;j++){var l=JLL[j];if(l&&l.length)l.forEach(fn);else if(CRY[j]!=null&&a===b)fn(CRY[j]);}}
+      var dStat={a:0,b:0,k:'',min:1,max:1,cnt:[],tot:0};
+      function depthStat(a,b){
+        var key=a+'-'+b+'|'+edKey;if(dStat.k===key)return dStat;
+        var mn=99,mx=1,cnt=new Array(maxD+2).fill(0),tot=0;
+        scan(a,b,function(i){var d=NN[i][3];if(d<mn)mn=d;if(d>mx)mx=d;cnt[d]++;tot++;});
+        if(mn>mx)mn=mx;dStat={a:a,b:b,k:key,min:mn,max:mx,cnt:cnt,tot:tot};return dStat;
+      }
       function autoDepth(a,b){
-        var inR=new Uint8Array(NN.length),rd=new Uint8Array(NN.length),cnt=new Array(maxD+2).fill(0),tot=0,i,p;
-        scan(a,b,function(k){inR[k]=1;});
-        for(i=0;i<NN.length;i++)if(inR[i]){p=NN[i][4];rd[i]=p>=0&&inR[p]?rd[p]+1:1;cnt[rd[i]]++;tot++;}
-        if(tot<=AUTO_N)return maxD;var c=0,d=1;for(var k=1;k<=maxD;k++){c+=cnt[k];if(c>AUTO_N)break;d=k;}return Math.max(1,Math.min(d,maxD-1));
+        var st=depthStat(a,b);if(st.tot<=AUTO_N)return st.max;var c=0,d=st.min;
+        for(var k=st.min;k<=st.max;k++){c+=st.cnt[k];if(c>AUTO_N)break;d=k;}
+        return Math.max(st.min,Math.min(d,st.max-1));
+      }
+      function fillDepth(){
+        var st=depthStat(ra,rb),h='<option value="'+st.max+'">全部層</option>',k,sig=st.k;
+        if(dEl.dataset.sig!==sig){for(k=st.min;k<st.max;k++)h+='<option value="'+k+'">到第 '+k+' 層</option>';dEl.innerHTML=h;dEl.dataset.sig=sig;}
+        if(noteEl)noteEl.textContent=st.tot?'這個範圍共 '+(st.max-st.min+1)+' 層（第 '+st.min+'–'+st.max+' 層，與科標的甲乙丙丁…對應）':'';
       }
       function build(a,b,depthMax,vt,colIn,focus,only){
         var n=NN.length,R=new Uint8Array(n),inc=new Uint8Array(n),hid=new Uint8Array(n),rd=new Uint8Array(n),kc=new Int32Array(n),ctx=new Uint8Array(n),i,p;
@@ -4030,7 +4042,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         else scan(a,b,function(k){R[k]=1;});
         if(focus>=0){var sub=new Uint8Array(n);for(i=0;i<n;i++){p=NN[i][4];if(i===focus||p>=0&&sub[p])sub[i]=1;if(!sub[i])R[i]=0;}}
         for(i=0;i<n;i++){if(!R[i])continue;p=NN[i][4];if(p>=0&&R[p]){rd[i]=rd[p]+1;kc[p]++;}else rd[i]=1;}
-        var col=colIn;if(!col){col=new Uint8Array(n);for(i=0;i<n;i++)if(R[i]&&kc[i]>0&&rd[i]>=depthMax)col[i]=1;}
+        var col=colIn;if(!col){col=new Uint8Array(n);for(i=0;i<n;i++)if(R[i]&&kc[i]>0&&NN[i][3]>=depthMax)col[i]=1;}
         for(i=0;i<n;i++){if(!R[i])continue;p=NN[i][4];if(p>=0&&R[p]&&(col[p]||hid[p]))hid[i]=1;else inc[i]=1;}
         var ids=[],fc=new Int32Array(n).fill(-1),lc=new Int32Array(n).fill(-1),ns=new Int32Array(n).fill(-1),
           x=new Float32Array(n),y=new Float32Array(n),w=new Float32Array(n),dep=new Uint8Array(n),lbs=new Array(n),tts=new Array(n);
@@ -4151,8 +4163,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function closePops(){if(!box)return;box.querySelectorAll('.km-pop').forEach(function(p){p.hidden=true;});box.querySelectorAll('[data-p]').forEach(function(b){b.setAttribute('aria-expanded','false');});}
       function syncUI(){
         selA.value=String(ra);selB.value=String(rb);allBtn.setAttribute('aria-pressed',String(ra===1&&rb===100));
-        oBtn.setAttribute('aria-pressed',String(vert));oBtn.querySelector('.l').textContent=vert?'直書':'橫書';sBtn.setAttribute('aria-pressed',String(split));dEl.value=String(md);
-        rngBtn.querySelector('.l').textContent=ra===1&&rb===100?'全部卷次':ra===rb?'第'+ra+'卷':ra+'–'+rb+'卷';depBtn.querySelector('.l').textContent=md>=maxD?'全部層':'到第'+md+'層';
+        fillDepth();var stx=depthStat(ra,rb);if(selIds||md>stx.max)md=selIds?99:stx.max;
+        oBtn.setAttribute('aria-pressed',String(vert));oBtn.querySelector('.l').textContent=vert?'直書':'橫書';sBtn.setAttribute('aria-pressed',String(split));dEl.value=String(md>=depthStat(ra,rb).max?depthStat(ra,rb).max:md);
+        rngBtn.querySelector('.l').textContent=ra===1&&rb===100?'全部卷次':ra===rb?'第'+ra+'卷':ra+'–'+rb+'卷';depBtn.querySelector('.l').textContent=selIds||md>=depthStat(ra,rb).max?'全部層':'到第'+md+'層';
       }
       function load(){
         var seq=++buildSeq;setStatus('整理中…');hover=-1;hideTip();syncUI();
@@ -4189,7 +4202,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         if(gov>=0&&kids[s0].tagName!=='H5')ids.unshift(gov);
         if(!ids.length)return;
         if(selIds&&selIds.length===ids.length&&selIds.every(function(v,x){return v===ids[x];}))return;
-        selIds=ids;selI=-1;focusI=-1;col=null;md=maxD;model=null;load();
+        selIds=ids;selI=-1;focusI=-1;col=null;md=99;model=null;load();
       }
       function endSel(){if(!selIds)return;selIds=null;col=null;focusI=-1;md=autoDepth(ra,rb);model=null;load();}
       function go(i){if(i<0)return;close(true);if(edKey!==EDITION){switchEdition(edKey).then(function(ok){try{goNode(i);}catch(e){}});return;}try{goNode(i);}catch(e){}}
@@ -4235,7 +4248,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           '<span class="km-seg" role="group" aria-label="版本"><button type="button" data-e="zang" aria-pressed="true">大藏經版</button><button type="button" data-e="hk" aria-pressed="false">韓清淨版</button></span></div>'+
           '<div class="km-main"><div class="km-map"><canvas></canvas><div class="km-msg" hidden></div><div class="km-tip" hidden></div><div class="km-chip" hidden></div><div class="km-hint"></div>'+
           '<div class="km-pop" data-pop="rng" hidden><div class="row"><select data-r="a" aria-label="起始卷次">'+ov+'</select><span>到</span><select data-r="b" aria-label="結束卷次">'+ov+'</select></div><button type="button" class="big" data-a="all">全部卷次</button></div>'+
-          '<div class="km-pop" data-pop="dep" hidden><div class="row"><span>顯示</span><select data-r="d" aria-label="顯示層級"></select></div></div>'+
+          '<div class="km-pop" data-pop="dep" hidden><div class="row"><span>顯示</span><select data-r="d" aria-label="顯示層級"></select></div><div class="note"></div></div>'+
           '<div class="km-dock" role="toolbar" aria-label="脈絡圖功能">'+
             '<button type="button" data-p="rng" aria-expanded="false">'+IC.rng+'<span class="l">第5卷</span></button>'+
             '<button type="button" data-p="dep" aria-expanded="false">'+IC.dep+'<span class="l">全部層</span></button>'+
@@ -4250,7 +4263,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         cv=box.querySelector('canvas');cx=cv.getContext('2d');mapEl=box.querySelector('.km-map');readEl=box.querySelector('.km-read');rbEl=box.querySelector('.km-rb');rhEl=box.querySelector('.km-rh');
         msgEl=box.querySelector('.km-msg');tipEl=box.querySelector('.km-tip');hintEl=box.querySelector('.km-hint');chipEl=box.querySelector('.km-chip');pctEl=null;
         selA=box.querySelector('[data-r=a]');selB=box.querySelector('[data-r=b]');dEl=box.querySelector('[data-r=d]');allBtn=box.querySelector('[data-a=all]');sBtn=box.querySelector('[data-a=split]');
-        foldBtn=box.querySelector('.km-fold');foldBtn.addEventListener('click',function(e){e.stopPropagation();fold(!box.querySelector('.km-dock').classList.contains('folded'));});oBtn=box.querySelector('[data-a=orient]');rngBtn=box.querySelector('[data-p=rng]');depBtn=box.querySelector('[data-p=dep]');
+        noteEl=box.querySelector('.km-pop .note');foldBtn=box.querySelector('.km-fold');foldBtn.addEventListener('click',function(e){e.stopPropagation();fold(!box.querySelector('.km-dock').classList.contains('folded'));});oBtn=box.querySelector('[data-a=orient]');rngBtn=box.querySelector('[data-p=rng]');depBtn=box.querySelector('[data-p=dep]');
         box.querySelector('.km-close').addEventListener('click',function(){close();});
         selA.addEventListener('change',function(){var a=+selA.value,b=Math.max(a,rb);setRange(a,b);});
         selB.addEventListener('change',function(){var b=+selB.value,a=Math.min(ra,b);setRange(a,b);});
@@ -4324,8 +4337,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function useBundle(B){
         NN=B.N;JLL=B.JL;CRY=B.CARRY;TXX=B.TXT;labx=B.lab;fullx=function(i){return B.lab(i)+NN[i][0];};edKey=B.k;
         maxD=NN.reduce(function(m,r){return r[3]>m?r[3]:m;},0);
-        var dv='<option value="'+maxD+'">全部層</option>';for(var k=1;k<maxD;k++)dv+='<option value="'+k+'">到第 '+k+' 層</option>';
-        dEl.innerHTML=dv;
+        dEl.dataset.sig='';dStat.k='';
         if(edBtns)edBtns.forEach(function(bt){bt.setAttribute('aria-pressed',String(bt.dataset.e===edKey));});
       }
       function bundleOf(ed){

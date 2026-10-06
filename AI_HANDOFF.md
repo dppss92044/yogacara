@@ -14,6 +14,7 @@
 - 第四輪（q 12:03）：脈絡圖內可切版本（`bundleOf(ed)` 以 `loadEdition` 取另一版資料；區塊內以 NN／JLL／CRY／TXX／labx／fullx 與外層 N／JL… 區隔）；並排正文時 `onSel()` 依選取範圍內的 `h5[data-id]` 算出科判，`build(…,only)` 只畫這些節點＋祖先（`ctx` 淡色）。`go()` 在版本不同時呼叫 `switchEdition(edKey)` 後再 `goNode`——會改變閱讀器版本與 localStorage `hk-edition-v154`。Chromium 測：版本來回、選取範圍、結束選取，錯誤 0。
 - 第五輪（q 12:14）：頂列精簡、底部 `.km-dock` 圖示工具列、`.km-pop` 卷次／層級面板；手機隱藏縮放鈕（雙指）。Chromium 截圖電腦、手機確認，錯誤 0。
 - 第六輪（q 12:22）：修正 `mapEl` 捕獲階段 pointerdown 把 `.km-pop` 關掉導致卷次／層級選單無法操作；wheel 對調；`--kui` 以 CSS `zoom` 縮放 dock／pop／chip；`.km-fold` 收合。Chromium 測：真實滑鼠點選單後面板仍開、zoom 1.25、收起展開。
+- 第七輪（q 12:25）：層級由「相對層」改「絕對層」（`NN[i][3]`），`depthStat()`／`fillDepth()` 依範圍列選項；`build()` 折疊規則改 `NN[i][3]>=depthMax`。Chromium：藏版第5卷（第3–6層）、韓版第5卷（第6–20層）、全部卷次（藏 1–8、韓 1–41）選項與標示一致，錯誤 0。
 - 測試（Chromium 模擬，非實機）：藏版本卷／全部／層級／全覽；韓版 46,769 科全展開縮放循環約 16ms／幀（rAF 上限）；電腦點節點→正文 `#j5` 定位、Esc 關閉、拖曳；手機 390×844 版面與雙指縮放（合成 pointer 事件 90%→250%）。`tools/check-analytics-registry.cjs` 另跑，結果見下方補記。
 - **未測**：Safari／iPhone／iPad 實機、iPad 版面截圖、手機橫向、深色模式截圖、Mac 觸控板縮放手感、點節點後三欄同步的全面比對。
 
