@@ -1294,7 +1294,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function railHTML(j) {
     var carried = !JL[j] && CARRY[j] != null, list = JL[j] || (carried ? pathOf(CARRY[j]) : []), out = [];
     out.push('<button type="button" class="rhead" data-juan-go="' + j + '" aria-label="閱讀卷第' + cn(j) + '">卷第' + cn(j) + "</button>");
-    out.push('<div class="rsub">' + (carried ? "(承接前卷科判)" : "(" + list.length + "科)") + "</div><div class=\"rol\">");
+    out.push('<div class="rsub">' + (carried ? "承接前卷科判" : list.length + "科") + "</div><div class=\"rol\">");
     var minD = 99; list.forEach(function (i) { minD = Math.min(minD, N[i][3]); });
     var dl = list.map(function (k) { return N[k][3] - minD; });
     var maxD = 1; dl.forEach(function (d) { if (d > maxD) maxD = d; });
@@ -3868,7 +3868,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if(!items.length){if(!forced)remember();return;}
       var box=document.createElement('div');box.className='upd-notice';box.id='updNotice';
       box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><div class="upd-groups"></div><p class="upd-more">完整內容：功能列表 › 關於 › 版本內容</p><button type="button" class="upd-ok">知道了</button></div>';
-      box.querySelector('h4').textContent='已更新至 v'+ver;
+      box.querySelector('h4').textContent='已更新'+ver;
       var gbox=box.querySelector('.upd-groups');
       ['new','fix'].forEach(function(k){var g=items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h5'),ul=document.createElement('ul');h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});gbox.appendChild(h);gbox.appendChild(ul);});
       function close(){if(!forced)remember();box.remove();}
@@ -5437,7 +5437,7 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root[data-layout=iphone] .settings-panel[data-settings-page=history]{height:var(--menu-height,calc(100dvh - 190px))!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:max(12px,env(safe-area-inset-bottom,0px))!important}
 /* 卷次欄：「(14科)」半形括號緊貼卷名右側、字小一號 */
 :root:root:root #rinner button.rhead{display:inline-block}
-:root:root:root #rinner .rsub{display:inline-block;margin-inline-start:4px!important;font-size:10px;vertical-align:baseline}
+:root:root:root #rinner .rsub{display:inline-block;margin-inline-start:.7em!important;font-size:10px;color:var(--muted);vertical-align:baseline}
 /* v1.92 preview — 頁碼鍵盤：按數字直接跳轉、手機置中；版本內容單色、電腦版獨立置中視窗 */
 #pKeypad button.go{display:none}
 #pKeypad .pk-disp{display:none;grid-column:1/-1;text-align:center;font:600 20px var(--ui);padding:2px 0 8px;color:var(--fg);font-variant-numeric:tabular-nums}
@@ -5490,6 +5490,9 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .upd-card .upd-groups li{margin:0 0 3px!important;line-height:1.6!important}
 .upd-card .upd-groups ul{margin:0 0 14px!important}
 .upd-card .upd-groups h5{margin:0 0 6px!important}
+
+.upd-card .upd-groups h5{margin:0 0 14px!important}
+.upd-card h4{margin:0 0 26px!important}
 </style>
 </body></html>
 <style>
