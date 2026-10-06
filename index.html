@@ -3672,8 +3672,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var x=Math.max(v.left+inset,Math.min(v.left+v.width-width-inset,anchor.left));
     var y=Math.max(b.top+8,Math.min(b.bottom-96,anchor.bottom+10));
     if(menu.classList.contains('menus-stacked'))menu.classList.remove('menus-stacked');if(menu.classList.contains('submenus-left'))menu.classList.remove('submenus-left');
-    menu.style.setProperty('--menu-width',width+'px');menu.style.setProperty('--menu-left',x+'px');menu.style.setProperty('--menu-top',y+'px');menu.style.setProperty('--menu-height',Math.max(40,b.bottom-y-8)+'px');
+    var mz=document.documentElement.dataset.mobileUi==='true'?1:Math.max(.6,Math.min(1.6,(+Z.m||1)*(+FT.s||1)));
+    menu.style.setProperty('--mz',mz);
+    menu.style.setProperty('--menu-width',(width/mz)+'px');menu.style.setProperty('--menu-left',(x/mz)+'px');menu.style.setProperty('--menu-top',(y/mz)+'px');menu.style.setProperty('--menu-height',(Math.max(40,b.bottom-y-8)/mz)+'px');
   }
+  window.addEventListener('reader-zoom',function(){if($('menu').classList.contains('open')||$('menu').classList.contains('pinned'))positionSubmenus();else try{positionSubmenus();}catch(e){}});
   var queueFloating=Motion.rafThrottle(function(){placeSearch();positionSubmenus();});window.addEventListener('resize',queueFloating);window.addEventListener('scroll',function(){if($('menu').classList.contains('open')||!$('q').hidden)queueFloating();},{passive:true});
   if(window.visualViewport){visualViewport.addEventListener('resize',queueFloating);visualViewport.addEventListener('scroll',queueFloating);}
   function editionUI(){
@@ -3770,11 +3773,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     // 不論浮窗是 hover 或點擊開的，一律回到全部收起（含匯出列的 .on 選取狀態）
     function hardClear(){clear();if(settingsPage!=='root')return;$('dlPop').hidden=true;document.querySelector('.menu .dl').classList.remove('on');$('ftWrap').classList.remove('open');$('about').classList.remove('open');}
     function place(body,row){
-      var pr=panel.getBoundingClientRect(),rr=row.getBoundingClientRect(),w=body.offsetWidth,h=body.offsetHeight,vh=innerHeight;
+      var pr=panel.getBoundingClientRect(),rr=row.getBoundingClientRect(),bb=body.getBoundingClientRect(),w=bb.width,h=bb.height,vh=innerHeight,mz=parseFloat(panel.style.getPropertyValue('--mz'))||1;
       var noR=pr.right+8+w>innerWidth-8,noL=pr.left-8-w<8;
       panel.classList.toggle('fly-left',noR&&!noL);panel.classList.toggle('fly-inline',!!panel.dataset.pin&&noR&&noL);
       var top=rr.top-pr.top-12;top=Math.min(top,vh-12-pr.top-h);top=Math.max(top,12-pr.top);
-      panel.style.setProperty('--fly-top',top+'px');panel.style.setProperty('--fly-maxh',(vh-24)+'px');
+      panel.style.setProperty('--fly-top',(top/mz)+'px');panel.style.setProperty('--fly-maxh',((vh-24)/mz)+'px');
     }
     function show(page,row,sel,force){
       if((!fine.matches&&!force)||settingsPage!=='root'||!$('menu').classList.contains('open'))return;
@@ -5747,6 +5750,7 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .upd-card .upd-skip input:checked+i{background:var(--c,#d9a62e);border-color:var(--c,#d9a62e)}
 .upd-card .upd-skip input:checked+i::after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .upd-card .upd-skip input:focus-visible+i{outline:2px solid var(--link);outline-offset:2px}
+.menu .mpop{zoom:var(--mz,1)}
 </style>
 </body></html>
 <style>
