@@ -3543,8 +3543,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     (function(){var box=$('versionDoc'),vs=Object.keys(versionNotes).sort(function(a,b){var x=a.split('.').map(Number),y=b.split('.').map(Number);return (y[0]-x[0])||(y[1]-x[1]);});
       vs.forEach(function(v,n){var d=document.createElement('details'),sm=document.createElement('summary'),ul=document.createElement('ul');d.className='vc-item';d.open=n===0;
         sm.innerHTML='<b></b><small></small>';sm.querySelector('b').textContent='v'+v;sm.querySelector('small').textContent=versionNotes[v].date||'';
-        versionNotes[v].items.forEach(function(i){var li=document.createElement('li'),k=document.createElement('b');k.className='vc-k vc-'+i[0];k.textContent=VN_KIND[i[0]]+'：';li.appendChild(k);li.appendChild(document.createTextNode(i[1]));ul.appendChild(li);});
-        d.appendChild(sm);d.appendChild(ul);box.appendChild(d);});})();
+        ['new','fix','improve'].forEach(function(k){var g=versionNotes[v].items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h6'),gl=document.createElement('ul');h.className='vc-h';h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];gl.appendChild(li);});d.appendChild(h);d.appendChild(gl);});
+        d.insertBefore(sm,d.firstChild);box.appendChild(d);});})();
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn','#detailedTourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
@@ -4747,8 +4747,8 @@ input,select,textarea,button{border-radius:8px}
     if($('pKeypad'))return;
     var tot=document.createElement('span');tot.className='pj-tot';tot.hidden=true;n.insertAdjacentElement('afterend',tot);
     var kp=document.createElement('div');kp.id='pKeypad';kp.hidden=true;kp.setAttribute('role','group');kp.setAttribute('aria-label','頁碼數字鍵');
-    var keys=['1','2','3','4','5','6','7','8','9','','0','del'];
-    kp.innerHTML='<div class="pk-disp" aria-live="polite"></div>'+keys.map(function(k){return k==='del'?'<button type="button" class="del" data-k="del" aria-label="刪除">⌫</button>':k===''?'<span class="pk-gap"></span>':'<button type="button" data-k="'+k+'">'+k+'</button>';}).join('');
+    var keys=['1','2','3','4','5','6','7','8','9','ok','0','del'];
+    kp.innerHTML='<div class="pk-disp" aria-live="polite"></div>'+keys.map(function(k){return k==='del'?'<button type="button" class="del" data-k="del" aria-label="刪除">⌫</button>':k==='ok'?'<button type="button" class="ok" data-k="ok" aria-label="確認">確認</button>':'<button type="button" data-k="'+k+'">'+k+'</button>';}).join('');
     pj.appendChild(kp);
     function size(){n.style.setProperty('--page-ch',Math.max(1,String(n.value).length)+'ch');var d=kp.querySelector('.pk-disp');if(d)d.textContent=n.value?n.value+' / '+(($('pageTotal')||{}).textContent||''):'輸入頁碼';}
     function go(){var v=parseInt(n.value,10),mx=parseInt(n.max,10)||999;if(!v)v=2;v=Math.max(2,Math.min(mx,v));n.value=v;n.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));}
@@ -4758,6 +4758,7 @@ input,select,textarea,button{border-radius:8px}
     kp.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();});
     kp.addEventListener('mousedown',function(e){e.preventDefault();});
     kp.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;e.stopPropagation();var k=b.dataset.k,v=n.value,s=n.selectionStart,t=n.selectionEnd;if(s==null){s=t=v.length;}
+      if(k==='ok'){var v0=parseInt(n.value,10);if(v0)n.dispatchEvent(new Event('change',{bubbles:true}));n.blur();return;}
       if(k==='del'){if(s===t&&s>0)s--;n.value=v.slice(0,s)+v.slice(t);n.setSelectionRange(s,s);}
       else{if(v.length-(t-s)>=3)return;n.value=v.slice(0,s)+k+v.slice(t);n.setSelectionRange(s+1,s+1);}
       size();n.focus();if(n.value)n.dispatchEvent(new Event('change',{bubbles:true}));});
@@ -5431,6 +5432,12 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .vc-item li::marker{color:var(--fg)}
 :root:root:root:root:not([data-layout=iphone]) .menu .mpop.settings-panel[data-settings-page=history]{position:fixed!important;left:50%!important;top:50%!important;right:auto!important;bottom:auto!important;transform:translate(-50%,-50%)!important;width:min(560px,92vw)!important;min-width:0!important;max-width:none!important;height:auto!important;max-height:min(78vh,720px)!important;overflow-y:auto!important;padding:16px 20px 8px!important;border-radius:20px!important;box-shadow:0 0 0 100vmax rgba(0,0,0,.28),0 24px 70px rgba(0,0,0,.35)!important;z-index:300}
 :root:root:root:root:not([data-layout=iphone]) .menu .mpop.settings-panel[data-settings-page=history] .vc-item li{font-size:15px}
+#pKeypad button.ok{background:var(--fg);color:var(--bg);font-size:12px;font-weight:600}
+:root:root:root:root:root:root:root:not([data-theme=light]) #pKeypad button.ok{background:var(--fg);color:var(--bg)}
+#pKeypad button.ok:hover,#pKeypad button.ok:active{background:var(--fg);opacity:.8}
+:root:root:root[data-layout=iphone] #pKeypad button.ok{font-size:18px}
+.vc-item .vc-h{margin:10px 0 4px;padding:0 14px;font:600 14px var(--ui);color:var(--fg);letter-spacing:.04em}
+.vc .vc-item>ul{padding:0 14px 6px 32px!important}
 </style>
 </body></html>
 <style>
