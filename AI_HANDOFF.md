@@ -20,6 +20,17 @@
 - 整合後實際測試（Chromium／Node 模擬，非實機）：W001 Worker 32/32、CLI 17/17、`tools/stats-test.cjs` 16/16、`tools/check-analytics-registry.cjs` 0 失敗（65 通過、91 不適用、3 手動）；W002 `tools/nav-contract-w002.cjs --dbl`：藏版 fixtures 3/3、單擊 2,552、雙擊 2,547、（分N）193，0 失敗；韓版（4 分片、2,017 頁）單擊 63,178、雙擊 63,173、（分N）4,186，0 失敗、頁面錯誤 0。數字與 W002 單獨分支的結果完全一致。
 - **未驗證**：Safari／iPhone／iPad 實機、觸控流程、窄視窗；W001 的 Worker 線上、真實 SW 離線；統計客戶端（W001 capture 監聽 click／dblclick）與 W002 `focusNode` 在實機的互動；`ALLOWED_ORIGIN` 仍須由 q 還原為 `https://dppss92044.github.io`（見 W001 章節）。W001 資料量偏高、告知／控制 UI 待定稿等原有未決事項不變。
 - 發布前提醒：`index.html` 已改但 `sw.js` 雜湊仍是 v1.91；發布須走 `tools/build_release.py`（`AGENTS.md` §3.4，需 q 確認）。W001 需先完成 migration 0003 與 Worker 部署，且 q 定稿告知／控制介面後才能發布。
+- **P5 實機驗收（2026-10-06，q 實機操作並回報；整合分支 `claude/project-thread-7xwf2g` @ `0f78e0c` 的程式，驗收期間未改任何 App 功能程式）**：方式＝q 的 Mac 上跑本機 Worker＋本機 D1（`wrangler dev --local`，以 `analytics/worker/schema.sql` 建表；`migrations/` 只用於舊資料庫升級，不可用於全新本機庫），`tools/p5-serve.py` 於 `http://192.168.0.12:8000` 服務 repo、即時替換統計網址（不改檔案、不碰 `sw.js`）。**未碰線上 D1／線上 Worker 部署。**
+  - **W002（Mac 電腦版人工驗收）：通過**——科判單擊、雙擊、（分N）、正文／卷次／科判同步，及先前兩個錯誤案例皆正常。
+  - **W001（iPhone Safari，非加入主畫面）：通過**——本機 D1 的 `instances`（opens_total=1、city=桃園、device=phone、mode=web）、`instance_days`、`instance_day_feature`（menu／settings／phone.screen／kepan.up.btn 等）、`instance_day_reading` 均成功寫入。
+  - **presence：通過**——前景約 10 秒有 1 筆（device=phone、mode=web、city=桃園）；約 35 秒後 `seen` 增加 33 秒（符合約 30 秒心跳）；鎖屏後變 0 筆（符合 hidden／pagehide 送 leave 的設計）。先前一度為空，原因是查詢時頁面已離開前景（自動鎖定），**不是 Bug**；Chromium 端對端模擬（真 Worker 程式碼＋iPhone 模擬）亦在 5 秒與 30 秒送出 `/p`。
+  - **W001 與 W002 互不干擾**：整合 App 上 W002 導航在 Mac 電腦版通過、W001 統計在 iPhone 寫入；W001 的 click／dblclick 監聽未造成已觀察到的導航異常。
+  - **這次 P5 沒有涵蓋（不得寫成已驗證）**：iPhone 加入主畫面的 PWA（`mode=pwa`）、iPad Safari／PWA、手機與 iPad 上的 W002 觸控導航（`singleNode`／`doubleNode`）、藏版／韓版在實機的完整走訪、真實 HTTPS 下的 Service Worker 與離線補送、真實 Cloudflare 城市判斷與線上 D1／Worker、Android。
+  - **P5 狀態**：W001＝通過（範圍如上）；W002＝通過（Mac 電腦版）；整合＝通過（上述範圍）。
+- **線上 Worker `ALLOWED_ORIGIN` 現況**：q 於 2026-10-06 階段 1 實測，線上 Worker 對 `http://192.168.0.12:8000` 回 HTTP 204 並帶 `access-control-allow-origin: http://192.168.0.12:8000`，表示**上次 P5 的臨時設定仍在線上，尚未恢復**。此後未對線上做過任何變更（本次 P5 完全在本機）。恢復步驟見下方「發布前剩餘工作」（尚未執行）。
+- 發布前剩餘工作（必要／可選）：
+  - 必要：①恢復線上 `ALLOWED_ORIGIN`＝`https://dppss92044.github.io`（要與新 Worker 一起：先對遠端 D1 套用 `migrations/0003-analytics-v2.sql`，再 `wrangler deploy`，驗證 LAN origin 回 403、github.io 回 204／`x-p`）；②q 定稿「告知／控制介面」（D059 App 內零統計 UI 與發布閘門衝突待裁定）並同意發布；③q 裁定 D099（文件與程式四項差異）；④q 決定資料量方案（每次 /v 約 87 列，免費額度約撐 260 日活）；⑤補測 PWA 與 iPad 實機（q 若要求）；⑥整理 W001＋W002 的 DECISIONS 編號與文件；⑦走 `AGENTS.md` §3.4 發布流程（`tools/build_release.py`、`appVer`、`versionSummaries`、`sw.js`、`CHANGELOG`、`MASTER_HISTORY` H156 起），需 q 明確確認。
+  - 可選：iPad／PWA／HTTPS 實機補測、韓版藏版實機完整走訪、`privacy.html` 發布、presence 資料量調整（`WITHOUT ROWID`／移除 day 索引）、清理本機 `.dev.vars`／`.wrangler/`。
 - 最後 commit：以 `git log` 為準（整合 merge commit 與本節文件更新 commit）。
 
 ## 目前工作編號
