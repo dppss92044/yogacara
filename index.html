@@ -3579,7 +3579,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       pop.className='verpop';pop.setAttribute('aria-hidden','true');
       var h=document.createElement('div');h.className='vp-h';h.innerHTML='<b></b><small></small>';h.querySelector('b').textContent='版本內容　v'+v;h.querySelector('small').textContent=versionNotes[v].date||'';pop.appendChild(h);
       ['new','fix','improve'].forEach(function(k){var g=versionNotes[v].items.filter(function(i){return i[0]===k;});if(!g.length)return;var t=document.createElement('h6'),ul=document.createElement('ul');t.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});pop.appendChild(t);pop.appendChild(ul);});
-      var f=document.createElement('p');f.className='vp-f';f.textContent='點一下，查看全部版本與更新通知設定';pop.appendChild(f);row.appendChild(pop);})();
+      var f=document.createElement('p');f.className='vp-f';f.textContent='點一下「版本」，紅點即消失。';pop.appendChild(f);row.appendChild(pop);})();
     (function(){var sv=document.querySelector('.learning-settings>summary>svg');if(!sv)return;
       var IC={mac:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M12 17v4M8 21h8"/>',ipad:'<rect x="4" y="2" width="16" height="20" rx="2.5"/><path d="M11 19h2"/>',iphone:'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 19h2"/>'};
       function upd(){var l=document.documentElement.dataset.layout||deviceLayout;sv.innerHTML=IC[l]||IC.mac;}
@@ -3587,8 +3587,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     (function(){var vb=$('versionBtn');if(!vb)return;var dots=[].slice.call(vb.querySelectorAll('.upd-dot'));var mb=$('menuBtn');if(mb&&!mb.querySelector('.upd-dot')){var md=document.createElement('i');md.className='upd-dot';md.hidden=true;mb.appendChild(md);dots.push(md);}
       var ver=($('appVer').textContent||'').replace(/^v/,'');
       function st(k){try{return localStorage.getItem(k);}catch(e){return null;}}
-      function refresh(){var unseen=st('hk-tour')&&st('hk-update-notice')==='off'&&st('hk-seen-version')!==ver;dots.forEach(function(d){d.hidden=!unseen;});}
-      vb.addEventListener('click',function(){try{localStorage.setItem('hk-seen-version',ver);}catch(e){}refresh();showSettingsPage('history');});
+      if(!st('hk-tour')&&!st('hk-ver-opened'))try{localStorage.setItem('hk-ver-opened',ver);}catch(e){}
+      function refresh(){var unseen=st('hk-tour')&&st('hk-ver-opened')!==ver;dots.forEach(function(d){d.hidden=!unseen;});}
+      vb.addEventListener('click',function(){try{localStorage.setItem('hk-seen-version',ver);localStorage.setItem('hk-ver-opened',ver);}catch(e){}refresh();
+        if(matchMedia('(hover:hover) and (pointer:fine)').matches){var r=vb.closest('.ver-menu-row');if(r)r.dispatchEvent(new MouseEvent('mouseenter'));return;}
+        showSettingsPage('history');});
       window.addEventListener('upd-dot',refresh);refresh();})();
     (function(){var vh=$('versionHistory');if(!vh||$('updForever'))return;
       var ver=($('appVer').textContent||'').replace(/^v/,'');
@@ -5682,9 +5685,14 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .verpop li{margin:0 0 2px}
 .verpop .vp-f{margin:10px 2px 0;font-size:12px;color:var(--muted)}
 .verpop .upd-pop{margin:0 0 4px;padding:7px 12px;font-family:"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif}
-/* 關於浮窗：加寬，完整網址不斷行（僅電腦懸浮浮窗） */
-:root:root:root:root:root .settings-panel[data-settings-page=root][data-hover=about] .apop{width:560px!important}
-.settings-panel[data-settings-page=root][data-hover=about] .apop .src-u,.settings-panel[data-settings-page=root][data-hover=about] .apop .srcl{white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important}
+/* 更新內容文字縮小 */
+.verpop,.verpop li{font-size:11.5px!important;line-height:1.55!important}
+.verpop .vp-h b{font-size:12.5px!important}
+.verpop .vp-h small,.verpop h6,.verpop .vp-f{font-size:10.5px!important}
+:root:root:root:root .vc-item li{font-size:13px!important;line-height:1.6!important}
+:root:root:root:root .vc-item summary b{font-size:16px!important}
+:root:root:root:root .vc-item .vc-h{font-size:12.5px!important}
+:root:root:root:root .vc-item summary small{font-size:11px!important}
 </style>
 </body></html>
 <style>
