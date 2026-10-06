@@ -176,6 +176,11 @@
 - 手機版本頁高度由固定高度改為依內容（`height:auto` + max-height），第一層不再有大片空白。
 - 測試（Chromium）：iPhone 13 第一層 281px 高、詳情後 579px；iPad 第一層 267px、詳情後 538px；電腦浮窗內按詳情可展開/收起。實機未測。
 
+## 發布前預覽第 43 輪（q 08:33；仍未發布）
+
+- 紅點規則更正：點過「版本」後，同一版本不再出現，只有下次更新（版本號改變）才會再出現。取消先前「?preview=update 每次載入都顯示紅點」的特例（改為與一般網址相同，以 `hk-ver-opened` 為準）。為了預覽時可重看，新增測試用參數 `?resetdot`（清除 `hk-ver-opened`），例如 `/?preview=update&resetdot`；不影響正式使用。
+- 測試（Chromium）：更新後第一次有紅點→點版本後消失→同版本再開（含 ?preview=update）不再出現→加 &resetdot 才重現。
+
 ## v1.92 發布（2026-10-06；整合分支 `claude/project-thread-7xwf2g`）
 
 - q 於 2026-10-06 明確確認：「確認發布 v1.92，摘要照用。」（`AGENTS.md` §3.4 第 3 條）。發布 commit＝「更新至 v1.92」（最後 commit 以 `git log` 為準）；PR 到 `main`，**由 q 自行 merge，Claude 不 merge**。
