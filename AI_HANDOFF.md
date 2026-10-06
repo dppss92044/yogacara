@@ -11,6 +11,7 @@
 - 做法：`index.html` 三處——功能列表「其他」加 `.ver-menu-row.map-menu-row`（`#mapBtn`，並入 settings 群組與 hover 列表）；`#kmapCss` 樣式；主 IIFE 結尾（`.catch` 之前）一段 W004 JS（`build()` 建樹與版面、canvas 繪製只畫可見區域、wheel／pointer／pinch、`goNode` 跳轉）。**未改版本號、`sw.js`、`data/`。**
 - 第二輪（q 11:39）：橫／直書素色、卷次範圍 a–b、層級、並排正文（右側自繪簡易正文，非閱讀器 `renderText`；資料取 `TXT[j-1][1]` 的 y／v／r／k 項）。`check-analytics-registry.cjs` 失敗 0。
 - 第三輪（q 11:50）：卷次範圍不帶祖先；`build()` 增 `col`（收合標記）與 `focus`（只看分支）；尾端 ⊖／⊕ 標記、選取 chip、F／C／E、Shift＋滾輪。Chromium 測：收放、只看分支、marker 點擊、錯誤 0。
+- 第四輪（q 12:03）：脈絡圖內可切版本（`bundleOf(ed)` 以 `loadEdition` 取另一版資料；區塊內以 NN／JLL／CRY／TXX／labx／fullx 與外層 N／JL… 區隔）；並排正文時 `onSel()` 依選取範圍內的 `h5[data-id]` 算出科判，`build(…,only)` 只畫這些節點＋祖先（`ctx` 淡色）。`go()` 在版本不同時呼叫 `switchEdition(edKey)` 後再 `goNode`——會改變閱讀器版本與 localStorage `hk-edition-v154`。Chromium 測：版本來回、選取範圍、結束選取，錯誤 0。
 - 測試（Chromium 模擬，非實機）：藏版本卷／全部／層級／全覽；韓版 46,769 科全展開縮放循環約 16ms／幀（rAF 上限）；電腦點節點→正文 `#j5` 定位、Esc 關閉、拖曳；手機 390×844 版面與雙指縮放（合成 pointer 事件 90%→250%）。`tools/check-analytics-registry.cjs` 另跑，結果見下方補記。
 - **未測**：Safari／iPhone／iPad 實機、iPad 版面截圖、手機橫向、深色模式截圖、Mac 觸控板縮放手感、點節點後三欄同步的全面比對。
 
