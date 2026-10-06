@@ -106,6 +106,11 @@
 - 全面查浮窗內距：內容浮窗下內距多 10px（已修 13/13）、關於浮窗「內容來源」與「問題回報」同高同樣式（42px、右側箭頭）、匯出卡片標題貼頂（改 padding-top 4px，標題離頂 12–14px）、字體浮窗底部按鈕列左右下內距對齊 13px。版本、介面、註釋導覽主面板已查，無需改。
 - 已看 iPhone、iPad 根面板與 iPhone 匯出頁截圖；手機/iPad 的「關於」「內容」頁僅截圖未逐項量測；實機未測。
 
+## 發布前預覽第 30 輪（q 07:50；仍未發布）
+
+- q 第二次回報「滑到版本會跳出關於浮窗、匯出短暫變白」。本環境沒有 WebKit（無法下載），只能用 Chromium；因此改成不依賴 mouseenter/mouseleave 順序：記錄滑鼠所在列（`under`），延遲開啟浮窗的計時器觸發時若滑鼠已不在該列就不開；版本列的 mouseenter／mouseover／mousemove 任一事件都會清掉計時器並收起浮窗。
+- 測試（Chromium）：連續取樣、事件順序模擬（只送版本 mouseover、進入匯出/關於 20ms 後切到版本）皆無浮窗與 `dl.on`。Safari/WebKit 未實測，須 q 在 Mac Safari 確認。
+
 ## v1.92 發布（2026-10-06；整合分支 `claude/project-thread-7xwf2g`）
 
 - q 於 2026-10-06 明確確認：「確認發布 v1.92，摘要照用。」（`AGENTS.md` §3.4 第 3 條）。發布 commit＝「更新至 v1.92」（最後 commit 以 `git log` 為準）；PR 到 `main`，**由 q 自行 merge，Claude 不 merge**。

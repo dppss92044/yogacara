@@ -3756,11 +3756,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if(page==='dl'){openDl(true);document.querySelector('.menu .dl').classList.add('on');}
       panel.dataset.hover=page;var body=row.querySelector(sel);if(body)place(body,row);
     }
-    rows.forEach(function(m){var row=panel.querySelector(':scope > '+m[0]);if(!row)return;row.addEventListener('mouseenter',function(){clearTimeout(leaveT);clearTimeout(timer);timer=setTimeout(function(){if(panel.dataset.pin)return;show(m[1],row,m[2]);},cur&&cur!==m[1]?280:80);});});
+    var under=null;
+    rows.forEach(function(m){var row=panel.querySelector(':scope > '+m[0]);if(!row)return;row.addEventListener('mouseenter',function(){under=m[1];clearTimeout(leaveT);clearTimeout(timer);timer=setTimeout(function(){if(panel.dataset.pin||under!==m[1])return;show(m[1],row,m[2]);},cur&&cur!==m[1]?280:80);});});
     panel.querySelectorAll('.edition-body,.label-body,.content-body,.settings-body,.ftpop,.dlpop,.apop').forEach(function(bd){bd.addEventListener('mouseenter',function(){clearTimeout(timer);clearTimeout(leaveT);if(bd.classList.contains('ftpop')&&cur==='ft'){clearTimeout(menuT);menuPinned=true;$('menu').classList.add('pinned');$('menuBtn').setAttribute('aria-pressed','true');panel.dataset.pin='ft';}});});
     pinLayoutFly=function(){var row=panel.querySelector(':scope > .learning-settings-list');if(!row)return;clearTimeout(timer);clearTimeout(leaveT);menuPinned=true;$('menu').classList.add('pinned');show('layout',row,'.settings-body',true);};
     $('tourBtn').addEventListener('mouseenter',function(){clearTimeout(timer);clear();});
-    (function(){var vr=panel.querySelector(':scope > .ver-menu-row');if(vr)vr.addEventListener('mouseenter',function(){clearTimeout(timer);clear();});})();
+    (function(){var vr=panel.querySelector(':scope > .ver-menu-row');if(!vr)return;function away(){under=null;clearTimeout(timer);clearTimeout(leaveT);clear();}vr.addEventListener('mouseenter',away);vr.addEventListener('mouseover',function(){if(cur||timer)away();});vr.addEventListener('mousemove',function(){if(cur)away();});})();
     panel.addEventListener('mouseleave',function(){clearTimeout(timer);if(panel.dataset.pin)return;leaveT=setTimeout(function(){if(!panel.dataset.pin)clear();},300);});
     panel.addEventListener('mouseenter',function(){clearTimeout(leaveT);});
     new MutationObserver(function(){if(!$('menu').classList.contains('open')||panel.dataset.settingsPage!=='root')clear();}).observe($('menu'),{attributes:true,subtree:false,attributeFilter:['class']});
