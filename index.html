@@ -220,6 +220,7 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-pop .row{display:flex;align-items:center;gap:10px;justify-content:center}
 #kmap .km-pop .row span{color:var(--muted)}
 #kmap .km-pop select{height:46px;min-width:112px;padding:0 14px;border:1px solid var(--rule);border-radius:14px;background:var(--bg);font-size:17px;text-align:center;text-align-last:center;appearance:none;-webkit-appearance:none}
+#kmap .km-grp{display:flex;align-items:center}#kmap .km-dock .km-st{min-width:34px;width:34px;height:44px;padding:0;border-radius:14px;font-size:22px;color:var(--muted)}#kmap .km-pop .pst{width:48px;height:48px;border:1px solid var(--rule);border-radius:14px;background:var(--bg);font-size:24px;line-height:1;cursor:pointer;padding:0}#kmap .km-pop .pst:active{opacity:.6}
 #kmap .km-pop .note{text-align:center;color:var(--muted);font-size:14px;max-width:300px}
 #kmap .km-pop .big{height:46px;border:1px solid var(--rule);border-radius:14px;background:var(--bg);font-size:17px;cursor:pointer}
 #kmap .km-pop .big[aria-pressed=true]{background:var(--acc,#d9a62e);color:#1f1d1a;border-color:var(--acc,#d9a62e)}
@@ -246,7 +247,7 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-hint{position:absolute;left:max(16px,env(safe-area-inset-left));bottom:calc(max(16px,env(safe-area-inset-bottom)) + 76px);color:var(--muted);font-size:13px;pointer-events:none;max-width:calc(100% - 32px)}
 #kmap .km-tip{position:absolute;z-index:2;max-width:280px;padding:7px 11px;border-radius:12px;background:var(--pop,rgba(246,246,246,.98));border:1px solid var(--rule);box-shadow:0 6px 20px var(--shadow,rgba(0,0,0,.15));font-size:14px;pointer-events:none;white-space:pre-line}
 #kmap .km-msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;pointer-events:none}
-@media (max-width:700px){#kmap .km-title{display:none}#kmap .km-bar{justify-content:space-between;gap:8px;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}#kmap .km-close{min-width:76px}#kmap .km-seg button{padding:0 12px;font-size:15px}#kmap .km-dock{gap:0;padding:5px}#kmap .km-dock button{min-width:0;flex:1 1 0;height:54px;padding:0 4px}#kmap .km-dock .km-zm,#kmap .km-dock i{display:none}#kmap .km-main{flex-direction:column}#kmap .km-read{border-left:0;border-top:1px solid var(--rule)}#kmap .km-map,#kmap .km-read{flex:1 1 50%}#kmap .km-rb{padding:10px 16px 40px;font-size:17px}#kmap .km-hint{display:none}}
+@media (max-width:700px){#kmap .km-title{display:none}#kmap .km-bar{justify-content:space-between;gap:8px;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}#kmap .km-close{min-width:76px}#kmap .km-seg button{padding:0 12px;font-size:15px}#kmap .km-dock{gap:0;padding:5px}#kmap .km-dock button{min-width:0;flex:1 1 0;height:54px;padding:0 4px}#kmap .km-dock .km-zm,#kmap .km-dock i,#kmap .km-dock .km-st{display:none}#kmap .km-grp{flex:1 1 0;display:flex}#kmap .km-main{flex-direction:column}#kmap .km-read{border-left:0;border-top:1px solid var(--rule)}#kmap .km-map,#kmap .km-read{flex:1 1 50%}#kmap .km-rb{padding:10px 16px 40px;font-size:17px}#kmap .km-hint{display:none}}
 </style>
 </head><body>
 <title>瑜伽師地論科判綱要</title>
@@ -4160,6 +4161,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       }
       function setUi(v){uiS=Math.max(0.7,Math.min(1.6,v));if(box)box.style.setProperty('--kui',uiS);}
       function fold(on){if(!box)return;var d=box.querySelector('.km-dock');d.classList.toggle('folded',on);foldBtn.setAttribute('aria-expanded',String(!on));foldBtn.setAttribute('aria-label',on?'展開功能列':'收起功能列');foldBtn.querySelector('span').textContent=on?'展開':'收起';closePops();}
+      function step(k){
+        var dx=k.slice(-1)==='+'?1:-1,c=k[0],cl=function(v,lo,hi){return Math.max(lo,Math.min(hi,v));},st=depthStat(ra,rb);
+        if(c==='j'){var span=rb-ra,na=cl(ra+dx,1,100-span);if(na!==ra)setRange(na,na+span);}
+        else if(c==='a'){var a=cl(ra+dx,1,100);if(a!==ra||a>rb)setRange(a,Math.max(a,rb));}
+        else if(c==='b'){var b=cl(rb+dx,1,100);if(b!==rb||b<ra)setRange(Math.min(ra,b),b);}
+        else if(c==='d'){var d=cl((md>=st.max?st.max:md)+dx,st.min,st.max);if(d!==md){md=d;col=null;load();}}
+      }
       function closePops(){if(!box)return;box.querySelectorAll('.km-pop').forEach(function(p){p.hidden=true;});box.querySelectorAll('[data-p]').forEach(function(b){b.setAttribute('aria-expanded','false');});}
       function syncUI(){
         selA.value=String(ra);selB.value=String(rb);allBtn.setAttribute('aria-pressed',String(ra===1&&rb===100));
@@ -4247,11 +4255,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         box.innerHTML='<div class="km-bar"><button type="button" class="km-close" aria-label="關閉脈絡圖">‹ 返回</button><span class="km-title">脈絡圖</span>'+
           '<span class="km-seg" role="group" aria-label="版本"><button type="button" data-e="zang" aria-pressed="true">大藏經版</button><button type="button" data-e="hk" aria-pressed="false">韓清淨版</button></span></div>'+
           '<div class="km-main"><div class="km-map"><canvas></canvas><div class="km-msg" hidden></div><div class="km-tip" hidden></div><div class="km-chip" hidden></div><div class="km-hint"></div>'+
-          '<div class="km-pop" data-pop="rng" hidden><div class="row"><select data-r="a" aria-label="起始卷次">'+ov+'</select><span>到</span><select data-r="b" aria-label="結束卷次">'+ov+'</select></div><button type="button" class="big" data-a="all">全部卷次</button></div>'+
-          '<div class="km-pop" data-pop="dep" hidden><div class="row"><span>顯示</span><select data-r="d" aria-label="顯示層級"></select></div><div class="note"></div></div>'+
+          '<div class="km-pop" data-pop="rng" hidden><div class="row"><button type="button" class="pst" data-s="a-" aria-label="起始卷減一">−</button><select data-r="a" aria-label="起始卷次">'+ov+'</select><button type="button" class="pst" data-s="a+" aria-label="起始卷加一">＋</button></div><div class="row"><span>到</span></div><div class="row"><button type="button" class="pst" data-s="b-" aria-label="結束卷減一">−</button><select data-r="b" aria-label="結束卷次">'+ov+'</select><button type="button" class="pst" data-s="b+" aria-label="結束卷加一">＋</button></div><button type="button" class="big" data-a="all">全部卷次</button></div>'+
+          '<div class="km-pop" data-pop="dep" hidden><div class="row"><button type="button" class="pst" data-s="d-" aria-label="少一層">−</button><select data-r="d" aria-label="顯示層級"></select><button type="button" class="pst" data-s="d+" aria-label="多一層">＋</button></div><div class="note"></div></div>'+
           '<div class="km-dock" role="toolbar" aria-label="脈絡圖功能">'+
-            '<button type="button" data-p="rng" aria-expanded="false">'+IC.rng+'<span class="l">第5卷</span></button>'+
-            '<button type="button" data-p="dep" aria-expanded="false">'+IC.dep+'<span class="l">全部層</span></button>'+
+            '<span class="km-grp"><button type="button" class="km-st" data-s="j-" aria-label="上一卷">−</button><button type="button" data-p="rng" aria-expanded="false">'+IC.rng+'<span class="l">第5卷</span></button><button type="button" class="km-st" data-s="j+" aria-label="下一卷">＋</button></span>'+
+            '<span class="km-grp"><button type="button" class="km-st" data-s="d-" aria-label="少一層">−</button><button type="button" data-p="dep" aria-expanded="false">'+IC.dep+'<span class="l">全部層</span></button><button type="button" class="km-st" data-s="d+" aria-label="多一層">＋</button></span>'+
             '<button type="button" data-a="orient" aria-pressed="false">'+IC.ori+'<span class="l">橫書</span></button>'+
             '<button type="button" data-a="split" aria-pressed="false">'+IC.spl+'<span class="l">並排</span></button><i></i>'+
             '<button type="button" class="km-zm" data-z="out" aria-label="縮小">'+IC.out+'<span>縮小</span></button>'+
@@ -4270,6 +4278,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         allBtn.addEventListener('click',function(){setRange(1,100);});
         dEl.addEventListener('change',function(){md=+dEl.value;col=null;load();});
         oBtn.addEventListener('click',function(){vert=!vert;load();});
+        box.addEventListener('click',function(e){var b=e.target.closest('[data-s]');if(!b)return;e.stopPropagation();step(b.dataset.s);});
         box.querySelectorAll('[data-p]').forEach(function(bt){bt.addEventListener('click',function(e){e.stopPropagation();var k=bt.dataset.p,pp=box.querySelector('[data-pop='+k+']'),open=pp.hidden;closePops();if(open){pp.hidden=false;bt.setAttribute('aria-expanded','true');}});});
         box.querySelectorAll('.km-pop').forEach(function(pp){pp.addEventListener('pointerdown',function(e){e.stopPropagation();});});
         mapEl.addEventListener('pointerdown',function(e){if(e.target.closest&&e.target.closest('.km-pop,.km-dock'))return;closePops();},true);
