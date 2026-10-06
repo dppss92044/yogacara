@@ -5527,6 +5527,34 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 
 /* 手機底部：圖示加文字整塊上下置中，天與地一樣高 */
 :root:root:root[data-layout=iphone] .device-tabs button{justify-content:center!important;padding-top:0!important;padding-bottom:0!important}
+
+/* 手機底部：空／圖／字 三段等高 1:1:1 */
+:root:root:root[data-layout=iphone] .device-tabs button{height:60px!important;min-height:60px!important;justify-content:flex-start!important;padding:20px 0 0!important;gap:0!important}
+:root:root:root[data-layout=iphone] .device-tabs button{margin:0!important}
+:root:root:root[data-layout=iphone] .device-tabs button svg{width:20px!important;height:20px!important;flex:none}
+:root:root:root[data-layout=iphone] .device-tabs button span{height:20px!important;line-height:20px!important;font-size:11px!important}
+
+/* 手機底部列高度配合 空／圖／字 */
+:root:root:root[data-layout=iphone]{--nav-height:calc(61px + env(safe-area-inset-bottom,0px))}
+:root:root:root[data-layout=iphone] .device-tabs{height:calc(61px + env(safe-area-inset-bottom,0px))!important;padding:0 6px env(safe-area-inset-bottom,0px)!important}
+/* 匯出：整體縮小、緊湊 */
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-hero{padding:11px 14px!important;gap:12px}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-hero b{font-size:15px!important}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-hero small{font-size:12px!important}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-hero svg{width:22px;height:22px}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-card{padding:2px 14px 12px;margin-top:10px}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-card h5{margin:10px 0 0!important;font-size:13px!important}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-row{padding:8px 0;column-gap:10px;grid-template-columns:2.2em minmax(0,1fr)}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-l{font-size:12px;padding-top:5px}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-range{gap:6px;font-size:13px}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-range input{width:3.4em!important;height:30px!important}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-quick .lk{padding:4px 6px;font-size:12px}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-card .cks{gap:6px}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-card .ck span{padding:4px 10px;font-size:12.5px}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-card .ex-go{height:36px;margin-top:6px!important;padding:0 22px!important;font-size:14px!important}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-acts .go{height:36px;font-size:13px!important}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-acts .allbtn{height:36px;font-size:12.5px}
+:root:root:root:root .settings-panel[data-settings-page=dl] .ex-info{font-size:12px}
 </style>
 </body></html>
 <style>
