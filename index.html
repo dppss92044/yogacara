@@ -989,7 +989,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     </div>
 
     <div class="dl">
-      <button class="mi" id="dlBtn" role="menuitem" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v9.5M6 9l4 4 4-4M3.5 15.5v1.5h13v-1.5"/></svg><span>匯出</span><i class="chev" aria-hidden="true">›</i></button>
+      <button class="mi" id="dlBtn" role="menuitem" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.6v9.4M6.9 5.7 10 2.5l3.1 3.2"/><path d="M6.6 8H5.4A1.4 1.4 0 0 0 4 9.4v6.2A1.4 1.4 0 0 0 5.4 17h9.2a1.4 1.4 0 0 0 1.4-1.4V9.4A1.4 1.4 0 0 0 14.6 8h-1.2"/></svg><span>匯出</span><i class="chev" aria-hidden="true">›</i></button>
       <div class="dlpop ex-panel" id="dlPop" hidden>
           <button class="one ex-hero" id="exOne"><svg width="26" height="26" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 2.8h7l3.5 3.5v10.9H5z"/><path d="M12 2.8v3.5h3.5M10 9v5M7.8 11.8 10 14l2.2-2.2"/></svg><span class="ex-hero-t"><b>一鍵匯出全書</b><small>卷一至卷一百・內文與科判・PDF</small></span><i class="chev" aria-hidden="true">›</i></button>
           <div class="msg" id="oneMsg"></div>
@@ -1006,12 +1006,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             <h5>直書科判表 PDF</h5>
             <p class="ex-info" id="dlInfo">選擇要匯出的頁碼範圍。</p>
             <div class="ex-row zang-only"><span class="ex-l">科標</span><div class="cks"><label class="ck"><input type="radio" name="kpl" id="kplGz"><span>干支</span></label><label class="ck"><input type="radio" name="kpl" id="kplZj"><span>章節</span></label></div></div><div class="ex-row"><span class="ex-l">頁碼</span><div class="ex-c ex-range"><span>第</span><input id="dlFrom" type="number" min="1" aria-label="起始頁"><span>至</span><input id="dlTo" type="number" min="1" aria-label="結束頁"><span>頁</span></div></div>
-            <div class="ex-acts"><button class="allbtn" id="dlAll"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3v9.5M6 9l4 4 4-4M3.5 15.5v1.5h13v-1.5"/></svg>整本科判表</button><button class="go" id="dlGo">匯出所選頁</button><button id="dlCancel" hidden></button></div>
+            <div class="ex-acts"><button class="allbtn" id="dlAll"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.6v9.4M6.9 5.7 10 2.5l3.1 3.2"/><path d="M6.6 8H5.4A1.4 1.4 0 0 0 4 9.4v6.2A1.4 1.4 0 0 0 5.4 17h9.2a1.4 1.4 0 0 0 1.4-1.4V9.4A1.4 1.4 0 0 0 14.6 8h-1.2"/></svg>整本科判表</button><button class="go" id="dlGo">匯出所選頁</button><button id="dlCancel" hidden></button></div>
             <div class="msg" id="dlMsg"></div>
           </section>
         </div>
     </div>
     <div class="about" id="about">
+      <button class="mi" id="versionBtn" role="menuitem"><em class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><i class="upd-dot" hidden></i></em><span>版本</span><i class="chev" aria-hidden="true">›</i></button>
       <button class="mi" id="aboutBtn" role="menuitem" aria-haspopup="true"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M10 9v5M10 6.3v.2"/></svg><span>關於</span><i class="chev" aria-hidden="true">›</i></button>
       <div class="apop" role="dialog" aria-label="關於"><div class="about-overview">
         <div class="grp">
@@ -2897,8 +2898,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   // 手機底部圖示：手指按住時顯示文字，完全放開後才消失
   (function(){
     var nav=document.querySelector('.device-tabs');if(!nav)return;var cur=null;
-    function off(){if(cur){cur.classList.remove('pressing');cur=null;}}
-    nav.addEventListener('pointerdown',function(e){var b=e.target.closest('button');if(!b)return;off();cur=b;b.classList.add('pressing');},true);
+    var fT=0;function off(){if(cur){var c=cur;c.classList.remove('pressing');c.classList.add('fading');clearTimeout(fT);fT=setTimeout(function(){c.classList.remove('fading');},5000);cur=null;}}
+    nav.addEventListener('pointerdown',function(e){var b=e.target.closest('button');if(!b)return;off();clearTimeout(fT);b.classList.remove('fading');cur=b;b.classList.add('pressing');},true);
     ['pointerup','pointercancel','touchend','touchcancel'].forEach(function(t){document.addEventListener(t,function(){setTimeout(off,0);},true);});
     window.addEventListener('blur',off);
   })();
@@ -3552,8 +3553,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function showSettingsPage(page){
     settingsPage=page;var menu=$('menu'),panel=menu.querySelector('.mpop');
     panel.dataset.settingsPage=page;panel.scrollTop=0;document.documentElement.classList.toggle('vc-lock',page==='history'&&deviceLayout==='iphone');
-    var names={root:'功能',label:'科標',report:'問題回報',edition:'版本',content:'內文',layout:'介面',ft:'字體',dl:'匯出',about:'關於',history:'版本內容',version:'更新摘要'};
-    $('settingsTitle').textContent=names[page]||'功能';$('settingsBack').hidden=page==='root';$('settingsBack').setAttribute('aria-label',page==='history'||page==='report'?'返回關於':'返回功能列表');var mp=$('menu').querySelector('.mpop');if(mp)delete mp.dataset.hover;
+    var names={root:'功能',label:'科標',report:'問題回報',edition:'版本',content:'內文',layout:'介面',ft:'字體',dl:'匯出',about:'關於',history:'版本',version:'更新摘要'};
+    $('settingsTitle').textContent=names[page]||'功能';$('settingsBack').hidden=page==='root';$('settingsBack').setAttribute('aria-label',page==='report'?'返回關於':'返回功能列表');var mp=$('menu').querySelector('.mpop');if(mp)delete mp.dataset.hover;
     $('ftWrap').classList.toggle('open',page==='ft');$('about').classList.toggle('open',page==='about'||page==='history'||page==='version'||page==='report');
     document.querySelector('.menu .dl').classList.toggle('on',page==='dl');$('dlPop').hidden=page!=='dl';
     document.querySelector('.learning-settings').open=page==='layout';
@@ -3575,17 +3576,23 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var IC={mac:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M12 17v4M8 21h8"/>',ipad:'<rect x="4" y="2" width="16" height="20" rx="2.5"/><path d="M11 19h2"/>',iphone:'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 19h2"/>'};
       function upd(){var l=document.documentElement.dataset.layout||deviceLayout;sv.innerHTML=IC[l]||IC.mac;}
       upd();new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['data-layout']});})();
+    (function(){var vb=$('versionBtn');if(!vb)return;var dots=[].slice.call(vb.querySelectorAll('.upd-dot'));var mb=$('menuBtn');if(mb&&!mb.querySelector('.upd-dot')){var md=document.createElement('i');md.className='upd-dot';md.hidden=true;mb.appendChild(md);dots.push(md);}
+      var ver=($('appVer').textContent||'').replace(/^v/,'');
+      function st(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+      function refresh(){var unseen=st('hk-tour')&&st('hk-update-notice')==='off'&&st('hk-seen-version')!==ver;dots.forEach(function(d){d.hidden=!unseen;});}
+      vb.addEventListener('click',function(){try{localStorage.setItem('hk-seen-version',ver);}catch(e){}refresh();showSettingsPage('history');});
+      window.addEventListener('upd-dot',refresh);refresh();})();
     (function(){var hb=$('versionHistoryBtn');if(!hb||$('updToggle'))return;var on=true;try{on=localStorage.getItem('hk-update-notice')!=='off';}catch(e){}
       var row=document.createElement('label');row.className='mi upd-toggle';row.innerHTML='<span>版本更新通知</span><input type="checkbox" id="updToggle" role="switch"><i class="upd-sw" aria-hidden="true"></i>';
       var cb=row.querySelector('input');cb.checked=on;cb.setAttribute('aria-checked',String(on));
-      cb.addEventListener('change',function(){cb.setAttribute('aria-checked',String(cb.checked));try{localStorage.setItem('hk-update-notice',cb.checked?'on':'off');}catch(e){}});
+      cb.addEventListener('change',function(){cb.setAttribute('aria-checked',String(cb.checked));try{localStorage.setItem('hk-update-notice',cb.checked?'on':'off');}catch(e){}window.dispatchEvent(new Event('upd-dot'));});
       hb.insertAdjacentElement('afterend',row);})();
     (function(){var ver=$('about').querySelector('.ver'),hb=$('versionHistoryBtn');if(!ver||!hb)return;ver.setAttribute('role','button');ver.tabIndex=0;ver.setAttribute('aria-label','版本內容');var ch=document.createElement('i');ch.className='chev';ch.textContent='›';ver.appendChild(ch);ver.addEventListener('click',function(){hb.click();});ver.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hb.click();}});})();
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn','#detailedTourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
     groups.forEach(function(g,index){var h=document.createElement('h5');h.className='settings-section';h.id='settingsSection'+index;h.textContent=g[0];panel.appendChild(h);g[1].forEach(function(sel,k){var row=panel.querySelector(sel);if(!row)return;row.dataset.settingsGroup=index;row.setAttribute('aria-describedby',h.id);if(k===0)row.classList.add('group-first');if(k===g[1].length-1)row.classList.add('group-last');panel.appendChild(row);});});
-    $('settingsBack').onclick=function(){showSettingsPage(settingsPage==='version'?versionBack:settingsPage==='history'||settingsPage==='report'?'about':'root');};
+    $('settingsBack').onclick=function(){showSettingsPage(settingsPage==='version'?versionBack:settingsPage==='report'?'about':'root');};
     panel.addEventListener('click',function(e){if(e.target.closest('#reportBtn')){e.preventDefault();e.stopImmediatePropagation();var mv=(document.querySelector('meta[name=app-version]')||{}).content||'';location.href='mailto:dppss92044@gmail.com?subject='+encodeURIComponent('瑜伽師地論app用戶問題回報')+'&body='+encodeURIComponent('\n\n——\n版本 v'+mv+'\n'+navigator.userAgent);return;}if(e.target.closest('.learning-settings summary')&&settingsPage==='root'){e.preventDefault();e.stopImmediatePropagation();pinLayoutFly();return;}var target=e.target.closest('#labelBtn,#reportBtn,#editionBtn,#contentBtn,#ftBtn,#dlBtn,#aboutBtn,.learning-settings summary,#versionHistoryBtn');if(!target)return;e.preventDefault();e.stopImmediatePropagation();var page=target.id==='labelBtn'?'label':target.id==='reportBtn'?'report':target.id==='editionBtn'?'edition':target.id==='contentBtn'?'content':target.id==='ftBtn'?'ft':target.id==='dlBtn'?'dl':target.id==='aboutBtn'?'about':target.id==='versionHistoryBtn'?'history':'layout';showSettingsPage(page);openMenu();},true);
     // Keep child navigation intentional rather than expanding while passing a row.
     panel.addEventListener('mouseenter',function(e){if(e.target.closest('#ftBtn,#dlBtn,#aboutBtn,.learning-settings'))e.stopImmediatePropagation();},true);
@@ -3881,7 +3888,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function remember(){try{localStorage.setItem(KEY,ver);}catch(e){}}
       var forced=/[?&]preview=update(&|$)/.test(location.search);
       var off=false;try{off=localStorage.getItem('hk-update-notice')==='off';}catch(e){}
-      if(off&&!forced){remember();return;}
+      if(off&&!forced){return;}
       if(last===ver&&!forced)return;
       if(!seen&&!forced){remember();return;}
       var vn=versionNotes[ver],items=vn?vn.items.filter(function(i){return i[2];}):[];
@@ -4808,7 +4815,7 @@ input,select,textarea,button{border-radius:8px}
     ['#menuBtn','功能列表：版本、內文、介面、字體、匯出等'],['#swapPanes','左右置換內文與科判表'],
     ['#editionBtn','切換大藏經版／韓清淨科判'],['.edition-choice[data-edition=zang]','大藏經原文與藏經科判表'],['.edition-choice[data-edition=hk]','韓清淨科判、披尋記與法師註解'],
     ['#labelBtn','科標顯示干支或章節'],['#contentBtn','選擇正文要顯示的科判、披尋記、法師釋、辭典'],['#detailedTourBtn','一步一步介紹各項功能'],
-    ['.learning-settings summary','選擇電腦、平板或手機介面'],['#ftBtn','調整字體、大小、行距與科判顏色'],['#dlBtn','選卷次與格式，下載檔案'],['#aboutBtn','版本紀錄、資料來源與問題回報'],
+    ['.learning-settings summary','選擇電腦、平板或手機介面'],['#ftBtn','調整字體、大小、行距與科判顏色'],['#dlBtn','選卷次與格式，下載檔案'],['#versionBtn','查看版本與每一版的更新內容'],['#aboutBtn','資料來源與問題回報'],
     ['#versionHistoryBtn','查看每一版的更新內容'],['#chartColorReset','科判標題顏色回到預設'],['#fsReset',''],
     ['#pageJump','目前頁／總頁數；點一下輸入頁碼跳頁'],['#pNum',''],['#pKeypad',''],['#chartTop','按一下回本卷頂端；按兩下回第一卷'],
     ['#searchButton','搜尋全文'],['.book-size-button','調整正文大小'],['#settingsBack','返回上一頁'],['#fsDn','縮小字體'],['#fsUp','放大字體'],['#fsReset','全部重置字體設定'],['.rhead','閱讀這一卷'],['#sourceFont','正文字體'],['#sourceWeight','字體粗細'],['#exOne','一鍵匯出全書'],['#exThis','選取目前這一卷'],['#exAll','選取全部卷次'],['#exGo','開始匯出'],['#dlAll','匯出整本科判表'],['#dlGo','匯出所選的頁'],['.dlpop label.ck,.ex-row label.ck','勾選要匯出的項目'],['.about-source summary','內容的資料來源'],['.srcl','開啟資料來源網站'],['#reportBtn','用電子郵件回報問題'],['#railOpen','打開卷目次欄'],['#railClose','收起卷目次欄'],['#panelOpen','打開科判欄'],['#panelClose','收起科判欄'],['#panelPin','釘選／取消釘選科判欄'],['#railPin','釘選／取消釘選卷目次欄'],
@@ -5515,7 +5522,8 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .upd-card h4{margin:0 0 26px!important}
 
 /* 底部圖示文字：按下立即出現，放開後逐漸淡出 */
-:root:root:root[data-layout=iphone] .device-tabs button span{transition:opacity 1.6s ease-out 3s}
+:root:root:root[data-layout=iphone] .device-tabs button span{transition:none}
+:root:root:root[data-layout=iphone] .device-tabs button.fading span{transition:opacity 1.6s ease-out 3s}
 :root:root:root[data-layout=iphone] .device-tabs button svg{transition:transform .35s ease-in-out 2.1s}
 :root:root:root[data-layout=iphone] .device-tabs button.pressing svg{transform:translateY(-10px);transition:transform .12s ease-out 0s}
 :root:root:root[data-layout=iphone] .device-tabs button.pressing span{transition:opacity .08s}
@@ -5573,6 +5581,22 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .upd-toggle input:focus-visible+.upd-sw{outline:2px solid var(--link);outline-offset:2px}
 .settings-panel[data-settings-page=history] .upd-toggle,.settings-panel[data-settings-page=report] .upd-toggle{display:none!important}
 :root:root:root:root .settings-panel .upd-toggle,:root:root:root:root .settings-panel .upd-toggle:hover,:root:root:root:root .settings-panel .upd-toggle:active{background:var(--bg)!important;color:var(--fg)!important}
+
+/* 底部圖示：加大、無底色、只有圖示變黃 */
+:root:root:root[data-layout=iphone] .device-tabs button{height:52px!important;min-height:52px!important;padding:12px 0 0!important}
+:root:root:root[data-layout=iphone] .device-tabs{height:calc(53px + env(safe-area-inset-bottom,0px))!important}
+:root:root:root[data-layout=iphone]{--nav-height:calc(53px + env(safe-area-inset-bottom,0px))}
+:root:root:root[data-layout=iphone] .device-tabs button svg{width:26px!important;height:26px!important}
+:root:root:root[data-layout=iphone] .device-tabs button span{height:14px!important;line-height:14px!important;font-size:10.5px!important;color:var(--muted)}
+:root:root:root:root[data-layout=iphone] .device-tabs button[aria-current=page],:root:root:root:root[data-layout=iphone] .device-tabs button[aria-current=page]:active{background:none!important;box-shadow:none!important}
+:root:root:root[data-layout=iphone] .device-tabs button[aria-current=page] svg{color:var(--acc2,#d9a42b)}
+/* 更新小紅點 */
+.upd-dot{position:absolute;top:-2px;right:-3px;width:9px;height:9px;border-radius:50%;background:#e03a2f;box-shadow:0 0 0 1.5px var(--bg,#fff);font-style:normal}
+.upd-dot[hidden]{display:none!important}
+.mi .ico{position:relative;display:inline-flex;flex:none;font-style:normal}
+/* 版本移出關於：關於內不再顯示版本列；非首頁不顯示版本鍵 */
+.about-overview .grp:has(.ver){display:none!important}
+.settings-panel:not([data-settings-page=root]) #versionBtn{display:none!important}
 </style>
 </body></html>
 <style>
