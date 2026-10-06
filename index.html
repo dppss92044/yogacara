@@ -3571,6 +3571,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         sm.innerHTML='<b></b><small></small>';sm.querySelector('b').textContent='v'+v;sm.querySelector('small').textContent=versionNotes[v].date||'';
         ['new','fix','improve'].forEach(function(k){var g=versionNotes[v].items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h6'),gl=document.createElement('ul');h.className='vc-h';h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];gl.appendChild(li);});d.appendChild(h);d.appendChild(gl);});
         d.insertBefore(sm,d.firstChild);box.appendChild(d);});})();
+    (function(){var ver=$('about').querySelector('.ver'),hb=$('versionHistoryBtn');if(!ver||!hb)return;ver.setAttribute('role','button');ver.tabIndex=0;ver.setAttribute('aria-label','版本內容');var ch=document.createElement('i');ch.className='chev';ch.textContent='›';ver.appendChild(ch);ver.addEventListener('click',function(){hb.click();});ver.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hb.click();}});})();
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
     var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn','#detailedTourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
@@ -5512,6 +5513,13 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root[data-layout=iphone] .device-tabs button{justify-content:flex-start!important;padding-top:6px!important;gap:2px!important}
 :root:root:root[data-layout=iphone] .device-tabs button span{position:static!important;display:block;height:14px;line-height:14px!important;font-size:11px!important}
 :root:root:root[data-layout=iphone] .device-tabs button svg,:root:root:root[data-layout=iphone] .device-tabs button.pressing svg{transform:none!important;transition:none!important}
+
+/* 版本列合併：點「版本 vX／最後更新」進入版本內容，不另外顯示「版本內容」列 */
+#versionHistoryBtn{display:none!important}
+.about .ver[role=button]{cursor:pointer;display:flex;align-items:center;gap:10px;border:0!important;margin:0!important}
+.about .grp:has(.ver[role=button]){margin-bottom:10px}
+.about .ver[role=button] span:nth-child(2){margin-inline-start:auto}
+.about .ver[role=button] .chev{font-style:normal;color:var(--muted);flex:none}
 </style>
 </body></html>
 <style>
