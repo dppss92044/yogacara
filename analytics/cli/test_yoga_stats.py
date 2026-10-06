@@ -67,6 +67,14 @@ class T(unittest.TestCase):
         run(['今天', '--裝置', '手機']); self.assertEqual(SEEN[-1][1]['dev'], 'phone')
         run(['今天', '--from', '2026-09-20', '--to', '2026-10-05']); self.assertNotIn('range', SEEN[-1][1]); self.assertEqual(SEEN[-1][1]['from'], '2026-09-20')
 
+    def test_all(self):
+        out, err = run(['全部']); self.assertIsNone(err)
+        for s in ['總覽：今天', '總覽：本週', '總覽：本月', '使用者', '閱讀', '科判', '功能', '趨勢', '資料量', '登錄', '即時']:
+            self.assertIn(s, out)
+        out, err = run(['全部', '今天']); self.assertIsNone(err); self.assertNotIn('總覽：本週', out)
+        self.assertIsNotNone(run(['全部', '--json'])[1])
+        self.assertIsNotNone(run(['全部', '明年'])[1])
+
     def test_returning_regions(self):
         out, _ = run(['回訪']); self.assertEqual(SEEN[-1][1]['range'], 'month'); self.assertIn('回訪率', out); self.assertNotIn('城市（', out)
         out, _ = run(['地區', '今天']); self.assertIn('城市（', out); self.assertNotIn('回訪率', out)
