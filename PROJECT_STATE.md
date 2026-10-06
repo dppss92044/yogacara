@@ -1,6 +1,6 @@
 # PROJECT_STATE.md — 專案現況（只描述「現在」）
 
-最後更新：2026-10-05（第二階段文件制度建立時；同日現況校正：區分 App 基底 commit 與 repository main HEAD）。每次正式發布或 W 工作狀態變動時更新。
+最後更新：2026-10-06（v1.92 發布 commit；PR 待 q merge）。每次正式發布或 W 工作狀態變動時更新。
 本檔**只寫現在**。已撤回的歷史需求不在此處；歷史見 `docs/history/MASTER_HISTORY.md`。
 
 ---
@@ -9,11 +9,11 @@
 
 | 項目 | 值 |
 |---|---|
-| 正式版本 | **v1.91**（`index.html` 的 `appVer`＝v1.91；`sw.js` 的 `VERSION`＝"1.91"） |
-| App 程式基底 commit | **`db77e11`**（「更新至 v1.91」，2026-10-05 11:16 +0800）；App 本體（`index.html`、`sw.js`、`data/` 等）自此未修改。本次現況校正前的 repository main HEAD 為 **`f4734fc`**（校正前快照）；`db77e11` 之後的 commit 只涉及文件／流程文件，不代表 App 本體升版 |
-| 下一正式版本候選 | **v1.92**（尚未開始） |
-| 目前工作編號 | **尚無**（目前無進行中的 W） |
-| 進行中的程式修改 | 無 |
+| 正式版本 | **v1.92**（發布 commit 位於整合分支 `claude/project-thread-7xwf2g` 的 PR，**待 q merge 到 main 才算上線**；`index.html` 的 `appVer`＝v1.92；`sw.js` 的 `VERSION`＝"1.92"）。merge 前，main 上仍是 v1.91 |
+| App 程式基底 commit | v1.92 的 App 變更在待 merge 的 PR 內（merge 後以 main 上「更新至 v1.92」commit 為基底；**不要把 main HEAD 寫成永久事實**）。v1.91 基底 **`db77e11`**（「更新至 v1.91」，2026-10-05 11:16 +0800）；App 本體（`index.html`、`sw.js`、`data/` 等）自此未修改。本次現況校正前的 repository main HEAD 為 **`f4734fc`**（校正前快照）；`db77e11` 之後的 commit 只涉及文件／流程文件，不代表 App 本體升版 |
+| 下一正式版本候選 | v1.93（尚未開始） |
+| 目前工作編號 | 無（W001、W002 已於 v1.92 發布並封存；下一個可用編號 **W003**） |
+| 進行中的程式修改 | 無（v1.92 PR 等 q merge 與發布後實機驗證） |
 | v1.91 與外部更新檔 | v1.91 更新檔 zip 的 7 個檔與 HEAD 逐檔相同（已比對） |
 | 部署 | GitHub Pages：`https://dppss92044.github.io/yogacara/`（使用者端以「更新app」指令從下載資料夾複製並 push；此流程詳情見 MASTER_HISTORY H103，腳本不在 repo） |
 
@@ -37,6 +37,8 @@
 - **搜尋**：只搜正文。
 - **字體／顯示**：七段字體；電腦卷次與正文預設 120%；科標淡紅色可自訂顏色、可「預設」還原；字體設定右下「全部重置」圖示。
 - **導覽**：只有一個入口「導覽」。
+- **匿名統計（W001，v1.92，無任何使用者介面）**：App 內嵌客戶端依 `analytics/registry.json` 白名單回報匿名使用情形（預設完整＋presence；DNT／GPC 停用），後端為自建 Cloudflare Worker＋D1，Mac 以「瑜伽統計」查詢；見 `analytics/README.md`、D049–D060、D101。
+- **科判導航（W002，v1.92）**：科判欄點標題時正文與卷次一律對到該節點自己的位置；單擊不讓科判欄換頁；雙擊＝往上一層並同步；進子枝幹靠（分N）（D100、`docs/nav-contract.md`）。
 - **PWA**：已快取的本版直接開啟、背景更新後自動切換一次（v1.81）；每版獨立快取。
 - **深色**：跟隨裝置深色模式（v1.90）。
 - **科判欄右下**：`x/96` 白色膠囊，點擊可打字或用 0–9 數字鍵跳頁；左下「回上方」固定、與右下對稱；電腦 hover 超過 2 秒顯示小說明框；黃底選取為微圓角（v1.91）。
@@ -69,13 +71,14 @@
 
 ## 8. 最近一次正式修改
 
-v1.91（H150）：關於來源合併、功能面板微調與用詞、`x/96` 頁碼膠囊與數字鍵、回上方固定左下、2 秒說明框、黃底微圓角、深色樣式。**交付後使用者尚無回饋。**
+v1.92（H161）：W002 科判導航修正（使用者可見）＋W001 匿名統計後台（無 UI）。**PR 待 q merge；發布後實機驗證（SW 更新、`/v`／`/p` 寫入、W002 導航、PWA／iPad）尚未做。** 前一版 v1.91（H150）：關於來源合併、功能面板微調與用詞、`x/96` 頁碼膠囊等，交付後使用者尚無回饋。
 
 ## 9. 已存在的測試
 
 - 結果檔（`tools/*-results.json`）：**僅針對 v1.61–v1.63、v1.76–v1.79 當時的版本**；全部無 `errors`；部分 `false` 欄位是「該裝置不適用」（依欄位名與裝置判斷，未重跑確認）。
 - 腳本：`edges/geometry/pwa/regression/source/stream/sync/ui/devices*.cjs`（Node＋Playwright 之類，需 fixtures；**目前沒有統一入口，也沒有針對 v1.80–v1.91 的測試檔入庫**）。
 - v1.80–v1.91 由 Claude-CC 只做 Chromium 模擬測試，結果未入庫。
+- v1.92 起另有：`tools/nav-contract-w002.cjs`（W002 導航契約全量巡檢，`--ed zang|hk`、`--shard i/n`、`--dbl`）、`tools/stats-test.cjs`、`tools/check-analytics-registry.cjs`、`analytics/worker/test/`、`analytics/cli/test_yoga_stats.py`（見 `AI_HANDOFF.md` 的測試結果；仍為 Chromium／Node 模擬，非實機）。
 - 所以：**現行版沒有可直接重跑的完整回歸套件。** 下一個 W 若需要，請在該 W 內建立並說明。
 
 ## 10. 需實機確認的地方

@@ -638,6 +638,18 @@ git 的作者全部是「紹謙」，只代表部署者。製作視窗是依下�
 
 **H155**｜（本 repo 工作階段）｜非開發｜2026-10-05｜**第二階段：建立專案永久記憶與跨 AI 接力制度**。使用者確認三項歷史判定（同號不重編、異常只記錄不改歷史、v1.91 之後唯一版本線），並建立 W 工作編號制度。新增 8 份 Markdown 文件，**未改任何 App 檔、未增加版本號、未 push**。後續新事件從 **H156** 起往後追加。
 
+**H156**｜Claude Code（W001 工作階段）｜W001｜2026-10-05｜**W001 匿名 App Analytics v2 施工**。q 批准施工（App 內零統計 UI，D059）：Registry 白名單、payload v4、Cloudflare Worker＋D1、Mac CLI「瑜伽統計」、內嵌客戶端、presence。DECISIONS D049–D060；D099 記錄文件與程式四項差異（未裁定）。未升版、未發布。
+
+**H157**｜Claude Code（W002 工作階段）｜W002｜2026-10-05｜**W002 科判導航／同步 Bug 修正**。根因：科判欄點節點時卷次取自頁面多數卷而非節點自己的卷。修 `focusNode()` 與雙擊（約 20 行）；新增 `tools/nav-contract-w002.cjs`、`docs/nav-contract.md`；q 裁定雙擊＝往上一層（D100）。藏版、韓版全量 0 失敗（Chromium 模擬）。
+
+**H158**｜Claude Code（整合驗收）｜W001＋W002｜2026-10-05｜**W001＋W002 整合**於 `claude/project-thread-7xwf2g`（先 W001 後 W002，merge，人工合併四份文件，`index.html` 自動合併）。整合後 W001 與 W002 全部自動測試通過。
+
+**H159**｜q＋Claude Code｜W001＋W002｜2026-10-06｜**P5 實機驗收**：q 在 Mac 跑本機 Worker／D1，W002 Mac 電腦版人工驗收通過；W001 iPhone Safari 寫入與 presence 通過（鎖屏後 presence 清空為設計行為）。q 裁定（D101）：W001＋W002 一起發布 v1.92、App 內維持零統計 UI、D099 只修文件、資料量不改 schema。與 v1.91 的使用者可見 UI 差異檢查：0。
+
+**H160**｜q（線上操作）＋Claude Code（指令與核對）｜W001｜2026-10-06｜**線上後台上線準備**：D1 套用 0003（先備份與記錄 Time Travel 還原點）、部署新版 Worker `a8b60481-…`、`ALLOWED_ORIGIN` 恢復為 github.io、驗證 `/v`、`/p`、LAN 來源 403、測試資料清空。
+
+**H161**｜Claude Code（發布）｜W001＋W002→v1.92｜2026-10-06｜**v1.92 發布 commit 與 PR**。q 明確確認發布（摘要只寫 W002 科判導航修正）。`tools/build_release.py 1.92`；`index.html` 未重新產生。發布前測試與「因快速發布而在約 47% 停止的韓版全量導航測試」見 `CHANGELOG.md` v1.92 與 `AI_HANDOFF.md`。PR 待 q merge。
+
 ---
 
 ## 4. 對照索引

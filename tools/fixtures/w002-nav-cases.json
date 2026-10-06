@@ -1,0 +1,26 @@
+{
+  "_doc": "W002 科判導航 regression fixtures。針對基底 v1.91（db77e11）的資料；節點 id 為 data/zang.js 內 nodes 的索引。以標題＋標號＋層級再次核對，避免 id 因資料更新而悄悄指到別處。",
+  "cases": [
+    {
+      "name": "案例1：藏版 科判第2頁 點「甲一、本地分」",
+      "edition": "zang", "panelPage": 2, "id": 0, "title": "本地分", "label": "甲一", "depth": 1,
+      "expectJuan": 1, "expectHeadingIdInText": 0,
+      "expectNextHeadingIds": [1],
+      "wrong": "舊行為：正文跳到卷十三（頁面多數節點屬卷十三），科判欄跳到第10頁；不得再發生"
+    },
+    {
+      "name": "案例2：藏版 科判第4頁 點「乙二、意地」",
+      "edition": "zang", "panelPage": 4, "id": 13, "title": "意地", "label": "乙二", "depth": 2,
+      "expectJuan": 1, "expectHeadingIdInText": 13,
+      "expectNextHeadingIds": [14],
+      "mustNotLandOn": [25],
+      "wrong": "舊行為：正文跳到卷三（丙二附近），略過丙一「意地五相」(id 14)；不得再發生"
+    },
+    {
+      "name": "案例2b：藏版 科判第4頁 點「丙一、意地五相」",
+      "edition": "zang", "panelPage": 4, "id": 14, "title": "意地五相", "label": "丙一", "depth": 3,
+      "expectJuan": 1, "expectHeadingIdInText": 14,
+      "expectNextHeadingIds": [15]
+    }
+  ]
+}

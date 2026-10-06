@@ -10,13 +10,23 @@ v1.27–v1.91 只做必要摘要；從 v1.92 起，每次正式發布才新增�
 
 ## Unreleased
 
-目前無進行中工作。
+（目前沒有進行中的 W 工作；W001、W002 已於 v1.92 發布並封存。）
 
 （當有 W 工作時，格式：`### W001｜基底 v1.91（db77e11）｜簡述｜狀態` ＋條列變更；發布時整段移為新版本。）
 
 ---
 
 ## 已發布
+
+### v1.92｜2026-10-06｜Claude Code（整合驗收）｜發布 commit：整合分支 `claude/project-thread-7xwf2g` 的「更新至 v1.92」（merge 後以 main 的 git log 為準）｜H156–H161｜W001＋W002 一起發布
+- **使用者可見（唯一）**：科判導航修正（W002）——點科判欄標題時，正文與卷次一律對到該標題自己的位置，不再誤跳到文字相近的他處；雙擊標題回到上一層後，正文與卷次也一併對齊。單擊科判標題不再讓科判欄自己換頁；點（分N）進子枝幹、雙擊＝往上一層維持不變（D100）。版本摘要只寫這一項。
+- **後台（無使用者介面，D059／D101）**：W001 匿名 App Analytics v2——內嵌統計客戶端（預設完整＋presence，DNT／GPC 自動停用，無任何 UI）、自建 Cloudflare Worker＋D1、Mac 查詢工具「瑜伽統計」；payload v4、Registry 白名單、即時在線 presence（約 30 秒心跳）。細節見 `analytics/README.md`、`DECISIONS.md` D049–D060、D101。
+- 變更檔：`index.html`（W002 修正約 20 行、W001 客戶端一段 `<script>`、版本字串）、`sw.js`（`tools/build_release.py 1.92`）；新增 `analytics/`、`docs/nav-contract.md`、`tools/` 測試與工具。`data/`、`manifest`、icon 與 v1.91 相同。
+- 與 v1.91 的使用者可見差異：除上述 W002 導航修正外，Chromium 於電腦、iPad 橫／直、iPhone 橫／直比對 0 處不同（頁面控制項、選單根頁與各子頁）。
+- 線上後台（q 操作）：D1 套用 `0003-analytics-v2.sql`、新版 Worker `a8b60481-9a90-4664-8ec5-501d32675837`、`ALLOWED_ORIGIN`＝`https://dppss92044.github.io`、測試資料清空。
+- 發布前測試（Chromium／Node 模擬，非 App 實機）：Worker 32/32、CLI 17/17、`tools/stats-test.cjs` 16/16、`tools/check-analytics-registry.cjs` 0 失敗；W002 `tools/nav-contract-w002.cjs`：藏版全量 0 失敗（fixtures 3/3、單擊 2,552、雙擊 2,547、（分N）193）；**韓版全量應 q 要求（快速發布）在約 47% 停止（約 950／2,017 頁、單擊約 30,187 次，0 失敗）**，完整韓版全量（單擊 63,178、雙擊 63,173、（分N）4,186，0 失敗）為先前於整合版 `index.html`（尚未改版本字串）完成的結果；SW `FILES` 38 檔雜湊與實際檔案一致。
+- 實機（q）：W002 Mac 電腦版人工驗收通過；W001 iPhone Safari（本機 Worker）與 presence 通過。**未做**：iPhone／iPad PWA、iPad、手機與 iPad 觸控導航、真實 HTTPS 下的 Service Worker 更新（發布後驗證）。
+- 發布前測試中另發現並修正 `stats-test.cjs` T13 的隨機失敗（等待窗口 62→75 秒；僅測試檔）。
 
 ### v1.91｜2026-10-05｜Claude-CC｜`db77e11`｜H150
 - 關於：藏經來源合併為一段。
