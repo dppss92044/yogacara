@@ -3591,8 +3591,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function st(k){try{return localStorage.getItem(k);}catch(e){return null;}}
       var forcedDot=/[?&]preview=update(&|$)/.test(location.search);
       if(!forcedDot&&!st('hk-tour')&&!st('hk-seen-version')&&!st('hk-ver-opened'))try{localStorage.setItem('hk-ver-opened',ver);}catch(e){}
-      function refresh(){var unseen=st('hk-ver-opened')!==ver;dots.forEach(function(d){d.hidden=!unseen;});}
-      vb.addEventListener('click',function(){try{localStorage.setItem('hk-seen-version',ver);localStorage.setItem('hk-ver-opened',ver);}catch(e){}refresh();
+      var openedNow=false;
+      function refresh(){var unseen=forcedDot?!openedNow:st('hk-ver-opened')!==ver;dots.forEach(function(d){d.hidden=!unseen;});}
+      vb.addEventListener('click',function(){openedNow=true;try{localStorage.setItem('hk-seen-version',ver);localStorage.setItem('hk-ver-opened',ver);}catch(e){}refresh();
         if(matchMedia('(hover:hover) and (pointer:fine)').matches){var r=vb.closest('.ver-menu-row');if(r)r.dispatchEvent(new MouseEvent('mouseenter'));return;}
         showSettingsPage('history');});
       window.addEventListener('upd-dot',refresh);refresh();})();

@@ -156,6 +156,11 @@
 - q 完全看不到紅點。原因：先前的紅點還要求 `hk-tour`，且全新（或無痕）瀏覽器第一次載入會被當新用戶而記為已看。改為：預覽網址帶 `?preview=update` 時一律不當新用戶、顯示紅點；其他情況只要 `hk-ver-opened`≠目前版本就顯示（不再要求 `hk-tour`）；全新且沒有任何舊記錄的一般網址才不顯示。點版本才清除。
 - 測試（Chromium）：全新＋一般網址無紅點；全新＋?preview=update 有紅點、點版本後消失；只有 hk-tour、只有 hk-seen-version 皆有紅點。
 
+## 發布前預覽第 39 輪（coordinator 補充；仍未發布）
+
+- `?preview=update` 的紅點改為忽略 `hk-ver-opened`：每次載入都顯示，直到該次載入中點過「版本」才消失（已點過版本的瀏覽器也能重看紅點）。一般網址仍以 `hk-ver-opened` 判斷。
+- 測試（Chromium）：已點過版本＋?preview=update 有紅點，點後消失；已點過版本＋一般網址無紅點。
+
 ## v1.92 發布（2026-10-06；整合分支 `claude/project-thread-7xwf2g`）
 
 - q 於 2026-10-06 明確確認：「確認發布 v1.92，摘要照用。」（`AGENTS.md` §3.4 第 3 條）。發布 commit＝「更新至 v1.92」（最後 commit 以 `git log` 為準）；PR 到 `main`，**由 q 自行 merge，Claude 不 merge**。
