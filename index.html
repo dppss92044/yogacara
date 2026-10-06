@@ -1294,7 +1294,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function railHTML(j) {
     var carried = !JL[j] && CARRY[j] != null, list = JL[j] || (carried ? pathOf(CARRY[j]) : []), out = [];
     out.push('<button type="button" class="rhead" data-juan-go="' + j + '" aria-label="閱讀卷第' + cn(j) + '">卷第' + cn(j) + "</button>");
-    out.push('<div class="rsub">' + (carried ? "本卷承接前卷科判" : "本卷 " + list.length + " 科") + "</div><div class=\"rol\">");
+    out.push('<div class="rsub">' + (carried ? "(承接前卷科判)" : "(" + list.length + "科)") + "</div><div class=\"rol\">");
     var minD = 99; list.forEach(function (i) { minD = Math.min(minD, N[i][3]); });
     var dl = list.map(function (k) { return N[k][3] - minD; });
     var maxD = 1; dl.forEach(function (d) { if (d > maxD) maxD = d; });
@@ -5415,6 +5415,9 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root:root[data-layout=iphone] .menu .mpop.settings-panel[data-settings-page=history]{left:12px!important;width:calc(100vw - 24px)!important;max-width:none!important}
 :root .settings-panel:not([data-settings-page=root])>.settings-head{height:auto!important;min-height:44px!important;margin-bottom:6px!important}
 :root[data-layout=iphone] .settings-panel[data-settings-page=history]{height:var(--menu-height,calc(100dvh - 190px))!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:max(12px,env(safe-area-inset-bottom,0px))!important}
+/* 卷次欄：「(14科)」半形括號緊貼卷名右側、字小一號 */
+:root:root:root #rinner button.rhead{display:inline-block}
+:root:root:root #rinner .rsub{display:inline-block;margin-inline-start:4px!important;font-size:12px;vertical-align:baseline}
 </style>
 </body></html>
 <style>
