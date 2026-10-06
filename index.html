@@ -247,6 +247,9 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-hint{position:absolute;left:max(16px,env(safe-area-inset-left));bottom:calc(max(16px,env(safe-area-inset-bottom)) + 76px);color:var(--muted);font-size:13px;pointer-events:none;max-width:calc(100% - 32px)}
 #kmap .km-tip{position:absolute;z-index:2;max-width:280px;padding:7px 11px;border-radius:12px;background:var(--pop,rgba(246,246,246,.98));border:1px solid var(--rule);box-shadow:0 6px 20px var(--shadow,rgba(0,0,0,.15));font-size:14px;pointer-events:none;white-space:pre-line}
 #kmap .km-msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:16px;pointer-events:none}
+#kmap .km-sec{display:flex;flex-direction:column;align-items:center;gap:2px}#kmap .km-row{display:flex;align-items:stretch;gap:2px}
+#kmap .km-cap{font-size:11px;line-height:1;letter-spacing:.2em;color:var(--muted);padding:2px 0 0}
+#kmap .km-tabs{display:none}
 #kmap .km-help{height:44px;padding:0 14px;border:1px solid var(--rule);border-radius:999px;background:var(--bg);font-size:16px;cursor:pointer;white-space:nowrap}
 #kmap .km-br{width:min(440px,calc(100vw - 24px));max-height:min(72vh,calc(100% - 110px));overflow:auto;gap:8px;font-family:"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif}
 #kmap .km-br .hd{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:600;font-size:16px;margin-top:4px}
@@ -270,7 +273,7 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-tour .tb button{height:42px;padding:0 18px;border:1px solid var(--rule);border-radius:999px;background:var(--bg);font:inherit;font-size:16px;cursor:pointer}
 #kmap .km-tour .tb button[data-t=next]{background:var(--acc,#d9a62e);border-color:var(--acc,#d9a62e);color:#1f1d1a}
 #kmap .km-hl{outline:3px solid var(--acc,#d9a62e);outline-offset:2px;border-radius:14px}
-@media (max-width:700px){#kmap .km-br .g1{grid-template-columns:1fr 1fr}#kmap .km-help{height:40px;padding:0 10px;font-size:15px}#kmap .km-title{display:none}#kmap .km-bar{justify-content:space-between;gap:8px;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}#kmap .km-close{min-width:76px}#kmap .km-seg button{padding:0 12px;font-size:15px}#kmap .km-dock{gap:0;padding:5px}#kmap .km-dock button{min-width:0;flex:1 1 0;height:54px;padding:0 4px}#kmap .km-dock .km-zm,#kmap .km-dock i,#kmap .km-dock .km-st{display:none}#kmap .km-grp{flex:1 1 0;display:flex}#kmap .km-main{flex-direction:column}#kmap .km-read{border-left:0;border-top:1px solid var(--rule)}#kmap .km-map,#kmap .km-read{flex:1 1 50%}#kmap .km-rb{padding:10px 16px 40px;font-size:17px}#kmap .km-hint{display:none}}
+@media (max-width:700px){#kmap .km-dock{flex-wrap:wrap;justify-content:center}#kmap .km-dock i,#kmap .km-cap{display:none}#kmap .km-tabs{display:flex;order:1;flex:1 1 0;gap:4px;padding:2px}#kmap .km-dock .km-tab{flex:1 1 0;min-width:0;height:36px;border-radius:12px;font-size:15px;flex-direction:row}#kmap .km-dock .km-tab.on{background:var(--acc,#d9a62e);color:#1f1d1a}#kmap .km-dock .km-fold{order:1;flex:0 0 auto;min-width:56px;height:36px;flex-direction:row}#kmap .km-dock .km-fold svg{width:20px;height:20px}#kmap .km-dock .km-fold span{display:none}#kmap .km-sec{order:2;flex:0 0 100%;display:none}#kmap .km-sec.on{display:flex}#kmap .km-row{width:100%}#kmap .km-row>button,#kmap .km-row>.km-grp{flex:1 1 0}#kmap .km-br .g1{grid-template-columns:1fr 1fr}#kmap .km-help{height:40px;padding:0 10px;font-size:15px}#kmap .km-title{display:none}#kmap .km-bar{justify-content:space-between;gap:8px;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}#kmap .km-close{min-width:76px}#kmap .km-seg button{padding:0 12px;font-size:15px}#kmap .km-dock{gap:0;padding:5px}#kmap .km-dock button{min-width:0;flex:1 1 0;height:54px;padding:0 4px}#kmap .km-dock .km-zm,#kmap .km-dock i,#kmap .km-dock .km-st{display:none}#kmap .km-grp{flex:1 1 0;display:flex}#kmap .km-main{flex-direction:column}#kmap .km-read{border-left:0;border-top:1px solid var(--rule)}#kmap .km-map,#kmap .km-read{flex:1 1 50%}#kmap .km-rb{padding:10px 16px 40px;font-size:17px}#kmap .km-hint{display:none}}
 </style>
 </head><body>
 <title>瑜伽師地論科判綱要</title>
@@ -4038,7 +4041,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var FONT_H='"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif',FONT_V='"TWKai","TWKai2","BiauKai","DFKai-SB","標楷體","Kaiti TC","STKaiti",serif';
       var FS_H=14,FS_V=16,ROW=24,COL=27,CH=17,PADH=7,PADV=5,GAP=32,BAND=640,MINS=0.004,MAXS=4,AUTO_N=800;
       var box,cv,cx,mapEl,readEl,rbEl,rhEl,msgEl,tipEl,hintEl,pctEl,dEl,selA,selB,allBtn,vBtn,sBtn,hBtn;
-      var stub=null,hoverMk=-1,ST={lab:1,lastLab:1,compact:0,equal:0,color:0,lw:0,dash:0,shape:0},brSpec=null,brI=-1,brName='',brSrc=0,NN,JLL,CRY,TXX,labx,fullx,edKey='',edBtns,selIds=null,readJ=0,sTimer=0,noteEl,uiS=1,foldBtn,oBtn,rngBtn,depBtn,model=null,col=null,focusI=-1,lastTap=null,chipEl,ra=1,rb=1,md=1,maxD=1,vert=false,split=false,tx=0,ty=0,sc=1,W=0,H=0,dpr=1,raf=0,hover=-1,curI=-1,selI=-1,stamp=null,frame=0,buildSeq=0,lastFocus=null;
+      var stub=null,hoverMk=-1,ST={lab:1,lastLab:1,compact:0,equal:0,color:0,lw:0,dash:0,shape:0},brSpec=null,brI=-1,brName='',brSrc=0,NN,JLL,CRY,TXX,labx,fullx,edKey='',edBtns,selIds=null,readJ=0,sTimer=0,noteEl,uiS=1,foldBtn,oBtn,rngBtn,depBtn,model=null,col=null,focusI=-1,lastTap=null,chipEl,ra=1,rb=1,md=1,maxD=1,vert=true,split=false,tx=0,ty=0,sc=1,W=0,H=0,dpr=1,raf=0,hover=-1,curI=-1,selI=-1,stamp=null,frame=0,buildSeq=0,lastFocus=null;
       var ptrs={},tap=null,pinch=null,gz0=1,PUNC='、，。,.；：;:';
       var VMAP={'（':'︵','）':'︶','(':'︵',')':'︶','「':'﹁','」':'﹂','『':'﹃','』':'﹄','—':'︱','－':'︱','…':'︙'};
       function pal(){var cs=getComputedStyle(box);return{bg:cs.backgroundColor,fg:cs.color,rule:cs.getPropertyValue('--rule').trim()||'#dcd7cd',line:cs.getPropertyValue('--fg').trim()||'#1f1d1a',red:cs.getPropertyValue('--cinnabar').trim()||'#9a2c1e',acc:cs.getPropertyValue('--acc2').trim()||'#c99520',hl:cs.getPropertyValue('--hl').trim()||'#f4e2a4'};}
@@ -4333,17 +4336,25 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           '<div class="km-pop km-sty" data-pop="sty" hidden><div class="r2"><span>科判標號</span><span class="seg2"><button type="button" data-st="lab:0" aria-pressed="false">無</button><button type="button" data-st="lab:1" aria-pressed="false">干支</button><button type="button" data-st="lab:2" aria-pressed="false">章節</button></span></div><button type="button" class="chk" data-ck="compact" aria-pressed="false"><i></i>縮小空間，緊密圖面</button><button type="button" class="chk" data-ck="equal" aria-pressed="false"><i></i>同層主題長度等齊</button><button type="button" class="chk" data-ck="color" aria-pressed="false"><i></i>彩色分支</button><div class="r2"><span>線條粗細</span><span class="seg2"><button type="button" data-st="lw:0" aria-pressed="false">極細</button><button type="button" data-st="lw:1" aria-pressed="false">細</button><button type="button" data-st="lw:2" aria-pressed="false">中</button><button type="button" data-st="lw:3" aria-pressed="false">粗</button></span></div><div class="r2"><span>線型</span><span class="seg2"><button type="button" data-st="dash:0" aria-pressed="false">實線</button><button type="button" data-st="dash:1" aria-pressed="false">虛線</button></span></div><div class="r2"><span>主題框</span><span class="seg2"><button type="button" data-st="shape:0" aria-pressed="false">無</button><button type="button" data-st="shape:1" aria-pressed="false">框線</button><button type="button" data-st="shape:2" aria-pressed="false">填色</button></span></div><button type="button" class="reset" data-st="reset">重設樣式</button></div>'+
           '<div class="km-tour" hidden><div class="ts"></div><div class="tt"></div><div class="tb"><button type="button" data-t="skip">略過</button><button type="button" data-t="next">下一步</button></div></div>'+
           '<div class="km-dock" role="toolbar" aria-label="脈絡圖功能">'+
+            '<span class="km-tabs"><button type="button" class="km-tab on" data-sec="0">主題</button><button type="button" class="km-tab" data-sec="1">卷次</button><button type="button" class="km-tab" data-sec="2">介面</button></span>'+
+            '<span class="km-sec on" data-sec="0"><span class="km-row">'+
             '<button type="button" data-p="br" aria-expanded="false">'+IC.br+'<span class="l">分支</span></button>'+
+            '<button type="button" data-a="title" aria-pressed="true">'+IC.ti+'<span class="l">標號</span></button>'+
+            '<button type="button" data-p="sty" aria-expanded="false">'+IC.st+'<span class="l">樣式</span></button>'+
+            '</span><span class="km-cap">主題</span></span><i></i>'+
+            '<span class="km-sec" data-sec="1"><span class="km-row">'+
             '<span class="km-grp"><button type="button" class="km-st" data-s="j-" aria-label="上一卷">−</button><button type="button" data-p="rng" aria-expanded="false">'+IC.rng+'<span class="l">第5卷</span></button><button type="button" class="km-st" data-s="j+" aria-label="下一卷">＋</button></span>'+
             '<span class="km-grp"><button type="button" class="km-st" data-s="d-" aria-label="少一層">−</button><button type="button" data-p="dep" aria-expanded="false">'+IC.dep+'<span class="l">全部層</span></button><button type="button" class="km-st" data-s="d+" aria-label="多一層">＋</button></span>'+
+            '</span><span class="km-cap">卷次</span></span><i></i>'+
+            '<span class="km-sec" data-sec="2"><span class="km-row">'+
             '<button type="button" data-a="orient" aria-pressed="false">'+IC.ori+'<span class="l">橫書</span></button>'+
             '<button type="button" data-a="split" aria-pressed="false">'+IC.spl+'<span class="l">並排</span></button>'+
-            '<button type="button" data-a="title" aria-pressed="true">'+IC.ti+'<span class="l">標號</span></button>'+
-            '<button type="button" data-p="sty" aria-expanded="false">'+IC.st+'<span class="l">樣式</span></button><i></i>'+
             '<button type="button" class="km-zm" data-z="out" aria-label="縮小">'+IC.out+'<span>縮小</span></button>'+
             '<button type="button" class="km-zm" data-z="in" aria-label="放大">'+IC.inn+'<span>放大</span></button>'+
             '<button type="button" data-z="fit">'+IC.fit+'<span>全覽</span></button>'+
-            '<button type="button" data-z="cur">'+IC.cur+'<span>目前</span></button><i></i><button type="button" class="km-fold" aria-label="收起功能列" aria-expanded="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><span>收起</span></button></div></div>'+
+            '<button type="button" data-z="cur">'+IC.cur+'<span>目前</span></button>'+
+            '</span><span class="km-cap">介面</span></span><i></i>'+
+            '<button type="button" class="km-fold" aria-label="收起功能列" aria-expanded="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><span>收起</span></button></div></div>'+
           '<div class="km-read"><div class="km-rh"><span></span><button type="button" data-a="kp" aria-pressed="true" title="顯示／隱藏正文中的科判標題">科判</button><button type="button" data-a="tx" aria-pressed="true" title="顯示／隱藏正文">正文</button><button type="button" data-a="prev" aria-label="上一卷">‹</button><button type="button" data-a="next" aria-label="下一卷">›</button><button type="button" data-a="open">在閱讀器開啟</button></div><div class="km-rb"></div></div></div>';
         document.body.appendChild(box);styLoad();styApply(false);
         cv=box.querySelector('canvas');cx=cv.getContext('2d');mapEl=box.querySelector('.km-map');readEl=box.querySelector('.km-read');rbEl=box.querySelector('.km-rb');rhEl=box.querySelector('.km-rh');
@@ -4358,6 +4369,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         oBtn.addEventListener('click',function(){vert=!vert;load();});
         box.addEventListener('click',function(e){var b=e.target.closest('[data-s]');if(!b)return;e.stopPropagation();step(b.dataset.s);});
         box.addEventListener('click',function(e){
+          var tab=e.target.closest('[data-sec].km-tab');if(tab){e.stopPropagation();closePops();box.querySelectorAll('[data-sec]').forEach(function(x){x.classList.toggle('on',x.dataset.sec===tab.dataset.sec);});return;}
           var b=e.target.closest('[data-b]');if(b){e.stopPropagation();pickBranch(b.dataset.b);return;}
           var s2=e.target.closest('[data-bs]');if(s2){e.stopPropagation();brSrc=+s2.dataset.bs;box.querySelectorAll('[data-bs]').forEach(function(x){x.setAttribute('aria-pressed',String(+x.dataset.bs===brSrc));});return;}
           var t=e.target.closest('[data-t]');if(t){e.stopPropagation();if(t.dataset.t==='skip')tourEnd();else tourStep(tourI+1);return;}
