@@ -4770,13 +4770,13 @@ input,select,textarea,button{border-radius:8px}
     pj.appendChild(kp);
     function size(){n.style.setProperty('--page-ch',Math.max(1,String(n.value).length)+'ch');var d=kp.querySelector('.pk-disp');if(d)d.textContent=n.value?n.value+' / '+(($('pageTotal')||{}).textContent||''):'輸入頁碼';}
     function go(){var v=parseInt(n.value,10),mx=parseInt(n.max,10)||999;if(!v)v=2;v=Math.max(2,Math.min(mx,v));n.value=v;n.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));}
-    n.addEventListener('focus',function(){n.inputMode=matchMedia('(hover:none)').matches?'none':'numeric';tot.textContent='/'+(($('pageTotal')||{}).textContent||'');tot.hidden=false;kp.hidden=false;size();});
-    n.addEventListener('blur',function(){tot.hidden=true;kp.hidden=true;});
+    n.addEventListener('focus',function(){var tch=matchMedia('(hover:none)').matches;n.inputMode=tch?'none':'numeric';n.readOnly=tch;tot.textContent='/'+(($('pageTotal')||{}).textContent||'');tot.hidden=false;kp.hidden=false;size();});
+    n.addEventListener('blur',function(){tot.hidden=true;kp.hidden=true;n.readOnly=false;});
     n.addEventListener('input',function(){var v=n.value.replace(/\D/g,'').slice(0,3);if(v!==n.value)n.value=v;size();});
     kp.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();});
     kp.addEventListener('mousedown',function(e){e.preventDefault();});
     kp.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;e.stopPropagation();var k=b.dataset.k,v=n.value,s=n.selectionStart,t=n.selectionEnd;if(s==null){s=t=v.length;}
-      if(k==='ok'){var v0=parseInt(n.value,10);if(v0)n.dispatchEvent(new Event('change',{bubbles:true}));n.blur();return;}
+      if(k==='ok'){var v0=parseInt(n.value,10);n.blur();if(v0){n.value=Math.max(2,v0);n.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));}return;}
       if(k==='del'){if(s===t&&s>0)s--;n.value=v.slice(0,s)+v.slice(t);n.setSelectionRange(s,s);}
       else{if(v.length-(t-s)>=3)return;n.value=v.slice(0,s)+k+v.slice(t);n.setSelectionRange(s+1,s+1);}
       size();n.focus();});
@@ -5472,6 +5472,7 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root[data-layout=iphone] #pKeypad button.ok{font-size:15px}
 :root:root:root[data-layout=iphone] #pKeypad .pk-disp{font-size:17px;padding:0 0 4px}
 @media(max-height:520px){:root:root:root[data-layout=iphone] #pKeypad{grid-template-columns:repeat(3,36px);gap:5px;padding:6px 8px 8px;bottom:calc(54px + env(safe-area-inset-bottom,0px))}:root:root:root[data-layout=iphone] #pKeypad button{width:36px;height:36px;font-size:16px}:root:root:root[data-layout=iphone] #pKeypad button.ok{font-size:12px}:root:root:root[data-layout=iphone] #pKeypad .pk-disp{display:none}}
+:root:root:root:root[data-layout=iphone] #pNum:not([hidden]){font-size:16px!important}
 </style>
 </body></html>
 <style>
