@@ -22,6 +22,12 @@
 - **merge 後待做（q 操作，一次一階段）**：GitHub Pages 更新後，iPhone／iPad Safari 與 PWA 確認顯示 v1.92 且 Service Worker 更新成功；實機試 W002 導航（含手機與 iPad 觸控）；`瑜伽統計 今天` 確認第一筆真實統計；上線首週量測 D1 用量（D101：presence 暫不改，必要時才調 60 秒）。
 - 仍未驗證：iPhone／iPad PWA、iPad、觸控導航、真實 HTTPS 下的 SW 更新、Android。
 
+### v1.92 發布前預覽調整（q，2026-10-06 04:49；**僅預覽，q 尚未確認設計，PR #4 未 merge、未發布**）
+1. 手機（`deviceLayout==="iphone"`）導覽（`runTour`）卡片由畫面下方改為水平垂直置中；iPad／電腦配置與導覽內容不變。
+2. 版本更新通知：首次進入新版本時顯示「已更新至 vX.XX」＋`versionSummaries[版本]` 以換行拆成條列＋「知道了」；以 localStorage `hk-seen-version` 記錄；全新使用者（尚未看過導覽）只記錄版本不彈出；導覽進行中不彈出。
+3. `versionSummaries["1.92"]` 依 q 的暫定文字改為兩行：「科判跳轉更準確，不會因為文字相似跳錯地方。／雙擊回上一層時，正文和卷次會一起對到正確位置。」（取代先前 q 已核准的單句摘要；待 q 確認）。
+4. 測試：僅針對性（Chromium 模擬 iPhone／iPad／電腦；通知出現、關閉、重新載入不重複、舊版本記錄再出現、全新使用者、導覽位置、深色模式）；未重跑 W001／韓版／藏版全量；未做 Safari 實機。
+
 ## W001＋W002 整合驗收（2026-10-05；整合分支 `claude/project-thread-7xwf2g`）
 
 - 範圍：只做整合與驗證。**未** PR、未 merge main、未 deploy、未升 v1.92、未改 `sw.js`／`appVer`（仍 v1.91）、未動兩個原分支。
