@@ -180,7 +180,7 @@ async function t(name, fn) {
   });
   await t('T13 presence：約 30 秒一次；x-p 調整間隔、0 停止；閒置 90 秒不送；hidden 送 leave；背景不送', async () => {
     const x = await boot({ clock: true }); await x.run(4000, true); await x.p.waitForTimeout(400); assert.strictEqual(x.pbodies().length, 1);
-    await x.run(62000, true); const n = x.pbodies().length; assert.ok(n >= 3 && n <= 4, 'n=' + n);
+    await x.run(75000, true); const n = x.pbodies().length; assert.ok(n >= 3 && n <= 4, 'n=' + n);   // 間隔為 30±5 秒的隨機抖動：首次約 4 秒＋兩個最長 35 秒＝74 秒＜79 秒，故 n≥3 必然成立（原 62 秒會隨機失敗）
     await x.p.clock.runFor(200000); const m = x.pbodies().length; assert.ok(m - n <= 4, '閒置期間最多再送到 idle 邊界 ' + (m - n));
     await x.vis('hidden'); await x.p.clock.runFor(100); const L = x.pbodies().filter(b => b.x === 1); assert.ok(L.length >= 1);
     const k = x.pbodies().length; await x.p.clock.runFor(120000); assert.strictEqual(x.pbodies().length, k, '背景不送'); noErr(x); await x.c.close();

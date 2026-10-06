@@ -8,9 +8,19 @@
 
 ## 正式基底
 
-- 正式版本：**v1.91**
-- App 程式基底 commit：**`db77e11`**（「更新至 v1.91」；App 本體最後一次修改）
-- W001 工作分支起點：`origin/main` = `e4a365f`（`db77e11` 之後只有文件變更）
+- 正式版本：**v1.92（發布 commit 已在 PR 內，待 q merge）**；merge 前 main 仍是 v1.91。
+- v1.91 App 基底 commit：`db77e11`；W001／W002 工作分支起點 `origin/main` = `e4a365f`。
+- **W001、W002 已隨 v1.92 發布並封存**（W 編號不再使用；下一個可用編號 W003）。以下 W001／W002 各節是封存的歷史交接，保留供追溯。
+
+## v1.92 發布（2026-10-06；整合分支 `claude/project-thread-7xwf2g`）
+
+- q 於 2026-10-06 明確確認：「確認發布 v1.92，摘要照用。」（`AGENTS.md` §3.4 第 3 條）。發布 commit＝「更新至 v1.92」（最後 commit 以 `git log` 為準）；PR 到 `main`，**由 q 自行 merge，Claude 不 merge**。
+- 內容：`tools/build_release.py 1.92`（meta、`sw.js` 38 檔雜湊）；`appVer` v1.92、最後更新 2026-10-06、`versionSummaries["1.92"]`（只寫 W002 科判導航修正，不提統計）。**未重新產生 `index.html`**（W002 修正保留）；`tools/stats-test.cjs` T13 等待窗口 62→75 秒（隨機抖動造成的測試不穩，非 App 行為）。
+- 線上後台已由 q 完成：D1 套用 0003、Worker `a8b60481-9a90-4664-8ec5-501d32675837`、`ALLOWED_ORIGIN`＝github.io、測試資料清空（14 表；`presence_ctl` 未動）；secrets 保留。回滾：Worker `npx wrangler rollback 97074a4c-1f46-455a-8eb3-e4f933b53c97`（舊版）；App 在 GitHub revert 該 merge。D1 Time Travel 還原點與 `~/yogastats-backups/before-0003-*.sql` 在 q 的 Mac。
+- 發布前測試（Chromium／Node 模擬）：Worker 32/32、CLI 17/17、`stats-test.cjs` 16/16、registry 檢查 0 失敗（65 通過／91 不適用／3 手動）、與 v1.91 UI 差異 0（電腦、iPad 橫／直、iPhone 橫／直）、SW `FILES` 38 檔雜湊一致；W002 藏版全量 0 失敗（單擊 2,552、雙擊 2,547、（分N）193、fixtures 3/3）。
+- **因 q 要求快速發布而未完成的測試**：發布版 `index.html` 上的 W002 **韓版全量**導航測試被停止在約 47%（4 分片各約 225–250／504 頁，單擊約 30,187 次，0 失敗）。完整韓版全量（單擊 63,178、雙擊 63,173、（分N）4,186，0 失敗，W002 單獨分支與 2026-10-05 整合版各一次）是在尚未改版本字串的 `index.html` 上完成；發布版與其差異僅為版本／日期／摘要字串與 `sw.js`。
+- **merge 後待做（q 操作，一次一階段）**：GitHub Pages 更新後，iPhone／iPad Safari 與 PWA 確認顯示 v1.92 且 Service Worker 更新成功；實機試 W002 導航（含手機與 iPad 觸控）；`瑜伽統計 今天` 確認第一筆真實統計；上線首週量測 D1 用量（D101：presence 暫不改，必要時才調 60 秒）。
+- 仍未驗證：iPhone／iPad PWA、iPad、觸控導航、真實 HTTPS 下的 SW 更新、Android。
 
 ## W001＋W002 整合驗收（2026-10-05；整合分支 `claude/project-thread-7xwf2g`）
 
