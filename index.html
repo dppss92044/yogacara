@@ -3512,8 +3512,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var VN_KIND={new:'新增功能',fix:'修正 Bug',improve:'操作改善'};
   /* 版本更新資料（單一來源）：[類型, 說明, 1=重要項目→出現在更新提醒]；全部項目→「關於 → 版本內容」。新版本請加在最前面。 */
   var versionNotes={"1.92":{date:"2026年10月6日",items:[
-    ["fix","科判跳轉更準確，不會因為文字相似而跳錯地方。",1],
-    ["fix","雙擊回上一層時，正文和卷次會一起對到正確位置。",1],
+    ["fix","點科判標題，不再跳錯地方。",1],
+    ["fix","雙擊回上一層，正文與卷次一起對齊。",1],
     ["fix","正文與科判左右置換後，拖曳欄位分隔線的方向不再相反。"],
     ["fix","手機版功能列表的「上一頁」按鈕不再遮住下面的內容。"],
     ["improve","手機版「關於」可使用更多畫面高度，版本內容能展開並上下滑動閱讀。"],
@@ -3849,7 +3849,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var vn=versionNotes[ver],items=vn?vn.items.filter(function(i){return i[2];}):[];
       if(!items.length){if(!forced)remember();return;}
       var box=document.createElement('div');box.className='upd-notice';box.id='updNotice';
-      box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><div class="upd-groups"></div><p class="upd-more">詳細內容可至「功能列表 → 關於 → 版本內容」查看</p><button type="button" class="upd-ok">知道了</button><div class="upd-sub"><button type="button" class="upd-tour">導覽</button><button type="button" class="upd-off">不再顯示</button></div></div>';
+      box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><div class="upd-groups"></div><p class="upd-more">完整內容：功能列表 › 關於 › 版本內容</p><button type="button" class="upd-ok">知道了</button><div class="upd-sub"><button type="button" class="upd-tour">導覽</button><button type="button" class="upd-off">不再顯示</button></div></div>';
       box.querySelector('h4').textContent='已更新至 v'+ver;
       var gbox=box.querySelector('.upd-groups');
       ['new','fix'].forEach(function(k){var g=items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h5'),ul=document.createElement('ul');h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});gbox.appendChild(h);gbox.appendChild(ul);});
