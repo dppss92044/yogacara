@@ -1018,7 +1018,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       <button class="mi" id="aboutBtn" role="menuitem" aria-haspopup="true"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M10 9v5M10 6.3v.2"/></svg><span>關於</span><i class="chev" aria-hidden="true">›</i></button>
       <div class="apop" role="dialog" aria-label="關於"><div class="about-overview">
         <div class="grp">
-        <p class="src"><span class="src-b"><b class="src-t">韓版</b>內文、分卷、科判、披尋記與常柏法師釋，皆依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷悉照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<span class="src-u">原文網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">mahabodhi.org/yoga/cb/</a></span></span></p>
+        <p class="src"><span class="src-b"><b class="src-t">韓清淨版</b>內文、分卷、科判、披尋記與常柏法師釋，皆依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷悉照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<span class="src-u">網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">https://mahabodhi.org/yoga/cb/</a></span></span></p>
         </div>
         <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.92</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-06">2026-10-06</time></span></div></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本內容</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><div class="vc" id="versionDoc"></div></div><div id="versionDetail"><b></b><p></p></div>
@@ -3664,7 +3664,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     DOC_TITLE=zang?'瑜伽師地論（藏經科判）':'瑜伽師地論（韓清淨科判）';
     $('editionCur').textContent=zang?'藏經版':'韓版';$('editionCur').title=zang?'藏經科判':'韓清淨科判';var badge=$('edBadge'),tools=document.querySelector('.zbar .books-tools[data-z="m"]');if(!badge&&tools){badge=document.createElement('button');badge.type='button';badge.id='edBadge';badge.className='ed-badge';badge.onclick=function(e){e.stopPropagation();switchEdition(EDITION==='zang'?'hk':'zang');};tools.before(badge);}if(badge){badge.innerHTML=zang?'藏<span class="v">版</span>':'韓<span class="v">版</span>';badge.title='目前：'+(zang?'藏經科判':'韓清淨科判')+'（點一下切換）';badge.setAttribute('aria-label',badge.title);}
     document.querySelectorAll('.edition-choice').forEach(function(b){b.setAttribute('aria-checked',String(b.dataset.edition===EDITION));});
-    var src=$('about').querySelector('.src');if(src){if(!src.dataset.hk)src.dataset.hk=src.innerHTML;src.innerHTML=zang?'<span class="src-b"><b class="src-t">藏經版</b>原文、分卷與科判，依《大正藏》第30冊 No.1579《瑜伽師地論》（唐．玄奘譯，共一百卷）整理；原文取自臺灣大學佛學數位圖書館的 PDF。本頁僅重新排版，卷次目錄與直書科判沿用同一介面。<span class="src-u">原文網址：<a class="srcl" href="https://dlbs.liberal.ntu.edu.tw/FULLTEXT/sutra/chi_pdf/sutra14/T30n1579.pdf" target="_blank" rel="noopener">dlbs.liberal.ntu.edu.tw／T30n1579.pdf</a></span></span>'+src.dataset.hk:src.dataset.hk+'<span class="src-b"><b class="src-t">藏經版</b>原文、分卷與科判，依《大正藏》第30冊 No.1579《瑜伽師地論》（唐．玄奘譯，共一百卷）整理；原文取自臺灣大學佛學數位圖書館的 PDF。本頁僅重新排版，卷次目錄與直書科判沿用同一介面。<span class="src-u">原文網址：<a class="srcl" href="https://dlbs.liberal.ntu.edu.tw/FULLTEXT/sutra/chi_pdf/sutra14/T30n1579.pdf" target="_blank" rel="noopener">dlbs.liberal.ntu.edu.tw／T30n1579.pdf</a></span></span>';}
+    var src=$('about').querySelector('.src');if(src){if(!src.dataset.hk)src.dataset.hk=src.innerHTML;src.innerHTML=zang?'<span class="src-b"><b class="src-t">大藏經版</b>原文、分卷與科判，依《大正藏》第30冊 No.1579《瑜伽師地論》（唐．玄奘譯，共一百卷）整理；原文取自臺灣大學佛學數位圖書館的 PDF。本頁僅重新排版，卷次目錄與直書科判沿用同一介面。<span class="src-u">網址：<a class="srcl" href="https://dlbs.liberal.ntu.edu.tw/FULLTEXT/sutra/chi_pdf/sutra14/T30n1579.pdf" target="_blank" rel="noopener">https://dlbs.liberal.ntu.edu.tw/FULLTEXT/sutra/chi_pdf/sutra14/T30n1579.pdf</a></span></span>'+src.dataset.hk:src.dataset.hk+'<span class="src-b"><b class="src-t">大藏經版</b>原文、分卷與科判，依《大正藏》第30冊 No.1579《瑜伽師地論》（唐．玄奘譯，共一百卷）整理；原文取自臺灣大學佛學數位圖書館的 PDF。本頁僅重新排版，卷次目錄與直書科判沿用同一介面。<span class="src-u">網址：<a class="srcl" href="https://dlbs.liberal.ntu.edu.tw/FULLTEXT/sutra/chi_pdf/sutra14/T30n1579.pdf" target="_blank" rel="noopener">https://dlbs.liberal.ntu.edu.tw/FULLTEXT/sutra/chi_pdf/sutra14/T30n1579.pdf</a></span></span>';}
   }
   function normT(t){return String(t||'').replace(/[^㐀-鿿豈-﫿]/g,'');}
   function textBlocks(vol){return vol?[].slice.call(vol.querySelectorAll('.txt > p:not(.au):not(.rq), .txt > .pin')):[];}
@@ -5682,6 +5682,9 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .verpop li{margin:0 0 2px}
 .verpop .vp-f{margin:10px 2px 0;font-size:12px;color:var(--muted)}
 .verpop .upd-pop{margin:0 0 4px;padding:7px 12px;font-family:"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif}
+/* 關於浮窗：加寬，完整網址不斷行（僅電腦懸浮浮窗） */
+:root:root:root:root:root .settings-panel[data-settings-page=root][data-hover=about] .apop{width:560px!important}
+.settings-panel[data-settings-page=root][data-hover=about] .apop .src-u,.settings-panel[data-settings-page=root][data-hover=about] .apop .srcl{white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important}
 </style>
 </body></html>
 <style>
