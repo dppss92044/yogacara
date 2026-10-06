@@ -5501,6 +5501,11 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 
 .upd-card .upd-groups h5{margin:0 0 14px!important}
 .upd-card h4{margin:0 0 26px!important}
+
+/* 底部圖示文字：按下立即出現，放開後逐漸淡出 */
+:root:root:root[data-layout=iphone] .device-tabs button span{transition:opacity .8s ease-out}
+:root:root:root[data-layout=iphone] .device-tabs button svg{transition:transform .8s ease-out}
+:root:root:root[data-layout=iphone] .device-tabs button.pressing span,:root:root:root[data-layout=iphone] .device-tabs button.pressing svg{transition-duration:.08s}
 </style>
 </body></html>
 <style>

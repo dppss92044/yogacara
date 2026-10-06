@@ -48,6 +48,10 @@
 
 - 手機底部圖示文字改由程式在手指按住期間顯示（`.pressing`），完全放開後才消失（取代 CSS `:active`）。Chromium 滑鼠按壓模擬通過，iPhone 實機未測。
 
+## 發布前預覽第 18 輪（q 06:50 改述；仍未發布）
+
+- 手機底部圖示文字：按下立即出現，放開後約 0.8 秒逐漸淡出（q 改述為「放開之後才逐漸淡化消失」）。僅 CSS 過場；iPhone 實機未測。
+
 ## v1.92 發布（2026-10-06；整合分支 `claude/project-thread-7xwf2g`）
 
 - q 於 2026-10-06 明確確認：「確認發布 v1.92，摘要照用。」（`AGENTS.md` §3.4 第 3 條）。發布 commit＝「更新至 v1.92」（最後 commit 以 `git log` 為準）；PR 到 `main`，**由 q 自行 merge，Claude 不 merge**。
