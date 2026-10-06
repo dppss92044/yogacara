@@ -170,6 +170,12 @@
 
 - 功能鈕（⋯）紅點移到圖示圓圈上右上 1 點鐘方向（圓心 16,15、半徑 7.2 → 紅點左上角 17,6）；`#menuBtn` 設 `position:relative` 以此定位。電腦、iPhone、iPad 三種介面按鈕尺寸相同，座標相同。「版本」列的紅點未改。
 
+## 發布前預覽第 42 輪（q 08:31；仍未發布）
+
+- 版本內容改兩層：第一層只放「重點」（`versionNotes` 中 important 的新增功能／修正 Bug；若無則退為全部），有一個「詳情」按鈕，按下才展開全部（含操作改善）；按鈕變「收起」。電腦預覽浮窗與手機/iPad 版本頁皆同（版本頁新增 `#vBrief`，`#versionHistory.expanded` 才顯示完整版本紀錄）。
+- 手機版本頁高度由固定高度改為依內容（`height:auto` + max-height），第一層不再有大片空白。
+- 測試（Chromium）：iPhone 13 第一層 281px 高、詳情後 579px；iPad 第一層 267px、詳情後 538px；電腦浮窗內按詳情可展開/收起。實機未測。
+
 ## v1.92 發布（2026-10-06；整合分支 `claude/project-thread-7xwf2g`）
 
 - q 於 2026-10-06 明確確認：「確認發布 v1.92，摘要照用。」（`AGENTS.md` §3.4 第 3 條）。發布 commit＝「更新至 v1.92」（最後 commit 以 `git log` 為準）；PR 到 `main`，**由 q 自行 merge，Claude 不 merge**。

@@ -3578,9 +3578,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var vs=Object.keys(versionNotes).sort(function(a,b){var x=a.split('.').map(Number),y=b.split('.').map(Number);return (y[0]-x[0])||(y[1]-x[1]);}),v=vs[0],pop=document.createElement('div');
       pop.className='verpop';pop.setAttribute('aria-hidden','true');
       var h=document.createElement('div');h.className='vp-h';h.innerHTML='<b></b><small></small>';h.querySelector('b').textContent='版本內容　v'+v;h.querySelector('small').textContent=versionNotes[v].date||'';pop.appendChild(h);
-      var card=document.createElement('div');card.className='vp-card';
-      ['new','fix','improve'].forEach(function(k){var g=versionNotes[v].items.filter(function(i){return i[0]===k;});if(!g.length)return;var t=document.createElement('h6'),ul=document.createElement('ul');t.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});card.appendChild(t);card.appendChild(ul);});
-      pop.appendChild(card);
+      var all=versionNotes[v].items,imp=all.filter(function(i){return i[2];});if(!imp.length)imp=all;
+      function fillNotes(host,items,kinds){kinds.forEach(function(k){var g=items.filter(function(i){return i[0]===k;});if(!g.length)return;var t=document.createElement('h6'),ul=document.createElement('ul');t.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});host.appendChild(t);host.appendChild(ul);});}
+      var shortC=document.createElement('div'),fullC=document.createElement('div');shortC.className='vp-card';fullC.className='vp-card';fullC.hidden=true;
+      fillNotes(shortC,imp,['new','fix']);fillNotes(fullC,all,['new','fix','improve']);
+      var more=document.createElement('button');more.type='button';more.className='vp-more';more.textContent='詳情';
+      more.addEventListener('click',function(e){e.stopPropagation();var open=fullC.hidden;fullC.hidden=!open;shortC.hidden=open;more.textContent=open?'收起':'詳情';});
+      pop.appendChild(shortC);pop.appendChild(fullC);pop.appendChild(more);
+      window.versionBrief={imp:imp,all:all,fill:fillNotes,v:v};
       var f=document.createElement('p');f.className='vp-f';f.textContent='點一下「版本」，紅點即消失。';pop.appendChild(f);row.appendChild(pop);})();
     (function(){var sv=document.querySelector('.learning-settings>summary>svg');if(!sv)return;
       var IC={mac:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M12 17v4M8 21h8"/>',ipad:'<rect x="4" y="2" width="16" height="20" rx="2.5"/><path d="M11 19h2"/>',iphone:'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 19h2"/>'};
@@ -3609,7 +3614,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if(pop){var pl=document.createElement('label');pl.className='upd-row upd-pop';pl.innerHTML='<span>更新通知</span><input type="checkbox" id="updForeverPop" role="switch"><i class="upd-sw" aria-hidden="true"></i>';pf=pl.querySelector('input');pf.checked=f.checked;var hd=pop.querySelector('.vp-h');hd.after(pl);pop.removeAttribute('aria-hidden');}
       function setN(v){f.checked=v;if(pf)pf.checked=v;put('hk-update-notice',v?'on':'off');window.dispatchEvent(new Event('upd-dot'));}
       f.addEventListener('change',function(){setN(f.checked);});if(pf)pf.addEventListener('change',function(){setN(pf.checked);});
-      vh.insertBefore(box,vh.firstChild);})();
+      vh.insertBefore(box,vh.firstChild);
+      var vb0=window.versionBrief;if(vb0&&!$('vBrief')){var br=document.createElement('div');br.className='vbrief';br.id='vBrief';
+        var hd=document.createElement('div');hd.className='vb-h';hd.innerHTML='<b></b><small></small><button type="button" class="vp-more">詳情</button>';hd.querySelector('b').textContent='v'+vb0.v;hd.querySelector('small').textContent=versionNotes[vb0.v].date||'';
+        var body=document.createElement('div');body.className='vb-body';vb0.fill(body,vb0.imp,['new','fix']);br.appendChild(hd);br.appendChild(body);
+        var mb=hd.querySelector('button');mb.addEventListener('click',function(){var x=vh.classList.toggle('expanded');mb.textContent=x?'收起':'詳情';});
+        box.after(br);}})();
     (function(){var ver=$('about').querySelector('.ver'),hb=$('versionHistoryBtn');if(!ver||!hb)return;ver.setAttribute('role','button');ver.tabIndex=0;ver.setAttribute('aria-label','版本內容');var ch=document.createElement('i');ch.className='chev';ch.textContent='›';ver.appendChild(ch);ver.addEventListener('click',function(){hb.click();});ver.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hb.click();}});})();
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
@@ -5488,7 +5498,7 @@ html.vc-lock:has(.menu.open),html.vc-lock:has(.menu.open) body{overflow:hidden!i
 html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root:root[data-layout=iphone] .menu .mpop.settings-panel[data-settings-page=history]{left:12px!important;width:calc(100vw - 24px)!important;max-width:none!important}
 :root .settings-panel:not([data-settings-page=root])>.settings-head{height:auto!important;min-height:44px!important;margin-bottom:6px!important}
-:root[data-layout=iphone] .settings-panel[data-settings-page=history]{height:var(--menu-height,calc(100dvh - 190px))!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:max(12px,env(safe-area-inset-bottom,0px))!important}
+:root[data-layout=iphone] .settings-panel[data-settings-page=history]{height:auto!important;max-height:var(--menu-height,calc(100dvh - 190px))!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:max(12px,env(safe-area-inset-bottom,0px))!important}
 /* 卷次欄：「(14科)」半形括號緊貼卷名右側、字小一號 */
 :root:root:root #rinner button.rhead{display:inline-block}
 :root:root:root #rinner .rsub{display:inline-block;margin-inline-start:.7em!important;font-size:10px;color:var(--muted);vertical-align:baseline}
@@ -5713,6 +5723,21 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 /* 功能鈕紅點：坐落在圖示圓圈右上 1 點鐘方向 */
 :root:root:root #menuBtn{position:relative}
 :root:root:root #menuBtn>.upd-dot{left:17px;top:6px;right:auto}
+/* 版本內容兩層：先看重點，按「詳情」才看全部 */
+.vp-more{margin:4px 2px 0;padding:3px 12px;border:0;border-radius:999px;background:rgba(118,118,128,.14);color:var(--fg);font:11px var(--ui);cursor:pointer}
+.verpop>.vp-more{display:block;margin:6px 0 0 auto}
+#versionHistory:not(.expanded) #versionDoc{display:none}
+#versionHistory.expanded .vb-body{display:none}
+.vbrief{background:var(--bg);border-radius:12px;padding:10px 14px 10px;margin:0 0 10px;font-family:"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif}
+.vbrief .vb-h{display:flex;align-items:baseline;gap:10px}
+.vbrief .vb-h b{font:600 16px var(--ui)}
+.vbrief .vb-h small{font:11px var(--ui);color:var(--muted)}
+.vbrief .vb-h .vp-more{margin:0 0 0 auto;align-self:center}
+.vbrief h6{margin:8px 0 2px;font:600 12px var(--ui);color:var(--muted)}
+.vbrief ul{margin:0;padding:0 0 0 1.3em}
+.vbrief li{margin:0 0 2px;font:12.5px/1.6 var(--ui)}
+#versionHistory.expanded .vbrief .vb-h b,#versionHistory.expanded .vbrief .vb-h small{display:none}
+#versionHistory.expanded .vbrief{padding:6px 14px;background:none}
 </style>
 </body></html>
 <style>
