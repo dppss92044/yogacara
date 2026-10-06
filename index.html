@@ -3575,6 +3575,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var IC={mac:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M12 17v4M8 21h8"/>',ipad:'<rect x="4" y="2" width="16" height="20" rx="2.5"/><path d="M11 19h2"/>',iphone:'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 19h2"/>'};
       function upd(){var l=document.documentElement.dataset.layout||deviceLayout;sv.innerHTML=IC[l]||IC.mac;}
       upd();new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['data-layout']});})();
+    (function(){var hb=$('versionHistoryBtn');if(!hb||$('updToggle'))return;var on=true;try{on=localStorage.getItem('hk-update-notice')!=='off';}catch(e){}
+      var row=document.createElement('label');row.className='mi upd-toggle';row.innerHTML='<span>版本更新通知</span><input type="checkbox" id="updToggle" role="switch"><i class="upd-sw" aria-hidden="true"></i>';
+      var cb=row.querySelector('input');cb.checked=on;cb.setAttribute('aria-checked',String(on));
+      cb.addEventListener('change',function(){cb.setAttribute('aria-checked',String(cb.checked));try{localStorage.setItem('hk-update-notice',cb.checked?'on':'off');}catch(e){}});
+      hb.insertAdjacentElement('afterend',row);})();
     (function(){var ver=$('about').querySelector('.ver'),hb=$('versionHistoryBtn');if(!ver||!hb)return;ver.setAttribute('role','button');ver.tabIndex=0;ver.setAttribute('aria-label','版本內容');var ch=document.createElement('i');ch.className='chev';ch.textContent='›';ver.appendChild(ch);ver.addEventListener('click',function(){hb.click();});ver.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hb.click();}});})();
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
@@ -3875,12 +3880,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       try{last=localStorage.getItem(KEY);}catch(e){}
       function remember(){try{localStorage.setItem(KEY,ver);}catch(e){}}
       var forced=/[?&]preview=update(&|$)/.test(location.search);
+      var off=false;try{off=localStorage.getItem('hk-update-notice')==='off';}catch(e){}
+      if(off&&!forced){remember();return;}
       if(last===ver&&!forced)return;
       if(!seen&&!forced){remember();return;}
       var vn=versionNotes[ver],items=vn?vn.items.filter(function(i){return i[2];}):[];
       if(!items.length){if(!forced)remember();return;}
       var box=document.createElement('div');box.className='upd-notice';box.id='updNotice';
-      box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><div class="upd-groups"></div><p class="upd-more">完整內容：功能列表 › 關於 › 版本內容</p><button type="button" class="upd-ok">知道了</button></div>';
+      box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><div class="upd-groups"></div><p class="upd-more">完整內容：功能列表 › 關於 › 版本內容<br>不想收到更新通知，可在功能列表 › 關於 關閉。</p><button type="button" class="upd-ok">知道了</button></div>';
       box.querySelector('h4').textContent='已更新'+ver;
       var gbox=box.querySelector('.upd-groups');
       ['new','fix'].forEach(function(k){var g=items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h5'),ul=document.createElement('ul');h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});gbox.appendChild(h);gbox.appendChild(ul);});
@@ -5508,7 +5515,7 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .upd-card h4{margin:0 0 26px!important}
 
 /* 底部圖示文字：按下立即出現，放開後逐漸淡出 */
-:root:root:root[data-layout=iphone] .device-tabs button span{transition:opacity 2.4s ease-out}
+:root:root:root[data-layout=iphone] .device-tabs button span{transition:opacity 1.6s ease-out 3s}
 :root:root:root[data-layout=iphone] .device-tabs button svg{transition:transform .35s ease-in-out 2.1s}
 :root:root:root[data-layout=iphone] .device-tabs button.pressing svg{transform:translateY(-10px);transition:transform .12s ease-out 0s}
 :root:root:root[data-layout=iphone] .device-tabs button.pressing span{transition:opacity .08s}
@@ -5529,14 +5536,14 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root[data-layout=iphone] .device-tabs button{justify-content:center!important;padding-top:0!important;padding-bottom:0!important}
 
 /* 手機底部：空／圖／字 三段等高 1:1:1 */
-:root:root:root[data-layout=iphone] .device-tabs button{height:60px!important;min-height:60px!important;justify-content:flex-start!important;padding:20px 0 0!important;gap:0!important}
+:root:root:root[data-layout=iphone] .device-tabs button{height:54px!important;min-height:54px!important;justify-content:flex-start!important;padding:18px 0 0!important;gap:0!important}
 :root:root:root[data-layout=iphone] .device-tabs button{margin:0!important}
-:root:root:root[data-layout=iphone] .device-tabs button svg{width:20px!important;height:20px!important;flex:none}
-:root:root:root[data-layout=iphone] .device-tabs button span{height:20px!important;line-height:20px!important;font-size:11px!important}
+:root:root:root[data-layout=iphone] .device-tabs button svg{width:18px!important;height:18px!important;flex:none}
+:root:root:root[data-layout=iphone] .device-tabs button span{height:18px!important;line-height:18px!important;font-size:11px!important}
 
 /* 手機底部列高度配合 空／圖／字 */
-:root:root:root[data-layout=iphone]{--nav-height:calc(61px + env(safe-area-inset-bottom,0px))}
-:root:root:root[data-layout=iphone] .device-tabs{height:calc(61px + env(safe-area-inset-bottom,0px))!important;padding:0 6px env(safe-area-inset-bottom,0px)!important}
+:root:root:root[data-layout=iphone]{--nav-height:calc(55px + env(safe-area-inset-bottom,0px))}
+:root:root:root[data-layout=iphone] .device-tabs{height:calc(55px + env(safe-area-inset-bottom,0px))!important;padding:0 6px env(safe-area-inset-bottom,0px)!important}
 /* 匯出：整體縮小、緊湊 */
 :root:root:root:root .settings-panel[data-settings-page=dl] .ex-hero{padding:11px 14px!important;gap:12px}
 :root:root:root:root .settings-panel[data-settings-page=dl] .ex-hero b{font-size:15px!important}
@@ -5555,6 +5562,17 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root:root .settings-panel[data-settings-page=dl] .ex-acts .go{height:36px;font-size:13px!important}
 :root:root:root:root .settings-panel[data-settings-page=dl] .ex-acts .allbtn{height:36px;font-size:12.5px}
 :root:root:root:root .settings-panel[data-settings-page=dl] .ex-info{font-size:12px}
+
+/* 關於：版本更新通知開關 */
+.upd-toggle{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.upd-toggle input{position:absolute;opacity:0;pointer-events:none}
+.upd-sw{position:relative;flex:none;width:44px;height:26px;border-radius:13px;background:rgba(118,118,128,.32);transition:background .2s}
+.upd-sw::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+.upd-toggle input:checked+.upd-sw{background:var(--fg)}
+.upd-toggle input:checked+.upd-sw::after{transform:translateX(18px)}
+.upd-toggle input:focus-visible+.upd-sw{outline:2px solid var(--link);outline-offset:2px}
+.settings-panel[data-settings-page=history] .upd-toggle,.settings-panel[data-settings-page=report] .upd-toggle{display:none!important}
+:root:root:root:root .settings-panel .upd-toggle,:root:root:root:root .settings-panel .upd-toggle:hover,:root:root:root:root .settings-panel .upd-toggle:active{background:var(--bg)!important;color:var(--fg)!important}
 </style>
 </body></html>
 <style>
