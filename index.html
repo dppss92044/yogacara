@@ -953,7 +953,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     <div class="menu" id="menu">
       <button class="mbtn" id="menuBtn" aria-label="選單：導覽、關於、匯出" aria-haspopup="menu"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="10" cy="10" r="8"/><circle cx="6.3" cy="10" r=".9" fill="currentColor" stroke="none"/><circle cx="10" cy="10" r=".9" fill="currentColor" stroke="none"/><circle cx="13.7" cy="10" r=".9" fill="currentColor" stroke="none"/></svg></button>
       <div class="mpop" role="menu"><div class="settings-head"><button id="settingsBack" type="button" aria-label="返回功能列表" hidden>‹</button><strong id="settingsTitle" aria-live="polite">功能</strong></div>
-        <div class="edition-settings"><button class="mi" id="editionBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 5.5h6.5a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 0-1.5-1.5H4zM20 5.5h-6.5A1.5 1.5 0 0 0 12 7v12a1.5 1.5 0 0 1 1.5-1.5H20z"/></svg><span>版本</span><em class="mi-val" id="editionCur">藏經版</em><i class="chev">›</i></button><div class="edition-body" role="radiogroup" aria-label="版本"><button type="button" class="edition-choice" data-edition="zang" role="radio" aria-checked="true"><span class="ed-t"><b>大藏經版</b><small>大藏經原文・藏經科判表</small></span><span class="ed-ck" aria-hidden="true">✓</span></button><button type="button" class="edition-choice" data-edition="hk" role="radio" aria-checked="false"><span class="ed-t"><b>韓清淨科判</b><small>科句、披尋記、法師註解</small></span><span class="ed-ck" aria-hidden="true">✓</span></button><p class="edition-note" id="editionMsg" role="status"></p></div></div><div class="label-settings"><button class="mi" id="labelBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 6h3M5 12h3M5 18h3M11 6h8M11 12h8M11 18h8"/></svg><span>科標</span><em class="mi-val" id="labelCur">干支</em><i class="chev">›</i></button><div class="label-body" role="radiogroup" aria-label="科標"><button type="button" class="label-choice" data-label="gz" role="radio"><span class="ed-t"><b>干支</b><small>甲一、乙一、丙一…</small></span></button><button type="button" class="label-choice" data-label="zj" role="radio"><span class="ed-t"><b>章節</b><small>1 本地分・1章・1節・1項・1目</small></span></button></div></div><div class="content-settings"><button class="mi" id="contentBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>內文</span><i class="chev">›</i></button><div class="content-body">        <div class="msw" id="optsTop" role="group" aria-labelledby="mswH">
+        <div class="edition-settings"><button class="mi" id="editionBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M4 5.5h6.5a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 0-1.5-1.5H4zM20 5.5h-6.5A1.5 1.5 0 0 0 12 7v12a1.5 1.5 0 0 1 1.5-1.5H20z"/></svg><span>版本</span><em class="mi-val" id="editionCur">藏經版</em><i class="chev">›</i></button><div class="edition-body" role="radiogroup" aria-label="版本"><button type="button" class="edition-choice" data-edition="zang" role="radio" aria-checked="true"><span class="ed-t"><b>大藏經版</b><small>大藏經原文・藏經科判表</small></span><span class="ed-ck" aria-hidden="true">✓</span></button><button type="button" class="edition-choice" data-edition="hk" role="radio" aria-checked="false"><span class="ed-t"><b>韓清淨科判</b><small>科句、披尋記、法師註解</small></span><span class="ed-ck" aria-hidden="true">✓</span></button><p class="edition-note" id="editionMsg" role="status"></p></div></div><div class="label-settings"><button class="mi" id="labelBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 6h3M5 12h3M5 18h3M11 6h8M11 12h8M11 18h8"/></svg><span>科標</span><em class="mi-val" id="labelCur">干支</em><i class="chev">›</i></button><div class="label-body" role="radiogroup" aria-label="科標"><button type="button" class="label-choice" data-label="gz" role="radio"><span class="ed-t"><b>干支</b><small>甲一、乙一、丙一…</small></span></button><button type="button" class="label-choice" data-label="zj" role="radio"><span class="ed-t"><b>章節</b><small>1 本地分・1章・1節・1項・1目</small></span></button></div></div><div class="content-settings"><button class="mi" id="contentBtn" role="menuitem" aria-haspopup="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg><span>註釋</span><i class="chev">›</i></button><div class="content-body">        <div class="msw" id="optsTop" role="group" aria-labelledby="mswH">
           <div class="mh" id="mswH">內文</div>
           <div class="grp">
           <label class="sw kp"><span class="nm">科判</span><input type="checkbox" id="optKp" role="switch" checked><span class="tr" aria-hidden="true"></span></label>
@@ -1006,7 +1006,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             <h5>直書科判表 PDF</h5>
             <p class="ex-info" id="dlInfo">選擇要匯出的頁碼範圍。</p>
             <div class="ex-row zang-only"><span class="ex-l">科標</span><div class="cks"><label class="ck"><input type="radio" name="kpl" id="kplGz"><span>干支</span></label><label class="ck"><input type="radio" name="kpl" id="kplZj"><span>章節</span></label></div></div><div class="ex-row"><span class="ex-l">頁碼</span><div class="ex-c ex-range"><span>第</span><input id="dlFrom" type="number" min="1" aria-label="起始頁"><span>至</span><input id="dlTo" type="number" min="1" aria-label="結束頁"><span>頁</span></div></div>
-            <div class="ex-acts"><button class="allbtn" id="dlAll"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.6v9.4M6.9 5.7 10 2.5l3.1 3.2"/><path d="M6.6 8H5.4A1.4 1.4 0 0 0 4 9.4v6.2A1.4 1.4 0 0 0 5.4 17h9.2a1.4 1.4 0 0 0 1.4-1.4V9.4A1.4 1.4 0 0 0 14.6 8h-1.2"/></svg>整本科判表</button><button class="go" id="dlGo">匯出所選頁</button><button id="dlCancel" hidden></button></div>
+            <div class="ex-acts"><button class="allbtn" id="dlAll"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.6v9.4M6.9 5.7 10 2.5l3.1 3.2"/><path d="M6.6 8H5.4A1.4 1.4 0 0 0 4 9.4v6.2A1.4 1.4 0 0 0 5.4 17h9.2a1.4 1.4 0 0 0 1.4-1.4V9.4A1.4 1.4 0 0 0 14.6 8h-1.2"/></svg>整本科判表</button><button class="go" id="dlGo">匯出所選頁</button><button id="dlCancel" hidden></button></div>
             <div class="msg" id="dlMsg"></div>
           </section>
         </div>
@@ -3553,7 +3553,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function showSettingsPage(page){
     settingsPage=page;var menu=$('menu'),panel=menu.querySelector('.mpop');
     panel.dataset.settingsPage=page;panel.scrollTop=0;document.documentElement.classList.toggle('vc-lock',page==='history'&&deviceLayout==='iphone');
-    var names={root:'功能',label:'科標',report:'問題回報',edition:'版本',content:'內文',layout:'介面',ft:'字體',dl:'匯出',about:'關於',history:'版本',version:'更新摘要'};
+    var names={root:'功能',label:'科標',report:'問題回報',edition:'版本',content:'註釋',layout:'介面',ft:'字體',dl:'匯出',about:'關於',history:'版本',version:'更新摘要'};
     $('settingsTitle').textContent=names[page]||'功能';$('settingsBack').hidden=page==='root';$('settingsBack').setAttribute('aria-label',page==='report'?'返回關於':'返回功能列表');var mp=$('menu').querySelector('.mpop');if(mp)delete mp.dataset.hover;
     $('ftWrap').classList.toggle('open',page==='ft');$('about').classList.toggle('open',page==='about'||page==='history'||page==='version'||page==='report');
     document.querySelector('.menu .dl').classList.toggle('on',page==='dl');$('dlPop').hidden=page!=='dl';
@@ -3579,14 +3579,20 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     (function(){var vb=$('versionBtn');if(!vb)return;var dots=[].slice.call(vb.querySelectorAll('.upd-dot'));var mb=$('menuBtn');if(mb&&!mb.querySelector('.upd-dot')){var md=document.createElement('i');md.className='upd-dot';md.hidden=true;mb.appendChild(md);dots.push(md);}
       var ver=($('appVer').textContent||'').replace(/^v/,'');
       function st(k){try{return localStorage.getItem(k);}catch(e){return null;}}
-      function refresh(){var unseen=st('hk-tour')&&st('hk-update-notice')==='off'&&st('hk-seen-version')!==ver;dots.forEach(function(d){d.hidden=!unseen;});}
+      function refresh(){var unseen=st('hk-tour')&&(st('hk-update-notice')==='off'||st('hk-update-skip')===ver)&&st('hk-seen-version')!==ver;dots.forEach(function(d){d.hidden=!unseen;});}
       vb.addEventListener('click',function(){try{localStorage.setItem('hk-seen-version',ver);}catch(e){}refresh();showSettingsPage('history');});
       window.addEventListener('upd-dot',refresh);refresh();})();
-    (function(){var hb=$('versionHistoryBtn');if(!hb||$('updToggle'))return;var on=true;try{on=localStorage.getItem('hk-update-notice')!=='off';}catch(e){}
-      var row=document.createElement('label');row.className='mi upd-toggle';row.innerHTML='<span>版本更新通知</span><input type="checkbox" id="updToggle" role="switch"><i class="upd-sw" aria-hidden="true"></i>';
-      var cb=row.querySelector('input');cb.checked=on;cb.setAttribute('aria-checked',String(on));
-      cb.addEventListener('change',function(){cb.setAttribute('aria-checked',String(cb.checked));try{localStorage.setItem('hk-update-notice',cb.checked?'on':'off');}catch(e){}window.dispatchEvent(new Event('upd-dot'));});
-      hb.insertAdjacentElement('afterend',row);})();
+    (function(){var vh=$('versionHistory');if(!vh||$('updForever'))return;
+      var ver=($('appVer').textContent||'').replace(/^v/,'');
+      function st(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+      function put(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+      var box=document.createElement('div');box.className='upd-prefs';
+      box.innerHTML='<label class="upd-row"><span>此版本不再通知</span><input type="checkbox" id="updThis" role="switch"><i class="upd-sw" aria-hidden="true"></i></label><label class="upd-row"><span>永遠不再通知</span><input type="checkbox" id="updForever" role="switch"><i class="upd-sw" aria-hidden="true"></i></label><p class="upd-hint">更新後會跳出通知；在這裡可以關閉。</p>';
+      var a=box.querySelector('#updThis'),f=box.querySelector('#updForever');
+      a.checked=st('hk-update-skip')===ver;f.checked=st('hk-update-notice')==='off';
+      a.addEventListener('change',function(){if(a.checked)put('hk-update-skip',ver);else try{localStorage.removeItem('hk-update-skip');}catch(e){}window.dispatchEvent(new Event('upd-dot'));});
+      f.addEventListener('change',function(){put('hk-update-notice',f.checked?'off':'on');window.dispatchEvent(new Event('upd-dot'));});
+      vh.insertBefore(box,vh.firstChild);})();
     (function(){var ver=$('about').querySelector('.ver'),hb=$('versionHistoryBtn');if(!ver||!hb)return;ver.setAttribute('role','button');ver.tabIndex=0;ver.setAttribute('aria-label','版本內容');var ch=document.createElement('i');ch.className='chev';ch.textContent='›';ver.appendChild(ch);ver.addEventListener('click',function(){hb.click();});ver.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hb.click();}});})();
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
@@ -3888,13 +3894,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function remember(){try{localStorage.setItem(KEY,ver);}catch(e){}}
       var forced=/[?&]preview=update(&|$)/.test(location.search);
       var off=false;try{off=localStorage.getItem('hk-update-notice')==='off';}catch(e){}
-      if(off&&!forced){return;}
+      var skip=false;try{skip=localStorage.getItem('hk-update-skip')===ver;}catch(e){}
+      if((off||skip)&&!forced){return;}
       if(last===ver&&!forced)return;
       if(!seen&&!forced){remember();return;}
       var vn=versionNotes[ver],items=vn?vn.items.filter(function(i){return i[2];}):[];
       if(!items.length){if(!forced)remember();return;}
       var box=document.createElement('div');box.className='upd-notice';box.id='updNotice';
-      box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><div class="upd-groups"></div><p class="upd-more">完整內容：功能列表 › 關於 › 版本內容<br>不想收到更新通知，可在功能列表 › 關於 關閉。</p><button type="button" class="upd-ok">知道了</button></div>';
+      box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><div class="upd-groups"></div><p class="upd-more">完整內容：功能列表 › 關於 › 版本內容<br>不想收到，可在功能列表 › 版本 關閉。</p><button type="button" class="upd-ok">知道了</button></div>';
       box.querySelector('h4').textContent='已更新'+ver;
       var gbox=box.querySelector('.upd-groups');
       ['new','fix'].forEach(function(k){var g=items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h5'),ul=document.createElement('ul');h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});gbox.appendChild(h);gbox.appendChild(ul);});
@@ -5597,6 +5604,43 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 /* 版本移出關於：關於內不再顯示版本列；非首頁不顯示版本鍵 */
 .about-overview .grp:has(.ver){display:none!important}
 .settings-panel:not([data-settings-page=root]) #versionBtn{display:none!important}
+
+/* 版本頁：更新通知開關（此版本／永遠） */
+.upd-prefs{margin:0 0 10px}
+.upd-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 14px;margin:0 0 6px;background:var(--bg);border-radius:12px;font:14px var(--ui);color:var(--fg);cursor:pointer}
+.upd-row input{position:absolute;opacity:0;pointer-events:none}
+.upd-row input:checked+.upd-sw{background:var(--fg)}
+.upd-row input:checked+.upd-sw::after{transform:translateX(18px)}
+.upd-row input:focus-visible+.upd-sw{outline:2px solid var(--link);outline-offset:2px}
+.upd-hint{margin:2px 4px 0;font:11.5px/1.5 var(--ui);color:var(--muted)}
+.upd-prefs,.upd-prefs *{font-family:"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif}
+.about-overview .upd-toggle{display:none!important}
+/* 版本與關於之間的分隔線 */
+:root:root:root:root:root .settings-panel[data-settings-page=root] #versionBtn{background-image:linear-gradient(var(--rule),var(--rule))!important;background-size:calc(100% - 56px) 1px!important;background-position:44px 100%!important;background-repeat:no-repeat!important;border-radius:10px 10px 0 0!important}
+/* 功能列表：間距收緊、勻稱 */
+:root:root:root:root:root .settings-panel[data-settings-page=root] .mi{min-height:34px!important;padding:3px 10px!important}
+:root:root:root:root:root .settings-panel[data-settings-page=root]>:is(.edition-settings,.content-settings,.learning-settings-list,.ft,.dl,.about){padding:1px 4px!important}
+:root:root:root:root:root .settings-panel[data-settings-page=root]>.settings-section{margin:9px 14px 4px!important}
+:root:root:root:root:root .settings-panel[data-settings-page=root]>#tourBtn{min-height:34px!important}
+/* 匯出：再縮小、精緻 */
+:root:root:root:root .ex-panel .ex-hero,:root:root:root:root .settings-panel .ex-panel .ex-hero{padding:8px 12px!important;gap:10px;border-radius:12px!important}
+:root:root:root:root .ex-panel .ex-hero b{font-size:13.5px!important}
+:root:root:root:root .ex-panel .ex-hero small{font-size:11px!important}
+:root:root:root:root .ex-panel .ex-hero svg{width:18px!important;height:18px!important}
+:root:root:root:root .ex-card{padding:0 12px 10px!important;margin-top:8px!important;border-radius:12px!important}
+:root:root:root:root .ex-card h5{font-size:12px!important;margin:8px 0 0!important}
+:root:root:root:root .ex-row{padding:6px 0!important;column-gap:8px!important;grid-template-columns:2em minmax(0,1fr)!important}
+:root:root:root:root .ex-l{font-size:11px!important;padding-top:4px!important}
+:root:root:root:root .ex-range{gap:5px!important;font-size:12px!important}
+:root:root:root:root .ex-range input,:root:root:root:root .settings-panel .ex-range input{width:2.9em!important;height:26px!important;font-size:14px!important;border-radius:7px!important}
+:root:root:root:root .ex-quick .lk,:root:root:root:root .settings-panel .ex-quick .lk{padding:3px 5px!important;font-size:11px!important}
+:root:root:root:root .ex-card .cks,:root:root:root:root .settings-panel .ex-card .cks{gap:5px!important}
+:root:root:root:root .ex-card .ck span,:root:root:root:root .settings-panel .ex-card .ck span{padding:3px 9px!important;font-size:11.5px!important}
+:root:root:root:root .ex-card .ex-go,:root:root:root:root .settings-panel .ex-card .ex-go{height:30px!important;min-width:84px!important;padding:0 18px!important;font-size:12.5px!important;border-radius:8px!important;margin-top:4px!important}
+:root:root:root:root .ex-acts .go,:root:root:root:root .settings-panel .ex-acts .go{height:30px!important;padding:0 14px!important;font-size:12px!important;border-radius:8px!important;max-width:150px}
+:root:root:root:root .ex-acts .allbtn,:root:root:root:root .settings-panel .ex-acts .allbtn{height:30px!important;padding:0 10px!important;font-size:11.5px!important;border-radius:8px!important;gap:5px!important}
+:root:root:root:root .ex-acts .allbtn svg{width:13px!important;height:13px!important;margin-top:0}
+:root:root:root:root .ex-info{font-size:11px!important}
 </style>
 </body></html>
 <style>
