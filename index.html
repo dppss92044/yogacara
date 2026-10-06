@@ -2798,11 +2798,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if (VM && side === "L") document.body.classList.add("row");
       if(side==='R'&&deviceLayout==='mac'&&equalPanes){var initialWidth=panel.getBoundingClientRect().width;equalPanes=false;wrap.classList.remove('equal-panes');document.documentElement.style.setProperty('--pw',initialWidth+'px');try{localStorage.setItem('hk-pane-split-v140','custom');}catch(e){}}
       var rect=wrap.getBoundingClientRect(),railWidth=railOn?rail.getBoundingClientRect().width:0,panelWidth=panel.hidden?0:panel.getBoundingClientRect().width,need=railNeed(),swap=wrap.classList.contains('panes-swapped');
+      var startX=e.clientX,startW=panelWidth,panelLeft=!panel.hidden&&panel.getBoundingClientRect().left<wrap.querySelector('.main').getBoundingClientRect().left;
       var max=side==='L'?Math.max(180,rect.width-(deviceLayout==='ipad'&&!ipadPinned?0:panelWidth)-(deviceLayout==='ipad'?220:300)):Math.max(180,rect.width-(deviceLayout==='ipad'?railWidth:railOn?Math.max(need,railWidth):0)-(deviceLayout==='ipad'?220:300));
       var min=deviceLayout==='ipad'?180:Math.min(side==='L'?need:260,max),property=deviceLayout==='ipad'?(side==='L'?'--ipad-rw':'--ipad-pw'):(side==='L'?'--rw':'--pw');
       Motion.cancel(g);g.classList.add('motion-dragging');
       var dragFitFrame=0;function scheduleDragFit(){if(!dragFitFrame)dragFitFrame=requestAnimationFrame(function(){dragFitFrame=0;placeGutters();fitP();fitV();});}
-      var updateDrag=Motion.rafThrottle(function(x){var reserve=deviceLayout==='ipad'?railWidth:railOn?Math.max(need,railWidth):0,desired=side==='L'?x-rect.left:swap?x-rect.left-reserve:rect.right-x,legal=Math.max(min,Math.min(max,desired)),over=desired-legal;document.documentElement.style.setProperty(property,legal+'px');scheduleDragFit();g.style.transform=over?'translate3d('+Motion.rubberBand(over,24)+'px,0,0)':'';});
+      var updateDrag=Motion.rafThrottle(function(x){var reserve=deviceLayout==='ipad'?railWidth:railOn?Math.max(need,railWidth):0,desired=side==='L'?x-rect.left:startW+(panelLeft?1:-1)*(x-startX),legal=Math.max(min,Math.min(max,desired)),over=desired-legal;document.documentElement.style.setProperty(property,legal+'px');scheduleDragFit();g.style.transform=over?'translate3d('+(side==='L'||panelLeft?1:-1)*Motion.rubberBand(over,24)+'px,0,0)':'';});
       function mv(ev){updateDrag(ev.clientX);}
       var ended=false;
       function up() {
@@ -3523,7 +3524,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   Object.keys(versionNotes).forEach(function(v){versionSummaries[v]=versionNotes[v].items.map(function(i){return VN_KIND[i[0]]+'：'+i[1];}).join('\n');});
   function showSettingsPage(page){
     settingsPage=page;var menu=$('menu'),panel=menu.querySelector('.mpop');
-    panel.dataset.settingsPage=page;panel.scrollTop=0;
+    panel.dataset.settingsPage=page;panel.scrollTop=0;document.documentElement.classList.toggle('vc-lock',page==='history'&&deviceLayout==='iphone');
     var names={root:'功能',label:'科標',report:'問題回報',edition:'版本',content:'內文',layout:'介面',ft:'字體',dl:'匯出',about:'關於',history:'版本內容',version:'更新摘要'};
     $('settingsTitle').textContent=names[page]||'功能';$('settingsBack').hidden=page==='root';$('settingsBack').setAttribute('aria-label',page==='history'||page==='report'?'返回關於':'返回功能列表');var mp=$('menu').querySelector('.mpop');if(mp)delete mp.dataset.hover;
     $('ftWrap').classList.toggle('open',page==='ft');$('about').classList.toggle('open',page==='about'||page==='history'||page==='version'||page==='report');
@@ -3841,18 +3842,20 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var ver=($('appVer').textContent||'').replace(/^v/,''),KEY='hk-seen-version',last=null;
       try{last=localStorage.getItem(KEY);}catch(e){}
       function remember(){try{localStorage.setItem(KEY,ver);}catch(e){}}
-      if(last===ver)return;
-      if(!seen){remember();return;}
+      var forced=/[?&]preview=update(&|$)/.test(location.search);
+      if(last===ver&&!forced)return;
+      if(!seen&&!forced){remember();return;}
       var vn=versionNotes[ver],items=vn?vn.items.filter(function(i){return i[2];}):[];
-      if(!items.length){remember();return;}
+      if(!items.length){if(!forced)remember();return;}
       var box=document.createElement('div');box.className='upd-notice';box.id='updNotice';
       box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><ul></ul><p class="upd-more">詳細更新內容可至「功能列表 → 關於 → 版本內容」查看。</p><button type="button">知道了</button></div>';
       box.querySelector('h4').textContent='已更新至 v'+ver;
       var ul=box.querySelector('ul');items.forEach(function(i){var li=document.createElement('li'),k=document.createElement('b');k.className='vc-k vc-'+i[0];k.textContent=VN_KIND[i[0]];li.appendChild(k);li.appendChild(document.createElement('span')).textContent=i[1];ul.appendChild(li);});
-      function close(){remember();box.remove();}
+      function close(){if(!forced)remember();box.remove();}
       box.querySelector('button').onclick=close;
       box.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();close();}});
-      setTimeout(function(){if($('tour'))return;document.body.appendChild(box);var cd=box.querySelector('.upd-card');cd.tabIndex=-1;cd.focus({preventScroll:true});},900);
+      function show(){if($('tour')){if(forced)setTimeout(show,800);return;}document.body.appendChild(box);var cd=box.querySelector('.upd-card');cd.tabIndex=-1;cd.focus({preventScroll:true});}
+      setTimeout(show,900);
     })();
     
   }).catch(function () { article.innerHTML = '<div class="loading">資料無法載入。請改用最新版的 Chrome、Edge 或 Safari 開啟這個網頁。</div>'; });
@@ -5398,9 +5401,11 @@ input,select,textarea,button{border-radius:8px}
 .vc-item li .vc-k{font-weight:600}
 .vc .vc-item>ul{padding:0 14px 12px 30px!important;margin:0!important}
 .vc .vc-item li{margin:0 0 6px!important}
-:root:root:root:root[data-layout=iphone] .menu .mpop.settings-panel[data-settings-page=about],:root:root:root:root[data-layout=iphone] .menu .mpop.settings-panel[data-settings-page=history],:root:root:root:root[data-layout=iphone] .menu .mpop.settings-panel[data-settings-page=version]{left:12px!important;width:calc(100vw - 24px)!important;max-width:none!important}
+html.vc-lock:has(.menu.open),html.vc-lock:has(.menu.open) body{overflow:hidden!important;overscroll-behavior:none}
+html.vc-lock .menu .mpop{touch-action:pan-y}
+:root:root:root:root[data-layout=iphone] .menu .mpop.settings-panel[data-settings-page=history]{left:12px!important;width:calc(100vw - 24px)!important;max-width:none!important}
 :root[data-layout=iphone] .settings-panel:not([data-settings-page=root])>.settings-head{height:auto!important;min-height:44px!important;margin-bottom:6px!important}
-:root[data-layout=iphone] .settings-panel[data-settings-page=about],:root[data-layout=iphone] .settings-panel[data-settings-page=history],:root[data-layout=iphone] .settings-panel[data-settings-page=version]{height:var(--menu-height,calc(100dvh - 190px))!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:max(12px,env(safe-area-inset-bottom,0px))!important}
+:root[data-layout=iphone] .settings-panel[data-settings-page=history]{height:var(--menu-height,calc(100dvh - 190px))!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:max(12px,env(safe-area-inset-bottom,0px))!important}
 </style>
 </body></html>
 <style>
