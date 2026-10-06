@@ -3578,7 +3578,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var vs=Object.keys(versionNotes).sort(function(a,b){var x=a.split('.').map(Number),y=b.split('.').map(Number);return (y[0]-x[0])||(y[1]-x[1]);}),v=vs[0],pop=document.createElement('div');
       pop.className='verpop';pop.setAttribute('aria-hidden','true');
       var h=document.createElement('div');h.className='vp-h';h.innerHTML='<b></b><small></small>';h.querySelector('b').textContent='版本內容　v'+v;h.querySelector('small').textContent=versionNotes[v].date||'';pop.appendChild(h);
-      ['new','fix','improve'].forEach(function(k){var g=versionNotes[v].items.filter(function(i){return i[0]===k;});if(!g.length)return;var t=document.createElement('h6'),ul=document.createElement('ul');t.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});pop.appendChild(t);pop.appendChild(ul);});
+      var card=document.createElement('div');card.className='vp-card';
+      ['new','fix','improve'].forEach(function(k){var g=versionNotes[v].items.filter(function(i){return i[0]===k;});if(!g.length)return;var t=document.createElement('h6'),ul=document.createElement('ul');t.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});card.appendChild(t);card.appendChild(ul);});
+      pop.appendChild(card);
       var f=document.createElement('p');f.className='vp-f';f.textContent='點一下「版本」，紅點即消失。';pop.appendChild(f);row.appendChild(pop);})();
     (function(){var sv=document.querySelector('.learning-settings>summary>svg');if(!sv)return;
       var IC={mac:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M12 17v4M8 21h8"/>',ipad:'<rect x="4" y="2" width="16" height="20" rx="2.5"/><path d="M11 19h2"/>',iphone:'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 19h2"/>'};
@@ -5693,6 +5695,16 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root:root .vc-item summary b{font-size:16px!important}
 :root:root:root:root .vc-item .vc-h{font-size:12.5px!important}
 :root:root:root:root .vc-item summary small{font-size:11px!important}
+/* 更新通知開關：黃色、同其他開關大小；更新內容白底框、字再小一級 */
+:root:root:root .upd-sw{width:34px;height:20px;border-radius:10px}
+:root:root:root .upd-sw::after{width:16px;height:16px}
+:root:root:root .upd-row input:checked+.upd-sw{background:var(--c,#d9a62e)}
+:root:root:root .upd-row input:checked+.upd-sw::after{transform:translateX(14px)}
+.verpop .vp-card{background:var(--bg);border-radius:12px;padding:6px 12px 8px;margin:0 0 4px}
+.verpop .vp-card h6:first-child{margin-top:4px}
+:root:root:root:root .verpop,:root:root:root:root .verpop li{font-size:10.5px!important}
+:root:root:root:root .verpop .vp-h small,:root:root:root:root .verpop h6,:root:root:root:root .verpop .vp-f{font-size:10px!important}
+:root:root:root:root .vc-item li{font-size:12px!important}
 </style>
 </body></html>
 <style>
