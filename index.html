@@ -3587,7 +3587,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     (function(){var vb=$('versionBtn');if(!vb)return;var dots=[].slice.call(vb.querySelectorAll('.upd-dot'));var mb=$('menuBtn');if(mb&&!mb.querySelector('.upd-dot')){var md=document.createElement('i');md.className='upd-dot';md.hidden=true;mb.appendChild(md);dots.push(md);}
       var ver=($('appVer').textContent||'').replace(/^v/,'');
       function st(k){try{return localStorage.getItem(k);}catch(e){return null;}}
-      function refresh(){var unseen=st('hk-tour')&&(st('hk-update-notice')==='off'||st('hk-update-skip')===ver)&&st('hk-seen-version')!==ver;dots.forEach(function(d){d.hidden=!unseen;});}
+      function refresh(){var unseen=st('hk-tour')&&st('hk-update-notice')==='off'&&st('hk-seen-version')!==ver;dots.forEach(function(d){d.hidden=!unseen;});}
       vb.addEventListener('click',function(){try{localStorage.setItem('hk-seen-version',ver);}catch(e){}refresh();showSettingsPage('history');});
       window.addEventListener('upd-dot',refresh);refresh();})();
     (function(){var vh=$('versionHistory');if(!vh||$('updForever'))return;
@@ -3595,11 +3595,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function st(k){try{return localStorage.getItem(k);}catch(e){return null;}}
       function put(k,v){try{localStorage.setItem(k,v);}catch(e){}}
       var box=document.createElement('div');box.className='upd-prefs';
-      box.innerHTML='<label class="upd-row"><span>此版本不再通知</span><input type="checkbox" id="updThis" role="switch"><i class="upd-sw" aria-hidden="true"></i></label><label class="upd-row"><span>永遠不再通知</span><input type="checkbox" id="updForever" role="switch"><i class="upd-sw" aria-hidden="true"></i></label><p class="upd-hint">更新後會跳出通知；在這裡可以關閉。</p>';
-      var a=box.querySelector('#updThis'),f=box.querySelector('#updForever');
-      a.checked=st('hk-update-skip')===ver;f.checked=st('hk-update-notice')==='off';
-      a.addEventListener('change',function(){if(a.checked)put('hk-update-skip',ver);else try{localStorage.removeItem('hk-update-skip');}catch(e){}window.dispatchEvent(new Event('upd-dot'));});
-      f.addEventListener('change',function(){put('hk-update-notice',f.checked?'off':'on');window.dispatchEvent(new Event('upd-dot'));});
+      box.innerHTML='<label class="upd-row"><span>更新通知</span><input type="checkbox" id="updForever" role="switch"><i class="upd-sw" aria-hidden="true"></i></label><p class="upd-hint">更新後會跳出通知。關閉後不再跳出，但有新版時，「版本」旁仍會有紅點。</p>';
+      var f=box.querySelector('#updForever');
+      f.checked=st('hk-update-notice')!=='off';
+      var pop=document.querySelector('.verpop'),pf=null;
+      if(pop){var pl=document.createElement('label');pl.className='upd-row upd-pop';pl.innerHTML='<span>更新通知</span><input type="checkbox" id="updForeverPop" role="switch"><i class="upd-sw" aria-hidden="true"></i>';pf=pl.querySelector('input');pf.checked=f.checked;var hd=pop.querySelector('.vp-h');hd.after(pl);pop.removeAttribute('aria-hidden');}
+      function setN(v){f.checked=v;if(pf)pf.checked=v;put('hk-update-notice',v?'on':'off');window.dispatchEvent(new Event('upd-dot'));}
+      f.addEventListener('change',function(){setN(f.checked);});if(pf)pf.addEventListener('change',function(){setN(pf.checked);});
       vh.insertBefore(box,vh.firstChild);})();
     (function(){var ver=$('about').querySelector('.ver'),hb=$('versionHistoryBtn');if(!ver||!hb)return;ver.setAttribute('role','button');ver.tabIndex=0;ver.setAttribute('aria-label','版本內容');var ch=document.createElement('i');ch.className='chev';ch.textContent='›';ver.appendChild(ch);ver.addEventListener('click',function(){hb.click();});ver.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hb.click();}});})();
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
@@ -3906,8 +3908,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function remember(){try{localStorage.setItem(KEY,ver);}catch(e){}}
       var forced=/[?&]preview=update(&|$)/.test(location.search);
       var off=false;try{off=localStorage.getItem('hk-update-notice')==='off';}catch(e){}
-      var skip=false;try{skip=localStorage.getItem('hk-update-skip')===ver;}catch(e){}
-      if((off||skip)&&!forced){return;}
+      if(off&&!forced){return;}
       if(last===ver&&!forced)return;
       if(!seen&&!forced){remember();return;}
       var vn=versionNotes[ver],items=vn?vn.items.filter(function(i){return i[2];}):[];
@@ -5680,6 +5681,7 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .verpop ul{margin:0;padding:0 0 0 1.3em}
 .verpop li{margin:0 0 2px}
 .verpop .vp-f{margin:10px 2px 0;font-size:12px;color:var(--muted)}
+.verpop .upd-pop{margin:0 0 4px;padding:7px 12px;font-family:"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif}
 </style>
 </body></html>
 <style>
