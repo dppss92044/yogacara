@@ -5507,6 +5507,11 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root[data-layout=iphone] .device-tabs button svg{transition:transform .35s ease-in-out 2.1s}
 :root:root:root[data-layout=iphone] .device-tabs button.pressing svg{transform:translateY(-10px);transition:transform .12s ease-out 0s}
 :root:root:root[data-layout=iphone] .device-tabs button.pressing span{transition:opacity .08s}
+
+/* 底部圖示：文字有獨立的一行，圖示固定不動 */
+:root:root:root[data-layout=iphone] .device-tabs button{justify-content:flex-start!important;padding-top:6px!important;gap:2px!important}
+:root:root:root[data-layout=iphone] .device-tabs button span{position:static!important;display:block;height:14px;line-height:14px!important;font-size:11px!important}
+:root:root:root[data-layout=iphone] .device-tabs button svg,:root:root:root[data-layout=iphone] .device-tabs button.pressing svg{transform:none!important;transition:none!important}
 </style>
 </body></html>
 <style>
