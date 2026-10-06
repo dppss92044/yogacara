@@ -117,6 +117,12 @@
 - 延續上一輪：以滑鼠所在列（`under`）為準，延遲計時器觸發時若已離開就不開。
 - Chromium 逐格取樣與事件模擬皆無殘留；曾在 Chromium 以原樣步驟「只滑過版本」未能重現閃白，Safari/WebKit 無法在此環境測試，須 q 實機回報。
 
+## 發布前預覽第 32 輪（q 07:59；仍未發布）
+
+- q 發現前兩輪「沒修好」其實是 Mac 上 8000 埠被舊伺服器佔用（Address already in use），看到的是舊版；停掉舊伺服器後 hover bug 消失（q 回報「有了」）。
+- 新需求：滑到「版本」要有預覽浮窗。新增 `.verpop`（與關於浮窗同款，300px），內容為目前版本的更新內容（取自 `versionNotes`），底部提示「點一下，查看全部版本與更新通知設定」；點擊仍進版本頁。版本列併入 `rows` 的 hover 機制（`data-hover=version`），僅在 hover 裝置顯示；手機/iPad 觸控不顯示。
+- 測試（Chromium 電腦）：停版本→浮窗、滑進浮窗保持、→關於、→匯出皆正確切換，點版本進 history 頁。Safari、實機未測。
+
 ## v1.92 發布（2026-10-06；整合分支 `claude/project-thread-7xwf2g`）
 
 - q 於 2026-10-06 明確確認：「確認發布 v1.92，摘要照用。」（`AGENTS.md` §3.4 第 3 條）。發布 commit＝「更新至 v1.92」（最後 commit 以 `git log` 為準）；PR 到 `main`，**由 q 自行 merge，Claude 不 merge**。

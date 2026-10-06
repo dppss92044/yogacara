@@ -3574,6 +3574,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         sm.innerHTML='<b></b><small></small>';sm.querySelector('b').textContent='v'+v;sm.querySelector('small').textContent=versionNotes[v].date||'';
         ['new','fix','improve'].forEach(function(k){var g=versionNotes[v].items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h6'),gl=document.createElement('ul');h.className='vc-h';h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];gl.appendChild(li);});d.appendChild(h);d.appendChild(gl);});
         d.insertBefore(sm,d.firstChild);box.appendChild(d);});})();
+    (function(){var row=document.querySelector('.ver-menu-row');if(!row||row.querySelector('.verpop'))return;
+      var vs=Object.keys(versionNotes).sort(function(a,b){var x=a.split('.').map(Number),y=b.split('.').map(Number);return (y[0]-x[0])||(y[1]-x[1]);}),v=vs[0],pop=document.createElement('div');
+      pop.className='verpop';pop.setAttribute('aria-hidden','true');
+      var h=document.createElement('div');h.className='vp-h';h.innerHTML='<b></b><small></small>';h.querySelector('b').textContent='版本內容　v'+v;h.querySelector('small').textContent=versionNotes[v].date||'';pop.appendChild(h);
+      ['new','fix','improve'].forEach(function(k){var g=versionNotes[v].items.filter(function(i){return i[0]===k;});if(!g.length)return;var t=document.createElement('h6'),ul=document.createElement('ul');t.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});pop.appendChild(t);pop.appendChild(ul);});
+      var f=document.createElement('p');f.className='vp-f';f.textContent='點一下，查看全部版本與更新通知設定';pop.appendChild(f);row.appendChild(pop);})();
     (function(){var sv=document.querySelector('.learning-settings>summary>svg');if(!sv)return;
       var IC={mac:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M12 17v4M8 21h8"/>',ipad:'<rect x="4" y="2" width="16" height="20" rx="2.5"/><path d="M11 19h2"/>',iphone:'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 19h2"/>'};
       function upd(){var l=document.documentElement.dataset.layout||deviceLayout;sv.innerHTML=IC[l]||IC.mac;}
@@ -3733,7 +3739,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   setTimeout(setupRailManualX, 0);
   function setupMenuFlyouts(){
     var panel=$('menu').querySelector('.mpop'),fine=matchMedia('(hover:hover) and (pointer:fine)'),cur=null,timer=0,leaveT=0;
-    var rows=[['.edition-settings','edition','.edition-body'],['.label-settings','label','.label-body'],['.content-settings','content','.content-body'],['.learning-settings-list','layout','.settings-body'],['.ft','ft','.ftpop'],['.dl','dl','.dlpop'],['.about','about','.apop']];
+    var rows=[['.edition-settings','edition','.edition-body'],['.label-settings','label','.label-body'],['.content-settings','content','.content-body'],['.learning-settings-list','layout','.settings-body'],['.ft','ft','.ftpop'],['.dl','dl','.dlpop'],['.ver-menu-row','version','.verpop'],['.about','about','.apop']];
     function clear(){
       delete panel.dataset.pin;panel.classList.remove('fly-inline');
       if(!cur)return;var was=cur;cur=null;delete panel.dataset.hover;panel.classList.remove('fly-left');
@@ -3763,7 +3769,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     panel.querySelectorAll('.edition-body,.label-body,.content-body,.settings-body,.ftpop,.dlpop,.apop').forEach(function(bd){bd.addEventListener('mouseenter',function(){clearTimeout(timer);clearTimeout(leaveT);if(bd.classList.contains('ftpop')&&cur==='ft'){clearTimeout(menuT);menuPinned=true;$('menu').classList.add('pinned');$('menuBtn').setAttribute('aria-pressed','true');panel.dataset.pin='ft';}});});
     pinLayoutFly=function(){var row=panel.querySelector(':scope > .learning-settings-list');if(!row)return;clearTimeout(timer);clearTimeout(leaveT);menuPinned=true;$('menu').classList.add('pinned');show('layout',row,'.settings-body',true);};
     $('tourBtn').addEventListener('mouseenter',function(){clearTimeout(timer);hardClear();});
-    (function(){var vr=panel.querySelector(':scope > .ver-menu-row');if(!vr)return;function away(){under=null;clearTimeout(timer);clearTimeout(leaveT);hardClear();}vr.addEventListener('mouseenter',away);vr.addEventListener('mouseover',away);vr.addEventListener('mousemove',function(){if(cur||document.querySelector('.menu .dl.on')||$('about').classList.contains('open')||$('ftWrap').classList.contains('open'))away();});})();
+    
     panel.addEventListener('mouseleave',function(){clearTimeout(timer);if(panel.dataset.pin)return;leaveT=setTimeout(function(){if(!panel.dataset.pin)clear();},300);});
     panel.addEventListener('mouseenter',function(){clearTimeout(leaveT);});
     new MutationObserver(function(){if(!$('menu').classList.contains('open')||panel.dataset.settingsPage!=='root')clear();}).observe($('menu'),{attributes:true,subtree:false,attributeFilter:['class']});
@@ -5661,6 +5667,19 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root .settings-panel .content-body .msw{padding:0!important}
 :root:root:root .settings-panel .content-body .msw .grp{margin:0!important}
 :root:root:root:root:root:root:root .ftpop .gbtns{margin:12px 0 0!important}
+/* 版本列懸浮預覽（與關於浮窗同款） */
+.ver-menu-row>.verpop{display:none}
+:root:root:root:root .settings-panel[data-settings-page=root][data-hover=version] .verpop{display:block!important;position:absolute!important;left:calc(100% + 8px)!important;right:auto!important;top:var(--fly-top,0px)!important;width:300px!important;max-width:calc(100vw - 24px)!important;max-height:var(--fly-maxh,80vh)!important;overflow-y:auto!important;margin:0!important;padding:12px!important;box-sizing:border-box;background:var(--rail)!important;border:1px solid var(--rule)!important;border-radius:20px!important;box-shadow:0 14px 44px rgba(0,0,0,.18)!important;z-index:5;font:13px/1.6 var(--ui);color:var(--fg)}
+:root:root:root:root .settings-panel[data-settings-page=root].fly-left[data-hover=version] .verpop{left:auto!important;right:calc(100% + 8px)!important}
+.settings-panel[data-hover=version] .verpop::before{content:"";position:absolute;top:-10px;bottom:-10px;left:-14px;width:16px}
+.settings-panel.fly-left[data-hover=version] .verpop::before{left:auto;right:-14px}
+.verpop .vp-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:0 2px 6px}
+.verpop .vp-h b{font:600 14px var(--ui)}
+.verpop .vp-h small{color:var(--muted);font-size:12px}
+.verpop h6{margin:8px 2px 2px;font:600 12px var(--ui);color:var(--muted);letter-spacing:.04em}
+.verpop ul{margin:0;padding:0 0 0 1.3em}
+.verpop li{margin:0 0 2px}
+.verpop .vp-f{margin:10px 2px 0;font-size:12px;color:var(--muted)}
 </style>
 </body></html>
 <style>
