@@ -2894,6 +2894,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   $("fsDn").onclick = function () { setFont(FSTEPS[Math.max(0, fsIdx(Z.m) - 1)], null, true); };
   $("fsUp").onclick = function () { setFont(FSTEPS[Math.min(FSTEPS.length-1, fsIdx(Z.m) + 1)], null, true); };
   $("lsSeg").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) setFont(null, +b.dataset.l, true); });
+  // 手機底部圖示：手指按住時顯示文字，完全放開後才消失
+  (function(){
+    var nav=document.querySelector('.device-tabs');if(!nav)return;var cur=null;
+    function off(){if(cur){cur.classList.remove('pressing');cur=null;}}
+    nav.addEventListener('pointerdown',function(e){var b=e.target.closest('button');if(!b)return;off();cur=b;b.classList.add('pressing');},true);
+    ['pointerup','pointercancel','touchend','touchcancel'].forEach(function(t){document.addEventListener(t,function(){setTimeout(off,0);},true);});
+    window.addEventListener('blur',off);
+  })();
   // 手機：在空白處連點兩下，該欄放大；再連點兩下還原（文字、科判標題、按鈕上的雙擊維持原功能）
   (function(){
     var last=null,prev={};
@@ -5478,8 +5486,8 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root[data-layout=iphone] .device-tabs button{position:relative}
 :root:root:root[data-layout=iphone] .device-tabs button span{position:absolute;left:0;right:0;bottom:3px;text-align:center;opacity:0;transition:opacity .12s}
 :root:root:root[data-layout=iphone] .device-tabs button svg{transition:transform .12s}
-:root:root:root[data-layout=iphone] .device-tabs button:active span{opacity:1}
-:root:root:root[data-layout=iphone] .device-tabs button:active svg{transform:translateY(-6px)}
+:root:root:root[data-layout=iphone] .device-tabs button.pressing span{opacity:1}
+:root:root:root[data-layout=iphone] .device-tabs button.pressing svg{transform:translateY(-6px)}
 /* 內容來源：分段、網址獨立一行 */
 .src-b{display:block;margin:0 0 16px;line-height:1.75}.src-b:last-child{margin-bottom:0}
 .src-t{display:block;margin:0 0 4px;font-weight:600}
