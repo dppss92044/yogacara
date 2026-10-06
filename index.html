@@ -1293,7 +1293,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   // ---------- left rail: 卷 + its 干支科判 (rubber band into adjacent 卷) ----------
   function railHTML(j) {
     var carried = !JL[j] && CARRY[j] != null, list = JL[j] || (carried ? pathOf(CARRY[j]) : []), out = [];
-    out.push('<button type="button" class="rhead" data-juan-go="' + j + '" aria-label="閱讀卷第' + cn(j) + '">卷第' + cn(j) + "</button>");
+    out.push('<button type="button" class="rhead" data-juan-go="' + j + '" aria-label="閱讀第' + cn(j) + '卷">第' + cn(j) + "卷</button>");
     out.push('<div class="rsub">' + (carried ? "承接前卷科判" : list.length + "科") + "</div><div class=\"rol\">");
     var minD = 99; list.forEach(function (i) { minD = Math.min(minD, N[i][3]); });
     var dl = list.map(function (k) { return N[k][3] - minD; });
@@ -5503,9 +5503,10 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .upd-card h4{margin:0 0 26px!important}
 
 /* 底部圖示文字：按下立即出現，放開後逐漸淡出 */
-:root:root:root[data-layout=iphone] .device-tabs button span{transition:opacity .8s ease-out}
-:root:root:root[data-layout=iphone] .device-tabs button svg{transition:transform .8s ease-out}
-:root:root:root[data-layout=iphone] .device-tabs button.pressing span,:root:root:root[data-layout=iphone] .device-tabs button.pressing svg{transition-duration:.08s}
+:root:root:root[data-layout=iphone] .device-tabs button span{transition:opacity 2.4s ease-out}
+:root:root:root[data-layout=iphone] .device-tabs button svg{transition:transform .35s ease-in-out 2.1s}
+:root:root:root[data-layout=iphone] .device-tabs button.pressing svg{transform:translateY(-10px);transition:transform .12s ease-out 0s}
+:root:root:root[data-layout=iphone] .device-tabs button.pressing span{transition:opacity .08s}
 </style>
 </body></html>
 <style>
