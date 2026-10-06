@@ -1011,8 +1011,10 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           </section>
         </div>
     </div>
-    <div class="about" id="about">
+    <div class="ver-menu-row">
       <button class="mi" id="versionBtn" role="menuitem"><em class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><i class="upd-dot" hidden></i></em><span>版本</span><i class="chev" aria-hidden="true">›</i></button>
+    </div>
+    <div class="about" id="about">
       <button class="mi" id="aboutBtn" role="menuitem" aria-haspopup="true"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M10 9v5M10 6.3v.2"/></svg><span>關於</span><i class="chev" aria-hidden="true">›</i></button>
       <div class="apop" role="dialog" aria-label="關於"><div class="about-overview">
         <div class="grp">
@@ -3596,7 +3598,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     (function(){var ver=$('about').querySelector('.ver'),hb=$('versionHistoryBtn');if(!ver||!hb)return;ver.setAttribute('role','button');ver.tabIndex=0;ver.setAttribute('aria-label','版本內容');var ch=document.createElement('i');ch.className='chev';ch.textContent='›';ver.appendChild(ch);ver.addEventListener('click',function(){hb.click();});ver.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hb.click();}});})();
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
-    var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn','#detailedTourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.about']]];
+    var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn','#detailedTourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.ver-menu-row','.about']]];
     groups.forEach(function(g,index){var h=document.createElement('h5');h.className='settings-section';h.id='settingsSection'+index;h.textContent=g[0];panel.appendChild(h);g[1].forEach(function(sel,k){var row=panel.querySelector(sel);if(!row)return;row.dataset.settingsGroup=index;row.setAttribute('aria-describedby',h.id);if(k===0)row.classList.add('group-first');if(k===g[1].length-1)row.classList.add('group-last');panel.appendChild(row);});});
     $('settingsBack').onclick=function(){showSettingsPage(settingsPage==='version'?versionBack:settingsPage==='report'?'about':'root');};
     panel.addEventListener('click',function(e){if(e.target.closest('#reportBtn')){e.preventDefault();e.stopImmediatePropagation();var mv=(document.querySelector('meta[name=app-version]')||{}).content||'';location.href='mailto:dppss92044@gmail.com?subject='+encodeURIComponent('瑜伽師地論app用戶問題回報')+'&body='+encodeURIComponent('\n\n——\n版本 v'+mv+'\n'+navigator.userAgent);return;}if(e.target.closest('.learning-settings summary')&&settingsPage==='root'){e.preventDefault();e.stopImmediatePropagation();pinLayoutFly();return;}var target=e.target.closest('#labelBtn,#reportBtn,#editionBtn,#contentBtn,#ftBtn,#dlBtn,#aboutBtn,.learning-settings summary,#versionHistoryBtn');if(!target)return;e.preventDefault();e.stopImmediatePropagation();var page=target.id==='labelBtn'?'label':target.id==='reportBtn'?'report':target.id==='editionBtn'?'edition':target.id==='contentBtn'?'content':target.id==='ftBtn'?'ft':target.id==='dlBtn'?'dl':target.id==='aboutBtn'?'about':target.id==='versionHistoryBtn'?'history':'layout';showSettingsPage(page);openMenu();},true);
@@ -3758,6 +3760,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     panel.querySelectorAll('.edition-body,.label-body,.content-body,.settings-body,.ftpop,.dlpop,.apop').forEach(function(bd){bd.addEventListener('mouseenter',function(){clearTimeout(timer);clearTimeout(leaveT);if(bd.classList.contains('ftpop')&&cur==='ft'){clearTimeout(menuT);menuPinned=true;$('menu').classList.add('pinned');$('menuBtn').setAttribute('aria-pressed','true');panel.dataset.pin='ft';}});});
     pinLayoutFly=function(){var row=panel.querySelector(':scope > .learning-settings-list');if(!row)return;clearTimeout(timer);clearTimeout(leaveT);menuPinned=true;$('menu').classList.add('pinned');show('layout',row,'.settings-body',true);};
     $('tourBtn').addEventListener('mouseenter',function(){clearTimeout(timer);clear();});
+    (function(){var vr=panel.querySelector(':scope > .ver-menu-row');if(vr)vr.addEventListener('mouseenter',function(){clearTimeout(timer);clear();});})();
     panel.addEventListener('mouseleave',function(){clearTimeout(timer);if(panel.dataset.pin)return;leaveT=setTimeout(function(){if(!panel.dataset.pin)clear();},300);});
     panel.addEventListener('mouseenter',function(){clearTimeout(leaveT);});
     new MutationObserver(function(){if(!$('menu').classList.contains('open')||panel.dataset.settingsPage!=='root')clear();}).observe($('menu'),{attributes:true,subtree:false,attributeFilter:['class']});
@@ -5615,8 +5618,6 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .upd-hint{margin:2px 4px 0;font:11.5px/1.5 var(--ui);color:var(--muted)}
 .upd-prefs,.upd-prefs *{font-family:"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif}
 .about-overview .upd-toggle{display:none!important}
-/* 版本與關於之間的分隔線 */
-:root:root:root:root:root .settings-panel[data-settings-page=root] #versionBtn{background-image:linear-gradient(var(--rule),var(--rule))!important;background-size:calc(100% - 56px) 1px!important;background-position:44px 100%!important;background-repeat:no-repeat!important;border-radius:10px 10px 0 0!important}
 /* 功能列表：間距收緊、勻稱 */
 :root:root:root:root:root .settings-panel[data-settings-page=root] .mi{min-height:34px!important;padding:3px 10px!important}
 :root:root:root:root:root .settings-panel[data-settings-page=root]>:is(.edition-settings,.content-settings,.learning-settings-list,.ft,.dl,.about){padding:1px 4px!important}
@@ -5641,6 +5642,16 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root:root:root .ex-acts .allbtn,:root:root:root:root .settings-panel .ex-acts .allbtn{height:30px!important;padding:0 10px!important;font-size:11.5px!important;border-radius:8px!important;gap:5px!important}
 :root:root:root:root .ex-acts .allbtn svg{width:13px!important;height:13px!important;margin-top:0}
 :root:root:root:root .ex-info{font-size:11px!important}
+
+/* 版本列自成一個容器；非首頁隱藏 */
+.settings-panel:not([data-settings-page=root])>.ver-menu-row{display:none!important}
+:root:root:root:root .settings-panel[data-settings-page=root]>.ver-menu-row{margin:0!important;border:0!important;overflow:visible!important;padding:1px 4px!important}
+.menu .about:focus-within:not(:hover):not(.open) .apop{display:none}
+/* 關於浮窗：兩列同高同色 */
+.about-overview .about-source{padding:0!important;margin:0 0 8px!important;background:var(--bg);border-radius:12px}
+.about-overview .about-source>summary{display:flex;align-items:center;min-height:42px;padding:0 14px;font:15px var(--ui);color:var(--fg)}
+.about-overview .about-source[open]{padding-bottom:10px!important}
+.about-overview #reportBtn{min-height:42px;padding:0 14px;font:15px var(--ui)}
 </style>
 </body></html>
 <style>
