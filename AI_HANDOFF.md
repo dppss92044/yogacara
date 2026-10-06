@@ -111,6 +111,12 @@
 - q 第二次回報「滑到版本會跳出關於浮窗、匯出短暫變白」。本環境沒有 WebKit（無法下載），只能用 Chromium；因此改成不依賴 mouseenter/mouseleave 順序：記錄滑鼠所在列（`under`），延遲開啟浮窗的計時器觸發時若滑鼠已不在該列就不開；版本列的 mouseenter／mouseover／mousemove 任一事件都會清掉計時器並收起浮窗。
 - 測試（Chromium）：連續取樣、事件順序模擬（只送版本 mouseover、進入匯出/關於 20ms 後切到版本）皆無浮窗與 `dl.on`。Safari/WebKit 未實測，須 q 在 Mac Safari 確認。
 
+## 發布前預覽第 31 輪（q 07:52；仍未發布）
+
+- 找到的真實缺口：`clear()` 開頭 `if(!cur)return`，只清「滑鼠懸浮」開的浮窗；由點擊／回上一頁留下的匯出列 `.on`（黃底白字）、關於／字體展開狀態不會被清。新增 `hardClear()`（無條件收起 dlPop、`.dl.on`、ft、about），用於：滑到版本列或導覽列、回到根面板。
+- 延續上一輪：以滑鼠所在列（`under`）為準，延遲計時器觸發時若已離開就不開。
+- Chromium 逐格取樣與事件模擬皆無殘留；曾在 Chromium 以原樣步驟「只滑過版本」未能重現閃白，Safari/WebKit 無法在此環境測試，須 q 實機回報。
+
 ## v1.92 發布（2026-10-06；整合分支 `claude/project-thread-7xwf2g`）
 
 - q 於 2026-10-06 明確確認：「確認發布 v1.92，摘要照用。」（`AGENTS.md` §3.4 第 3 條）。發布 commit＝「更新至 v1.92」（最後 commit 以 `git log` 為準）；PR 到 `main`，**由 q 自行 merge，Claude 不 merge**。

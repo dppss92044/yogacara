@@ -3742,6 +3742,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if(was==='dl'){$('dlPop').hidden=true;document.querySelector('.menu .dl').classList.remove('on');}
       if(was==='ft')$('ftWrap').classList.remove('open');if(was==='about')$('about').classList.remove('open');
     }
+    // 不論浮窗是 hover 或點擊開的，一律回到全部收起（含匯出列的 .on 選取狀態）
+    function hardClear(){clear();if(settingsPage!=='root')return;$('dlPop').hidden=true;document.querySelector('.menu .dl').classList.remove('on');$('ftWrap').classList.remove('open');$('about').classList.remove('open');}
     function place(body,row){
       var pr=panel.getBoundingClientRect(),rr=row.getBoundingClientRect(),w=body.offsetWidth,h=body.offsetHeight,vh=innerHeight;
       var noR=pr.right+8+w>innerWidth-8,noL=pr.left-8-w<8;
@@ -3760,12 +3762,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     rows.forEach(function(m){var row=panel.querySelector(':scope > '+m[0]);if(!row)return;row.addEventListener('mouseenter',function(){under=m[1];clearTimeout(leaveT);clearTimeout(timer);timer=setTimeout(function(){if(panel.dataset.pin||under!==m[1])return;show(m[1],row,m[2]);},cur&&cur!==m[1]?280:80);});});
     panel.querySelectorAll('.edition-body,.label-body,.content-body,.settings-body,.ftpop,.dlpop,.apop').forEach(function(bd){bd.addEventListener('mouseenter',function(){clearTimeout(timer);clearTimeout(leaveT);if(bd.classList.contains('ftpop')&&cur==='ft'){clearTimeout(menuT);menuPinned=true;$('menu').classList.add('pinned');$('menuBtn').setAttribute('aria-pressed','true');panel.dataset.pin='ft';}});});
     pinLayoutFly=function(){var row=panel.querySelector(':scope > .learning-settings-list');if(!row)return;clearTimeout(timer);clearTimeout(leaveT);menuPinned=true;$('menu').classList.add('pinned');show('layout',row,'.settings-body',true);};
-    $('tourBtn').addEventListener('mouseenter',function(){clearTimeout(timer);clear();});
-    (function(){var vr=panel.querySelector(':scope > .ver-menu-row');if(!vr)return;function away(){under=null;clearTimeout(timer);clearTimeout(leaveT);clear();}vr.addEventListener('mouseenter',away);vr.addEventListener('mouseover',function(){if(cur||timer)away();});vr.addEventListener('mousemove',function(){if(cur)away();});})();
+    $('tourBtn').addEventListener('mouseenter',function(){clearTimeout(timer);hardClear();});
+    (function(){var vr=panel.querySelector(':scope > .ver-menu-row');if(!vr)return;function away(){under=null;clearTimeout(timer);clearTimeout(leaveT);hardClear();}vr.addEventListener('mouseenter',away);vr.addEventListener('mouseover',away);vr.addEventListener('mousemove',function(){if(cur||document.querySelector('.menu .dl.on')||$('about').classList.contains('open')||$('ftWrap').classList.contains('open'))away();});})();
     panel.addEventListener('mouseleave',function(){clearTimeout(timer);if(panel.dataset.pin)return;leaveT=setTimeout(function(){if(!panel.dataset.pin)clear();},300);});
     panel.addEventListener('mouseenter',function(){clearTimeout(leaveT);});
     new MutationObserver(function(){if(!$('menu').classList.contains('open')||panel.dataset.settingsPage!=='root')clear();}).observe($('menu'),{attributes:true,subtree:false,attributeFilter:['class']});
-    new MutationObserver(function(){if(panel.dataset.settingsPage!=='root')clear();}).observe(panel,{attributes:true,attributeFilter:['data-settings-page']});
+    new MutationObserver(function(){if(panel.dataset.settingsPage!=='root')clear();else hardClear();}).observe(panel,{attributes:true,attributeFilter:['data-settings-page']});
   }
   // 問題回報：直接寄到維護者信箱（FormSubmit）；失敗時改開郵件 App。
   function setupReport(){
