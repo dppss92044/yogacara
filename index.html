@@ -3926,16 +3926,17 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var forced=/[?&]preview=update(&|$)/.test(location.search);
       var off=false;try{off=localStorage.getItem('hk-update-notice')==='off';}catch(e){}
       if(off&&!forced){return;}
-      if(last===ver&&!forced)return;
+      var hid=null;try{hid=localStorage.getItem('hk-notice-hide');}catch(e){}
+      if(hid===ver&&!forced)return;
       if(!seen&&!forced){remember();return;}
       var vn=versionNotes[ver],items=vn?vn.items.filter(function(i){return i[2];}):[];
       if(!items.length){if(!forced)remember();return;}
       var box=document.createElement('div');box.className='upd-notice';box.id='updNotice';
-      box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><div class="upd-groups"></div><p class="upd-more">完整內容：功能列表 › 關於 › 版本內容<br>不想收到，可在功能列表 › 版本 關閉。</p><button type="button" class="upd-ok">知道了</button></div>';
+      box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><div class="upd-groups"></div><p class="upd-more">詳情：功能列表 › 版本</p><label class="upd-skip"><input type="checkbox" id="updSkip"><i aria-hidden="true"></i>此版本不再顯示</label><button type="button" class="upd-ok">知道了</button></div>';
       box.querySelector('h4').textContent='已更新'+ver;
       var gbox=box.querySelector('.upd-groups');
       ['new','fix'].forEach(function(k){var g=items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h5'),ul=document.createElement('ul');h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});gbox.appendChild(h);gbox.appendChild(ul);});
-      function close(){if(!forced)remember();box.remove();}
+      function close(){if(!forced)remember();if(box.querySelector('#updSkip').checked)try{localStorage.setItem('hk-notice-hide',ver);}catch(e){}box.remove();}
       box.querySelector('.upd-ok').onclick=close;
       box.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();close();}});
       function show(){if($('tour')){if(forced)setTimeout(show,800);return;}document.body.appendChild(box);var cd=box.querySelector('.upd-card');cd.tabIndex=-1;cd.focus({preventScroll:true});}
@@ -5738,6 +5739,14 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .vbrief li{margin:0 0 2px;font:12.5px/1.6 var(--ui)}
 #versionHistory.expanded .vbrief .vb-h b,#versionHistory.expanded .vbrief .vb-h small{display:none}
 #versionHistory.expanded .vbrief{padding:6px 14px;background:none}
+/* 更新通知：此版本不再顯示勾選（預設不勾）、說明縮成一行 */
+.upd-card .upd-more{margin:0 0 10px!important;font-size:12px!important;color:var(--muted)}
+.upd-card .upd-skip{display:flex;align-items:center;gap:8px;margin:0 0 12px;font-size:13px;color:var(--fg);cursor:pointer;user-select:none}
+.upd-card .upd-skip input{position:absolute;opacity:0;pointer-events:none}
+.upd-card .upd-skip i{flex:none;width:16px;height:16px;border-radius:4px;border:1.5px solid var(--muted);box-sizing:border-box;position:relative;background:transparent}
+.upd-card .upd-skip input:checked+i{background:var(--c,#d9a62e);border-color:var(--c,#d9a62e)}
+.upd-card .upd-skip input:checked+i::after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.upd-card .upd-skip input:focus-visible+i{outline:2px solid var(--link);outline-offset:2px}
 </style>
 </body></html>
 <style>
