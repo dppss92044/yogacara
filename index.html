@@ -3108,6 +3108,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   document.addEventListener("keydown",function(e){if(e.code!=="Space"||!$("menu").classList.contains("open"))return;if(e.target.closest('input,textarea,select,[contenteditable="true"]'))return;e.preventDefault();dismissMenu();});
   var resetReaderHints=function(){};
   var HINTS=[{"s": "#jFold", "t": "卷目次", "d": "點一下收起卷號，再點一下展開。"}, {"s": "#juans a", "t": "選卷", "d": "點卷號，閱讀那一卷。"}, {"s": "#rv .rol a", "t": "科判", "d": "點這條，內文與科判表一起跳過去。"}, {"s": "#pNum", "t": "跳頁", "d": "輸入科判頁碼，按 Enter。"}, {"s": "#swapPanes", "t": "左右置換", "d": "點一下交換內文與科判表，再點復原。"}, {"s": "#panelPin", "t": "釘選", "d": "點一下，科判表固定在旁邊；再點恢復浮動。"}, {"s": "#gutL,#gutR", "t": "欄寬", "d": "按住這條線，左右拖動調整寬度。"}, {"s": ".zc", "t": "放大縮小", "d": "按 − 或 ＋ 縮放；點百分比還原 100%。"}, {"s": "#railClose,#panelClose", "t": "收起欄位", "d": "點一下隱藏這一欄。"}, {"s": "#railOpen,#panelOpen", "t": "開啟欄位", "d": "點一下重新顯示這一欄。"}, {"s": "#searchButton", "t": "搜尋", "d": "點放大鏡，輸入字詞後按 Enter。"}, {"s": "#menuBtn", "t": "功能列表", "d": "移過來查看功能；點一下固定展開，再點收起。"}, {"s": ".sw.kp", "t": "科判", "d": "亮燈顯示正文科判，熄燈隱藏。"}, {"s": ".sw.px", "t": "披尋記", "d": "亮燈顯示披尋記，熄燈隱藏。"}, {"s": ".sw.cb", "t": "常柏法師釋", "d": "亮燈顯示常柏法師釋，熄燈隱藏。"}, {"s": ".learning-settings summary", "t": "介面", "d": "手機自動配合螢幕；其他裝置可選平板或電腦。"}, {"s": ".sw.dict", "t": "辭典", "d": "亮燈開啟辭典。手機與平板雙擊正文詞語；電腦反白查詞。"}, {"s": "#ftBtn", "t": "字體", "d": "這裡改字體、大小與行距。"}, {"s": "#dlBtn", "t": "匯出", "d": "選卷次、內容與格式，把檔案下載下來。"}, {"s": "#aboutBtn", "t": "關於", "d": "這裡看版本與資料來源。"}, {"s": "#tourBtn", "t": "導覽", "d": "重看大導覽，也讓各功能的第一次提示重新出現。"}, {"s": "#termChoices button", "t": "切換詞語", "d": "反白含多個詞時，點這裡切換要看的詞。"}, {"s": "#termPreviewClose", "t": "關閉辭典", "d": "點 × 關閉。Escape 或點外面也可以。"}, {"s": "#termPreviewLink", "t": "完整詞條", "d": "內容沒顯示時，點這裡另開詞條。需要連網。"}, {"s": "#termPreview", "t": "反白查詞", "d": "上面選詞，下面看解釋。點 × 關閉。"}, {"s": "#article .txt p,#article h1", "t": "反白佛學辭典", "d": "手機與平板：雙擊正文詞語查辭典，長按仍使用系統反白功能。電腦：反白查詞，可選整句後切換詞語。"}, {"s": "#panel .pview", "t": "直書科判", "d": "點科判標題，跳到相應內文。"}, {"s": "#barHide", "t": "收起頂部", "d": "點一下收起最上面的工具列。"}, {"s": "#dockTab", "t": "展開頂部", "d": "點一下重新顯示頂部工具列。"}];
+  HINTS.length=0; /* q 2026-10-06：只保留滑鼠停留的小灰框說明（hovtip），不再跳出獨立講解視窗 */
   (function(){
     var key='hk-reader-hints-v139',seen={};try{seen=JSON.parse(localStorage.getItem(key)||'{}')||{};}catch(e){}
     var tip=document.createElement('aside');tip.className='reader-hint';tip.hidden=true;tip.setAttribute('role','status');tip.innerHTML='<button aria-label="關閉說明">×</button><b></b><p></p>';document.body.appendChild(tip);
@@ -4746,10 +4747,10 @@ input,select,textarea,button{border-radius:8px}
     if($('pKeypad'))return;
     var tot=document.createElement('span');tot.className='pj-tot';tot.hidden=true;n.insertAdjacentElement('afterend',tot);
     var kp=document.createElement('div');kp.id='pKeypad';kp.hidden=true;kp.setAttribute('role','group');kp.setAttribute('aria-label','頁碼數字鍵');
-    var keys=['1','2','3','4','5','6','7','8','9','del','0','go'];
-    kp.innerHTML=keys.map(function(k){return k==='del'?'<button type="button" class="del" data-k="del" aria-label="刪除">⌫</button>':k==='go'?'<button type="button" class="go" data-k="go" aria-label="前往">前往</button>':'<button type="button" data-k="'+k+'">'+k+'</button>';}).join('');
+    var keys=['1','2','3','4','5','6','7','8','9','','0','del'];
+    kp.innerHTML='<div class="pk-disp" aria-live="polite"></div>'+keys.map(function(k){return k==='del'?'<button type="button" class="del" data-k="del" aria-label="刪除">⌫</button>':k===''?'<span class="pk-gap"></span>':'<button type="button" data-k="'+k+'">'+k+'</button>';}).join('');
     pj.appendChild(kp);
-    function size(){n.style.setProperty('--page-ch',Math.max(1,String(n.value).length)+'ch');}
+    function size(){n.style.setProperty('--page-ch',Math.max(1,String(n.value).length)+'ch');var d=kp.querySelector('.pk-disp');if(d)d.textContent=n.value?n.value+' / '+(($('pageTotal')||{}).textContent||''):'輸入頁碼';}
     function go(){var v=parseInt(n.value,10),mx=parseInt(n.max,10)||999;if(!v)v=2;v=Math.max(2,Math.min(mx,v));n.value=v;n.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));}
     n.addEventListener('focus',function(){n.inputMode=matchMedia('(hover:none)').matches?'none':'numeric';tot.textContent='/'+(($('pageTotal')||{}).textContent||'');tot.hidden=false;kp.hidden=false;size();});
     n.addEventListener('blur',function(){tot.hidden=true;kp.hidden=true;});
@@ -4757,10 +4758,9 @@ input,select,textarea,button{border-radius:8px}
     kp.addEventListener('pointerdown',function(e){e.preventDefault();e.stopPropagation();});
     kp.addEventListener('mousedown',function(e){e.preventDefault();});
     kp.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;e.stopPropagation();var k=b.dataset.k,v=n.value,s=n.selectionStart,t=n.selectionEnd;if(s==null){s=t=v.length;}
-      if(k==='go'){go();return;}
       if(k==='del'){if(s===t&&s>0)s--;n.value=v.slice(0,s)+v.slice(t);n.setSelectionRange(s,s);}
       else{if(v.length-(t-s)>=3)return;n.value=v.slice(0,s)+k+v.slice(t);n.setSelectionRange(s+1,s+1);}
-      size();n.focus();});
+      size();n.focus();if(n.value)n.dispatchEvent(new Event('change',{bubbles:true}));});
   }
   // ---- 回上方：底色跟隨科判欄 ----
   setInterval(function(){var p=$('panel');if(p)document.documentElement.style.setProperty('--ct-bg',getComputedStyle(p).backgroundColor);},800);
@@ -4772,7 +4772,7 @@ input,select,textarea,button{border-radius:8px}
     ['.learning-settings summary','選擇電腦、平板或手機介面'],['#ftBtn','調整字體、大小、行距與科判顏色'],['#dlBtn','選卷次與格式，下載檔案'],['#aboutBtn','版本紀錄、資料來源與問題回報'],
     ['#versionHistoryBtn','查看每一版的更新內容'],['#chartColorReset','科判標題顏色回到預設'],['#fsReset',''],
     ['#pageJump','目前頁／總頁數；點一下輸入頁碼跳頁'],['#pNum',''],['#pKeypad',''],['#chartTop','按一下回本卷頂端；按兩下回第一卷'],
-    ['#searchButton','搜尋全文'],['#railOpen','打開卷目次欄'],['#railClose','收起卷目次欄'],['#panelOpen','打開科判欄'],['#panelClose','收起科判欄'],['#panelPin','釘選／取消釘選科判欄'],['#railPin','釘選／取消釘選卷目次欄'],
+    ['#searchButton','搜尋全文'],['.book-size-button','調整正文大小'],['#settingsBack','返回上一頁'],['#fsDn','縮小字體'],['#fsUp','放大字體'],['#fsReset','全部重置字體設定'],['.rhead','閱讀這一卷'],['#sourceFont','正文字體'],['#sourceWeight','字體粗細'],['#exOne','一鍵匯出全書'],['#exThis','選取目前這一卷'],['#exAll','選取全部卷次'],['#exGo','開始匯出'],['#dlAll','匯出整本科判表'],['#dlGo','匯出所選的頁'],['.dlpop label.ck,.ex-row label.ck','勾選要匯出的項目'],['.about-source summary','內容的資料來源'],['.srcl','開啟資料來源網站'],['#reportBtn','用電子郵件回報問題'],['#railOpen','打開卷目次欄'],['#railClose','收起卷目次欄'],['#panelOpen','打開科判欄'],['#panelClose','收起科判欄'],['#panelPin','釘選／取消釘選科判欄'],['#railPin','釘選／取消釘選卷目次欄'],
     ['#jFold','展開或收起一百卷清單'],['#edBadge','點一下切換大藏經版／韓版'],['.zc [data-zd="-1"]','縮小'],['.zc [data-zd="1"]','放大'],['.zc .zv','回到 100%'],
     ['.sw.kp','正文科判：亮燈顯示，熄燈隱藏'],['.sw.px','披尋記：亮燈顯示，熄燈隱藏'],['.sw.cb','常柏法師釋：亮燈顯示，熄燈隱藏'],['.sw.dict','辭典：亮燈後反白查詞']
   ];
@@ -4781,7 +4781,6 @@ input,select,textarea,button{border-radius:8px}
   var tip=document.createElement('div');tip.className='hovtip';tip.hidden=true;tip.setAttribute('role','tooltip');
   var tmr=0,cur=null;
   function textFor(el){for(var i=0;i<TIPS.length;i++){var m=el.closest(TIPS[i][0]);if(m&&(m===el||el.contains(m)||m.contains(el)))return TIPS[i][1];}
-    if(el.title){el.dataset.tip=el.title;el.removeAttribute('title');}
     return el.dataset.tip||el.getAttribute('aria-label')||'';}
   function hide(){clearTimeout(tmr);tmr=0;cur=null;tip.classList.remove('on');tip.hidden=true;}
   function show(el,txt){if(!el.isConnected||!cur)return;var h=document.querySelector('.reader-hint:not([hidden])');if(h)return;if(document.getElementById('tour'))return;
@@ -4792,11 +4791,13 @@ input,select,textarea,button{border-radius:8px}
     if(el&&el.matches('label')&&!el.closest('.menu,.mpop'))el=null;
     if(el===cur)return;hide();if(!el)return;
     // 先清掉原生 title（避免兩個說明框）
-    var txt=textFor(el);el.querySelectorAll('[title]').forEach(function(x){x.dataset.tip=x.title;x.removeAttribute('title');});
-    if(!txt)return;cur=el;tmr=setTimeout(function(){show(el,txt);},2000);},true);
+    return;},true); /* q 2026-10-06：說明改用原生小灰框（title），不再用自製浮窗；由 applyTitles 補齊 */
   document.addEventListener('mouseout',function(e){if(cur&&!(e.relatedTarget&&cur.contains(e.relatedTarget))&&cur.contains(e.target))hide();},true);
   ['pointerdown','keydown','wheel'].forEach(function(ev){document.addEventListener(ev,hide,{capture:true,passive:true});});
   window.addEventListener('scroll',hide,{capture:true,passive:true});window.addEventListener('blur',hide);
+  function applyTitles(){TIPS.forEach(function(t){if(!t[1])return;var list;try{list=document.querySelectorAll(t[0]);}catch(e){return;}list.forEach(function(el){if(!el.getAttribute('title'))el.setAttribute('title',t[1]);});});}
+  var titleTimer=0;function queueTitles(){clearTimeout(titleTimer);titleTimer=setTimeout(applyTitles,300);}
+  applyTitles();try{new MutationObserver(queueTitles).observe(document.body,{childList:true,subtree:true});}catch(e){}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setupPager);else setupPager();
 })();
 </script>
@@ -5404,7 +5405,7 @@ input,select,textarea,button{border-radius:8px}
 .vc-item summary::-webkit-details-marker{display:none}
 .vc-item summary::after{content:'›';margin-left:auto;color:var(--muted)}
 .vc-item[open] summary::after{content:'⌄'}
-.vc-item summary b{font:600 18px var(--ui)}.vc-item summary small{font:12px var(--ui);color:var(--muted)}
+.vc-item summary b{font:600 18px var(--ui);color:var(--fg)}.vc-item summary small{font:12px var(--ui);color:var(--muted)}
 .vc-item ul{margin:0;padding:0 14px 14px 32px;list-style:disc}
 .vc-item li{margin:0 0 7px;padding-left:2px;font:14px/1.7 var(--ui)}.vc-item li::marker{color:var(--muted)}
 .vc-item li .vc-k{font-weight:600}
@@ -5418,6 +5419,18 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 /* 卷次欄：「(14科)」半形括號緊貼卷名右側、字小一號 */
 :root:root:root #rinner button.rhead{display:inline-block}
 :root:root:root #rinner .rsub{display:inline-block;margin-inline-start:4px!important;font-size:12px;vertical-align:baseline}
+/* v1.92 preview — 頁碼鍵盤：按數字直接跳轉、手機置中；版本內容單色、電腦版獨立置中視窗 */
+#pKeypad button.go{display:none}
+#pKeypad .pk-disp{display:none;grid-column:1/-1;text-align:center;font:600 20px var(--ui);padding:2px 0 8px;color:var(--fg);font-variant-numeric:tabular-nums}
+#pKeypad .pk-gap{display:block}
+:root:root:root[data-layout=iphone] #pKeypad{position:fixed;left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);grid-template-columns:repeat(3,60px);gap:10px;padding:16px 18px 18px;border-radius:22px;box-shadow:0 0 0 100vmax rgba(0,0,0,.28),0 20px 60px rgba(0,0,0,.3);z-index:300}
+:root:root:root[data-layout=iphone] #pKeypad .pk-disp{display:block}
+:root:root:root[data-layout=iphone] #pKeypad button{width:60px;height:60px;font-size:24px}
+:root:root:root[data-layout=iphone] #pKeypad button.del{font-size:22px}
+.vc .vc-k,.vc-new,.vc-fix,.vc-improve{color:var(--fg)!important}
+.vc-item li::marker{color:var(--fg)}
+:root:root:root:root:not([data-layout=iphone]) .menu .mpop.settings-panel[data-settings-page=history]{position:fixed!important;left:50%!important;top:50%!important;right:auto!important;bottom:auto!important;transform:translate(-50%,-50%)!important;width:min(560px,92vw)!important;min-width:0!important;max-width:none!important;height:auto!important;max-height:min(78vh,720px)!important;overflow-y:auto!important;padding:16px 20px 8px!important;border-radius:20px!important;box-shadow:0 0 0 100vmax rgba(0,0,0,.28),0 24px 70px rgba(0,0,0,.35)!important;z-index:300}
+:root:root:root:root:not([data-layout=iphone]) .menu .mpop.settings-panel[data-settings-page=history] .vc-item li{font-size:15px}
 </style>
 </body></html>
 <style>
