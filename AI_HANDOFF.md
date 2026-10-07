@@ -36,6 +36,7 @@
 - 第二十六輪（q 11:22）：`edz/edh` 切換呼叫 `setEd` 後 `prOpen(VR)`；t50 驗證。韓版全部範圍目前預覽達 400 頁上限（既有 guard），未處理。
 - 第二十七輪（q 11:35）：`prEnh/prDdOpen/prSync/prSnap/prRestore`；`vcw()`；km-print3。t51 驗證加減與下拉同寬（desktop）。手機版面未測。
 - 第二十八輪（q 11:45）：`prPop*`、`prPlace`、`o.pt`；t53 驗證桌面。手機未測。
+- 第二十九輪（q 11:49）：`numLab/numSize`；列印 kind 3 token；canvas 與 panel（`.hz`）。t54 驗證列印與科判圖，panel 目視。
 - 測試（Chromium 模擬，非實機）：藏版本卷／全部／層級／全覽；韓版 46,769 科全展開縮放循環約 16ms／幀（rAF 上限）；電腦點節點→正文 `#j5` 定位、Esc 關閉、拖曳；手機 390×844 版面與雙指縮放（合成 pointer 事件 90%→250%）。`tools/check-analytics-registry.cjs` 另跑，結果見下方補記。
 - **未測**：Safari／iPhone／iPad 實機、iPad 版面截圖、手機橫向、深色模式截圖、Mac 觸控板縮放手感、點節點後三欄同步的全面比對。
 

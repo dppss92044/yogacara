@@ -2107,7 +2107,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if (n.id < 0 || !N[n.id]) { n.tk = vtoks(verticalForms(n.text), VT.FULL, VT.HALF); n.indA = 0; n.labN = 0; }
       else {
         var lead = n.rt ? [{ c: "◎", h: "◎", a: VT.FULL }] : [];
-        var lt = vtoks(vlabel(n.id), VT.FULL, VT.HALF).map(function (x) { return { c: x.c, h: '<span class="lb">' + x.h + "</span>", a: x.a }; });
+        var vl0 = vlabel(n.id), lt = ZJM && /^[0-9][0-9\-–]*[章節項目款分層子]*\s*$/.test(vl0) ? [{ c: vl0.trim(), h: '<span class="lb hz">' + esc(vl0.trim()) + "</span>", a: VT.FULL }] : vtoks(vl0, VT.FULL, VT.HALF).map(function (x) { return { c: x.c, h: '<span class="lb">' + x.h + "</span>", a: x.a }; });
         // 章節科標：標號後空一個字再接標題
         if (ZJM && lt.length) lt.push({ c: " ", h: '<span class="vgap"></span>', a: VT.GAP });
         var ttl = verticalForms(N[n.id][0]), pm = /\([^()]*\)$/.exec(ttl), pnTk = [];
@@ -4311,7 +4311,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function overview(){if(!model||!model.n)return;sc=Math.max(MINS,Math.min(fitScale(),1.4));tx=(W-model.bw*sc)/2-model.bx0*sc;ty=Math.max(16,(H-model.bh*sc)/2)-model.by0*sc;req();}
       function toCurrent(){var q=shownCur();if(q>=0){centerOn(q,Math.max(sc,0.8));req();}}
       function req(){if(!raf)raf=requestAnimationFrame(draw);}
-      function vcw(s){var a=0;Array.from(s).forEach(function(c){a+=c===' '?.5:1;});return a;}
+      function vcw(s){if(numLab(s))return 1+(/\s$/.test(s)?.5:0);var a=0;Array.from(s).forEach(function(c){a+=c===' '?.5:1;});return a;}
       function vchars(s){var o=[];Array.from(s).forEach(function(c){o.push(VMAP[c]||c);});return o;}
       function draw(){
         raf=0;if(!box||box.hidden||!model)return;
@@ -4378,9 +4378,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             if(isCur||isHov){cx.beginPath();if(CELL)cx.rect(rx,ry,rw,ly===8?M.step:rh);else rr(cx,rx,ry,rw,rh,5);cx.fillStyle=isCur?P.hl:P.rule;cx.globalAlpha=isCur?1:.55;cx.fill();cx.globalAlpha=1;}
             cx.globalAlpha=own?1:.5;
             if(vt){
-              var lc=vchars(M.lbs[i]),tc=vchars(M.tts[i]),yy=ry+PADV,X0=rx+rw/2,k,ch;
+              var nl=numLab(M.lbs[i]),lc=nl?[M.lbs[i].trim()].concat(/\s$/.test(M.lbs[i])?[' ']:[]):vchars(M.lbs[i]),tc=vchars(M.tts[i]),yy=ry+PADV,X0=rx+rw/2,k,ch;
               for(k=0;k<lc.length+tc.length;k++){var red=k<lc.length;ch=red?lc[k]:tc[k-lc.length];var ox=0,oy=0;if(PUNC.indexOf(ch)>=0){var mm=cx.measureText(ch);if(mm.actualBoundingBoxAscent!=null){ox=-(mm.actualBoundingBoxRight-mm.actualBoundingBoxLeft)/2;oy=-(mm.actualBoundingBoxDescent-mm.actualBoundingBoxAscent)/2;}else{ox=fs*.32;oy=-fs*.3;}}
-                var st=ch===' '?CH/2:CH;if(ch!==' '){cx.fillStyle=red?P.red:P.fg;cx.fillText(ch,X0+ox,yy+st/2+oy);}yy+=st;}
+                var st=ch===' '?CH/2:CH;if(nl&&k===0){var fs0=cx.font;cx.font=numSize(ch,fs)+'px '+FONT_V;cx.fillStyle=P.red;cx.fillText(ch,X0,yy+st/2);cx.font=fs0;}else if(ch!==' '){cx.fillStyle=red?P.red:P.fg;cx.fillText(ch,X0+ox,yy+st/2+oy);}yy+=st;}
             }else{
               var ty0=ly===8?ry+M.step/2+1.5:ry+rh/2+.5,lbt=M.lbs[i],ttt=M.tts[i],lw=cx.measureText(lbt).width;
               if(CELL){var av=rw-PADH*2-(M.kc[i]>0?12:0),tw2=cx.measureText(ttt).width;if(lw+tw2>av){var keep=Math.floor(ttt.length*Math.max(0,av-lw-FS_H)/Math.max(tw2,1));ttt=keep>0?ttt.slice(0,keep)+'…':'…';if(lw>av)lbt='';}}
@@ -4561,7 +4561,10 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function prKids2(k){return prKids(k).filter(function(c){return NN[c][6]<=prVb;});}
       function prSpan(k){if(k>=VR)return [1,100];var a=NN[k][6],b=a,e=subEnd(k),x;for(x=k+1;x<e;x++)if(NN[x][6]>b)b=NN[x][6];return [a,Math.max(a,b)];}
       function prRoots(k){if(k>=VR&&prVa<=1&&prVb>=100)return [k];var v=NN[k][6];if(k<VR&&v>prVb)return [];if(k<VR&&v>=prVa)return [k];var out=[];prKids(k).forEach(function(c){out=out.concat(prRoots(c));});return out;}
-      function prTxt(k,note){var a=[],l=Array.from(prLab?labAny(k,prLM)||'':''),n=Array.from(NN[k][0]||'');l.forEach(function(c){a.push([c,1]);});n.forEach(function(c){a.push([c,0]);});if(note)Array.from('(分'+cn(note)+')').forEach(function(c){a.push([c,2]);});return a;}
+      function prTxt(k,note){var a=[],ls=prLab?labAny(k,prLM)||'':'',l=Array.from(ls),n=Array.from(NN[k][0]||'');if(prV&&numLab(ls)){a.push([ls.trim(),3]);if(/\s$/.test(ls))a.push([' ',1]);}else l.forEach(function(c){a.push([c,1]);});n.forEach(function(c){a.push([c,0]);});if(note)Array.from('(分'+cn(note)+')').forEach(function(c){a.push([c,2]);});return a;}
+      function numLab(l){return /^[0-9][0-9\-–]*[章節項目款分層子]*\s*$/.test(l||'');}
+      function numSize(str,fs){var u=0;Array.from(str).forEach(function(c){u+=/[0-9\-–]/.test(c)?.55:1;});return fs*Math.min(.8,1.25/Math.max(u,1));}
+      var prV=true;
       function prW(t){return t[0]===' '?.5:t[1]===2?(t[0]==='('||t[0]===')'?.36:.66):1;}
       function prPath(r){var a=[],p=NN[r][4];while(p>=0&&p<VR){a.unshift(p);p=NN[p][4];}return a;}
       function prLayout(r,cuts,limAbs,fs,v,sp){
@@ -4598,7 +4601,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         return {n:ls.length,lines:ls};}
       function pfx(a){var l=a[a.length-1];return /^第.+卷$/.test(l)?[l].concat(a.slice(0,-1)):a;}
       function prPages(rs,o){
-        var pages=[],q=[],bases={},limAbs=99,mx=o.mx,my=o.my,v=o.v,pf=o.fs*.6,titleH=0,gapB=o.fs*1.6,guard=0,pmap={};prLab=o.lab;prLM=o.lm||1;prVa=o.va;prVb=o.vb;
+        var pages=[],q=[],bases={},limAbs=99,mx=o.mx,my=o.my,v=o.v,pf=o.fs*.6,titleH=0,gapB=o.fs*1.6,guard=0,pmap={};prLab=o.lab;prLM=o.lm||1;prV=o.v;prVa=o.va;prVb=o.vb;
         function chain(r){var a=['瑜伽師地論'];prPath(r).forEach(function(k){a.push((o.plab?labAny(k,prLM):'')+NN[k][0]);});if(r<VR&&NN[r][6]>0)a.push('第'+cn(NN[r][6])+'卷');return a;}
         function fits(l,w,h){return !l.over&&l.w<=w&&l.h<=h;}
         rs.forEach(function(r0){var rr=prRoots(r0);if(!rr.length)rr=[r0];rr.forEach(function(k){bases[k]=NN[r0][3];q.push(k);});});
@@ -4644,7 +4647,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           s+='<g transform="translate('+bx.toFixed(1)+' '+by.toFixed(1)+') scale('+b.s.toFixed(4)+')"><path d="'+lay.lines+'" fill="none" stroke="#444" stroke-width="1"/>';
           lay.nodes.forEach(function(n){
             var pn=n.more&&o.pn?pg.map[n.k]:0;if(pn===i+1)pn=0;
-            if(v){var yy=n.y;n.t.forEach(function(t){var w=prW(t),sz=t[1]===2?fs*.66:fs;s+=prChar(t[0],n.x,yy,sz,t[1]===1?RED:t[1]===2?'#777':INK,lay.lh*w);yy+=lay.lh*w;});
+            if(v){var yy=n.y;n.t.forEach(function(t){var w=prW(t),sz=t[1]===2?fs*.66:fs;if(t[1]===3){var ns=numSize(t[0],fs);s+='<text x="'+n.x.toFixed(1)+'" y="'+(yy+lay.lh*w/2+ns*.35).toFixed(1)+'" font-size="'+ns.toFixed(1)+'" fill="'+RED+'" text-anchor="middle">'+esc(t[0])+'</text>';yy+=lay.lh*w;return;}s+=prChar(t[0],n.x,yy,sz,t[1]===1?RED:t[1]===2?'#777':INK,lay.lh*w);yy+=lay.lh*w;});
               if(pn)s+='<text x="'+n.x.toFixed(1)+'" y="'+(yy+fs*.5).toFixed(1)+'" font-size="'+(fs*.66).toFixed(1)+'" text-anchor="middle" fill="#777">p'+pn+'</text>';}
             else s+=prRun1(pn?n.t.concat([[' ',2],['p',2]].concat(Array.from(String(pn)).map(function(c){return [c,2];}))):n.t,n.x,n.y+fs*0.35,fs,INK,RED);});
           s+='</g>';
@@ -5648,6 +5651,7 @@ html{scroll-snap-type:y proximity;scroll-padding-top:70px}
 }
 </style>
 <style id="v167">/* v1.67 */
+.kscale .hz{display:inline-block;writing-mode:horizontal-tb;white-space:nowrap;font-size:.78em;line-height:1;letter-spacing:-.03em}
 .kscale .vgap{display:inline-block;inline-size:2.47mm;block-size:1px}
 /* 版本選擇：淡黃底，不要框、不要勾 */
 :root:root:root:root .settings-panel .edition-choice{border:0!important;box-shadow:none!important;outline:0!important;background:var(--bg)!important}
