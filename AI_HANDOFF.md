@@ -29,6 +29,7 @@
 - 第十九輪（q 10:13，見 D107 第十九輪）：`prTarget()`、`prLayout` 改父節點接續定位、預覽 IntersectionObserver 惰性繪製；`.km-dk`／`.km-open` 控制功能列顯示（僅 ≥701px）。Chromium 驗證；未測 Safari／iPad／實機。
 - 第二十輪（q 10:30，見 D107 第二十輪）：`prRoots/prSpan/prScope` 做主題與卷次範圍；`prPages` 對後續支脈先以剩餘區域試排（`prFit(r,o,rw,rh)`），`pmap` 對應節點→頁碼；`prDraw` 重畫保留捲動位置。Chromium 驗證；未測 Safari／iPad／實機。圖一（勾選列在預覽中無法呈現）Chromium 無法重現，待 q 補述。
 - 第二十一輪（q 10:39）：`prPages` 續頁佇列改 `q=lay.def.concat(q)`（DFS）。Chromium 驗證頁序：甲二→乙一→丙二→丁一→戊…。
+- 第二十二輪（q 10:43）：`prScope` 回傳陣列（十七地含兩分）；`labAny`；`o.lcol`、`o.mx/my`。Chromium 驗證（t44）：修所成地兩頁、藍色標號、邊界16mm。Safari／實機列印未測。
 - 測試（Chromium 模擬，非實機）：藏版本卷／全部／層級／全覽；韓版 46,769 科全展開縮放循環約 16ms／幀（rAF 上限）；電腦點節點→正文 `#j5` 定位、Esc 關閉、拖曳；手機 390×844 版面與雙指縮放（合成 pointer 事件 90%→250%）。`tools/check-analytics-registry.cjs` 另跑，結果見下方補記。
 - **未測**：Safari／iPhone／iPad 實機、iPad 版面截圖、手機橫向、深色模式截圖、Mac 觸控板縮放手感、點節點後三欄同步的全面比對。
 
