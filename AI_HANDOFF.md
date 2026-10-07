@@ -25,6 +25,7 @@
 - 第十五輪（q 2026-10-07 07:55，見 D107 第十五輪）：①`build()` 增 `ctx`（灰色虛線 ghost 祖先）與虛擬根 `VR`（`useBundle` 內 `NN.push(["瑜伽師地論",…])`，`go(i)` 對 `i>=VR` 不跳轉）。②`fillPage()` 補全別表（兩版 94／2016 頁全數完整；先前 15＋約 510 頁缺層）。③`#mapBtn` 改為科判欄右下動態建立的 `.chart-top.map-go`，頁碼 pill `left:88px`；功能列表的 `.map-menu-row` 已刪。④架構選單只留邏輯／心智／括弧／樹狀／表格／時間軸（`styLoad` 把 ly 3、7、8、9 改 0；相關繪製碼為死碼未刪）。⑤括弧圖圓弧重寫。⑥入口 `setRange(1,100);md=1`。⑦列印：chip「列印」→`.km-pr` 對話框→`prPages/prLayout/prSvg`→隱藏 iframe `print()`。測試（Chromium）：預設入口、虛線上層、括弧橫直書、列印 1／6／50 頁預覽圖、藏版電腦與手機、韓版載入無 JS 錯誤；**未測**：Safari／iPhone／iPad 實機列印（iOS 列印對話框行為）、實際紙本輸出、手機科判欄按鈕截圖。
 - 第十六輪（q 08:28，見 D107 第十六輪）：`prLayout` 改為直／橫通用，`prSvg(…,prev)` 產生預覽與列印同一份 SVG；`.km-back2` 回正文鈕。測試 Chromium 截圖（直書、橫書、200%、寬鬆）；未測 Safari／iOS 實機列印與 PDF。
 - 第十七輪（q 08:40，見 D107 第十七輪）：`emb` 嵌入模式（`#kmap.km-emb` 以 `embPos()` 貼合 `#panel` 矩形；`pick()` 嵌入時 `goNode`；`setEmb()` 每 500ms 同步卷次與 `S.cur`）；`#mapBtn`（心智圖）、`#mapFull`（展開）、`.km-back2`／`.km-exp` 以 CSS 變數對位。Chromium 截圖驗證電腦；未測 iPad／手機（手機沒有右側科判欄）／Safari。
+- 第十八輪（q 08:55，見 D107 第十八輪）：列印核心改為 `prFit`（每個頂層支脈貪心選展開深度）＋`prPages`（逐行貨架排版、同頁多支脈、路徑取共同前綴、其餘支脈小字接在旁）；`draw()` 收起節點畫（分N），`hitMark` 對應加大點擊區。測試 Chromium：直書／橫書預覽、全螢幕入口；未測 Safari／iPad／實機列印。
 - 測試（Chromium 模擬，非實機）：藏版本卷／全部／層級／全覽；韓版 46,769 科全展開縮放循環約 16ms／幀（rAF 上限）；電腦點節點→正文 `#j5` 定位、Esc 關閉、拖曳；手機 390×844 版面與雙指縮放（合成 pointer 事件 90%→250%）。`tools/check-analytics-registry.cjs` 另跑，結果見下方補記。
 - **未測**：Safari／iPhone／iPad 實機、iPad 版面截圖、手機橫向、深色模式截圖、Mac 觸控板縮放手感、點節點後三欄同步的全面比對。
 
