@@ -33,6 +33,7 @@
 - 第二十三輪（q 10:52）：`prChar` 以 canvas measureText 置中標點；`pfx()` 路徑卷次前置；`o.pn`；Chromium（t46）驗證預設值、p N、路徑順序。Safari／實機未測。
 - 第二十四輪（q 10:54）：`o.lm`/`prLM` 傳給 `labAny`；t47 驗證三種模式。Safari 未測。
 - 第二十五輪（q 11:06）：`prFitUI`、`o.bw/up/rng/pa/pb`、`prRun` 2-up；t49 驗證。Safari、實際列印（含2頁並排、頁範圍）未測。
+- 第二十六輪（q 11:22）：`edz/edh` 切換呼叫 `setEd` 後 `prOpen(VR)`；t50 驗證。韓版全部範圍目前預覽達 400 頁上限（既有 guard），未處理。
 - 測試（Chromium 模擬，非實機）：藏版本卷／全部／層級／全覽；韓版 46,769 科全展開縮放循環約 16ms／幀（rAF 上限）；電腦點節點→正文 `#j5` 定位、Esc 關閉、拖曳；手機 390×844 版面與雙指縮放（合成 pointer 事件 90%→250%）。`tools/check-analytics-registry.cjs` 另跑，結果見下方補記。
 - **未測**：Safari／iPhone／iPad 實機、iPad 版面截圖、手機橫向、深色模式截圖、Mac 觸控板縮放手感、點節點後三欄同步的全面比對。
 
