@@ -238,7 +238,15 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-rb h5.sel{background:var(--hl,#f4e2a4);color:#1f1d1a;border-radius:6px;padding:0 6px}
 #kmap .km-chip{position:absolute;z-index:3;top:12px;left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:calc(100% - 24px);padding:10px 12px;border-radius:20px;background:var(--pop,rgba(246,246,246,.98));border:1px solid var(--rule);box-shadow:0 8px 24px var(--shadow,rgba(0,0,0,.16))}
 #kmap .km-chip[hidden]{display:none}
-#kmap .km-back2{position:absolute;z-index:4;right:16px;bottom:104px;width:44px;height:44px;border-radius:50%;border:1px solid var(--rule);background:var(--bg);color:var(--muted,#666);display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+#kmap .km-back2,#kmap .km-exp{position:fixed;z-index:12;left:var(--b2x,auto);top:var(--b2y,auto);right:auto;width:31px;height:31px;border-radius:50%;border:1px solid var(--rule);background:var(--bg);color:var(--muted,#666);display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+#kmap .km-exp{display:none;left:var(--exx,auto);top:var(--exy,auto)}
+#kmap.km-emb .km-exp{display:grid}
+#kmap .km-etb{display:none}
+#kmap.km-emb{inset:auto;left:var(--ex,0);top:var(--ey,0);width:var(--ew,100%);height:var(--eh,100%);z-index:60;border-left:1px solid var(--rule)}
+#kmap.km-emb .km-bar,#kmap.km-emb .km-dock,#kmap.km-emb .km-hint,#kmap.km-emb .km-chip{display:none!important}
+#kmap.km-emb .km-etb{display:flex;position:absolute;z-index:5;top:8px;left:8px;gap:6px}
+#kmap .km-etb button{height:32px;padding:0 10px;border:1px solid var(--rule);border-radius:999px;background:var(--bg);color:inherit;font-size:13px;cursor:pointer}
+#kmap.km-emb .km-pr{position:fixed}
 #kmap .km-pr{position:absolute;inset:0;z-index:9;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;padding:12px}
 #kmap .km-pr .card{width:min(1000px,100%);height:min(720px,100%);display:flex;gap:16px;padding:16px;border-radius:20px;background:var(--bg);border:1px solid var(--rule);box-shadow:0 12px 40px rgba(0,0,0,.25);overflow:hidden}
 #kmap .km-pr .side{flex:0 0 300px;display:flex;flex-direction:column;gap:9px;overflow:auto;padding-right:4px}
@@ -4083,11 +4091,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     // W004: 脈絡圖（科判樹狀圖；卷次範圍、層級、橫／直書、並排正文；滾輪縮放、拖曳移動）
     (function(){
       var btn=document.getElementById('mapBtn');
-      if(!btn){var pnl=$('panel');if(!pnl)return;btn=document.createElement('button');btn.type='button';btn.id='mapBtn';btn.className='chart-top map-go';btn.setAttribute('aria-label','開啟全面科判脈絡圖');btn.title='一鍵進入全面科判脈絡圖';btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="9.5" width="5" height="5" rx="1.4"/><rect x="16.5" y="3.5" width="5" height="4.5" rx="1.4"/><rect x="16.5" y="16" width="5" height="4.5" rx="1.4"/><path d="M7.5 12h3.5M11 12V5.8h5.5M11 12v8.3h5.5"/></svg>';pnl.appendChild(btn);}
+      if(!btn){var pnl=$('panel');if(!pnl)return;btn=document.createElement('button');btn.type='button';btn.id='mapBtn';btn.className='chart-top map-go';btn.setAttribute('aria-label','在科判欄顯示脈絡圖');btn.title='科判欄改為脈絡圖（可對照正文）';btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="9.5" width="5" height="5" rx="1.4"/><rect x="16.5" y="3.5" width="5" height="4.5" rx="1.4"/><rect x="16.5" y="16" width="5" height="4.5" rx="1.4"/><path d="M7.5 12h3.5M11 12V5.8h5.5M11 12v8.3h5.5"/></svg>';pnl.appendChild(btn);
+        var fb2=document.createElement('button');fb2.type='button';fb2.id='mapFull';fb2.className='chart-top map-go map-full';fb2.setAttribute('aria-label','展開成全螢幕脈絡圖');fb2.title='展開成全螢幕脈絡圖';fb2.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>';pnl.appendChild(fb2);}
       var FONT_H='"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif',FONT_V='"TWKai","TWKai2","BiauKai","DFKai-SB","標楷體","Kaiti TC","STKaiti",serif';
       var FS_H=14,FS_V=16,ROW=24,COL=27,CH=17,PADH=7,PADV=5,GAP=32,BAND=640,MINS=0.004,MAXS=4,AUTO_N=800;
       var box,cv,cx,mapEl,readEl,rbEl,rhEl,msgEl,tipEl,hintEl,pctEl,dEl,selA,selB,allBtn,vBtn,sBtn,hBtn;
-      var VR=-1,stub=null,nst=null,hoverMk=-1,ST={fs:1,end:0,ly:0,lab:1,lastLab:1,compact:0,equal:0,color:0,lw:0,dash:0,shape:0},brSpec=null,brI=-1,brName='',brSrc=0,NN,JLL,CRY,TXX,labx,fullx,edKey='',edBtns,selIds=null,readJ=0,sTimer=0,noteEl,uiS=1,foldBtn,oBtn,rngBtn,depBtn,model=null,col=null,focusI=-1,lastTap=null,chipEl,ra=1,rb=1,md=1,maxD=1,vert=true,split=false,tx=0,ty=0,sc=1,W=0,H=0,dpr=1,raf=0,hover=-1,curI=-1,selI=-1,stamp=null,frame=0,buildSeq=0,lastFocus=null;
+      var emb=false,embT=0,VR=-1,stub=null,nst=null,hoverMk=-1,ST={fs:1,end:0,ly:0,lab:1,lastLab:1,compact:0,equal:0,color:0,lw:0,dash:0,shape:0},brSpec=null,brI=-1,brName='',brSrc=0,NN,JLL,CRY,TXX,labx,fullx,edKey='',edBtns,selIds=null,readJ=0,sTimer=0,noteEl,uiS=1,foldBtn,oBtn,rngBtn,depBtn,model=null,col=null,focusI=-1,lastTap=null,chipEl,ra=1,rb=1,md=1,maxD=1,vert=true,split=false,tx=0,ty=0,sc=1,W=0,H=0,dpr=1,raf=0,hover=-1,curI=-1,selI=-1,stamp=null,frame=0,buildSeq=0,lastFocus=null;
       var ptrs={},tap=null,pinch=null,gz0=1,PUNC='、，。,.；：;:';
       var VMAP={'（':'︵','）':'︶','(':'︵',')':'︶','「':'﹁','」':'﹂','『':'﹃','』':'﹄','—':'︱','－':'︱','…':'︙'};
       function pal(){var cs=getComputedStyle(box);return{bg:cs.backgroundColor,fg:cs.color,rule:cs.getPropertyValue('--rule').trim()||'#dcd7cd',line:cs.getPropertyValue('--fg').trim()||'#1f1d1a',red:cs.getPropertyValue('--cinnabar').trim()||'#9a2c1e',acc:cs.getPropertyValue('--acc2').trim()||'#c99520',hl:cs.getPropertyValue('--hl').trim()||'#f4e2a4'};}
@@ -4473,6 +4482,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function endSel(){if(!selIds)return;selIds=null;col=null;focusI=-1;md=autoDepth(ra,rb);model=null;load();}
       function go(i){if(i<0||i>=VR)return;close(true);if(edKey!==EDITION){switchEdition(edKey).then(function(ok){try{goNode(i);}catch(e){}});return;}try{goNode(i);}catch(e){}}
       function pick(i){
+        if(emb){selI=i;req();if(edKey===EDITION)try{goNode(i);}catch(e){}return;}
         var now=Date.now();if(lastTap&&lastTap.i===i&&now-lastTap.t<380){lastTap=null;go(i);return;}
         lastTap={i:i,t:now};selI=i;updChip();req();if(split)showRead(i);
       }
@@ -4621,7 +4631,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         box=document.createElement('div');box.id='kmap';box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','脈絡圖');
         var ov='',dv='',k;for(k=1;k<=100;k++)ov+='<option value="'+k+'">第 '+k+' 卷</option>';
         var IC={ly:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="5" height="6" rx="1"/><path d="M8 12h4M12 6v12M12 6h4M12 18h4"/><rect x="16" y="3.5" width="5" height="5" rx="1"/><rect x="16" y="15.5" width="5" height="5" rx="1"/></svg>',ti:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7V5h14v2M12 5v14M9 19h6"/></svg>',st:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>',br:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 12h4a3 3 0 0 0 3-3V6h3M11 12h3a3 3 0 0 1 3 3v3"/></svg>',rng:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>',dep:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 3.5 9 12 14l8.5-5z"/><path d="m3.5 13 8.5 5 8.5-5"/></svg>',ori:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h9M5 18h12"/></svg>',spl:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M12 5v14"/></svg>',out:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4M8 11h6"/></svg>',inn:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4M8 11h6M11 8v6"/></svg>',fit:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V5h4M20 9V5h-4M4 15v4h4M20 15v4h-4"/></svg>',cur:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>'};
-        box.innerHTML='<button type="button" class="km-back2" aria-label="回到正文與科判欄" title="回到正文與科判欄"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M9 3.5v17M13 9h4M13 13h4"/></svg></button><div class="km-bar"><button type="button" class="km-close" aria-label="關閉脈絡圖">‹ 返回</button><span class="km-title">脈絡圖</span><button type="button" class="km-help" data-a="tour">導覽</button>'+
+        box.innerHTML='<button type="button" class="km-back2" aria-label="回到正文與科判欄" title="回到正文與科判欄"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M9 3.5v17M13 9h4M13 13h4"/></svg></button><button type="button" class="km-exp" aria-label="展開成全螢幕脈絡圖" title="展開成全螢幕"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></button><div class="km-etb"><button type="button" data-e2="d-" title="少一層">層−</button><button type="button" data-e2="d+" title="多一層">層＋</button><button type="button" data-e2="orient" title="橫書／直書">橫／直</button><button type="button" data-e2="fit" title="全覽">全覽</button><button type="button" data-e2="print" title="列印選取的分支">列印</button></div><div class="km-bar"><button type="button" class="km-close" aria-label="關閉脈絡圖">‹ 返回</button><span class="km-title">脈絡圖</span><button type="button" class="km-help" data-a="tour">導覽</button>'+
           '<span class="km-seg" role="group" aria-label="版本"><button type="button" data-e="zang" aria-pressed="true">大藏經版</button><button type="button" data-e="hk" aria-pressed="false">韓清淨版</button></span></div>'+
           '<div class="km-main"><div class="km-map"><canvas></canvas><div class="km-msg" hidden></div><div class="km-tip" hidden></div><div class="km-chip" hidden></div><div class="km-hint"></div>'+
           '<div class="km-pop" data-pop="rng" hidden><div class="row"><button type="button" class="pst" data-s="a-" aria-label="起始卷減一">−</button><select data-r="a" aria-label="起始卷次">'+ov+'</select><button type="button" class="pst" data-s="a+" aria-label="起始卷加一">＋</button></div><div class="row"><span>到</span></div><div class="row"><button type="button" class="pst" data-s="b-" aria-label="結束卷減一">−</button><select data-r="b" aria-label="結束卷次">'+ov+'</select><button type="button" class="pst" data-s="b+" aria-label="結束卷加一">＋</button></div><button type="button" class="big" data-a="all">全部卷次</button></div>'+
@@ -4659,6 +4669,10 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         noteEl=box.querySelector('.km-pop .note');foldBtn=box.querySelector('.km-fold');foldBtn.addEventListener('click',function(e){e.stopPropagation();fold(!box.querySelector('.km-dock').classList.contains('folded'));});oBtn=box.querySelector('[data-a=orient]');rngBtn=box.querySelector('[data-p=rng]');depBtn=box.querySelector('[data-p=dep]');
         box.querySelector('.km-close').addEventListener('click',function(){close();});
         box.querySelector('.km-back2').addEventListener('click',function(){close();});
+        box.querySelector('.km-exp').addEventListener('click',function(){setEmb(false);});
+        box.querySelector('.km-etb').addEventListener('click',function(e){var b=e.target.closest('[data-e2]');if(!b)return;var k=b.dataset.e2;
+          if(k==='print'){var q=selI>=0?selI:(curI>=0?curI:-1);if(q>=0)prOpen(q);return;}
+          var t=k==='d-'?'[data-s=d-]':k==='d+'?'[data-s=d+]':k==='orient'?'[data-a=orient]':'[data-z=fit]',x=box.querySelector(t);if(x)x.click();});
         selA.addEventListener('change',function(){var a=+selA.value,b=Math.max(a,rb);setRange(a,b);});
         selB.addEventListener('change',function(){var b=+selB.value,a=Math.min(ra,b);setRange(a,b);});
         allBtn.addEventListener('click',function(){setRange(1,100);});
@@ -4740,7 +4754,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         window.addEventListener('orientationchange',function(){setTimeout(resize,250);});
       }
       function close(noFocus){
-        if(!box||box.hidden)return;box.hidden=true;buildSeq++;ptrs={};tap=null;pinch=null;hideTip();
+        if(!box||box.hidden)return;box.hidden=true;emb=false;box.classList.remove('km-emb');clearInterval(embT);buildSeq++;ptrs={};tap=null;pinch=null;hideTip();
         if(!noFocus&&lastFocus&&lastFocus.focus&&document.contains(lastFocus))try{lastFocus.focus({preventScroll:true});}catch(e){}
       }
       function useBundle(B){
@@ -4770,23 +4784,36 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           if(brSpec){var sp=brSpec;brSrc=sp.src;pickBranch(sp.c);}else load();
         }).catch(function(){setStatus('版本資料無法載入，請確認連線後再試。');});
       }
-      function open(){
+      function embPos(){
+        var pn=$('panel'),b1=$('mapBtn'),b2=$('mapFull');if(!pn||!box)return;var pr=pn.getBoundingClientRect(),r1=b1?b1.getBoundingClientRect():null,r2=b2?b2.getBoundingClientRect():null,st=box.style;
+        if(emb){st.setProperty('--ex',pr.left+'px');st.setProperty('--ey',pr.top+'px');st.setProperty('--ew',pr.width+'px');st.setProperty('--eh',pr.height+'px');}
+        var a=emb?r1:r2,e=r2;if(a&&a.width){st.setProperty('--b2x',a.left+'px');st.setProperty('--b2y',a.top+'px');}if(e&&e.width){st.setProperty('--exx',e.left+'px');st.setProperty('--exy',e.top+'px');}
+        var w=Math.round(pr.width),h=Math.round(pr.height);if(emb&&(box._ew!==w||box._eh!==h)){box._ew=w;box._eh=h;W=0;resize();}}
+      function setEmb(on){
+        emb=on;box.classList.toggle('km-emb',on);clearInterval(embT);box._ew=0;embPos();
+        var back=box.querySelector('.km-back2');back.title=on?'回到科判欄':'回到正文與科判欄';
+        if(on)embT=setInterval(function(){if(!emb||box.hidden){clearInterval(embT);return;}embPos();
+          var j=S.juan;if(j>=1&&j<=100&&j!==ra&&brI<0){setRange(j,j);}
+          var c=S.cur!=null&&NN[S.cur]?S.cur:-1;if(c!==curI){curI=c;req();}},500);
+        W=0;requestAnimationFrame(function(){resize();var f=box.querySelector('[data-z=fit]');if(f)f.click();});}
+      function open(asEmb){
         if(!box)make();
         dismissMenu();
         lastFocus=document.activeElement&&document.activeElement!==document.body?document.activeElement:$('menuBtn');
-        box.hidden=false;setUi(uiS);W=H=0;resize();
+        box.hidden=false;setUi(uiS);W=H=0;resize();emb=false;setEmb(!!asEmb);
         box.tabIndex=-1;try{box.focus({preventScroll:true});}catch(e){}
         bundleOf(EDITION).then(function(B){
           useBundle(B);
           curI=S.cur!=null&&NN[S.cur]?S.cur:-1;selI=-1;selIds=null;
           var j=S.juan>=1&&S.juan<=100?S.juan:1;model=null;col=null;focusI=-1;
           if(split)showReadJuan(curI>=0?NN[curI][6]:j,curI);
-          setRange(1,100);md=1;col=null;load();
+          if(asEmb){var j2=S.juan>=1&&S.juan<=100?S.juan:1;setRange(j2,j2);setTimeout(function(){var f=box.querySelector('[data-z=fit]');if(f)f.click();},700);}else{setRange(1,100);md=1;col=null;load();}
           var seen='';try{seen=localStorage.getItem('km-tour')||'';}catch(e){}
           if(!seen)setTimeout(function(){if(box&&!box.hidden&&tourI<0)tourStep(0);},900);
         });
       }
-      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open();});
+      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(true);});
+      var fb=document.getElementById('mapFull');if(fb)fb.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(false);});
     })();
   }).catch(function () { article.innerHTML = '<div class="loading">資料無法載入。請改用最新版的 Chrome、Edge 或 Safari 開啟這個網頁。</div>'; });
 })();
@@ -5647,7 +5674,7 @@ input,select,textarea,button{border-radius:8px}
   background:var(--ct-bg,#f6f6f6)!important;color:var(--muted)!important;border:1px solid transparent!important;box-shadow:none!important;opacity:.55!important;transition:opacity .15s,background .15s,box-shadow .15s,color .15s}
 :root:root:root:root:root .chart-top:hover,:root:root:root:root:root .chart-top:focus-visible{opacity:1!important;background:#fff!important;color:var(--fg)!important;box-shadow:0 1px 4px rgba(0,0,0,.1)!important;border-color:rgba(0,0,0,.05)!important}
 :root:root:root:root:root .chart-top svg{display:none!important}
-:root:root:root:root:root:root:root .chart-top.map-go{left:auto!important;right:14px!important}:root:root:root:root:root:root:root:root .chart-top.map-go svg{display:block!important;width:16px;height:16px}:root:root:root:root:root:root:root:root .chart-top.map-go .t{display:none!important}
+:root:root:root:root:root:root:root .chart-top.map-go{left:auto!important;right:53px!important}:root:root:root:root:root:root:root:root:root .chart-top.map-full{right:14px!important}:root:root:root:root:root:root:root:root .chart-top.map-go svg{display:block!important;width:16px;height:16px}:root:root:root:root:root:root:root:root .chart-top.map-go .t{display:none!important}
 :root:root:root:root:root .chart-top .t{display:block!important;font:13px/1 var(--ui)!important;letter-spacing:0!important;text-align:center}
 :root:root:root:root:root .chart-top[data-off]{display:none!important}
 /* 滑鼠停留兩秒：小說明框 */
