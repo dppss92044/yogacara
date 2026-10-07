@@ -4591,7 +4591,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             if(!pos){q.unshift(r);break;}
             pmap[r]=pi;
             pg.blocks.push({r:r,lay:lay,s:s,x:pos.x,y:pos.y,w:lay.w*s+exW,h:lay.h*s+exH,ch:ch,ex:v?exW:exH});
-            lay.def.forEach(function(k){q.push(k);});first=false;
+            q=lay.def.concat(q);first=false;
             if(!q.length)break;r=q.shift();ch=chain(r);}
         }
         pages.forEach(function(pg){pg.map=pmap;});
