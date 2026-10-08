@@ -40,6 +40,7 @@
 - 第三十輪（q 12:05）：`numLab` 拆數字／單位；`o.bw=false,o.up=1` 固定。t54／t52 目視。Safari、手機未測。
 - 第三十一輪（q 10-08 15:28）：僅調整 prOpen 的群組順序。
 - 第三十二輪（q 10-08 15:38）：`labg/labz` 開關寫入隱藏 select；`.cnt` 張數；t55 驗證。
+- 第三十三輪（q 10-08 15:50）：`prSplit/prLines`、`prLayout` 多欄寬度、`prPopColor`、`prMaxLvl`、`o.pvt`；t56 驗證。畫布科判圖未換行。
 - 測試（Chromium 模擬，非實機）：藏版本卷／全部／層級／全覽；韓版 46,769 科全展開縮放循環約 16ms／幀（rAF 上限）；電腦點節點→正文 `#j5` 定位、Esc 關閉、拖曳；手機 390×844 版面與雙指縮放（合成 pointer 事件 90%→250%）。`tools/check-analytics-registry.cjs` 另跑，結果見下方補記。
 - **未測**：Safari／iPhone／iPad 實機、iPad 版面截圖、手機橫向、深色模式截圖、Mac 觸控板縮放手感、點節點後三欄同步的全面比對。
 
