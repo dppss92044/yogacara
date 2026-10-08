@@ -289,7 +289,7 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-pr .r{padding:0 12px}
 #kmap .km-pr input[type=color]{width:34px;padding:3px;border-radius:9px}#kmap .km-pr input[type=color]::-webkit-color-swatch{border-radius:6px}#kmap .km-pr input[type=color]::-moz-color-swatch{border-radius:6px}
 #kmap .km-pr .main{position:relative}#kmap .km-pr .cnt{position:absolute;right:22px;bottom:16px;padding:6px 14px;border-radius:999px;background:rgba(30,30,30,.78);color:#fff;font-size:15px;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.25)}
-#kmap .km-pr .ddl.sw{display:flex;gap:8px;padding:10px 12px}#kmap .km-pr .ddl.sw button{width:30px;height:30px;padding:0;border-radius:50%;border:2px solid transparent}#kmap .km-pr .ddl.sw button.on{border-color:var(--fg,#222)}
+#kmap .km-pr .ddl.sw{display:grid;grid-template-columns:repeat(8,26px);gap:4px;padding:10px 12px}#kmap .km-pr .ddl.sw button{width:26px;height:26px;padding:0;border-radius:4px;border:2px solid transparent}#kmap .km-pr .ddl.sw button.on{border-color:var(--fg,#222)}
 #kmap .km-pr .pz{position:absolute;top:14px;right:26px;display:flex;align-items:center;gap:6px;padding:4px 6px;border-radius:999px;background:rgba(30,30,30,.78);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);z-index:5}#kmap .km-pr .pz button{width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:18px;cursor:pointer}#kmap .km-pr .pz b{min-width:48px;text-align:center;font-weight:400;font-size:14px}
 #kmap .km-pr .pv{align-items:flex-start;overflow-x:auto}#kmap .km-pr .pgp{margin-left:auto;margin-right:auto}
 #kmap .km-pr .est{font-size:14px;color:var(--mute,#777);line-height:1.5}
@@ -4706,7 +4706,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function prSync(d){d.querySelectorAll('select[data-pr]').forEach(function(se){var b=se._dd;if(!b)return;var op=se.options[se.selectedIndex],t=op?op.text:'',n=se.dataset.pr;
           if(n==='mxs'&&se.value==='c')t=(d._mx/10).toFixed(2).replace(/0$/,'')+'×'+(d._my/10).toFixed(2).replace(/0$/,'')+' cm';
           if(n==='rng'&&se.value==='r'){var pa=d.querySelector('[data-pr=pa]').value,pb=d.querySelector('[data-pr=pb]').value;t='第 '+pa+'–'+pb+' 頁';}
-          if(n==='paper')t=t.split('（')[0];if(n==='lcol'&&se.value==='c')t='其他色';
+          if(n==='paper')t=t.split('（')[0];if(n==='lcol'&&se.value==='c')t='自選色';
           b.textContent=t;});
         var vb=d.querySelector('[data-vol]');if(vb)vb.textContent=d.querySelector('[data-pr=va]').value+' – '+d.querySelector('[data-pr=vb]').value+' 卷';}
       function prPlace(d,l,b){var sd=d.querySelector('.side'),zm=parseFloat(sd&&sd.style.zoom)||1,dr=d.getBoundingClientRect(),br=b.getBoundingClientRect(),top=(br.bottom-dr.top+4)/zm,left=(br.left-dr.left)/zm;if(zm!==1)l.style.zoom=String(zm);
@@ -4720,7 +4720,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           var u=document.createElement('i');u.textContent=rw.unit||'';row.appendChild(lb);row.appendChild(mi);row.appendChild(inp);row.appendChild(pl);row.appendChild(u);l.appendChild(row);});
         d.appendChild(l);prPlace(d,l,b);}
       function prPopColor(d,b){var had=d.querySelector('.ddl');prDdClose(d);var l=document.createElement('div');l.className='ddl ddp sw';l._b=b;
-        [['#1f4e9c','藍'],['#2d6a3a','綠'],['#8a5a1c','褐'],['#666666','灰'],['#6b3fa0','紫']].forEach(function(c){var bt=document.createElement('button');bt.type='button';bt.title=c[1];bt.setAttribute('aria-label',c[1]);bt.style.background=c[0];bt.className=(d._lc||'#1f4e9c')===c[0]?'on':'';bt.addEventListener('click',function(e){e.stopPropagation();d._lc=c[0];prDdClose(d);prDraw();});l.appendChild(bt);});
+        function mix(h,t,p){var n=parseInt(h.slice(1),16),r=[n>>16&255,n>>8&255,n&255].map(function(x){return Math.round(x+(t-x)*p);});return '#'+r.map(function(x){return ('0'+x.toString(16)).slice(-2);}).join('');}
+        var cur=(d._lc||'').toLowerCase(),cols=[['#000000','黑'],['#9a2c1e','紅'],['#7f7f7f','灰'],['#7b4a1e','咖啡'],['#1f4e9c','藍'],['#ff0000','原色紅'],['#ffff00','原色黃'],['#0000ff','原色藍']],sh=[[0,0],[255,.4],[255,.2],[0,.25],[0,.5]];
+        sh.forEach(function(q){cols.forEach(function(c){var hx=q[1]?mix(c[0],q[0],q[1]):c[0],bt=document.createElement('button');bt.type='button';bt.title=c[1]+(q[1]?(q[0]?'（淺）':'（深）'):'');bt.setAttribute('aria-label',bt.title);bt.style.background=hx;bt.className=cur===hx?'on':'';bt.addEventListener('click',function(e){e.stopPropagation();d._lc=hx;prDdClose(d);prDraw();});l.appendChild(bt);});});
         d.appendChild(l);prPlace(d,l,b);}
       function prPopMargin(d,b){prPop(d,b,[{label:'左右',min:0,max:60,step:1,unit:'mm',get:function(){return d._mx;},set:function(v){d._mx=v;d._cm=1;prDraw();}},{label:'上下',min:0,max:60,step:1,unit:'mm',get:function(){return d._my;},set:function(v){d._my=v;d._cm=1;prDraw();}}]);}
       function prPopVol(d,b){var va=d.querySelector('[data-pr=va]'),vb=d.querySelector('[data-pr=vb]');prPop(d,b,[{label:'從',min:1,max:100,step:1,unit:'卷',get:function(){return +va.value;},set:function(v){va.value=String(v);if(+vb.value<v)vb.value=String(v);prPg=0;prDraw();}},{label:'到',min:1,max:100,step:1,unit:'卷',get:function(){return +vb.value;},set:function(v){vb.value=String(v);if(+va.value>v)va.value=String(v);prPg=0;prDraw();}}]);}
@@ -4764,7 +4766,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           '<div class="grp"><label class="r"><span>主題</span><select data-pr="scope">'+scp+'</select></label><div class="r"><span>卷次</span><span class="dd"><button type="button" class="ddb" data-vol="1" aria-haspopup="dialog"></button></span><select data-pr="va" data-nodd="1" style="display:none">'+vop+'</select><select data-pr="vb" data-nodd="1" style="display:none">'+vop+'</select></div>'+
           '<label class="r"><span>層數</span><select data-pr="n">'+nop+'</select></label></div>'+
           '<div class="grp"><select data-pr="lab" data-nodd="1" style="display:none"><option value="1">干支</option>'+(edKey==='zang'?'<option value="2">章節</option>':'')+'<option value="0">無</option></select>'+ck('labg','科判標號（干支）')+(edKey==='zang'?ck('labz','科判標號（章節）'):'')+
-          '<label class="r" data-pr="lcrow"><span>標號顏色</span><select data-pr="lcol"><option value="r">紅色</option><option value="k">黑色</option><option value="c">其他色…</option></select></label>'+ck('pno','頁面')+ck('pn','分頁頁碼')+ck('path','路徑')+
+          '<label class="r" data-pr="lcrow"><span>標號顏色</span><select data-pr="lcol"><option value="r">紅色</option><option value="k">黑色</option><option value="c">更多顏色…</option></select></label>'+ck('pno','頁面')+ck('pn','分頁頁碼')+ck('path','路徑')+
           '<label class="r" data-pr="phrow"><span>路徑位置</span><select data-pr="ph2"><option value="b">下方</option><option value="t">上方</option></select><select data-pr="pv" hidden><option value="r">右方</option><option value="l">左方</option></select></label></div>'+
           '<div class="grp"><label class="r"><span>書寫</span><select data-pr="wr"><option value="v">直書</option><option value="h">橫書</option></select></label>'+
           '<label class="r"><span>字體</span><select data-pr="font"><option value="m">新細明體</option><option value="k">標楷體</option><option value="s">宋體</option><option value="h">黑體</option></select></label>'+
