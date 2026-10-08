@@ -43,6 +43,7 @@
 - 第三十三輪（q 10-08 15:50）：`prSplit/prLines`、`prLayout` 多欄寬度、`prPopColor`、`prMaxLvl`、`o.pvt`；t56 驗證。畫布科判圖未換行。
 - 第三十四輪（q 10-08 15:58）：`wrap` 參數貫穿 prLines/prLayout/prFit；`ln.off` 續行偏移。實測韓版 31 張頁面可排；未找到 >6 字標題的實例截圖。
 - 第三十五輪（q 10-08 16:01）：`d._pz`、`pzd/pzu`；t59 驗證。
+- 第三十六輪（q 10-08 16:03）：`prFit` 包裝 `prFit0`（A 不換行、B 換行擇優）；`o.h1`、`cf`。t58 驗證（藏版 9 張）。
 - 測試（Chromium 模擬，非實機）：藏版本卷／全部／層級／全覽；韓版 46,769 科全展開縮放循環約 16ms／幀（rAF 上限）；電腦點節點→正文 `#j5` 定位、Esc 關閉、拖曳；手機 390×844 版面與雙指縮放（合成 pointer 事件 90%→250%）。`tools/check-analytics-registry.cjs` 另跑，結果見下方補記。
 - **未測**：Safari／iPhone／iPad 實機、iPad 版面截圖、手機橫向、深色模式截圖、Mac 觸控板縮放手感、點節點後三欄同步的全面比對。
 
