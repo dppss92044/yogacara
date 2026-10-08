@@ -4638,11 +4638,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         return {n:ls.length,lines:ls};}
       function pfx(a){var l=a[a.length-1];return /^第.+卷$/.test(l)?[l].concat(a.slice(0,-1)):a;}
       function prPages(rs,o){
-        var pages=[],q=[],bases={},limAbs=99,mx=o.mx,my=o.my,v=o.v,pf=o.fs*.7,titleH=0,gapB=o.fs*1.6,guard=0,pmap={},npg={},ovrDone=false;prPartMap={};prLab=o.lab;prLM=o.lm||1;prV=o.v;prVa=o.va;prVb=o.vb;
+        var pages=[],q=[],bases={},limAbs=99,mx=o.mx,my=o.my,v=o.v,pf=o.fs*.7,titleH=0,gapB=o.fs*1.6,guard=0,pmap={},npg={},ovrDone=false,present={};prPartMap={};prLab=o.lab;prLM=o.lm||1;prV=o.v;prVa=o.va;prVb=o.vb;
         function pgn(k){return o.pno&&npg[k]?'(p'+npg[k]+')':'';}
         function chain(r){var a=['瑜伽師地論'+pgn(VR)];prPath(r).forEach(function(k){a.push((o.plab?labAny(k,prLM):'')+NN[k][0]+pgn(k));});if(prPartMap[r]&&prPartMap[r].length&&r<VR)a.push((o.plab?labAny(r,prLM):'')+NN[r][0]+pgn(r));if(r<VR&&NN[r][6]>0)a.push('第'+cn(NN[r][6])+'卷');return a;}
         function fits(l,w,h){return !l.over&&l.w<=w&&l.h<=h;}
-        prSrcFn=function(r){if(!o.path||r>=VR)return null;var p0,t,pn;if(prPartMap[r]&&prPartMap[r].length){t=(o.plab?labAny(r,prLM):'')+NN[r][0];pn=npg[r];}else{p0=NN[r][4];if(p0<0||p0>=VR){t='瑜伽師地論';pn=npg[VR];}else{t=(o.plab?labAny(p0,prLM):'')+NN[p0][0];pn=npg[p0];}}if(pn===pi)return null;var tc=Array.from(t);if(tc.length>10)t=tc.slice(0,10).join('')+'…';return {t:t,p:o.pno&&pn?'p'+pn:null};};
+        prSrcFn=function(r){if(!o.path||r>=VR)return null;var p0,t,pn;if(prPartMap[r]&&prPartMap[r].length){t=(o.plab?labAny(r,prLM):'')+NN[r][0];pn=npg[r];}else{p0=NN[r][4];if(p0<0||p0>=VR){t='瑜伽師地論';pn=npg[VR];}else{t=(o.plab?labAny(p0,prLM):'')+NN[p0][0];pn=npg[p0];}}if(pn===pi||present[pi+'|'+(prPartMap[r]&&prPartMap[r].length?r:p0)])return null;var tc=Array.from(t);if(tc.length>10)t=tc.slice(0,10).join('')+'…';return {t:t,p:o.pno&&pn?'p'+pn:null};};
         rs.forEach(function(r0){var rr=prRoots(r0);if(!rr.length)rr=[r0];rr.forEach(function(k){bases[k]=NN[r0][3];q.push(k);});});
         while(q.length&&guard++<3000&&pages.length<400){
           var r=q.shift(),ch=chain(r),pb=prPathBox(pfx(ch).join('/'),pf,v,v?o.ph-2*my:o.pw-2*mx);
@@ -4661,7 +4661,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             else{var res=nf(r);if(res){lay=res.lay;pos=res.pos;}}
             if(!pos&&!first){for(var qi=0;qi<q.length&&qi<12&&!pos;qi++){var r2=q[qi],res2=nf(r2);if(res2){q.splice(qi,1);q.unshift(r);r=r2;ch=chain(r);lay=res2.lay;pos=res2.pos;}}}
             if(!pos){q.unshift(r);break;}
-            if(ovr)ovrDone=true;delete prPartMap[r];Object.keys(lay.parts||{}).forEach(function(pk){prPartMap[pk]=lay.parts[pk];});pmap[r]=pi;lay.nodes.forEach(function(nd){if(npg[nd.k]==null)npg[nd.k]=pi;});
+            if(ovr)ovrDone=true;delete prPartMap[r];Object.keys(lay.parts||{}).forEach(function(pk){prPartMap[pk]=lay.parts[pk];});pmap[r]=pi;lay.nodes.forEach(function(nd){if(npg[nd.k]==null)npg[nd.k]=pi;if(!nd.hide)present[pi+'|'+nd.k]=1;});
             var bdd=bdep(r,lay);pg.dm=pg.dm==null?bdd:Math.min(pg.dm,bdd);pg.blocks.push({r:r,d:bdd,lay:lay,s:s,x:pos.x,y:pos.y,w:lay.w*s+exW,h:lay.h*s+exH,ch:ch,ex:v?exW:exH});
             lay.def.forEach(function(k){bases[k]=bases[r];});q=lay.def.concat(q);first=false;
             if(!q.length)break;r=q.shift();ch=chain(r);}
@@ -4682,7 +4682,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function prSvg(pg,i,tot,o,prev){
         var fs=o.fs,mx=o.mx,my=o.my,v=o.v,RED=o.bw?'#111':o.lcol,INK='#111',pf=pg.pf,ff=FONTS[o.font]||FONTS.m,pfw=(prFF=ff,''),
         s='<svg xmlns="http://www.w3.org/2000/svg" '+(prev?'style="display:block;width:100%;height:auto;background:#fff"':'width="'+(o.mmW*(o.sc||1)).toFixed(2)+'mm" height="'+(o.mmH*(o.sc||1)).toFixed(2)+'mm"')+' viewBox="0 0 '+o.pw+' '+o.ph+'" font-family="'+ff.replace(/"/g,"'")+'"><rect width="'+o.pw+'" height="'+o.ph+'" fill="#fff"/>';
-        var b0=pg.blocks[0],lcp=b0.ch.slice();pg.blocks.forEach(function(b){var k=0;while(k<lcp.length&&k<b.ch.length&&lcp[k]===b.ch[k])k++;lcp.length=k;});
+        var dmn0=1e9;pg.blocks.forEach(function(b){if(b.d<dmn0)dmn0=b.d;});var tb=pg.blocks.filter(function(b){return b.d===dmn0;}),b0=tb[0]||pg.blocks[0],lcp=b0.ch.slice();(tb.length?tb:pg.blocks).forEach(function(b){var k=0;while(k<lcp.length&&k<b.ch.length&&lcp[k]===b.ch[k])k++;lcp.length=k;});
         if(o.pno)s+='<text x="'+o.pw/2+'" y="'+(o.ph-my*0.5)+'" font-size="'+Math.min(fs*0.8,13)+'" text-anchor="middle" fill="#555">第 '+(i+1)+' 頁／共 '+tot+' 頁</text>';
         var x0=mx+(v&&o.pl==='l'?pg.px:0),y0=my+pg.titleH+(!v&&o.pt==='t'?pg.py:0);
         var gw=0;pg.rows.forEach(function(r){if(r.w>gw)gw=r.w;});var gx=x0+(pg.aw-gw)/2;
