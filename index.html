@@ -4647,7 +4647,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         return '<text x="'+x.toFixed(1)+'" y="'+(cy+sz*0.35).toFixed(1)+'" font-size="'+sz+'" fill="'+fill+'" text-anchor="middle">'+esc(c)+'</text>';}
       function prRun1(t,x,y,sz,INK,RED){
         var s='<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" font-size="'+sz+'" fill="'+INK+'">',cur=-1,b='';
-        function flush(){if(b)s+='<tspan fill="'+(cur===1?RED:cur===2?'#777':INK)+'"'+(cur===2?' font-size="'+(sz*.66).toFixed(1)+'"':'')+'>'+esc(b)+'</tspan>';b='';}
+        function flush(){if(b)s+='<tspan fill="'+(cur===1?RED:cur===2||cur===4?'#777':INK)+'"'+(cur===2?' font-size="'+(sz*.66).toFixed(1)+'"':cur===4?' font-size="'+Math.max(6,sz*.66-2).toFixed(1)+'"':'')+'>'+esc(b)+'</tspan>';b='';}
         t.forEach(function(p){if(p[1]!==cur){flush();cur=p[1];}b+=p[0];});flush();return s+'</text>';}
       function prSvg(pg,i,tot,o,prev){
         var fs=o.fs,mx=o.mx,my=o.my,v=o.v,RED=o.bw?'#111':o.lcol,INK='#111',pf=pg.pf,ff=FONTS[o.font]||FONTS.m,pfw=(prFF=ff,''),
@@ -4664,8 +4664,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             var L=n.L||1;
             n.lines.forEach(function(ln,li){var last=li===L-1;
               if(v){var xx=n.x+((L-1)/2-li)*lay.cstep,yy=n.y+(ln.off||0)*lay.lh;ln.forEach(function(t){var w=prW(t),sz=t[1]===2?fs*.66:fs;if(t[1]===3){var ns=numSize(t[0],fs);s+='<text x="'+xx.toFixed(1)+'" y="'+(yy+lay.lh*w/2+ns*.35).toFixed(1)+'" font-size="'+ns.toFixed(1)+'" fill="'+RED+'" text-anchor="middle">'+esc(t[0])+'</text>';yy+=lay.lh*w;return;}s+=prChar(t[0],xx,yy,sz,t[1]===1?RED:t[1]===2?'#777':INK,lay.lh*w);yy+=lay.lh*w;});
-                if(pn&&last)s+='<text x="'+xx.toFixed(1)+'" y="'+(yy+fs*.5).toFixed(1)+'" font-size="'+(fs*.66).toFixed(1)+'" text-anchor="middle" fill="#777">p'+pn+'</text>';}
-              else{var yb=n.y+fs*0.35+(li-(L-1)/2)*lay.cstep;s+=prRun1(pn&&last?ln.concat([[' ',2],['p',2]].concat(Array.from(String(pn)).map(function(c){return [c,2];}))):ln,n.x+(ln.off||0)*fs,yb,fs,INK,RED);}});});
+                if(pn&&last)s+='<text x="'+xx.toFixed(1)+'" y="'+(yy+fs*.5+fs*.33).toFixed(1)+'" font-size="'+Math.max(6,fs*.66-2).toFixed(1)+'" text-anchor="middle" fill="#777" xml:space="preserve">p'+pn+'</text>';}
+              else{var yb=n.y+fs*0.35+(li-(L-1)/2)*lay.cstep;s+=prRun1(pn&&last?ln.concat([[' ',2],[' ',4],['p',4]].concat(Array.from(String(pn)).map(function(c){return [c,4];}))):ln,n.x+(ln.off||0)*fs,yb,fs,INK,RED);}});});
           s+='</g>';
           });
         if(o.path){var pb=prPathBox(pfx(lcp).join('/'),pf,v,v?o.ph-2*my-pg.titleH:o.pw-2*mx);
@@ -4795,6 +4795,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           else if(k==='cancel')prClose();else if(k==='go'||k==='pdf')prRun(k==='pdf');});
         d.addEventListener('input',function(e){if(e.target&&e.target.dataset.pr==='lcol'){prDraw();}});
         d.addEventListener('change',function(e){var t0=e.target&&e.target.dataset.pr;if(t0==='mxs'){if(e.target.value==='c')d._cm=1;else{d._cm=0;d._mx=d._my=+e.target.value;}}if(t0==='mxs'&&e.target.value==='c'||t0==='rng'&&e.target.value==='r'||t0==='lcol'&&e.target.value==='c'){setTimeout(function(){prDraw();var bb=e.target._dd;if(bb){if(t0==='mxs')prPopMargin(d,bb);else if(t0==='lcol')prPopColor(d,bb);else prPopPages(d,bb);}},0);}prPg=0;if(e.target&&e.target.dataset.pr==='scope'){var sp1=prSpanOf(prScope(e.target.value));d.querySelector('[data-pr=va]').value=String(sp1[0]);d.querySelector('[data-pr=vb]').value=String(sp1[1]);}prDraw();});        prEnh(d);
+        (function(){var pv=d.querySelector('.pv'),dg=null;pv.style.cursor='grab';
+          pv.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse'||e.button!==0)return;dg={x:e.clientX,y:e.clientY,l:pv.scrollLeft,t:pv.scrollTop};pv.style.cursor='grabbing';pv.setPointerCapture(e.pointerId);});
+          pv.addEventListener('pointermove',function(e){if(!dg)return;pv.scrollLeft=dg.l-(e.clientX-dg.x);pv.scrollTop=dg.t-(e.clientY-dg.y);});
+          function up(e){if(!dg)return;dg=null;pv.style.cursor='grab';try{pv.releasePointerCapture(e.pointerId);}catch(_){}}
+          pv.addEventListener('pointerup',up);pv.addEventListener('pointercancel',up);})();
         d.querySelector('details').addEventListener('click',function(e){if(e.target.closest('summary'))this._u=1;});
         prDraw();window.addEventListener('resize',function(){var dd=box.querySelector('.km-pr');if(dd)prFitUI(dd);});}
       function prRun(pdf){
