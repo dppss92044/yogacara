@@ -279,7 +279,7 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-pr .stp .ddb{padding:0 12px 0 2px;font-size:14px}
 #kmap .km-pr .ddb:after{content:'';position:absolute;right:9px;top:50%;width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-70%) rotate(45deg);opacity:.5}
 #kmap .km-pr .stp .ddb:after{right:5px}
-#kmap .km-pr .ddl{position:absolute;z-index:40;background:var(--bg);border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.28);border:1px solid var(--rule);overflow:auto;padding:4px;box-sizing:border-box;font-family:inherit;font-weight:300}
+#kmap .km-pr .ddl{position:absolute;z-index:40;background:var(--bg);border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.28);border:1px solid var(--rule);overflow:auto;padding:4px;box-sizing:border-box;font-family:'PingFang TC','Heiti TC','Microsoft JhengHei','Noto Sans TC',sans-serif;font-weight:300}
 #kmap .km-pr .ddl button{display:block;width:100%;border:0;background:none;color:inherit;font:inherit;font-size:15px;text-align:center;padding:8px 12px;border-radius:10px;cursor:pointer;white-space:nowrap}
 #kmap .km-pr .ddl button:hover{background:rgba(120,120,128,.16)}#kmap .km-pr .ddl button[aria-selected=true]{background:var(--acc,#d9a62e);color:#1f1d1a}
 #kmap .km-pr input[type=color]::-webkit-color-swatch-wrapper{padding:0}#kmap .km-pr input[type=color]::-webkit-color-swatch{border:0;border-radius:9px}#kmap .km-pr input[type=color]::-moz-color-swatch{border:0;border-radius:9px}
@@ -288,6 +288,7 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-pr .side>*{max-width:330px;width:100%;margin-left:auto;margin-right:auto;box-sizing:border-box}
 #kmap .km-pr .r{padding:0 12px}
 #kmap .km-pr input[type=color]{width:34px;padding:3px;border-radius:9px}#kmap .km-pr input[type=color]::-webkit-color-swatch{border-radius:6px}#kmap .km-pr input[type=color]::-moz-color-swatch{border-radius:6px}
+#kmap .km-pr .main{position:relative}#kmap .km-pr .cnt{position:absolute;right:22px;bottom:16px;padding:6px 14px;border-radius:999px;background:rgba(30,30,30,.78);color:#fff;font-size:15px;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 #kmap .km-pr .est{font-size:14px;color:var(--mute,#777);line-height:1.5}
 #kmap .km-pr .note{font-size:12.5px;color:var(--mute,#777);line-height:1.5}
 #kmap .km-pr .bt{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
@@ -4677,6 +4678,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         (function(){var ss=d.querySelector('[data-pr=mxs]'),op=[].slice.call(ss.options).filter(function(x){return x.value!=='c'&&Math.abs(+x.value-d._mx)<.01&&Math.abs(+x.value-d._my)<.01;});if(!d._cm&&op.length)ss.value=op[0].value;else{ss.value='c';d._cm=1;}})();
         ['pa','pb'].forEach(function(k,j){var se=d.querySelector('[data-pr='+k+']'),cur=+se.value||(j?ps.length:1),h='';for(var q=1;q<=ps.length;q++)h+='<option value="'+q+'">'+q+'</option>';se.innerHTML=h;se.value=String(Math.min(cur,ps.length));});
         d.querySelectorAll('[data-pr=oriv],[data-pr=orih]').forEach(function(bt){bt.setAttribute('aria-pressed',String((bt.dataset.pr==='orih')===(o.ori==='l')));});
+        (function(){var lv=d.querySelector('[data-pr=lab]').value,g=d.querySelector('[data-pr=labg]'),z=d.querySelector('[data-pr=labz]');if(g)g.setAttribute('aria-pressed',String(lv==='1'));if(z)z.setAttribute('aria-pressed',String(lv==='2'));})();
+        d.querySelector('.cnt').textContent=o.rng==='r'?'列印 '+Math.max(0,Math.min(ps.length,Math.max(o.pa,o.pb))-Math.min(o.pa,o.pb)+1)+' 張，共 '+ps.length+' 張':'共 '+ps.length+' 張';
         prSync(d);prFitUI(d);
         try{localStorage.setItem('km-print3',JSON.stringify({pno:o.pno,pn:o.pn,path:o.path,pt:d._pt||null,n:o.n,paper:o.paper,ori:o.ori,wr:o.v?'v':'h',sp:o.sp,pv:o.pv,mx:d._mx,my:d._my,lcol:o.lcol,ph2:o.ph2,font:o.font}));}catch(_){}}
       function prSync(d){d.querySelectorAll('select[data-pr]').forEach(function(se){var b=se._dd;if(!b)return;var op=se.options[se.selectedIndex],t=op?op.text:'',n=se.dataset.pr;
@@ -4726,16 +4729,16 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         var d=document.createElement('div');d.className='km-pr';
         var nop='<option value="0">1 – 最後一層</option>';for(var k=1;k<=8;k++)nop+='<option value="'+k+'">1 – 第 '+k+' 層</option>';
         var pop=Object.keys(PAPERS).map(function(k){return '<option value="'+k+'">'+k+'（'+PAPERS[k][0]+'×'+PAPERS[k][1]+'）</option>';}).join('');
-        var vop='';for(var vi=1;vi<=100;vi++)vop+='<option value="'+vi+'">第'+vi+'卷</option>';var mop=[[0,'無'],[6.35,'0.64 cm（¼ 吋）'],[12.7,'1.27 cm（½ 吋）'],[19.05,'1.91 cm（¾ 吋）'],[25.4,'2.54 cm（1 吋）'],[31.75,'3.18 cm（1¼ 吋）']].map(function(m){return '<option value="'+m[0]+'">'+m[1]+'</option>';}).join('')+'<option value="c">自訂…</option>';
+        var vop='';for(var vi=1;vi<=100;vi++)vop+='<option value="'+vi+'">第'+vi+'卷</option>';var mop=[[0,'無'],[6.35,'¼ 吋（0.64 cm）'],[12.7,'½ 吋（1.27 cm）'],[19.05,'¾ 吋（1.91 cm）'],[25.4,'1 吋（2.54 cm）'],[31.75,'1¼ 吋（3.18 cm）']].map(function(m){return '<option value="'+m[0]+'">'+m[1]+'</option>';}).join('')+'<option value="c">自訂…</option>';
         var DN=['五識身相應地','意地','有尋有伺地','無尋唯伺地','無尋無伺地','三摩呬多地','非三摩呬多地','有心地','無心地','聞所成地','思所成地','修所成地','聲聞地','獨覺地','菩薩地','有餘依地','無餘依地'];
         var scp=(i<VR?'<option value="sel">目前選取：'+esc(labx(i)+NN[i][0])+'</option>':'')+'<option value="all">全部</option><optgroup label="五大部分">'+PN.map(function(n,k){return '<option value="p'+k+'">'+n+'</option>';}).join('')+'</optgroup><optgroup label="十七地">'+DN.map(function(n,k){return '<option value="d'+k+'">'+(k+1)+' '+n+'</option>';}).join('')+'</optgroup>';
         var ck=function(id,t){return '<button type="button" class="r chk" data-pr="'+id+'" aria-pressed="true"><span>'+t+'</span><i></i></button>';};
-        d.innerHTML='<div class="card" role="dialog" aria-label="列印科判"><div class="main"><div class="pv"></div></div>'+
+        d.innerHTML='<div class="card" role="dialog" aria-label="列印科判"><div class="main"><div class="pv"></div><div class="cnt" aria-live="polite"></div></div>'+
           '<div class="side"><h3>列印科判'+(i<VR?'<small>'+esc(labx(i)+NN[i][0])+'</small>':'')+'</h3>'+
           '<span class="seg wide"><button type="button" data-pr="edz" aria-pressed="'+(edKey==='zang')+'">大藏經版</button><button type="button" data-pr="edh" aria-pressed="'+(edKey!=='zang')+'">韓清淨版</button></span>'+
           '<div class="grp"><label class="r"><span>主題</span><select data-pr="scope">'+scp+'</select></label><div class="r"><span>卷次</span><span class="dd"><button type="button" class="ddb" data-vol="1" aria-haspopup="dialog"></button></span><select data-pr="va" data-nodd="1" style="display:none">'+vop+'</select><select data-pr="vb" data-nodd="1" style="display:none">'+vop+'</select></div>'+
           '<label class="r"><span>層數</span><select data-pr="n">'+nop+'</select></label></div>'+
-          '<div class="grp"><label class="r"><span>科判標號</span><select data-pr="lab"><option value="1">干支</option>'+(edKey==='zang'?'<option value="2">章節</option>':'')+'<option value="0">無</option></select></label>'+
+          '<div class="grp"><select data-pr="lab" data-nodd="1" style="display:none"><option value="1">干支</option>'+(edKey==='zang'?'<option value="2">章節</option>':'')+'<option value="0">無</option></select>'+ck('labg','科判標號（干支）')+(edKey==='zang'?ck('labz','科判標號（章節）'):'')+
           '<label class="r" data-pr="lcrow"><span>科判標號顏色</span><input type="color" data-pr="lcol" value="#9a2c1e" aria-label="科判標號顏色"></label>'+ck('pno','頁面')+ck('pn','分頁頁碼')+ck('path','路徑')+
           '<label class="r" data-pr="phrow"><span>路徑位置</span><select data-pr="ph2"><option value="b">下方</option><option value="t">上方</option></select><select data-pr="pv" hidden><option value="r">右方</option><option value="l">左方</option></select></label></div>'+
           '<div class="grp"><label class="r"><span>書寫</span><select data-pr="wr"><option value="v">直書</option><option value="h">橫書</option></select></label>'+
@@ -4757,7 +4760,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         function sv2(k,val,df){d.querySelector('[data-pr='+k+']').value=String(val==null?df:val);}
         d._pt=sv.pt||null;d._mx=sv.mx==null?25.4:sv.mx;d._my=sv.my==null?25.4:sv.my;var sc1='all';sv2('scope',sc1,'all');sv2('va',1,1);sv2('vb',100,100);sv2('wr',sv.wr,'v');sv2('font',sv.font,'k');sv2('n',sv.n,0);sv2('sp',sv.sp,1);sv2('lcol',sv.lcol&&sv.lcol!=='#8c2a1f'?sv.lcol:'#9a2c1e','#9a2c1e');sv2('rng','a','a');sv2('lab',ST.lab===2&&edKey!=='zang'?1:ST.lab,1);sv2('paper',sv.paper,'A4');sv2('ori',sv.ori,'l');sv2('pv',sv.pv,'r');sv2('ph2',sv.ph2,'b');
         d.addEventListener('click',function(e){var b=e.target.closest('[data-pr]');if(e.target===d){prClose();return;}if(!b||b.tagName==='SELECT')return;var k=b.dataset.pr;
-          if(k==='pno'||k==='pn'||k==='path'||k==='plab'){b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));prPg=0;prDraw();}
+          if(k==='labg'||k==='labz'){var ls0=d.querySelector('[data-pr=lab]'),tv=k==='labg'?'1':'2';ls0.value=ls0.value===tv?'0':tv;prPg=0;prDraw();}
+          else if(k==='pno'||k==='pn'||k==='path'||k==='plab'){b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));prPg=0;prDraw();}
           else if(k==='edz'||k==='edh'){var ne=k==='edz'?'zang':'hk';if(ne!==edKey){var kp=prSnap(d);prClose();var t0=Date.now(),iv=setInterval(function(){if(edKey===ne||Date.now()-t0>20000){clearInterval(iv);if(edKey===ne&&box&&!box.hidden){prOpen(VR);var nd=box.querySelector('.km-pr');if(nd)prRestore(nd,kp);}}},200);setEd(ne);}}
           else if(k==='oriv'||k==='orih'){d.querySelector('[data-pr=ori]').value=k==='orih'?'l':'p';prPg=0;prDraw();}
           else if(k==='mxd'||k==='mxu'||k==='myd'||k==='myu'){var kk=k[1]==='x'?'_mx':'_my';d[kk]=Math.max(0,Math.min(60,Math.round(((d[kk]==null?25.4:d[kk])+(k[2]==='u'?1:-1))*10)/10));prDraw();}
