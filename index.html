@@ -4621,7 +4621,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function pfx(a){var l=a[a.length-1];return /^第.+卷$/.test(l)?[l].concat(a.slice(0,-1)):a;}
       function prPages(rs,o){
         var pages=[],q=[],bases={},limAbs=99,mx=o.mx,my=o.my,v=o.v,pf=o.fs*.7,titleH=0,gapB=o.fs*1.6,guard=0,pmap={},npg={};prLab=o.lab;prLM=o.lm||1;prV=o.v;prVa=o.va;prVb=o.vb;
-        function pgn(k){return o.pno&&npg[k]?' '+npg[k]:'';}
+        function pgn(k){return o.pno&&npg[k]?'(p'+npg[k]+')':'';}
         function chain(r){var a=['瑜伽師地論'+pgn(VR)];prPath(r).forEach(function(k){a.push((o.plab?labAny(k,prLM):'')+NN[k][0]+pgn(k));});if(r<VR&&NN[r][6]>0)a.push('第'+cn(NN[r][6])+'卷');return a;}
         function fits(l,w,h){return !l.over&&l.w<=w&&l.h<=h;}
         rs.forEach(function(r0){var rr=prRoots(r0);if(!rr.length)rr=[r0];rr.forEach(function(k){bases[k]=NN[r0][3];q.push(k);});});
