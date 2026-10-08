@@ -4834,7 +4834,7 @@ pg.blocks.forEach(function(b){
           '<div class="grp"><label class="r"><span>列印範圍</span><select data-pr="rng"><option value="a">全部</option><option value="r">指定頁</option></select></label>'+
           '<select data-pr="pa" data-nodd="1" style="display:none"></select><select data-pr="pb" data-nodd="1" style="display:none"></select>'+
           ck('pvt','預覽（實際大小）')+'</div>'+
-          '<div class="est"></div><div class="bt"><button type="button" data-pr="cancel">取消</button><button type="button" data-pr="pdf">儲存成 PDF</button><button type="button" class="pri" data-pr="go">列印</button></div><div class="note">存成 PDF：按「儲存成 PDF」，在列印視窗的目的地選「另存為 PDF」（iPhone／iPad 點分享→儲存到檔案）。</div></div></div>';
+          '<div class="est"></div><div class="bt"><button type="button" data-pr="cancel">取消</button><button type="button" data-pr="html">生成 HTML</button><button type="button" data-pr="pdf">儲存成 PDF</button><button type="button" class="pri" data-pr="go">列印</button></div><div class="note">存成 PDF：按「儲存成 PDF」，在列印視窗的目的地選「另存為 PDF」（iPhone／iPad 點分享→儲存到檔案）。</div></div></div>';
         box.appendChild(d);
         function sb(k,on){var b=d.querySelector('[data-pr='+k+']');b.setAttribute('aria-pressed',String(on));}
         sb('pno',sv.pno!==false);sb('pvt',false);sb('pn',sv.pn!==false);sb('path',sv.path!==false);
@@ -4848,7 +4848,7 @@ pg.blocks.forEach(function(b){
           else if(k==='oriv'||k==='orih'){d.querySelector('[data-pr=ori]').value=k==='orih'?'l':'p';prPg=0;prDraw();}
           else if(k==='mxd'||k==='mxu'||k==='myd'||k==='myu'){var kk=k[1]==='x'?'_mx':'_my';d[kk]=Math.max(0,Math.min(60,Math.round(((d[kk]==null?(kk==='_my'?15:25.4):d[kk])+(k[2]==='u'?1:-1))*10)/10));prDraw();}
           else if(k==='zdn'||k==='zup'){var PT=[6,7,8,9,10,10.5,11,12,14,16,18,20,22,24,26,28,36,48],cu=prOpts().pt,ix=0;PT.forEach(function(p,q){if(p<=cu)ix=q;});if(k==='zup')ix=Math.min(PT.length-1,PT[ix]<cu?ix+1:ix+1);else ix=PT[ix]<cu?ix:Math.max(0,ix-1);d._pt=PT[ix];prDraw();}
-          else if(k==='cancel')prClose();else if(k==='go'||k==='pdf')prRun(k==='pdf');});
+          else if(k==='cancel')prClose();else if(k==='html')prHtml();else if(k==='go'||k==='pdf')prRun(k==='pdf');});
         d.addEventListener('input',function(e){if(e.target&&e.target.dataset.pr==='lcol'){prDraw();}});
         d.addEventListener('change',function(e){var t0=e.target&&e.target.dataset.pr;if(t0==='mxs'){if(e.target.value==='c')d._cm=1;else{d._cm=0;d._mx=d._my=+e.target.value;}}if(t0==='mxs'&&e.target.value==='c'||t0==='rng'&&e.target.value==='r'||t0==='lcol'&&e.target.value==='c'){setTimeout(function(){prDraw();var bb=e.target._dd;if(bb){if(t0==='mxs')prPopMargin(d,bb);else if(t0==='lcol')prPopColor(d,bb);else prPopPages(d,bb);}},0);}prPg=0;if(e.target&&e.target.dataset.pr==='scope'){var sp1=prSpanOf(prScope(e.target.value));d.querySelector('[data-pr=va]').value=String(sp1[0]);d.querySelector('[data-pr=vb]').value=String(sp1[1]);}prDraw();});
         function prZoomBy(f){var pc=d._pz||100,np=Math.max(25,Math.min(300,Math.round(pc*f)));if(np===pc)np+=f>1?1:-1;d._pz=Math.max(25,Math.min(300,np));prDraw();}
@@ -4863,6 +4863,15 @@ pg.blocks.forEach(function(b){
           pv.addEventListener('pointerup',up);pv.addEventListener('pointercancel',up);})();
         d.querySelector('details').addEventListener('click',function(e){if(e.target.closest('summary'))this._u=1;});
         prDraw();window.addEventListener('resize',function(){var dd=box.querySelector('.km-pr');if(dd)prFitUI(dd);});}
+      function prHtml(){
+        var o=prOpts(),ps=prPages(o.roots,o),nm=o.root<VR?labx(o.root)+NN[o.root][0]:'全部',ids=ps.map(function(p,i){return i;});
+        if(o.rng==='r'){var pa=Math.min(o.pa,o.pb),pb=Math.max(o.pa,o.pb);ids=ids.filter(function(i){return i+1>=pa&&i+1<=pb;});}
+        var body=ids.map(function(i){return '<section class="p" id="p'+(i+1)+'">'+prSvg(ps[i],i,ps.length,o,true)+'</section>';}).join(''),opt=ids.map(function(i){return '<option value="'+(i+1)+'">第 '+(i+1)+' 頁</option>';}).join('');
+        var html='<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>瑜伽師地論科判_'+esc(nm)+'</title><style>html,body{margin:0;background:#e9e7e1;font:14px -apple-system,BlinkMacSystemFont,sans-serif;color:#222}.bar{position:sticky;top:0;z-index:2;display:flex;gap:8px;align-items:center;justify-content:center;padding:8px;background:#faf9f5;border-bottom:1px solid #ccc}.bar button,.bar select{font:inherit;padding:4px 10px;border:1px solid #bbb;border-radius:6px;background:#fff}.p{margin:12px auto;background:#fff;box-shadow:0 1px 6px #0003;width:'+o.pw+'px;max-width:none}.p svg{display:block;width:100%;height:auto}</style></head><body><div class="bar"><button id="zo">－</button><span id="zv">100%</span><button id="zi">＋</button><button id="zf">符合寬度</button><select id="pg">'+opt+'</select></div><div id="w">'+body+'</div><script>(function(){var z=1,w=document.getElementById("w"),zv=document.getElementById("zv"),P='+o.pw+';function ap(){z=Math.max(.25,Math.min(3,z));[].forEach.call(w.children,function(e){e.style.width=(P*z)+"px"});zv.textContent=Math.round(z*100)+"%"}function fit(){z=Math.min(1,(innerWidth-24)/P);ap()}document.getElementById("zo").onclick=function(){z-=.25;ap()};document.getElementById("zi").onclick=function(){z+=.25;ap()};document.getElementById("zf").onclick=fit;document.getElementById("pg").onchange=function(){var e=document.getElementById("p"+this.value);if(e)e.scrollIntoView()};addEventListener("wheel",function(e){if(e.ctrlKey||e.metaKey){e.preventDefault();z*=e.deltaY<0?1.1:1/1.1;ap()}},{passive:false});fit()})()<\/script></body></html>';
+        var blob=new Blob([html],{type:'text/html;charset=utf-8'}),u=URL.createObjectURL(blob),wn=null;
+        try{wn=window.open(u,'_blank');}catch(_){}
+        if(!wn){var a=document.createElement('a');a.href=u;a.download='瑜伽師地論科判_'+nm+'.html';document.body.appendChild(a);a.click();a.remove();}
+        setTimeout(function(){URL.revokeObjectURL(u);},120000);}
       function prRun(pdf){
         var o=prOpts(),ps=prPages(o.roots,o),nm=o.root<VR?labx(o.root)+NN[o.root][0]:'全部',ids=ps.map(function(p,i){return i;});
         if(o.rng==='r'){var pa=Math.min(o.pa,o.pb),pb=Math.max(o.pa,o.pb);ids=ids.filter(function(i){return i+1>=pa&&i+1<=pb;});}
