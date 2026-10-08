@@ -290,6 +290,8 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-pr input[type=color]{width:34px;padding:3px;border-radius:9px}#kmap .km-pr input[type=color]::-webkit-color-swatch{border-radius:6px}#kmap .km-pr input[type=color]::-moz-color-swatch{border-radius:6px}
 #kmap .km-pr .main{position:relative}#kmap .km-pr .cnt{position:absolute;right:22px;bottom:16px;padding:6px 14px;border-radius:999px;background:rgba(30,30,30,.78);color:#fff;font-size:15px;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 #kmap .km-pr .ddl.sw{display:flex;gap:8px;padding:10px 12px}#kmap .km-pr .ddl.sw button{width:30px;height:30px;padding:0;border-radius:50%;border:2px solid transparent}#kmap .km-pr .ddl.sw button.on{border-color:var(--fg,#222)}
+#kmap .km-pr .pz{position:absolute;top:14px;right:26px;display:flex;align-items:center;gap:6px;padding:4px 6px;border-radius:999px;background:rgba(30,30,30,.78);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);z-index:5}#kmap .km-pr .pz button{width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:18px;cursor:pointer}#kmap .km-pr .pz b{min-width:48px;text-align:center;font-weight:400;font-size:14px}
+#kmap .km-pr .pv{align-items:flex-start;overflow-x:auto}#kmap .km-pr .pgp{margin-left:auto;margin-right:auto}
 #kmap .km-pr .est{font-size:14px;color:var(--mute,#777);line-height:1.5}
 #kmap .km-pr .note{font-size:12.5px;color:var(--mute,#777);line-height:1.5}
 #kmap .km-pr .bt{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
@@ -4682,8 +4684,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         e.textContent=(o.root<VR?'「'+(labx(o.root)+NN[o.root][0])+'」':'')+'預設會切成 '+ps.length+' 張'+(ps.length>1?'，內容依支脈順序排滿一張再換頁，左側可上下捲動預覽':'')+'。';
         d.querySelector('[data-pr=zv]').textContent=o.pt+' pt';
         if(prObs)prObs.disconnect();
-        var avw=Math.max(200,pv.clientWidth-12),tw=o.pvt?Math.min(o.pw,avw):0,scl=o.pvt?tw/o.pw:1;
-        pv.innerHTML=ps.map(function(p,i){return '<div class="pgp" data-i="'+i+'" style="aspect-ratio:'+o.pw+'/'+o.ph+';'+(o.pvt?'width:'+tw+'px;max-width:none':'max-width:'+(o.pw>o.ph?'1000px':'620px'))+'"></div>';}).join('');
+        var avw=Math.max(200,pv.clientWidth-12),pz=(d._pz||100)/100,tw=o.pvt?Math.min(o.pw,avw)*pz:Math.min(avw,o.pw>o.ph?1000:620)*pz,scl=(o.pvt?Math.min(o.pw,avw):1)*pz/(o.pvt?1:1);if(o.pvt)scl=tw/o.pw;d.querySelector('[data-pr=pzv]').textContent=Math.round(pz*100)+'%';
+        pv.innerHTML=ps.map(function(p,i){return '<div class="pgp" data-i="'+i+'" style="aspect-ratio:'+o.pw+'/'+o.ph+';width:'+tw.toFixed(1)+'px;max-width:none"></div>';}).join('');
         if(o.pvt)e.textContent+=(scl>=0.995?'　目前是 1:1 實際大小顯示。':'　注意：螢幕太小，此非 1:1，目前約 '+Math.round(scl*100)+'%。');
         prObs=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting&&!x.target.firstChild){var i=+x.target.dataset.i;x.target.innerHTML=prSvg(ps[i],i,ps.length,o,true);}});},{root:pv,rootMargin:'400px'});
         pv.querySelectorAll('.pgp').forEach(function(el){prObs.observe(el);});pv.scrollTop=sc0;
@@ -4754,7 +4756,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         var DN=['五識身相應地','意地','有尋有伺地','無尋唯伺地','無尋無伺地','三摩呬多地','非三摩呬多地','有心地','無心地','聞所成地','思所成地','修所成地','聲聞地','獨覺地','菩薩地','有餘依地','無餘依地'];
         var scp=(i<VR?'<option value="sel">目前選取：'+esc(labx(i)+NN[i][0])+'</option>':'')+'<option value="all">全部</option><optgroup label="五大部分">'+PN.map(function(n,k){return '<option value="p'+k+'">'+n+'</option>';}).join('')+'</optgroup><optgroup label="十七地">'+DN.map(function(n,k){return '<option value="d'+k+'">'+(k+1)+' '+n+'</option>';}).join('')+'</optgroup>';
         var ck=function(id,t){return '<button type="button" class="r chk" data-pr="'+id+'" aria-pressed="true"><span>'+t+'</span><i></i></button>';};
-        d.innerHTML='<div class="card" role="dialog" aria-label="列印科判"><div class="main"><div class="pv"></div><div class="cnt" aria-live="polite"></div></div>'+
+        d.innerHTML='<div class="card" role="dialog" aria-label="列印科判"><div class="main"><div class="pv"></div><div class="cnt" aria-live="polite"></div><div class="pz"><button type="button" data-pr="pzd" aria-label="縮小預覽">−</button><b data-pr="pzv">100%</b><button type="button" data-pr="pzu" aria-label="放大預覽">＋</button></div></div>'+
           '<div class="side"><h3>列印科判'+(i<VR?'<small>'+esc(labx(i)+NN[i][0])+'</small>':'')+'</h3>'+
           '<span class="seg wide"><button type="button" data-pr="edz" aria-pressed="'+(edKey==='zang')+'">大藏經版</button><button type="button" data-pr="edh" aria-pressed="'+(edKey!=='zang')+'">韓清淨版</button></span>'+
           '<div class="grp"><label class="r"><span>主題</span><select data-pr="scope">'+scp+'</select></label><div class="r"><span>卷次</span><span class="dd"><button type="button" class="ddb" data-vol="1" aria-haspopup="dialog"></button></span><select data-pr="va" data-nodd="1" style="display:none">'+vop+'</select><select data-pr="vb" data-nodd="1" style="display:none">'+vop+'</select></div>'+
@@ -4784,6 +4786,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           if(k==='labg'||k==='labz'){var ls0=d.querySelector('[data-pr=lab]'),tv=k==='labg'?'1':'2';ls0.value=ls0.value===tv?'0':tv;prPg=0;prDraw();}
           else if(k==='pvt'||k==='pno'||k==='pn'||k==='path'||k==='plab'){b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));prPg=0;prDraw();}
           else if(k==='edz'||k==='edh'){var ne=k==='edz'?'zang':'hk';if(ne!==edKey){var kp=prSnap(d);prClose();var t0=Date.now(),iv=setInterval(function(){if(edKey===ne||Date.now()-t0>20000){clearInterval(iv);if(edKey===ne&&box&&!box.hidden){prOpen(VR);var nd=box.querySelector('.km-pr');if(nd)prRestore(nd,kp);}}},200);setEd(ne);}}
+          else if(k==='pzd'||k==='pzu'){var PZ=[25,50,75,100,125,150,200,300],pc=d._pz||100,pi2=0;PZ.forEach(function(p,q){if(p<=pc)pi2=q;});pi2=k==='pzu'?Math.min(PZ.length-1,pi2+1):(PZ[pi2]<pc?pi2:Math.max(0,pi2-1));d._pz=PZ[pi2];prDraw();}
           else if(k==='oriv'||k==='orih'){d.querySelector('[data-pr=ori]').value=k==='orih'?'l':'p';prPg=0;prDraw();}
           else if(k==='mxd'||k==='mxu'||k==='myd'||k==='myu'){var kk=k[1]==='x'?'_mx':'_my';d[kk]=Math.max(0,Math.min(60,Math.round(((d[kk]==null?25.4:d[kk])+(k[2]==='u'?1:-1))*10)/10));prDraw();}
           else if(k==='zdn'||k==='zup'){var PT=[6,7,8,9,10,10.5,11,12,14,16,18,20,22,24,26,28,36,48],cu=prOpts().pt,ix=0;PT.forEach(function(p,q){if(p<=cu)ix=q;});if(k==='zup')ix=Math.min(PT.length-1,PT[ix]<cu?ix+1:ix+1);else ix=PT[ix]<cu?ix:Math.max(0,ix-1);d._pt=PT[ix];prDraw();}
