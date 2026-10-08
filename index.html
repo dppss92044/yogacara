@@ -4735,6 +4735,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           '<span class="seg wide"><button type="button" data-pr="edz" aria-pressed="'+(edKey==='zang')+'">大藏經版</button><button type="button" data-pr="edh" aria-pressed="'+(edKey!=='zang')+'">韓清淨版</button></span>'+
           '<div class="grp"><label class="r"><span>主題</span><select data-pr="scope">'+scp+'</select></label><div class="r"><span>卷次</span><span class="dd"><button type="button" class="ddb" data-vol="1" aria-haspopup="dialog"></button></span><select data-pr="va" data-nodd="1" style="display:none">'+vop+'</select><select data-pr="vb" data-nodd="1" style="display:none">'+vop+'</select></div>'+
           '<label class="r"><span>層數</span><select data-pr="n">'+nop+'</select></label></div>'+
+          '<div class="grp"><label class="r"><span>科判標號</span><select data-pr="lab"><option value="1">干支</option>'+(edKey==='zang'?'<option value="2">章節</option>':'')+'<option value="0">無</option></select></label>'+
+          '<label class="r" data-pr="lcrow"><span>科判標號顏色</span><input type="color" data-pr="lcol" value="#9a2c1e" aria-label="科判標號顏色"></label>'+ck('pno','頁面')+ck('pn','分頁頁碼')+ck('path','路徑')+
+          '<label class="r" data-pr="phrow"><span>路徑位置</span><select data-pr="ph2"><option value="b">下方</option><option value="t">上方</option></select><select data-pr="pv" hidden><option value="r">右方</option><option value="l">左方</option></select></label></div>'+
           '<div class="grp"><label class="r"><span>書寫</span><select data-pr="wr"><option value="v">直書</option><option value="h">橫書</option></select></label>'+
           '<label class="r"><span>字體</span><select data-pr="font"><option value="m">新細明體</option><option value="k">標楷體</option><option value="s">宋體</option><option value="h">黑體</option></select></label>'+
           '<div class="r"><span>字大小</span><span class="stp"><button type="button" data-pr="zdn" aria-label="縮小字">−</button><b data-pr="zv">100%</b><button type="button" data-pr="zup" aria-label="放大字">＋</button></span></div>'+
@@ -4744,9 +4747,6 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           '<label class="r"><span>邊界</span><select data-pr="mxs">'+mop+'</select></label>'+
           '<label class="r"><span>紙張</span><select data-pr="paper">'+pop+'</select></label>'+
           '<div class="r"><span>紙張方向</span><span class="seg"><button type="button" data-pr="oriv" aria-label="直放"><svg viewBox="0 0 24 24" width="20" height="20"><rect x="6" y="3" width="12" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button><button type="button" data-pr="orih" aria-label="橫放"><svg viewBox="0 0 24 24" width="20" height="20"><rect x="3" y="6" width="18" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button></span><select data-pr="ori" hidden><option value="l">橫放</option><option value="p">直放</option></select></div></details>'+
-          '<div class="grp"><label class="r"><span>科判標號</span><select data-pr="lab"><option value="1">干支</option>'+(edKey==='zang'?'<option value="2">章節</option>':'')+'<option value="0">無</option></select></label>'+
-          '<label class="r" data-pr="lcrow"><span>科判標號顏色</span><input type="color" data-pr="lcol" value="#9a2c1e" aria-label="科判標號顏色"></label>'+ck('pno','頁面')+ck('pn','分頁頁碼')+ck('path','路徑')+
-          '<label class="r" data-pr="phrow"><span>路徑位置</span><select data-pr="ph2"><option value="b">下方</option><option value="t">上方</option></select><select data-pr="pv" hidden><option value="r">右方</option><option value="l">左方</option></select></label></div>'+
           '<div class="grp"><label class="r"><span>列印範圍</span><select data-pr="rng"><option value="a">全部</option><option value="r">指定頁</option></select></label>'+
           '<select data-pr="pa" data-nodd="1" style="display:none"></select><select data-pr="pb" data-nodd="1" style="display:none"></select>'+
           '</div>'+
