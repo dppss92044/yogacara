@@ -4598,7 +4598,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           if(o.ch.length){var a0=o.a+o.hh+3,am=o.a+o.hh+gap/2,a1=o.a+o.hh+gap-2,cs=o.ch.map(function(c){return c.c;}),c0=Math.min.apply(0,cs),c1=Math.max.apply(0,cs);
             var cf=o.c-(o.L-1)/2*cstep,aa=o.L>1?o.a+o.h1+3:a0,lo=Math.min(c0,cf),hi=Math.max(c1,cf);lines+='M'+P(aa,cf)+'L'+P(am,cf)+(lo<hi?'M'+P(am,lo)+'L'+P(am,hi):'');o.ch.forEach(function(c){lines+='M'+P(am,c.c)+'L'+P(a1,c.c);});}});
         return {nodes:nodes,lines:lines,w:v?span:ext,h:v?ext:span,def:def,fs:fs,lh:unit,cstep:cstep,v:v,over:over};}
-      function prFit(r,o,aw,ah,limAbs){var A=prFit0(r,o,aw,ah,limAbs,false),okA=!A.over&&A.w<=aw&&A.h<=ah;if(okA&&!A.def.length)return A;var B=prFit0(r,o,aw,ah,limAbs,true),okB=!B.over&&B.w<=aw&&B.h<=ah;
+      function prFit(r,o,aw,ah,limAbs,tol){tol=tol||1;var A=prFit0(r,o,aw,ah,limAbs,false),okA=!A.over&&A.w<=aw*tol&&A.h<=ah*tol;if(okA&&!A.def.length)return A;var B=prFit0(r,o,aw,ah,limAbs,true),okB=!B.over&&B.w<=aw*tol&&B.h<=ah*tol;
         if(okB&&(!okA||B.def.length<A.def.length))return B;return A;}
       function prFit0(r,o,aw,ah,limAbs,wrap){
         var tops=prKids2(r),cuts={},top=Math.min(limAbs,maxD);
@@ -4624,8 +4624,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           var px=v&&pb.n?pb.n*pf*1.6+o.fs*.8:0,py=!v&&pb.n?pb.n*pf*1.6+o.fs*.8:0,aw=o.pw-2*mx-px,ah=o.ph-2*my-py;
           var pg={blocks:[],rows:[],px:px,py:py,aw:aw,ah:ah,titleH:0,pf:pf,map:pmap},pi=pages.length+1;pages.push(pg);var first=true;
           while(true){
-            limAbs=o.n?o.n:99;var full=prFit(r,o,aw,ah,limAbs),exW=first?0:(v?pf*1.5:0),exH=first?0:(v?0:pf*1.8),row=pg.rows[pg.rows.length-1],pos=null,lay=full,s=1;
-            if(first){if(Math.min(1,aw/full.w,ah/full.h)<1){var fw=prFit0(r,o,aw,ah,limAbs,true);if(Math.min(1,aw/fw.w,ah/fw.h)>Math.min(1,aw/full.w,ah/full.h)){full=fw;lay=fw;}}s=Math.min(1,aw/full.w,ah/full.h);pos={x:0,y:0};pg.rows.push({y:0,h:full.h*s+exH,w:full.w*s+exW});}
+            limAbs=o.n?o.n:99;var full=prFit(r,o,aw,ah,limAbs,first?1.18:1),exW=first?0:(v?pf*1.5:0),exH=first?0:(v?0:pf*1.8),row=pg.rows[pg.rows.length-1],pos=null,lay=full,s=1;
+            if(first){s=Math.min(1,aw/full.w,ah/full.h);pos={x:0,y:0};pg.rows.push({y:0,h:full.h*s+exH,w:full.w*s+exW});}
             else{
               if(row){var rw=aw-(row.w+gapB)-exW,rh=ah-row.y-exH;if(rw>0&&rh>0){var l1=prFit(r,o,rw,rh,limAbs);if(fits(l1,rw,rh)&&l1.def.length<=full.def.length){lay=l1;pos={x:row.w+gapB,y:row.y};row.w+=gapB+l1.w+exW;row.h=Math.max(row.h,l1.h+exH);}}
                 if(!pos){var ny=row.y+row.h+gapB,rh2=ah-ny-exH,rw2=aw-exW;if(rh2>0){var l2=prFit(r,o,rw2,rh2,limAbs);if(fits(l2,rw2,rh2)&&l2.def.length<=full.def.length){lay=l2;pos={x:0,y:ny};pg.rows.push({y:ny,h:l2.h+exH,w:l2.w+exW});}}}}
