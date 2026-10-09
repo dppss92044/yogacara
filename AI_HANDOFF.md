@@ -7,6 +7,15 @@
 ---
 
 ## 進行中：W004（q 2026-10-06 11:19「脈絡圖」）
+### 最新接續（Codex，2026-10-09，第七十七輪）
+- 使用者原始需求（附右下兩個圖示截圖）：「右下，這部分，幫我刪除展開，僅留下左邊。然後左邊按下去，就會全部背景展開。」
+- 本次從預覽分支 `claude/kepan-map-view-36by8y` 的 `b77e82f` 接續同一個 W004；本機工作分支 `work-w004-map-entry`。程式修改 commit：`6a4d0be99a6888be98146c1213619df17ceb6c61`（交接文件提交後最新 HEAD 以 `git log -1` 為準）。
+- 只移除科判欄右下 `#mapFull` 的建立與事件，保留 `#mapBtn` 的圖示與位置；點擊改用既有 `open(false)`，直接開啟全畫面、全部卷次的脈絡圖；返回鈕對齊保留的入口。已先在 DECISIONS 的第七十七輪記錄取代 D107 第十七輪雙入口設計。
+- 針對性 Chromium 操作檢查：電腦 1440×900、iPad 直向 820×1180／橫向 1180×820、手機直向 390×844／橫向 844×390，各搭配藏經版與韓版，共 10/10 通過；確認只剩單一入口、點擊覆蓋整個 viewport、卷次 1–100、返回鈕位置、關閉／重開／Esc、無 pageerror。測試腳本與結果：`/tmp/yogacara-map-entry-test.cjs`、`/tmp/yogacara-map-entry-test.log`（暫存，不假設下一個任務仍存在）。
+- Analytics 完整性檢查（既有 W001／v1.91 基底測試，對目前 W004 程式完整執行）：靜態 152 features／92 rules／26 states，0 失敗；動態 56 通過／97 不適用／3 手動／3 失敗（mac、ipad、iphone 的 `#reportBtn` 均未收到 `report.open`）；控制項掃描另有 1 類失敗，未登錄或排除的控制項為 `#versionBtn`、`#mapBtn`，合計 4 類失敗，exit 1。這兩個控制項在本次基底 `b77e82f` 已存在，原基底另有本次移除的 `#mapFull`；本次未改 Registry／統計客戶端／問題回報。此檢查不算通過，相關 Analytics 落差尚待另行處理。
+- 完整性檢查命令：`PLAYWRIGHT_PATH=/tmp/yogacara-registry-playwright.cjs CHROME_PATH=/usr/bin/chromium node tools/check-analytics-registry.cjs`。本機 helper 只設定支援的更新通知偏好 `hk-update-notice=off`（避免舊測試被通知遮擋）、Playwright 操作 timeout 3 秒與 navigation timeout 30 秒；未修改測試或斷言。結果 `/tmp/yogacara-w004-registry-final.log`。
+- 未執行舊版 fixtures 或舊歷史回歸套件。未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未升正式版本、未改 sw.js、未 push、未開 PR、未部署。
+
 - 基底 v1.92（main `4b7cac1`）。需求：到另一個介面看指定卷次或全部卷次的科判脈絡圖，滾輪縮放。工作分支 `claude/kepan-map-view-36by8y`；決定見 D107。
 - 做法：`index.html` 三處——功能列表「其他」加 `.ver-menu-row.map-menu-row`（`#mapBtn`，並入 settings 群組與 hover 列表）；`#kmapCss` 樣式；主 IIFE 結尾（`.catch` 之前）一段 W004 JS（`build()` 建樹與版面、canvas 繪製只畫可見區域、wheel／pointer／pinch、`goNode` 跳轉）。**未改版本號、`sw.js`、`data/`。**
 - 第二輪（q 11:39）：橫／直書素色、卷次範圍 a–b、層級、並排正文（右側自繪簡易正文，非閱讀器 `renderText`；資料取 `TXT[j-1][1]` 的 y／v／r／k 項）。`check-analytics-registry.cjs` 失敗 0。
