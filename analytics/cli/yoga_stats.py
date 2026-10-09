@@ -8,6 +8,7 @@
   閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標 [範圍]
   功能 [範圍] [--全部｜--未使用｜--類型 型]   功能使用（--全部 含 0 次；--未使用 只列 0 次）
   裝置 [範圍]                 功能與狀態的手機／平板／電腦分布
+  全部 [範圍]                 一次顯示總覽、使用者、回訪、地區、閱讀、科判…、功能、裝置（不含 即時／趨勢／資料量／登錄）
   即時 [--timeout 秒] [--監看] [--最近]   目前在線（心跳）
   回訪｜地區 [範圍]｜趨勢 [7|30]｜資料量｜登錄
   共用旗標：--date 日期  --from 日期 --to 日期  --裝置 手機|平板|電腦  --limit N  --sort …  --json
@@ -27,7 +28,9 @@ RANGES = {'今天': 'today', '今日': 'today', 'today': 'today', '本週': 'wee
 RANGE_LABEL = {'today': '今日', 'week': '本週', 'month': '本月', 'custom': '指定期間'}
 TOPICS = {'回訪': 'returning', '地區': 'regions', '地区': 'regions', '使用者': 'users', '實例': 'instance', '实例': 'instance', '閱讀': 'reading', '阅读': 'reading',
           '科判': 'nodes', '版本': 'edition', '註釋': 'notes', '注釋': 'notes', '搜尋': 'search', '辭典': 'dict', '匯出': 'export', '導航': 'nav', '顯示': 'display',
-          '字體': 'font', '科標': 'label', '功能': 'features', '裝置': 'devices', '即時': 'presence', '趨勢': 'trend', '資料量': 'size', '登錄': 'registry'}
+          '字體': 'font', '科標': 'label', '功能': 'features', '全部': 'all', '裝置': 'devices', '即時': 'presence', '趨勢': 'trend', '資料量': 'size', '登錄': 'registry'}
+# 「全部」依序顯示的主題（不含 即時、趨勢、資料量、登錄、實例，那些不是依範圍統計的內容）
+ALL_PARTS = ['今天', '使用者', '回訪', '地區', '閱讀', '科判', '版本', '註釋', '搜尋', '辭典', '匯出', '導航', '顯示', '字體', '科標', '功能', '裝置']
 DEVICE = {'phone': '手機', 'tablet': '平板', 'desktop': '電腦'}
 DEV_IN = {'手機': 'phone', '平板': 'tablet', '電腦': 'desktop', 'phone': 'phone', 'tablet': 'tablet', 'desktop': 'desktop'}
 MODE = {'web': '網頁', 'pwa': 'PWA'}
@@ -411,7 +414,7 @@ def render_registry(d):
 # ---- 主程式 ----
 def build_parser():
     ap = argparse.ArgumentParser(prog='瑜伽統計', description='查詢《瑜伽師地論》匿名 App 分析')
-    ap.add_argument('what', help='今天｜本週｜本月｜使用者｜實例｜閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標｜功能｜裝置｜即時｜回訪｜地區｜趨勢｜資料量｜登錄')
+    ap.add_argument('what', help='今天｜本週｜本月｜使用者｜實例｜閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標｜功能｜裝置｜全部｜即時｜回訪｜地區｜趨勢｜資料量｜登錄')
     ap.add_argument('period', nargs='?', help='範圍：今天｜本週｜本月；實例請給短代號；趨勢請給 7 或 30')
     ap.add_argument('--limit', type=int, default=30)
     ap.add_argument('--sort', default=None)
@@ -427,6 +430,26 @@ def build_parser():
 
 def valid_date(s):
     return s and len(s) == 10 and s[4] == '-' and s[7] == '-' and s.replace('-', '').isdigit()
+
+
+def run_all(a, argv, sleep):
+    import contextlib, io
+    argv = list(sys.argv[1:] if argv is None else argv)
+    i = argv.index('全部')
+    rest = [x for x in argv[i + 1:] if x != a.period]
+    per = a.period if a.period in RANGES else '本月'
+    outs = {}
+    for part in ALL_PARTS:
+        # 「今天」在這裡代表「總覽」；總覽與其他主題使用同一個範圍（未指定時為本月）
+        args = argv[:i] + ([per] if part == '今天' else [part, per]) + rest
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            main(args, sleep)
+        outs[part] = buf.getvalue()
+    if a.json:
+        print(json.dumps({k: json.loads(v) for k, v in outs.items() if v.strip()}, ensure_ascii=False, indent=2))
+    else:
+        print(('\n' + '─' * 60 + '\n').join(v.rstrip('\n') for v in outs.values() if v.strip()))
 
 
 def main(argv=None, sleep=time.sleep):
@@ -458,6 +481,8 @@ def main(argv=None, sleep=time.sleep):
         rng = RANGES[a.period] if a.period in RANGES else default
     else:
         sys.exit('不認得「%s」。可用：今天、本週、本月、使用者、實例、閱讀、科判、版本、註釋、搜尋、辭典、匯出、導航、顯示、字體、科標、功能、裝置、即時、回訪、地區、趨勢、資料量、登錄' % a.what)
+    if topic == 'all':
+        return run_all(a, argv, sleep)
     P = {'range': None if a.from_ else rng, 'date': a.date, 'from': a.from_, 'to': a.to, 'dev': dev}
     P = {k: v for k, v in P.items() if v}
 
