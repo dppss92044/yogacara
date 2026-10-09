@@ -6,6 +6,17 @@
 
 ---
 
+## 進行中：W005（Codex，2026-10-09，卷次欄置頂與點選穩定）
+- 正式基底 v1.92（main `4b7cac1`），接續 W004 獨立預覽 `1df6008`；沿用工作／預覽分支 `work-w004-map-entry`。程式修改 commit：`9a3043fb03ad57f33a8f5a66724516a35b1bb1b7`。最新交接 HEAD 以 Git 為準。
+- 使用者原始需求（附卷目次截圖）：「把左上設為預設開啟。然後點下去每一個卷的時候，下面的卷次欄位的該卷，都要在下面的卷次欄位置頂。比如點36卷……目前是還會看到35卷的後段。而點36卷的內容，卷次欄位頁面不要上下晃動。」已先記錄 D108，取代 D019 預設收起要求，再改程式；同步 PROJECT_SPEC、UI_SPEC、PROJECT_STATE、CHANGELOG。
+- 桌面／平板百卷清單初始化為展開、仍可手動收起；手機獨立浮窗保持原操作。選卷包含重選目前卷都重建卷次欄並置頂；以實際畫面座標補償 CSS zoom 與前插／移除鄰卷，預填後續短卷、補足第 100 卷最後捲動空間、略過隱藏欄位填充。卷次欄點科判時只保留垂直位置，既有水平對焦、正文與科判欄連動仍保留；選卷／科判點選重設正文同步等待計時，避免重選同卷被舊計時提前解除鎖定。
+- 針對性 Chromium 固定 viewport 操作檢查：桌面 1440×1000、iPad 直向 820×1180／橫向 1180×820、手機直向 390×844／橫向 844×390，另桌面卷次倍率 80%／140%，各搭配藏經版與韓版，共 14 組、126/126 項通過（初始展開、1／2／18／35／36／37／100 卷置頂、點科判期間可見欄位捲動位置不變、重選 36 卷、無 pageerror）。前五種版面卷次倍率 120%、正文 100%，觸控版面設定 hasTouch；isMobile=false 固定 viewport，未宣稱實機。手機／平板直向點卷內項目仍沿用自動切回正文，位置取樣只涵蓋卷次欄可見期間。腳本／結果 `/tmp/yogacara-volume-navigation-test.cjs`、`/tmp/yogacara-volume-navigation-test.log`。
+- 桌面兩版捲到卷內較下方，再點可見項目，連續取樣 4 秒垂直位置保持不變並可重選卷置頂：4/4 通過，`/tmp/yogacara-mid-node-test.cjs`、`/tmp/yogacara-mid-node-test.log`。全部卷次初輪與最終程式重跑皆兩版 200/200 通過，`/tmp/yogacara-all-volume-test.cjs`、`/tmp/yogacara-all-volume-final.log`。
+- Analytics 完整性檢查完整執行兩次（既有 W001／v1.91 基底套件）。初輪靜態 152 features／92 rules／26 states，0 失敗；動態 56 通過／97 不適用／3 手動／3 失敗（3 版面 #reportBtn），控制項掃描另有 #versionBtn／#mapBtn 未登錄或排除，合計 4 類失敗、exit 1。最終重跑靜態仍 0 失敗；套件彙總動態 55 通過／97 不適用／3 手動／4 失敗，實際 FAIL 日誌另包括 mac kepan.xref、iphone edition.entry.menu（同一規則鍵被後續紀錄覆寫，彙總數與 FAIL 行數不同），加控制項掃描合計 6 類失敗，exit 1。檢查未全數通過。未修改 Registry／統計客戶端／測試斷言。命令 `PLAYWRIGHT_PATH=/tmp/yogacara-registry-fast-playwright.cjs CHROME_PATH=/usr/bin/chromium node tools/check-analytics-registry.cjs`；helper 僅設定更新通知偏好 hk-update-notice=off、操作預設 timeout 300ms、navigation／waitForSelector 30 秒（原套件點選明定 3 秒）；結果 `/tmp/yogacara-w005-registry.log`、`/tmp/yogacara-w005-registry-final.log`。
+- 最終統計套件另曾在 mac kepan.xref、iphone edition.entry.menu 沒收到事件。以同樣啟動／實際操作／模擬時鐘／flush 步驟隔離重現：kepan.xref 本次 2/2、未修改基底 2/2 收到事件；edition.entry.menu 本次 1/1、未修改基底 1/1 收到事件。無法穩定重現，不能把完整套件失敗算成通過；未為此修改無關程式。暫存腳本與結果 `/tmp/yogacara-xref-isolation.cjs`／`.log`、`/tmp/yogacara-edition-isolation.cjs`／`.log`。
+- 程式 commit `9a3043f` 已成功推送到獨立分支 `work-w004-map-entry`（未推送 main）；本次固定程式 commit 網址 `https://raw.githack.com/dppss92044/yogacara/9a3043fb03ad57f33a8f5a66724516a35b1bb1b7/index.html`，避免沿用舊分支網址的快取。此雲端 egress proxy 先前對 raw.githack.com CONNECT 回 403，未在本環境驗證公網頁面載入；本機 Chromium 功能測試已完成。
+- 未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未執行其他歷史 fixtures 或舊版回歸套件。未升版、未改 sw.js／資料、未 push main、未開 PR、未部署正式站。
+
 ## 進行中：W004（q 2026-10-06 11:19「脈絡圖」）
 ### 最新接續（Codex，2026-10-09，第七十七輪）
 - 後續 q 要求「給我網址」：已依預覽需求推送獨立分支 `work-w004-map-entry`（未 push main、未開 PR、未部署正式站）。預覽程式 commit `6a4d0be`，已推送的交接 commit `f64df92`。第三方預覽網址為 `https://raw.githack.com/dppss92044/yogacara/work-w004-map-entry/index.html`；Git 讀取確認遠端分支存在，但雲端 egress proxy 對 raw.githack.com 的 CONNECT 回 403，因此無法在此環境驗證該公網網址實際載入。
