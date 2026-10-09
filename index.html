@@ -236,7 +236,7 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-rb h5{margin:1em 0 .3em;font:inherit;font-size:.9em;color:var(--muted);font-weight:400}
 #kmap .km-rb h5 .lb{color:var(--cinnabar)}
 #kmap .km-rb h5.sel{background:var(--hl,#f4e2a4);color:#1f1d1a;border-radius:6px;padding:0 6px}
-#kmap .km-chip{position:absolute;z-index:3;top:12px;left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:calc(100% - 24px);padding:10px 12px;border-radius:20px;background:var(--pop,rgba(246,246,246,.98));border:1px solid var(--rule);box-shadow:0 8px 24px var(--shadow,rgba(0,0,0,.16))}
+#kmap .km-chip{position:absolute;z-index:3;top:12px;left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:calc(100% - 24px);padding:10px 12px;border-radius:28px;background:var(--pop,rgba(246,246,246,.98));border:1px solid var(--rule);box-shadow:0 8px 24px var(--shadow,rgba(0,0,0,.16))}
 #kmap .km-chip[hidden]{display:none}
 #kmap .km-back2,#kmap .km-exp{position:fixed;z-index:12;left:var(--b2x,auto);top:var(--b2y,auto);right:auto;width:40px;height:40px;border-radius:12px;border:1px solid var(--rule);background:var(--bg);color:var(--muted,#666);display:grid;place-items:center;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 #kmap .km-exp{display:none;left:var(--exx,auto);top:var(--exy,auto)}
@@ -4318,6 +4318,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function req(){if(!raf)raf=requestAnimationFrame(draw);}
       function vcw(s){if(numLab(s)){var mq=/^([0-9][0-9\-–]*)(.*?)\s*$/.exec(s);return 1+Array.from(mq[2]).length+(/\s$/.test(s)?.5:0);}var a=0;Array.from(s).forEach(function(c){a+=c===' '?.5:1;});return a;}
       function vchars(s){var o=[];Array.from(s).forEach(function(c){o.push(VMAP[c]||c);});return o;}
+      var chipPt=null,chipStage=0,chipFor=-2;
+      function placeChip(){
+        if(!chipEl||chipEl.hidden)return;var st=chipEl.style;
+        if(!chipPt){st.left='';st.top='';st.transform='';return;}
+        var cw=chipEl.offsetWidth,chh=chipEl.offsetHeight,z=parseFloat(getComputedStyle(chipEl).zoom)||1,px=chipPt[0]/z+6,py=chipPt[1]/z-4;
+        px=Math.max(8,Math.min(px,W/z-cw-8));py=Math.max(8,Math.min(py,H/z-chh-8));st.left=px+'px';st.top=py+'px';st.transform='none';
+      }
       function draw(){
         raf=0;if(!box||box.hidden||!model)return;
         cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);
@@ -4332,7 +4339,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         var b0=Math.max(0,Math.floor(ac0/BAND)-1),b1=Math.min(M.bn.length-1,Math.floor(ac1/BAND)+1);
         var COARSE=window.matchMedia&&matchMedia('(pointer:coarse)').matches,maxDep=sc<0.05?3:99,textOK=sc>=0.32,i,a,L,curCur=shownCur(),b;
         if(!stamp||stamp.length!==NN.length){stamp=new Int32Array(NN.length);stub=new Int32Array(NN.length);nst=new Int32Array(NN.length);}
-        frame++;
+        frame++;chipPt=null;
         cx.save();cx.translate(tx,ty);cx.scale(sc,sc);
         var LW=[0.9,1.6,2.6,4][ST.lw]||0.9,PAL=['#c0392b','#d68910','#8a7d0a','#1e8449','#117a8b','#2e6da4','#6c3483','#7b7d7d'],nc=ST.color?8:1,c0;
         cx.lineWidth=Math.max(LW,1)/sc;cx.setLineDash(ST.dash?[6/sc,5/sc]:[]);
@@ -4380,6 +4387,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             var bcol=ST.color?PAL[M.bc[i]%8]:P.fg;
             if(M.spine&&Math.abs(M.y[i]-M.axisY)<1){cx.fillStyle=P.bg;cx.fillRect(rx-2,ry,rw+4,rh);}
             if(ST.shape||CELL){cx.globalAlpha=own?1:.5;cx.beginPath();if(CELL)cx.rect(rx,ry,rw,rh);else rr(cx,rx,ry,rw,rh,7);if(ST.shape===2){cx.globalAlpha=(own?1:.5)*.16;cx.fillStyle=bcol;cx.fill();cx.globalAlpha=own?1:.5;}cx.lineWidth=Math.max(1,1.2/sc);cx.strokeStyle=CELL&&!ST.shape?P.rule:bcol;cx.stroke();cx.globalAlpha=1;}
+            if(isCur&&i===selI)chipPt=[(rx+rw)*sc+tx,ry*sc+ty];
             if(isCur||isHov){cx.beginPath();if(CELL)cx.rect(rx,ry,rw,ly===8?M.step:rh);else rr(cx,rx,ry,rw,rh,5);cx.fillStyle=isCur?P.hl:P.rule;cx.globalAlpha=isCur?1:.55;cx.fill();cx.globalAlpha=1;}
             cx.globalAlpha=own?1:.5;
             if(vt){
@@ -4405,7 +4413,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
               cx.beginPath();cx.arc(mx,my,6,0,6.2832);cx.fillStyle=P.bg;cx.fill();cx.lineWidth=1.1/sc;cx.strokeStyle=P.fg;cx.globalAlpha=.7;cx.stroke();
               cx.beginPath();cx.moveTo(mx-3,my);cx.lineTo(mx+3,my);if(M.col[i]){cx.moveTo(mx,my-3);cx.lineTo(mx,my+3);}cx.stroke();cx.globalAlpha=1;}
           }}
-        cx.restore();
+        cx.restore();placeChip();
       }
       function mkA(M,i){return M.sd[i]>0||M.ly>=6?M.x[i]+M.w[i]+M.mko:M.x[i]-M.mko;}
       function mkC(M,i){return M.ly===8?M.ct[i]+M.step/2:M.y[i];}
@@ -4556,13 +4564,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         if(selI>=0||selIds||focusI>=0)box.classList.add('km-dk');
         if(!chipEl)return;var q=selI>=0&&model&&model.inc[selI]?selI:-1;
         if(q<0&&focusI<0&&!selIds){chipEl.hidden=true;return;}
-        var h='';if(q>=0){if(q<VR)h+='<b>'+esc(labx(q)+NN[q][0])+'</b>';
-          h+='<button type="button" data-c="print" title="列印此分支（可選層數、紙張）">列印</button>';
-          h+='<button type="button" data-c="focus" title="快捷鍵 F">'+(focusI===q?'還原全部':'只看此分支')+'</button>';
-          if(model.kc[q]>0)h+='<button type="button" data-c="col" title="快捷鍵 C">'+(model.col[q]?'展開':'收起')+'</button><button type="button" data-c="all" title="快捷鍵 E">展開全部層</button>';}
+        if(chipFor!==q){chipFor=q;chipStage=0;}
+        var h='';if(q>=0){
+          if(chipStage===1&&focusI!==q)h+='<button type="button" data-c="fall">全部展開</button><button type="button" data-c="fpart">一部分</button>';
+          else{h+='<button type="button" data-c="print" title="列印此分支（可選層數、紙張）">列印</button>';
+            h+='<button type="button" data-c="focus" title="快捷鍵 F">'+(focusI===q?'還原全部':'只看這個')+'</button>';}}
         if(focusI>=0&&focusI!==q)h+='<button type="button" data-c="unfocus">還原全部</button>';
         if(selIds)h+='<button type="button" data-c="endsel">結束選取範圍</button>';
-        chipEl.innerHTML=h;chipEl.hidden=false;
+        chipEl.innerHTML=h;chipEl.hidden=false;req();
       }
       var prLab=true,prLM=1,prVa=1,prVb=100,PAPERS={A3:[297,420],A4:[210,297],A5:[148,210],B4:[250,353],B5:[176,250],Letter:[216,279],Legal:[216,356]},FONTS={m:"PMingLiU,'新細明體','Songti TC','Noto Serif TC',serif",k:"DFKai-SB,'標楷體','BiauKai','Kaiti TC',serif",h:"'PingFang TC','Microsoft JhengHei','Noto Sans TC',sans-serif",s:"'Songti TC','Noto Serif TC',SimSun,serif"},prCh=null,prFor=null,prCx=null,prFF='serif',prO=null,prPg=0,prCache=null,prObs=null;
       function prKids(i){if(prFor!==NN){prFor=NN;prCh=[];var k,p;for(k=0;k<NN.length;k++)prCh.push([]);for(k=0;k<NN.length;k++){p=NN[k][4];if(p>=0&&p<NN.length)prCh[p].push(k);}}return prCh[i];}
@@ -5010,7 +5019,7 @@ pg.blocks.forEach(function(b){
         sBtn.addEventListener('click',function(){setSplit(!split);});
         chipEl.addEventListener('pointerdown',function(e){e.stopPropagation();});
         chipEl.addEventListener('click',function(e){var b=e.target.closest('button[data-c]');if(!b)return;var c=b.dataset.c;
-          if(c==='go')go(selI);else if(c==='focus')toggleFocus(selI);else if(c==='unfocus')toggleFocus(-1);else if(c==='col')toggleCol(selI);else if(c==='all')expandAll(selI);else if(c==='endsel')endSel();else if(c==='print')prOpen(selI);});
+          if(c==='go')go(selI);else if(c==='focus'){if(focusI===selI)toggleFocus(selI);else{chipStage=1;updChip();}}else if(c==='fall'){chipStage=0;toggleFocus(selI);expandAll(selI);}else if(c==='fpart'){chipStage=0;toggleFocus(selI);}else if(c==='unfocus')toggleFocus(-1);else if(c==='col')toggleCol(selI);else if(c==='all')expandAll(selI);else if(c==='endsel')endSel();else if(c==='print')prOpen(selI);});
         edBtns=box.querySelectorAll('[data-e]');edBtns.forEach(function(bt){bt.addEventListener('click',function(){setEd(bt.dataset.e);});});
         box.querySelector('[data-a=prev]').addEventListener('click',function(){showReadJuan(readJ-1,-1);});
         box.querySelector('[data-a=next]').addEventListener('click',function(){showReadJuan(readJ+1,-1);});
