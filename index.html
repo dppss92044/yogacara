@@ -1481,28 +1481,29 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
   var railBusy = false, railProg = 0;
   function railFill() {
-    var sc = $("rscroll"), inner = $("rinner"), secs = inner.querySelectorAll(".rsec"); if (!secs.length || railBusy) return;
+    var sc = $("rscroll"), inner = $("rinner"), secs = inner.querySelectorAll(".rsec"); if (!secs.length || railBusy || !sc.clientHeight) return;
     railBusy = true;
     var last = +secs[secs.length - 1].dataset.j, first = +secs[0].dataset.j;
-    if (last < 100 && sc.scrollHeight - sc.scrollTop - sc.clientHeight < 1400) inner.insertAdjacentHTML("beforeend", railHTML(last + 1));
-    if (first > 1 && sc.scrollTop < 500) { var an = secs[0], o0 = an.offsetTop, st0 = sc.scrollTop; inner.insertAdjacentHTML("afterbegin", railHTML(first - 1)); sc._progX = Date.now(); sc.scrollTop = st0 + an.offsetTop - o0; }
+    while (last < 100 && sc.scrollHeight - sc.scrollTop - sc.clientHeight < 1400) inner.insertAdjacentHTML("beforeend", railHTML(++last));
+    if (last === 100) inner.querySelector('.rsec[data-j="100"]').style.minHeight = sc.clientHeight / (parseFloat(getComputedStyle(inner).zoom) || 1) + "px";
+    if (first > 1 && sc.scrollTop < 500) { var an = secs[0], o0 = an.getBoundingClientRect().top, st0 = sc.scrollTop; inner.insertAdjacentHTML("afterbegin", railHTML(first - 1)); sc._progX = Date.now(); sc.scrollTop = st0 + an.getBoundingClientRect().top - o0; }
     secs = inner.querySelectorAll(".rsec");
     if (secs.length > 7) {
       var mid = sc.scrollTop + sc.clientHeight / 2, a0 = secs[0], aN = secs[secs.length - 1];
-      if (a0.offsetTop + a0.offsetHeight < mid - 3000) { var a1 = secs[1], o1 = a1.offsetTop, st1 = sc.scrollTop; a0.remove(); sc.scrollTop = st1 - (o1 - a1.offsetTop); }
+      if (a0.offsetTop + a0.offsetHeight < mid - 3000) { var a1 = secs[1], o1 = a1.getBoundingClientRect().top, st1 = sc.scrollTop; a0.remove(); sc.scrollTop = st1 + a1.getBoundingClientRect().top - o1; }
       else if (aN.offsetTop > mid + 3000) aN.remove();
     }
     railBusy = false;
   }
   var railAnchor = null;
-  function railHold() { if (!railAnchor || Date.now() > railAnchor.until) { railAnchor = null; return; } var sc = $("rscroll"), x = $("rinner").querySelector('.rsec[data-j="' + railAnchor.j + '"]'); if (x) { railProg = Date.now() + 300; sc.scrollTop = x.offsetTop - 6; } }
+  function railHold() { if (!railAnchor || Date.now() > railAnchor.until) { railAnchor = null; return; } var sc = $("rscroll"), x = $("rinner").querySelector('.rsec[data-j="' + railAnchor.j + '"]'); if (x && sc.clientHeight) { if (railAnchor.j === 100) x.style.minHeight = sc.clientHeight / (parseFloat(getComputedStyle(x.parentNode).zoom) || 1) + "px"; railProg = Date.now() + 300; sc.scrollTop += x.getBoundingClientRect().top - sc.getBoundingClientRect().top; } }
   function renderRail(j) {
     railMark(j); railProg = Date.now() + 900; railAnchor = { j: j, until: Date.now() + 1200 };
     setTimeout(railHold, 60); setTimeout(railHold, 300); setTimeout(railHold, 800);
     $("rinner").innerHTML = railHTML(j);
     if ($("rscroll").dataset.rj !== String(j)) { railUserX = false; $("rscroll").dataset.rj = j; }
     $("rscroll")._progX = Date.now(); $("rscroll").scrollTop = 0; if (!railUserX) $("rscroll").scrollLeft = 0;
-    railFill();
+    railFill(); railHold();
     $("pullTop").textContent = j > 1 ? "繼續上滑，進入卷第" + cn(j - 1) : "";
     $("pullBot").textContent = j < 100 ? "繼續下滑，進入卷第" + cn(j + 1) : "";
   }
@@ -1570,13 +1571,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     });
   })();
 
-  function railFocus(i, contextJuan) {
+  function railFocus(i, contextJuan, keepPosition) {
     var j = nodeJuan(i,contextJuan||S.juan);
     if (!$("rinner").querySelector('.rsec[data-j="' + j + '"]')) renderRail(j); else if (S.railJuan !== j) railMark(j);
     $("rinner").querySelectorAll("a.cur").forEach(function (x) { x.classList.remove("cur"); });
     var a = $("rinner").querySelector('.rsec[data-j="' + j + '"] a[data-n="' + i + '"]') || $("rinner").querySelector('a[data-n="' + i + '"]');
     if (a) {
-      a.classList.add("cur");focusRailCamera(a);
+      a.classList.add("cur");focusRailCamera(a,keepPosition);
     }
   }
   function markIn(root, i) {
@@ -1601,7 +1602,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   document.addEventListener('keydown',function(e){if(!editingField()&&['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(e.key)){readingTargetJuan=0;spyLock=0;panelHold=false;}});
   document.addEventListener('pointerdown',function(e){if(e.target===document.documentElement&&e.clientX>=innerWidth-20){readingTargetJuan=0;spyLock=0;panelHold=false;}},{passive:true});
 
-  function restoreLinkedPane(screen){var i=S.cur,j=S.juan;spyLock=Date.now()+1800;requestAnimationFrame(function(){if(screen==='catalog'){if(S.railJuan!==j)renderRail(j);if(i!=null)railFocus(i);}else if(screen==='chart'){if(i!=null)panelPage(pageInJuan(i,j,linkedPage),i,j);else flushPendingPanel();}else if(screen==='read'&&i!=null)reveal('k'+localNode(i,j));});} 
+  function restoreLinkedPane(screen){var i=S.cur,j=S.juan;spyLock=Date.now()+1800;requestAnimationFrame(function(){if(screen==='catalog'){if(S.railJuan!==j)renderRail(j);railFill();railHold();if(i!=null)railFocus(i);}else if(screen==='chart'){if(i!=null)panelPage(pageInJuan(i,j,linkedPage),i,j);else flushPendingPanel();}else if(screen==='read'&&i!=null)reveal('k'+localNode(i,j));});}
   // When this volume inherits a title printed in an earlier volume, show that
   // same title in the existing metadata slot instead of highlighting a different child.
   function readerHeading(i,j) {
@@ -1622,13 +1623,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var panelPick=from==='panel'||from==='panelhead'||from==='panelsync',explicitPage=(panelPick||from==='go')&&pg>=2;
     var scope=panelPick?null:contextJuan||(from==='rail'?S.railJuan:from==='text'?S.juan:null),j=nodeJuan(i,scope);readingTargetJuan=j;jumpUntil=0;linkedPage=explicitPage?pg:pageInJuan(i,j,pg || (from==='panel'?S.ppage:null));
     if(narrowNow() && from==='rail'){setPanel(false);setRail(false);}
-    railFocus(i,j);
+    railFocus(i,j,from==='rail');
     if (S.view === "v") {
       S.hl = i; markIn(article, i);
       if (from !== "v") goPage(pg || APPEAR[i] || 2, i);
       return;
     }
-    var targetPage=linkedPage;if (S.view !== "t" || S.juan !== j) { noPin = true; if (panelPick || from === "go") panelJuan = j; openText(j); noPin = false; }panelHold = panelPick || from === "go";linkedPage=targetPage;railFocus(i,j);
+    var targetPage=linkedPage;if (S.view !== "t" || S.juan !== j) { noPin = true; if (panelPick || from === "go") panelJuan = j; openText(j); noPin = false; }panelHold = panelPick || from === "go";linkedPage=targetPage;railFocus(i,j,from==='rail');
     panelJuan = j; if (from === "panelsync") markIn($("pzoom"), i); else panelPage(linkedPage, i, j, from === "go");
     article.querySelectorAll(".kn.on").forEach(function (x) { x.classList.remove("on"); });
     var el=readerHeading(i,j),localId=localNode(i,j);
@@ -1637,7 +1638,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       spyLock = Date.now() + 1200;
       reveal("k" + localId);
     }
-    S.cur = i;readingTargetJuan=j;S.juan=j;updateVolumeLabel();try{history.replaceState(null,"","#j"+j);}catch(e){}if(narrowNow() && from==="rail")restoreLinkedPane("read");
+    S.cur = i;readingTargetJuan=j;rtMark=[j,Date.now()];S.juan=j;updateVolumeLabel();try{history.replaceState(null,"","#j"+j);}catch(e){}if(narrowNow() && from==="rail")restoreLinkedPane("read");
     if (panelPick || from === "go" || from === "rail") updUp(i); else $("upNav").hidden = true;
   }
   // 此卷沒有新科判（承接前卷）：留在此卷卷首，科判欄標出承接的那一科
@@ -2359,7 +2360,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
 
   // ---------- navigation ----------
-  function goJuan(j){readerTracking=true;window.dispatchEvent(new Event('reader-before-navigation'));panelHold=false;panelJuan=0;S.cur=null;linkedPage=null;ReaderUI.bookmark=null;readingTargetJuan=j;if(S.view==='v'){renderRail(j);var pg=JFIRSTPAGE[j]||2;S.hl=null;S.lockPage=pg;S.lockJuan=j;goPage(pg);}else nav('#j'+j);} 
+  function goJuan(j){readerTracking=true;window.dispatchEvent(new Event('reader-before-navigation'));panelHold=false;panelJuan=0;S.cur=null;linkedPage=null;ReaderUI.bookmark=null;readingTargetJuan=j;rtMark=[j,Date.now()];renderRail(j);if(S.view==='v'){var pg=JFIRSTPAGE[j]||2;S.hl=null;S.lockPage=pg;S.lockJuan=j;goPage(pg);}else nav('#j'+j);}
   function goNode(i) { focusNode(i, "rail"); }
   function route(hs) {
     var h = (typeof hs === "string" ? hs : location.hash).slice(1), m;
@@ -2874,7 +2875,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         if (on) { rt.classList.add("fold"); ft = setTimeout(function () { rt.classList.add("fold-done"); }, 380); }
         else { rt.classList.add("notr"); rt.classList.remove("fold-done"); void rt.offsetHeight; rt.classList.remove("notr"); void rt.offsetHeight; rt.classList.remove("fold"); } if (save) { try { localStorage.setItem("hk-jfold", on ? "1" : "0"); } catch (e) {} } }
       fb.onclick = function () { setFold(!rt.classList.contains("fold"), false); };
-      if (!(window.matchMedia && matchMedia("(max-width: 700px)").matches)) setFold(true, false);
+      setFold(false, false);
       var pk = 0, fine = window.matchMedia && matchMedia("(hover:hover) and (pointer:fine)").matches;
       function peek(on) { clearTimeout(pk); rt.classList.toggle("jpeek", !!on && rt.classList.contains("fold-done")); }
       if (fine) {
@@ -3393,10 +3394,10 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     document.addEventListener('pointerdown',function(e){if(!ipadFloat()||!rail.classList.contains('open'))return;if(rail.contains(e.target)||e.target.closest('#railOpen,#tour'))return;setRail(false);},true);
     rail.addEventListener('click',function(e){if(ipadFloat()&&e.target.closest('.rol a'))setTimeout(function(){setRail(false);},250);});
   })();
-  function focusRailCamera(a){railProg=Date.now()+700;railAnchor=null;
+  function focusRailCamera(a,keepPosition){railProg=Date.now()+700;railAnchor=null;
     var sc=$('rscroll');if(!a||!sc.clientHeight||railDrag)return;
     var r=a.getBoundingClientRect(),s=sc.getBoundingClientRect();
-    sc.scrollTop=Math.max(0,sc.scrollTop+r.top-s.top+(r.height-sc.clientHeight)/2);
+    if(!keepPosition)sc.scrollTop=Math.max(0,sc.scrollTop+r.top-s.top+(r.height-sc.clientHeight)/2);
     if(!railUserX){sc._progX=Date.now();centerHeadingText(a.querySelector('.rail-title')||a,sc);}
   }
   function setPhoneChartPage(p,hl){
