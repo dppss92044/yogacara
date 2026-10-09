@@ -4659,7 +4659,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             function bdep(rr,l){var fv=null;l.nodes.forEach(function(n){if(!fv&&!n.hide)fv=n;});return fv?NN[fv.k][3]:NN[rr][3];}
             function offOf(rr){var dd=(prPartMap[rr]&&prPartMap[rr].length)?NN[rr][3]+1:NN[rr][3],dm=pg.dm==null?dd:Math.min(pg.dm,dd);return Math.max(0,(dd-dm)*pf*3.4);}
             var lite=false;function rH(bl){var L=0,m=0;bl.forEach(function(b){L=Math.max(L,b.sh);});bl.forEach(function(b){m=Math.max(m,b.of+b.h+(lite?0:L-b.sh));});return m;}
-            function nf(rr,fl){if(fastM)return null;var o1=offOf(rr),r1=nf0(rr,o1);return r1||(o1>0?nf0(rr,0):null);}
+            function nf(rr,fl){if(fastM)return null;var o1=offOf(rr),r1=nf0(rr,o1);if(r1)return r1;if(o1<=0)return null;lite=true;var r2=nf0(rr,0);lite=false;return r2;}
             function nf0(rr,of){var lo=prFit(rr,o,aw,ah,limAbs,1,false),row=pg.rows[pg.rows.length-1],l1,l2,res=null;if(!row)return null;
               var rw=aw-(row.w+gapB)-exW,rh=ah-row.y-exH-of;if(rw>0&&rh>0){l1=prFit(rr,o,rw,rh,limAbs,1,false);var nb=row.blks.concat([{of:of,h:l1.h+exH,sh:prLO(l1)}]),nh=rH(nb);if(fits(l1,rw,rh)&&row.y+nh<=ah&&l1.def.length<=lo.def.length){row.w+=gapB+l1.w+exW;row.h=nh;row.blks=nb;return {lay:l1,pos:{x:row.w-l1.w-exW,y:row.y}};}}
               var ny=row.y+row.h+gapB,rh2=ah-ny-exH-of,rw2=aw-exW;if(rh2>0){l2=prFit(rr,o,rw2,rh2,limAbs,1,false);if(fits(l2,rw2,rh2)&&l2.def.length<=lo.def.length){pg.rows.push({y:ny,h:l2.h+exH+of,w:l2.w+exW,blks:[{of:of,h:l2.h+exH,sh:prLO(l2)}]});return {lay:l2,pos:{x:0,y:ny}};}}
