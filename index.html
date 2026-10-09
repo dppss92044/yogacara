@@ -4131,8 +4131,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     // W004: 脈絡圖（科判樹狀圖；卷次範圍、層級、橫／直書、並排正文；滾輪縮放、拖曳移動）
     (function(){
       var btn=document.getElementById('mapBtn');
-      if(!btn){var pnl=$('panel');if(!pnl)return;btn=document.createElement('button');btn.type='button';btn.id='mapBtn';btn.className='chart-top map-go';btn.setAttribute('aria-label','在科判欄顯示脈絡圖');btn.title='科判欄改為脈絡圖（可對照正文）';btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="9.5" width="5" height="5" rx="1.4"/><rect x="16.5" y="3.5" width="5" height="4.5" rx="1.4"/><rect x="16.5" y="16" width="5" height="4.5" rx="1.4"/><path d="M7.5 12h3.5M11 12V5.8h5.5M11 12v8.3h5.5"/></svg>';pnl.appendChild(btn);
-        var fb2=document.createElement('button');fb2.type='button';fb2.id='mapFull';fb2.className='chart-top map-go map-full';fb2.setAttribute('aria-label','展開成全螢幕脈絡圖');fb2.title='展開成全螢幕脈絡圖';fb2.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>';pnl.appendChild(fb2);}
+      if(!btn){var pnl=$('panel');if(!pnl)return;btn=document.createElement('button');btn.type='button';btn.id='mapBtn';btn.className='chart-top map-go';btn.setAttribute('aria-label','開啟全畫面脈絡圖');btn.title='開啟全畫面脈絡圖';btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="9.5" width="5" height="5" rx="1.4"/><rect x="16.5" y="3.5" width="5" height="4.5" rx="1.4"/><rect x="16.5" y="16" width="5" height="4.5" rx="1.4"/><path d="M7.5 12h3.5M11 12V5.8h5.5M11 12v8.3h5.5"/></svg>';pnl.appendChild(btn);
+      }
       var FONT_H='"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif',FONT_V='"TWKai","TWKai2","BiauKai","DFKai-SB","標楷體","Kaiti TC","STKaiti",serif';
       var FS_H=14,FS_V=16,ROW=24,COL=27,CH=17,PADH=7,PADV=5,GAP=32,BAND=640,MINS=0.004,MAXS=4,AUTO_N=800;
       var box,cv,cx,mapEl,readEl,rbEl,rhEl,msgEl,tipEl,hintEl,pctEl,dEl,selA,selB,allBtn,vBtn,sBtn,hBtn;
@@ -5106,7 +5106,7 @@ pg.blocks.forEach(function(b){
         }).catch(function(){setStatus('版本資料無法載入，請確認連線後再試。');});
       }
       function embPos(){
-        var pn=$('panel'),b1=$('mapBtn'),b2=$('mapFull');if(!pn||!box)return;var pr=pn.getBoundingClientRect(),r1=b1?b1.getBoundingClientRect():null,r2=b2?b2.getBoundingClientRect():null,st=box.style;
+        var pn=$('panel'),b1=$('mapBtn'),b2=$('mapBtn');if(!pn||!box)return;var pr=pn.getBoundingClientRect(),r1=b1?b1.getBoundingClientRect():null,r2=b2?b2.getBoundingClientRect():null,st=box.style;
         if(emb){st.setProperty('--ex',pr.left+'px');st.setProperty('--ey',pr.top+'px');st.setProperty('--ew',pr.width+'px');st.setProperty('--eh',pr.height+'px');}
         var a=emb?r1:r2,e=r2;if(a&&a.width){st.setProperty('--b2x',a.left+'px');st.setProperty('--b2y',a.top+'px');}if(e&&e.width){st.setProperty('--exx',e.left+'px');st.setProperty('--exy',e.top+'px');}
         var w=Math.round(pr.width),h=Math.round(pr.height);if(emb&&(box._ew!==w||box._eh!==h)){box._ew=w;box._eh=h;W=0;resize();}}
@@ -5133,8 +5133,7 @@ pg.blocks.forEach(function(b){
           if(!seen)setTimeout(function(){if(box&&!box.hidden&&tourI<0)tourStep(0);},900);
         });
       }
-      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(true);});
-      var fb=document.getElementById('mapFull');if(fb)fb.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(false);});
+      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(false);});
     })();
   }).catch(function () { article.innerHTML = '<div class="loading">資料無法載入。請改用最新版的 Chrome、Edge 或 Safari 開啟這個網頁。</div>'; });
 })();
