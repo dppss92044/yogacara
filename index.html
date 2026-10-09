@@ -4568,8 +4568,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         var h='';if(q>=0){
           if(chipStage===1&&focusI!==q)h+='<button type="button" data-c="fall">全部展開</button><button type="button" data-c="fpart">一部分</button>';
           else{h+='<button type="button" data-c="print" title="列印此分支（可選層數、紙張）">列印</button>';
-            h+='<button type="button" data-c="focus" title="快捷鍵 F">'+(focusI===q?'還原全部':'只看這個')+'</button>';}}
-        if(focusI>=0&&focusI!==q)h+='<button type="button" data-c="unfocus">還原全部</button>';
+            h+='<button type="button" data-c="focus" title="快捷鍵 F">'+(focusI===q?'回去':'只看這個')+'</button>';}}
+        if(focusI>=0&&focusI!==q)h+='<button type="button" data-c="unfocus">回去</button>';
         if(selIds)h+='<button type="button" data-c="endsel">結束選取範圍</button>';
         chipEl.innerHTML=h;chipEl.hidden=false;req();
       }
