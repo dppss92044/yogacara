@@ -8,6 +8,7 @@
 
 ## 進行中：W004（q 2026-10-06 11:19「脈絡圖」）
 ### 最新接續（Codex，2026-10-09，第七十七輪）
+- 後續 q 要求「給我網址」：已依預覽需求推送獨立分支 `work-w004-map-entry`（未 push main、未開 PR、未部署正式站）。預覽程式 commit `6a4d0be`，已推送的交接 commit `f64df92`。第三方預覽網址為 `https://raw.githack.com/dppss92044/yogacara/work-w004-map-entry/index.html`；Git 讀取確認遠端分支存在，但雲端 egress proxy 對 raw.githack.com 的 CONNECT 回 403，因此無法在此環境驗證該公網網址實際載入。
 - 使用者原始需求（附右下兩個圖示截圖）：「右下，這部分，幫我刪除展開，僅留下左邊。然後左邊按下去，就會全部背景展開。」
 - 本次從預覽分支 `claude/kepan-map-view-36by8y` 的 `b77e82f` 接續同一個 W004；本機工作分支 `work-w004-map-entry`。程式修改 commit：`6a4d0be99a6888be98146c1213619df17ceb6c61`（交接文件提交後最新 HEAD 以 `git log -1` 為準）。
 - 只移除科判欄右下 `#mapFull` 的建立與事件，保留 `#mapBtn` 的圖示與位置；點擊改用既有 `open(false)`，直接開啟全畫面、全部卷次的脈絡圖；返回鈕對齊保留的入口。已先在 DECISIONS 的第七十七輪記錄取代 D107 第十七輪雙入口設計。
