@@ -4179,8 +4179,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         var IND=ST.compact?18:26,gapc=ST.compact?6:12;
         for(i=0;i<n;i++){if(!inc[i])continue;ids.push(i);
           var lb=labx(i),tt=NN[i][0];lbs[i]=lb;tts[i]=tt;
-          if(vt&&(ly===0||ly===2)){var wsg=prSplit(tt);if(wsg.length>1){tls[i]=wsg;kL[i]=Math.min(wsg.length,250);}}
-          if(vt&&tls[i]){var lw0=vcw(lb),mxw=lw0+vcw(tls[i][0]);tls[i].forEach(function(z,zi){if(zi>0)mxw=Math.max(mxw,lw0+1+vcw(z));});w[i]=mxw*CH+PADV*2;}
+                    if(vt&&tls[i]){var lw0=vcw(lb),mxw=lw0+vcw(tls[i][0]);tls[i].forEach(function(z,zi){if(zi>0)mxw=Math.max(mxw,lw0+1+vcw(z));});w[i]=mxw*CH+PADV*2;}
           else if(vt)w[i]=(vcw(lb)+vcw(tt))*CH+PADV*2;
           else{var s=lb+tt,tw=wc[s];if(tw==null)tw=wc[s]=m.measureText(s).width;w[i]=Math.ceil(tw)+PADH*2;}
           p=NN[i][4];if(p>=0&&inc[p]){if(lc[p]<0)fc[p]=i;else ns[lc[p]]=i;lc[p]=i;dep[i]=dep[p]+1;bc[i]=dep[i]===1?(++bcn):bc[p];}else bc[i]=++bcn;
