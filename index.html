@@ -5106,7 +5106,7 @@ pg.blocks.forEach(function(b){
         var back=box.querySelector('.km-back2');back.title=on?'回到科判欄':'回到正文與科判欄';
         if(on)embT=setInterval(function(){if(!emb||box.hidden){clearInterval(embT);return;}embPos();
           var j=S.juan;if(j>=1&&j<=100&&j!==ra&&brI<0){setRange(j,j);}
-          var c=S.cur!=null&&NN[S.cur]?S.cur:-1;if(c!==curI){curI=c;req();}},500);
+          },500);
         W=0;requestAnimationFrame(function(){resize();var f=box.querySelector('[data-z=fit]');if(f)f.click();});}
       function open(asEmb){
         if(!box)make();
@@ -5116,10 +5116,10 @@ pg.blocks.forEach(function(b){
         box.tabIndex=-1;try{box.focus({preventScroll:true});}catch(e){}
         bundleOf(EDITION).then(function(B){
           useBundle(B);
-          curI=S.cur!=null&&NN[S.cur]?S.cur:-1;selI=-1;selIds=null;
+          curI=-1;selI=-1;selIds=null;
           var j=S.juan>=1&&S.juan<=100?S.juan:1;model=null;col=null;focusI=-1;
-          if(split)showReadJuan(curI>=0?NN[curI][6]:j,curI);
-          if(asEmb){var j2=S.juan>=1&&S.juan<=100?S.juan:1;setRange(j2,j2);setTimeout(function(){var f=box.querySelector('[data-z=fit]');if(f)f.click();},700);}else{setRange(1,100);md=1;col=null;load();}
+          if(split)showReadJuan(S.cur!=null&&NN[S.cur]?NN[S.cur][6]:j,-1);
+          if(asEmb){var j2=S.juan>=1&&S.juan<=100?S.juan:1;setRange(j2,j2);setTimeout(function(){var f=box.querySelector('[data-z=fit]');if(f)f.click();},1500);}else{ST.compact=0;if(!ST.lab)ST.lab=ST.lastLab||1;setRange(1,100);md=2;col=null;styApply(false);load();setTimeout(function(){var f=box.querySelector('[data-z=fit]');if(f)f.click();},700);}
           var seen='';try{seen=localStorage.getItem('km-tour')||'';}catch(e){}
           if(!seen)setTimeout(function(){if(box&&!box.hidden&&tourI<0)tourStep(0);},900);
         });
