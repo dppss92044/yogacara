@@ -49,6 +49,9 @@
 - 程式 commit `9a3043f` 已成功推送到獨立分支 `work-w004-map-entry`（未推送 main）；本次固定程式 commit 網址 `https://raw.githack.com/dppss92044/yogacara/9a3043fb03ad57f33a8f5a66724516a35b1bb1b7/index.html`，避免沿用舊分支網址的快取。此雲端 egress proxy 先前對 raw.githack.com CONNECT 回 403，未在本環境驗證公網頁面載入；本機 Chromium 功能測試已完成。
 - 未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未執行其他歷史 fixtures 或舊版回歸套件。未升版、未改 sw.js／資料、未 push main、未開 PR、未部署正式站。
 
+## W004 第九十二輪（Claude，2026-10-10）
+- 重新導覽改常駐按鈕；動畫簡介 13 景；移除簡介→逐步導覽的銜接（`tourStep` 程式與「？」單項說明卡仍在）。測試：Chromium 電腦，按鈕在、點後開簡介、後六景截圖已看（齒輪景面板已修剪）、無 pageerror。未測 iPad／手機（右上列變寬）／實機。
+
 ## W004 第九十一輪（Claude，2026-10-10）
 - 「？」說明模式多「重新導覽」鈕（`[data-a=reguide]`）→開動畫簡介；簡介加 F 開展、F 後列印兩景（7 景）。測試：Chromium 電腦，重新導覽鈕只在按？後出現、點後開簡介、兩景截圖已看；未驗證列印實際輸出，未測 iPad／手機／實機。
 
