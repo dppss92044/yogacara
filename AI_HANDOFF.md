@@ -843,3 +843,6 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 
 ### W004 第一〇九輪
 - index.html：kbd 加 wheel 鍵（.kk.ms）；對應列點標黃。測試：桌面 Chromium 截圖 round109。未測手機／Safari。
+
+### W004 第一一〇輪
+- index.html：buildKb(os)、osT()、setOs()、scenes.unshift 選機種頁；localStorage km-os。測試：桌面 Chromium 兩種系統逐頁，鍵盤與文字依系統；截圖 round110。未測：真實 Windows／Mac 實機、觸控（觸控裝置不顯示選機種頁）、Safari。
