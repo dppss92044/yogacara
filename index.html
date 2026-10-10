@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="1.92"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="2.0"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -1254,7 +1254,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src"><span class="src-b"><b class="src-t">韓清淨版</b>內文、分卷、科判、披尋記與常柏法師釋，皆依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷悉照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<span class="src-u">網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">https://mahabodhi.org/yoga/cb/</a></span></span></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v1.92</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-06">2026-10-06</time></span></div></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v2.0</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-10">2026-10-10</time></span></div></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本內容</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><div class="vc" id="versionDoc"></div></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
@@ -3827,10 +3827,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var settingsPage='root',versionBack='about';
   var VN_KIND={new:'新增功能',fix:'修正 Bug',improve:'操作改善'};
   /* 版本更新資料（單一來源）：[類型, 說明, 1=重要項目→出現在更新提醒]；全部項目→「關於 → 版本內容」。新版本請加在最前面。 */
-  var versionNotes={"2.0":{date:"2026年10月",hero:{title:"新增：完整展開的科判圖",lines:["點科判欄右下角的「科判圖」圖示，就能看到完整展開的科判圖。"],cta:"開啟科判圖"},items:[
+  var versionNotes={"2.0":{date:"2026年10月10日",hero:{title:"新增：完整展開的科判圖",lines:["點科判欄右下角的「科判圖」圖示，就能看到完整展開的科判圖。"],cta:"開啟科判圖"},items:[
     ["new","右下角新增「科判圖」：完整展開全書科判，可縮放、拖曳、只看一支。",1],
     ["new","科判圖左下可選一百卷，並可列印、存成 PDF 或 HTML。"],
     ["new","第一次進科判圖有操作動畫簡介，右上角「說明」可隨時重看。"],
+    ["new","科判圖快捷鍵：F 只看選取的一支、＋／− 開合科判層次、Ctrl／⌘＋＋／− 縮放；右上「說明」有 Windows／Mac 圖示說明。"],
     ["improve","百卷清單預設展開；點卷號會把該卷對齊卷次欄頂端，點科判標題不再讓卷次欄晃動。"],
     ["improve","點科判標題時，正文標題停在工具列下方約兩行半處，更好閱讀。"],
     ["improve","正文頁面的「大小」按鍵移除，介面更簡潔。"]
@@ -4226,6 +4227,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if(off&&!forced){return;}
       var hid=null;try{hid=localStorage.getItem('hk-notice-hide');}catch(e){}
       if(hid===ver&&!forced)return;
+      if(last===ver&&!forced)return;
       if(!seen&&!forced){remember();return;}
       var vn=versionNotes[ver],items=vn?vn.items.filter(function(i){return i[2];}):[];
       if(!items.length){if(!forced)remember();return;}

@@ -858,3 +858,9 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 
 ### W004 第一一四輪
 - index.html：標題與例句；.ki-d 高度 200。測試：桌面 Chromium 該頁截圖 round114，卡片高度恒 628px。未測手機／Safari。
+
+### W004／W005 發布 2.0（Claude，2026-10-10）
+- 依 q「發布」執行：index.html 版本 v2.0、最後更新 2026-10-10、versionNotes 2.0 加快捷鍵一條；`tools/build_release.py 2.0`（sw.js VERSION=2.0、離線檔案 38）；更新通知 `last===ver` 不再重複跳出。
+- 文件：CHANGELOG（Unreleased→2.0）、PROJECT_STATE、MASTER_HISTORY H156、DECISIONS D110。W 編號封存。
+- 測試：桌面 Chromium：appVer v2.0、seen=1.92 會跳 2.0 通知、seen=2.0 不跳；語法檢查。未測 Safari／iPhone／iPad、實機 Service Worker 更新。
+- 尚未做：合併到 main／部署（需 q 明確指示）。
