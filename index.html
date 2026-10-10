@@ -3827,7 +3827,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var settingsPage='root',versionBack='about';
   var VN_KIND={new:'新增功能',fix:'修正 Bug',improve:'操作改善'};
   /* 版本更新資料（單一來源）：[類型, 說明, 1=重要項目→出現在更新提醒]；全部項目→「關於 → 版本內容」。新版本請加在最前面。 */
-  var versionNotes={"2.0":{date:"2026年10月",hero:{title:"全新「脈絡圖」",lines:["點科判欄右下角的「脈絡圖」圖示，整個畫面變成一張大圖，從甲一到全書所有科判一目了然。","滾輪上下移、Ctrl／⌘＋滾輪或兩指縮放，拖曳移動；點科判跳到正文，點支線回到上一層。","點科判再按「只看這個」，只看那一支；左下的一百卷圓球可直接選卷，按「回全覽」回來。","可換邏輯圖、心智圖、括弧圖、樹狀圖、表格圖、時間軸；可並排正文、列印或存成 PDF、HTML。","第一次進去有動畫簡介，之後按「？」隨時看說明。"],cta:"開啟脈絡圖"},items:[
+  var versionNotes={"2.0":{date:"2026年10月",hero:{title:"全新「脈絡圖」",lines:["點科判欄右下角的「脈絡圖」圖示，整個畫面變成一張大圖，從甲一到全書所有科判一目了然。","滾輪上下移、Ctrl／⌘＋滾輪或兩指縮放，拖曳移動；點科判跳到正文，點支線回到上一層。","點科判再按 F，只看那一支；左下的一百卷圓球可直接選卷，按「回全覽」回來。","可換邏輯圖、心智圖、括弧圖、樹狀圖、表格圖、時間軸；可並排正文、列印或存成 PDF、HTML。","第一次進去有動畫簡介，之後按「？」隨時看說明。"],cta:"開啟脈絡圖"},items:[
     ["new","右下角新增「脈絡圖」：全屏顯示全書科判，可縮放、拖曳、只看一支、依五大部分或十七地選主題。"],
     ["new","脈絡圖左下一百卷圓球：點卷號只看該卷，可收合成卷軸圖示，按「回全覽」回到進圖時的分支。"],
     ["new","脈絡圖可換六種圖形、調整文字與線條、並排正文。"],
@@ -4611,7 +4611,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           var key=EDITION+'|'+ST.lab;
           if(!(model&&model.a===ra&&model.b===rb&&model.md===md&&model.vr===vert&&model.key===key&&model.col===col&&model.focus===focusI&&model.only===selIds&&model.sig===ST.lab+'|'+ST.compact+'|'+ST.equal+'|'+ST.ly+'|'+(ST.fs|0))){model=build(ra,rb,md,vert,col,focusI,selIds);col=model.col;}
           setStatus(model.n?'':'此卷沒有科判');
-          hintEl.textContent=(window.matchMedia&&matchMedia('(pointer:coarse)').matches?'雙指縮放、拖曳移動':'滾輪上下移、Shift＋滾輪左右移、Ctrl／⌘＋滾輪縮放')+(selIds?'　選取範圍':'')+'、點選科判、點兩下前往正文'+(focusI>=0&&focusI===brI?'　分支：'+brName:'')+(model.fb?'　心智圖需單一分支，請先點科判並選「只看這個」（目前以邏輯圖顯示）':'')+(model.own?'　顯示 '+model.own+' 科':'');
+          hintEl.textContent=(window.matchMedia&&matchMedia('(pointer:coarse)').matches?'雙指縮放、拖曳移動':'滾輪上下移、Shift＋滾輪左右移、Ctrl／⌘＋滾輪縮放')+(selIds?'　選取範圍':'')+'、點選科判、點兩下前往正文'+(focusI>=0&&focusI===brI?'　分支：'+brName:'')+(model.fb?'　心智圖需單一分支，請先點科判並按 F（目前以邏輯圖顯示）':'')+(model.own?'　顯示 '+model.own+' 科':'');
           if(viewIntent==='entry'){centerOn(shownCur()>=0?shownCur():model.first,1);}else if(viewIntent==='whole'){overview();}else if(viewIntent==='branch'){branchFit();}else homeView();
           if(viewIntent==='entry')saveEntry();viewIntent='';updChip();req();
         },30);
@@ -4653,15 +4653,15 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         ['.km-map','移動和放大',['電腦：按住滑鼠拖曳移動圖，移到圖的邊緣就會停住。','滾輪上下移動；按住 Shift 再滾動，可左右移動。','按住 Ctrl（Mac 用 ⌘）再滾動，可放大、縮小。','手機和平板：一指拖曳、兩指捏合縮放。']],
         ['[data-a=settings]','打開所有功能',['按齒輪，就能看到所有設定。','再按一次齒輪，可以收起設定。','按右下「回主頁」，回到剛才的閱讀位置。','按問號，再點功能旁的小問號，查看該功能說明。']],
         ['.km-catalog-grid','選擇一卷',['下方圓球是第 1 到 100 卷，每個數字是一卷。','左右滑動這一排，就能找到後面的卷數。','點卷號，只顯示該卷的脈絡圖。','左下角的卷軸圖示，可以收起或展開這一排。']],
-        ['[data-p=ly]','換一種圖的樣子',['在「介面」按圖形按鈕，選你喜歡的圖形。','可選邏輯圖、心智圖、括弧圖等圖形。','心智圖和時間軸，建議先點科判，再選「只看這個」。']],
+        ['[data-p=ly]','換一種圖的樣子',['在「介面」按圖形按鈕，選你喜歡的圖形。','可選邏輯圖、心智圖、括弧圖等圖形。','心智圖和時間軸，建議先點科判，再按 F 只看這一支。']],
         ['[data-p=sty]','調整文字和線條',['按「樣式」，可以改文字大小和科判標號。','也能改分支顏色、線條粗細、虛線和框線。','想讓圖緊密一些，可開啟「縮小空間」。','放大整張圖和改文字大小，是兩種不同的調整。']],
         ['[data-p=rng]','選要看的卷次',['先選「卷次」，再打開卷次範圍。','選起始卷和結束卷，就能看這幾卷。','旁邊的 −／＋，可以一卷一卷移動。','「全部卷次」改卷數；左上卷號可直接選某一卷。']],
         ['[data-p=dep]','選要展開幾層',['層級就是甲、乙、丙、丁等科判的深淺。','選「全部層」，就能看到所有下層。','旁邊的 −／＋，可以少看一層、多看一層。','節點旁的 ⊖／⊕，能收起或展開那一支。']],
         ['[data-a=split]','一邊看圖，一邊讀正文',['先選「介面」，再按「並排」。','畫面會同時顯示脈絡圖和正文。','選取一段正文，就能看這一段的科判。','按「在閱讀器開啟」，回到完整閱讀畫面。']],
-        ['[data-a=whole]','返回上一步',['按「全部」、選一卷、或按「只看這個」後，畫面會改變。','字樣變成「返回」或「回去」時，按下去回到上一步。','不是跳回最開始進來的畫面，可以一步一步退回去。']],
+        ['[data-a=whole]','返回上一步',['按「全部」、選一卷、或按 F 只看一支後，畫面會改變。','字樣變成「返回」或「回去」時，按下去回到上一步。','不是跳回最開始進來的畫面，可以一步一步退回去。']],
         ['[data-e=hk]','切換版本',['設定上方可選大藏經版或韓清淨版。','切換後，脈絡圖和並排正文會一起換版。','從閱讀器重新開啟時，會使用閱讀器目前的版本。']],
         ['[data-a=print]','列印或存成檔案',['按「列印」，先看列印預覽。','可以選紙張、範圍、字體大小和顏色。','選「儲存成 PDF」，再用瀏覽器存檔。','選「生成 HTML」，可以另存網頁。']],
-        ['.km-map','點科判，前往正文',['點一下科判，會出現列印圖示與「只看這個」。','小分支會直接展開；放不下時才選「全部」或「一部」（五層）。','「全部」維持可讀字級；超出螢幕的部分，拖曳就能查看。','也可以從齒輪按「返回」，回原閱讀位置。']],
+        ['.km-map','點科判，前往正文',['點一下科判，會出現「按F開合」；按 F 可以只看這一支，再按一次回去。','小分支會直接展開；放不下時才選「全部」或「一部」（五層）。','「全部」維持可讀字級；超出螢幕的部分，拖曳就能查看。','也可以從齒輪按「返回」，回原閱讀位置。']],
         ['.km-map','鍵盤快速操作',['方向鍵：上下左右移動圖面。','＋／−：放大、縮小；F：只看選取的分支。','C：收起或展開；E：展開全部下層。','Esc：關閉說明；「完成」回圖，「返回」回閱讀位置。']],
         ['.km-node-control','收起與展開這個分支',['淡黃色標題旁的「−」：收起它的下層支脈。','收起後按「＋」或「（分幾）」：重新展開下一層。','「（分幾）」表示這個標題還有幾個下層分支。','圖面大小可用 Ctrl／⌘＋滾輪，或雙指捏合調整。']]
       ];
@@ -4781,7 +4781,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function tourStep(n){
         var t=box.querySelector('.km-tour');if(n>=TOUR.length){tourEnd();return;}if(n<0)return;
         if(!model||viewIntent){setTimeout(function(){if(!box.hidden)tourStep(n);},60);return;}
-        if(tourI<0){var pp=settingsEl.querySelector('.km-pop:not([hidden])');tourOrigin={catalogTop:catalogEl.scrollTop,catalogGroups:Array.from(catalogEl.querySelectorAll('details')).map(function(d){return d.open;}),open:!settingsEl.hidden,sec:box.querySelector('.km-tab.on').dataset.sec,top:settingsEl.scrollTop,pop:pp&&pp.dataset.pop,focus:document.activeElement,zoomHidden:wholeZoom.hidden,whole:wholeBtn.getAttribute('aria-pressed'),readHtml:rbEl.innerHTML,readTitle:rhEl.firstChild.textContent,readTop:rbEl.scrollTop,readJ:readJ,cache:{},pressed:Array.from(box.querySelectorAll('[aria-pressed]')).map(function(el){return{el:el,value:el.getAttribute('aria-pressed')};}),view:{model:model,col:col,only:selIds,focus:focusI,sel:selI,md:md,vert:vert,style:Object.assign({},ST),metrics:[FS_H,FS_V,ROW,COL,CH,PADH,PADV],sc:sc,tx:tx,ty:ty,w:W,h:H}};tourPlaying=false;}
+        if(tourI<0){try{localStorage.removeItem('km-chip-off');}catch(e){}var pp=settingsEl.querySelector('.km-pop:not([hidden])');tourOrigin={catalogTop:catalogEl.scrollTop,catalogGroups:Array.from(catalogEl.querySelectorAll('details')).map(function(d){return d.open;}),open:!settingsEl.hidden,sec:box.querySelector('.km-tab.on').dataset.sec,top:settingsEl.scrollTop,pop:pp&&pp.dataset.pop,focus:document.activeElement,zoomHidden:wholeZoom.hidden,whole:wholeBtn.getAttribute('aria-pressed'),readHtml:rbEl.innerHTML,readTitle:rhEl.firstChild.textContent,readTop:rbEl.scrollTop,readJ:readJ,cache:{},pressed:Array.from(box.querySelectorAll('[aria-pressed]')).map(function(el){return{el:el,value:el.getAttribute('aria-pressed')};}),view:{model:model,col:col,only:selIds,focus:focusI,sel:selI,md:md,vert:vert,style:Object.assign({},ST),metrics:[FS_H,FS_V,ROW,COL,CH,PADH,PADV],sc:sc,tx:tx,ty:ty,w:W,h:H}};tourPlaying=false;}
         tourI=n;tourCycle=n===5?-1:0;tourP=0;
         t.querySelector('.ts').textContent='功能說明';t.querySelector('h3').textContent=TOUR[n][1];
         var list=t.querySelector('.tt');list.replaceChildren();TOUR[n][2].forEach(function(line,i){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.dataset.guidePoint=i;b.textContent=line;li.appendChild(b);list.appendChild(li);});
@@ -4842,10 +4842,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         if(selI>=0||selIds||focusI>=0)box.classList.add('km-dk');
         if(!chipEl)return;var q=selI>=0&&model&&model.inc[selI]?selI:-1;
         if(q<0&&focusI<0&&!selIds){chipEl.hidden=true;return;}
+        var chipOff=false;try{chipOff=localStorage.getItem('km-chip-off')==='1';}catch(e){}
+        if(chipOff&&q>=0&&focusI<0&&!selIds&&chipStage!==1){chipEl.hidden=true;return;}
         if(chipFor!==q){chipFor=q;chipStage=0;}
         var h='';if(q>=0){
           if(chipStage===1&&focusI!==q)h+='<button type="button" data-c="fall">全部</button><button type="button" data-c="fpart">一部</button>';
-          else{h+='<button type="button" data-c="focus" title="快捷鍵 F">'+(focusI===q?'回去':'只看這個')+'</button>';h+='<button type="button" data-c="print" aria-label="列印此分支的全部支脈" title="列印此分支的全部支脈"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7zM17 11h1"/></svg></button>';
+          else{h+='<button type="button" data-c="focus" title="快捷鍵 F：只看這一支，再按一次回去">'+(focusI===q?'回去':'按F開合')+'</button>';if(focusI!==q)h+='<button type="button" data-c="never" class="km-chip-never" title="不再顯示這個提示；按「導覽」可恢復">不再顯示</button>';
             }}
         if(focusI>=0&&focusI!==q)h+='<button type="button" data-c="unfocus">回去</button>';
         if(selIds)h+='<button type="button" data-c="endsel">結束選取範圍</button>';
@@ -5323,7 +5325,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         sBtn.addEventListener('click',function(){setSplit(!split);});
         var chipPress=null;chipEl.addEventListener('pointerdown',function(e){e.stopPropagation();chipPress=e.target.closest('button[data-c]');});chipEl.addEventListener('pointercancel',function(){chipPress=null;});
         chipEl.addEventListener('click',function(e){var b=e.target.closest('button[data-c]');if(!b||e.detail&&chipPress!==b)return;chipPress=null;var c=b.dataset.c;
-          if(c==='go')go(selI);else if(c==='focus'){if(focusI===selI)toggleFocus(selI);else if(branchFits(selI)){chipStage=0;branchView(selI,true);}else{chipStage=1;updChip();}}else if(c==='fall'){chipStage=0;branchView(selI,true);}else if(c==='fpart'){chipStage=0;branchView(selI,false);}else if(c==='unfocus')toggleFocus(-1);else if(c==='col')toggleCol(selI);else if(c==='all')expandAll(selI);else if(c==='endsel')endSel();else if(c==='print')prOpen(selI,false,true);});
+          if(c==='go')go(selI);else if(c==='focus'){if(focusI===selI)toggleFocus(selI);else if(branchFits(selI)){chipStage=0;branchView(selI,true);}else{chipStage=1;updChip();}}else if(c==='fall'){chipStage=0;branchView(selI,true);}else if(c==='fpart'){chipStage=0;branchView(selI,false);}else if(c==='unfocus')toggleFocus(-1);else if(c==='never'){try{localStorage.setItem('km-chip-off','1');}catch(_){}chipEl.hidden=true;}else if(c==='col')toggleCol(selI);else if(c==='all')expandAll(selI);else if(c==='endsel')endSel();else if(c==='print')prOpen(selI,false,true);});
         edBtns=box.querySelectorAll('[data-e]');edBtns.forEach(function(bt){bt.addEventListener('click',function(){setEd(bt.dataset.e);});});
         box.querySelector('[data-a=prev]').addEventListener('click',function(){showReadJuan(readJ-1,-1);});
         box.querySelector('[data-a=next]').addEventListener('click',function(){showReadJuan(readJ+1,-1);});
@@ -7431,6 +7433,11 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 .upd-hero li{margin:0 0 3px}
 .upd-hero .upd-cta{height:40px;padding:0 18px;border-radius:20px;border:0;background:#d9a62b;color:#fff;font:600 15px inherit;font-family:inherit;cursor:pointer}
 </style>
+<style>
+#kmap .km-chip{zoom:calc(var(--kui,1)*.6)!important}
+#kmap .km-chip .km-chip-never{border-style:dashed;color:var(--muted)}
+</style>
+
 
 
 
