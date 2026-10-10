@@ -3827,15 +3827,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var settingsPage='root',versionBack='about';
   var VN_KIND={new:'新增功能',fix:'修正 Bug',improve:'操作改善'};
   /* 版本更新資料（單一來源）：[類型, 說明, 1=重要項目→出現在更新提醒]；全部項目→「關於 → 版本內容」。新版本請加在最前面。 */
-  var versionNotes={"2.1":{date:"2026年10月10日",hero:{title:"新增：完整展開的科判圖",lines:["點科判欄右下角的「科判圖」圖示，就能看到完整展開的科判圖。"],cta:"開啟科判圖"},warn:"目前版本以電腦版為主，手機版、平板版，仍有些許bug，陸續修正中。",items:[
-    ["new","更新通知新增提醒：目前以電腦版為主，手機版、平板版仍在修正。"],
-    ["new","右下角新增「科判圖」：完整展開全書科判，可縮放、拖曳、只看一支。",1],
-    ["new","科判圖左下可選一百卷，並可列印、存成 PDF 或 HTML。"],
-    ["new","第一次進科判圖有操作動畫簡介，右上角「說明」可隨時重看。"],
-    ["new","科判圖快捷鍵：F 只看選取的一支、＋／− 開合科判層次、Ctrl／⌘＋＋／− 縮放；右上「說明」有 Windows／Mac 圖示說明。"],
-    ["improve","百卷清單預設展開；點卷號會把該卷對齊卷次欄頂端，點科判標題不再讓卷次欄晃動。"],
-    ["improve","點科判標題時，正文標題停在工具列下方約兩行半處，更好閱讀。"],
-    ["improve","正文頁面的「大小」按鍵移除，介面更簡潔。"]
+  var versionNotes={"2.1":{date:"2026年10月10日",warn:"目前版本以電腦版為主，手機版、平板版，仍有些許bug，陸續修正中。",items:[
+    ["new","手機版右上角新增鈴鐺：有新版本時顯示紅點，點開查看更新內容。",1],
+    ["new","更新通知新增提醒：目前以電腦版為主，手機版、平板版仍在修正。"]
   ]},"2.0":{date:"2026年10月10日",hero:{title:"新增：完整展開的科判圖",lines:["點科判欄右下角的「科判圖」圖示，就能看到完整展開的科判圖。"],cta:"開啟科判圖"},warn:"目前版本以電腦版為主，手機版、平板版，仍有些許bug，陸續修正中。",items:[
     ["new","右下角新增「科判圖」：完整展開全書科判，可縮放、拖曳、只看一支。",1],
     ["new","科判圖左下可選一百卷，並可列印、存成 PDF 或 HTML。"],
@@ -4244,6 +4238,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if(last===ver&&!forced)return;
       if(!seen&&!forced){remember();return;}
       var vn=versionNotes[ver],items=vn?vn.items.filter(function(i){return i[2];}):[];
+      var oldv=parseFloat(last||'0')||0;if(vn&&!vn.hero&&oldv<2&&versionNotes['2.0']&&versionNotes['2.0'].hero){vn=Object.assign({},vn,{hero:versionNotes['2.0'].hero});}
       if(!items.length){if(!forced)remember();return;}
       var box=document.createElement('div');box.className='upd-notice';box.id='updNotice';
       box.innerHTML='<div class="upd-card" role="dialog" aria-modal="true" aria-labelledby="updTitle"><h4 id="updTitle"></h4><div class="upd-groups"></div><p class="upd-more">詳情：功能列表 › 版本</p><label class="upd-skip"><input type="checkbox" id="updSkip"><i aria-hidden="true"></i>此版本不再顯示</label><button type="button" class="upd-ok">知道了</button></div>';

@@ -884,3 +884,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 ### W007 併入 2.1（Claude，2026-10-10）
 - 依 q 指示靜默併入：版號仍 2.1；CHANGELOG 併入 2.1 條目；已合併 main。W007 封存。
 - 驗證：版號 v2.1、已讀者不跳通知／不亮鈴鐺（Chromium 手機尺寸）。未測 iPhone／Safari 實機。
+
+### 2.1 更新內容去重（Claude，2026-10-10）
+- index.html：versionNotes['2.1'] 只留新增兩條＋warn；通知對 last<2 補 2.0 hero。已重跑 build_release 2.1，已合併 main。
+- 測試：Chromium：seen=1.92 見 hero＋!；seen=2.0 只見 !＋鈴鐺條目；seen=2.1 無通知。未測 Safari／實機。
