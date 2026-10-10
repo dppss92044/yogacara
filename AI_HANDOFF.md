@@ -831,3 +831,6 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 
 ### W004 第一〇五輪
 - index.html：kbEl 依 subsOf 顯示；最後一頁 subs=列點數。測試：桌面 Chromium 逐步點下一步，無快捷鍵頁 .ki-kb hidden，最後一頁六步依序標黃。未測手機／Safari。
+
+### W004 第一〇六輪
+- index.html：合併滾輪上下移＋縮放大小為「滾輪移動與縮放」。測試：桌面 Chromium 逐頁；截圖 round106。未測手機／Safari。
