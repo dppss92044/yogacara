@@ -834,3 +834,6 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 
 ### W004 第一〇六輪
 - index.html：合併滾輪上下移＋縮放大小為「滾輪移動與縮放」。測試：桌面 Chromium 逐頁；截圖 round106。未測手機／Safari。
+
+### W004 第一〇七輪
+- index.html：卡片固定高度（檔尾 CSS＋kbEl.style.visibility）。測試：桌面 Chromium 逐頁量卡片高度皆 598px；截圖 round107。未測手機（卡片較高，有內捲）／Safari。
