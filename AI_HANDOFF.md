@@ -49,6 +49,9 @@
 - 程式 commit `9a3043f` 已成功推送到獨立分支 `work-w004-map-entry`（未推送 main）；本次固定程式 commit 網址 `https://raw.githack.com/dppss92044/yogacara/9a3043fb03ad57f33a8f5a66724516a35b1bb1b7/index.html`，避免沿用舊分支網址的快取。此雲端 egress proxy 先前對 raw.githack.com CONNECT 回 403，未在本環境驗證公網頁面載入；本機 Chromium 功能測試已完成。
 - 未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未執行其他歷史 fixtures 或舊版回歸套件。未升版、未改 sw.js／資料、未 push main、未開 PR、未部署正式站。
 
+## W004 第九十五輪（Claude，2026-10-10）
+- 移除「？」、「說明」按鈕（原重新說明）、順序改為 說明／全部／列印／設定。q 要求：之後每次都附更新畫面截圖（見 `/mnt/project-files/W004/round95/`）。測試：Chromium 電腦，控制列順序與說明開動畫已驗證、五張截圖已看；手機窄螢幕未測。
+
 ## W004 第九十四輪（Claude，2026-10-10）
 - 動畫新增「點支線回上一層」；非觸控裝置略過雙指景（`orig[]` 保留原景編號給 CSS）。測試：Chromium 電腦，景列為 13 景且無雙指景、新景截圖已看；觸控裝置的 14 景未實測（pointer:coarse）。
 
