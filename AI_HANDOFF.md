@@ -888,3 +888,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 ### 2.1 更新內容去重（Claude，2026-10-10）
 - index.html：versionNotes['2.1'] 只留新增兩條＋warn；通知對 last<2 補 2.0 hero。已重跑 build_release 2.1，已合併 main。
 - 測試：Chromium：seen=1.92 見 hero＋!；seen=2.0 只見 !＋鈴鐺條目；seen=2.1 無通知。未測 Safari／實機。
+
+### W008（Claude，2026-10-10）：說明動畫排除 reduced-motion 全域關閉
+- index.html 第 147 行規則加 `:not(.km-intro):not(.km-intro *)`；已重跑 build_release 2.1（版號不變）。
+- 測試：Chromium emulate reducedMotion=reduce／no-preference，說明舞台 animationName 皆為 kiWheel（動畫執行）；修改前未對照實測，原因為推測。未測 q 實機。未合併 main，待 q 確認。

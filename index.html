@@ -144,7 +144,7 @@ button.motion-pressed,summary.motion-pressed{scale:.97}
 .settings-panel[data-settings-page=version] #versionDetail{display:block}
 .about-source{background:var(--bg);border-radius:14px;padding:14px;margin-bottom:14px}
 .about-source summary{cursor:pointer;font:15px var(--ui)}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}button,summary{transition:none!important}button.motion-pressed,summary.motion-pressed{scale:1!important}.book-size,.term-preview,.mpop{animation:none!important}}
+@media(prefers-reduced-motion:reduce){*:not(.km-intro):not(.km-intro *),*:not(.km-intro):not(.km-intro *)::before,*:not(.km-intro):not(.km-intro *)::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}button,summary{transition:none!important}button.motion-pressed,summary.motion-pressed{scale:1!important}.book-size,.term-preview,.mpop{animation:none!important}}
 /* At 175–200% a deep heading may extend beyond its pane. Keep its original
    indentation and let that heading pan locally instead of widening the app. */
 :root[data-large-reading=true][data-layout=mac] .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
