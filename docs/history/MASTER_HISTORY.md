@@ -736,6 +736,8 @@ git 的作者全部是「紹謙」，只代表部署者。製作視窗是依下�
 
 **H156**｜（本 repo 工作階段，Claude Code）｜2026-10-10｜**發布 2.0**。使用者於對話中明確要求「發布」。W004（全屏科判圖與說明動畫等）與 W005（卷次欄）合為正式版本 2.0（D109 命名，由 1.92 直接升 2.0），以 `tools/build_release.py 2.0` 更新 `index.html` 版本與 `sw.js` 快取；並讓更新通知對同一版本只在首次開啟跳出（比對 `hk-seen-version`）。測試僅桌面 Chromium 模擬，未經 Safari／iPhone／iPad 實機。
 
+**H157**｜（本 repo 工作階段，Claude Code）｜2026-10-10｜**發布 2.1 並合併 main**。使用者先要求預覽、再明確說「用2.1發布 合併」。2.0 發布並合併後，更新通知加紅色「!」提醒（手機／平板仍有 bug）、Windows 標誌改灰；以 `tools/build_release.py 2.1` 更新版本與 `sw.js`；versionNotes 新增 2.1。測試僅桌面 Chromium，未經 Safari／iPhone／iPad 實機。
+
 ---
 
 *本文件為歷史史料；任何新事件請追加 H156 起，不得改動既有 H 編號。*

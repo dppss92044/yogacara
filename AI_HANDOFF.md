@@ -871,3 +871,8 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 ### W006 續（Claude，2026-10-10）：更新通知加紅色「!」提醒（預覽）
 - index.html：versionNotes['2.0'].warn＋通知卡片渲染；`?preview=update` 強制顯示。版號仍 2.0（已重跑 build_release 更新雜湊）。未合併 main。
 - 測試：桌面與手機尺寸 Chromium 截圖 round116。待 q 決定是否升 2.1（升版後已看過 2.0 通知的人才會再看到）。
+
+### W006 發布 2.1（Claude，2026-10-10）
+- 依 q「用2.1發布 合併」：appVer v2.1、`build_release.py 2.1`（sw.js VERSION=2.1）、versionNotes 新增 2.1（hero＋warn＋items）；文件已同步（CHANGELOG、PROJECT_STATE、MASTER_HISTORY H157、DECISIONS D112）；W006 封存。
+- 測試：桌面 Chromium：seen=1.92／2.0 會跳「已更新2.1」含 ! 提醒，seen=2.1 不跳；語法檢查。未測 Safari／iPhone／iPad／實機 SW 更新。
+- 已合併 main（快轉）。
