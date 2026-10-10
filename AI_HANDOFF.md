@@ -801,3 +801,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 ### W004 第九十七輪（按鍵依文字寬度）
 - 修改：index.html 末尾追加 CSS（.upd-ok/.upd-cta、設定面板 km-row/km-grp/km-sec 不撐寬）。
 - 測試：桌面 Chromium 與手機尺寸截圖（/mnt/project-files/W004/round98/）。未測：真機、Safari、iPad、實際列印。
+
+### W004 第九十八輪
+- index.html：新增 branchStep()；移除 C/E 鍵；說明頁的「快捷鍵：」項目改在同頁「快捷鍵」小標題下。
+- 測試：桌面 Chromium（5 次按鍵後可見節點數 1971→1928→1850→1928→1971，整體層級不變）、說明動畫截圖 /mnt/project-files/W004/round99/。未測：真實注音輸入法、觸控、Safari、iPad。
