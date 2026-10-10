@@ -49,6 +49,21 @@
 - 未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未執行其他歷史 fixtures 或舊版回歸套件。未升版、未改 sw.js／資料、未 push main、未開 PR、未部署正式站。
 
 ## 進行中：W004（q 2026-10-06 11:19「脈絡圖」）
+### 最新接續（Codex，2026-10-10，第七十八輪，待預覽確認）
+- q 原始需求：「後面的那個脈絡圖，幫我點下去之後，會呈現在目前的分支。這分支，一樣是全部展開的圖，只不過以當前所選取的科判脈絡為正中心，並且標記淡色黃。大小100趴。字的大小約莫12。然後頁面很乾淨，只有一個齒輪的按鍵跟『全部』的按鍵。按下齒輪，就會看到現在所有的功能都打包在上面。按下全部，就會看到從甲一開始的整張展開的圖。按下全部就會看到加減的按鈕，可放大縮小畫面。然後齒輪旁邊要有一個問號，按下去就會詳細導覽說明。」
+- 同一 W004、預覽分支 `work-w004-map-entry`，從 `2b3633a` 接續；程式 commit `8302fe69d7f3922b52502cfbbe5f966c4866b655` 已推送，遠端 Git hash 已核對。先在 D107 第七十八輪記錄 q 對舊三層／無預選／控制列規格的明確取代，再改程式。正式 app 仍 v1.92；正式發布等待 q 另行指示。
+- 開啟全卷、全部層、無收合的圖，依閱讀器版本與 `S.cur` 置中，淡黃標記、100%、橫／直書字級均 12px；若沒有選取則取目前卷第一科判／承接科判。每次重開依最新選取重設，不保留前次全覽／並排／分支限制；移除延遲自動全覽與初次自動導覽。
+- 常駐齒輪／問號／全部三鈕。既有上方控制列、底部三頁籤與五種彈出面板移入齒輪設定，功能與事件沿用；設定可捲動，滾輪／原生觸控捲動不再傳給背景圖；canvas 自己保留 touch-action:none 以處理圖面拖曳／捏合。「全部」還原全卷全層、全覽、顯示圖面加減；最低倍率降至 0.001%，完整韓版也能放入畫面，低倍率不再只畫前三層。縮放不放大功能介面；「目前」回標記科判與 100%。
+- 問號 14 步手動導覽，涵蓋當前置中／全部／手勢／齒輪／分支／架構／樣式／卷次／層級／並排／目前／切版／列印／節點快捷鍵；可完成、關閉、重播。保留節點小選單與雙擊回正文。新增常駐控制項及 12px 選項為純圖面與說明操作，明確列入 Analytics excluded；未增加事件、資料維度或統計客戶端。
+- 最終脈絡圖矩陣：桌面 1440×900、iPad 直向 820×1180／橫向 1180×820、手機直向 390×844／橫向 844×390，各搭配藏／韓版，10 組、830/830 通過。檢查全部節點（藏版 1,970＋虛擬根／韓版 46,769＋虛擬根）、收合數 0、正中心座標、100%、12px、canvas 淡黃像素、初始3鈕／全部後5鈕、完整圖框入畫面、加減、齒輪全部子面板、水平不溢出、並排正文、橫直書、14步導覽／重播／關閉、分支後全部還原、拖曳、返回／重選／重開／Esc、無 pageerror。腳本／結果：`/tmp/yogacara-context-test.cjs`、`/tmp/yogacara-context-test-final.log`；初輪830亦通過，補原生設定捲動後重跑最終矩陣。hasTouch、isMobile=false固定 viewport 模擬。
+- 原生互動補查：桌面矮視窗 1440×390、手機橫向 844×390，各搭配藏／韓版，共4組、46/46通過。實際滾輪捲設定200px、CDP原生單指滑動捲126／131px且背景不動、Ctrl＋滾輪與雙指捏合縮放、面板換版維持全層展開、點節點選單、雙擊／雙擊觸控返回同正文科判、藏版選定分支列印預覽開啟／取消、無 pageerror。`/tmp/yogacara-context-interactions.cjs`、`/tmp/yogacara-context-interactions-final.log`；首輪測試少發一次觸控點選而失敗，修正測試為兩次點選後通過，未為此改程式。
+- W005 回歸：兩版×桌面／iPad／手機五種版面，另桌面正文與左欄倍率80%／140%，14組、168/168通過；右點科判左欄30%、上方12px純空白、正文2.5行定位、同頁、單欄返回、無 pageerror。沿用前輪測試，僅暫存測試網址換本機8001，`/tmp/yogacara-context-reader-regression.cjs`／`.log`。本次功能檢查合計1,044項通過，不另重跑無關歷史套件。
+- 視覺檢視：桌面藏版初始與齒輪、手機韓版直向／藏版橫向截圖；選取淡黃、置中與三鈕確認。`/tmp/yogacara-context-probe.png`、`/tmp/yogacara-context-settings.png`、`/tmp/yogacara-context-hk-phone-portrait.png`、`/tmp/yogacara-context-zang-phone-landscape.png`。Inline JS 四區語法、Registry JSON、git diff --check通過。
+- Analytics 最終全量完整執行（既有 W001／v1.91 基底套件）：靜態152 features／92 rules／26 states，0失敗；動態54通過／97不適用／3手動／5失敗（mac #sourceFont 未收到 font.family.song、ipad #exAll 未收到 export.shortcut.all，另mac／ipad／iphone #reportBtn 未收到 report.open）；控制項掃描另有1類失敗，#versionBtn、#mapBtn 未登錄或排除，共6類失敗、exit1，未全數通過。最後兩個控制項與report失敗沿用前輪已記錄問題；新增兩個全量失敗分別隔離比對基底2b3633a／本次8302fe6，各1/1收到預期事件（原生鍵盤切宋體、匯出全部卷快捷），並未更改這些功能／客戶端／事件規則。隔離通過不取代全量失敗結果；原因未確認。腳本／結果：`/tmp/yogacara-context-font-isolation.cjs`／`.log`、`/tmp/yogacara-context-export-isolation.cjs`／`.log`。
+- 全量命令：`PLAYWRIGHT_PATH=/tmp/yogacara-registry-playwright.cjs CHROME_PATH=/usr/bin/chromium node tools/check-analytics-registry.cjs`；helper僅使用hk-update-notice=off、操作timeout500ms、navigation／waitForSelector30秒，套件明定點選仍3秒；未修改測試斷言。`/tmp/yogacara-context-registry-final.log`。第一次啟動因補齒輪原生捲動中止，未算完整執行；最終index source保持不變。全量啟動後另補12px選項到同一排除項（不變動feature／rule／state），以同套件的完整靜態部分重檢0失敗並核對新增selector；動態套件本來不開啟脈絡圖。
+- 固定程式預覽：`https://raw.githack.com/dppss92044/yogacara/8302fe69d7f3922b52502cfbbe5f966c4866b655/index.html`。遠端 Git 已驗證；先前雲端 egress proxy 對 raw.githack.com CONNECT 403，本環境未驗證公網預覽載入。
+- 未測 Safari、iPhone／iPad實機、PWA更新、正式列印／PDF下載／HTML匯出完整回歸；僅列印預覽smoke。未改SW、App版本、資料或正式main；未開PR／正式部署。所有tmp測試與截圖僅本環境暫存。
+
 ### 最新接續（Codex，2026-10-09，第七十七輪）
 - 後續 q 要求「給我網址」：已依預覽需求推送獨立分支 `work-w004-map-entry`（未 push main、未開 PR、未部署正式站）。預覽程式 commit `6a4d0be`，已推送的交接 commit `f64df92`。第三方預覽網址為 `https://raw.githack.com/dppss92044/yogacara/work-w004-map-entry/index.html`；Git 讀取確認遠端分支存在，但雲端 egress proxy 對 raw.githack.com 的 CONNECT 回 403，因此無法在此環境驗證該公網網址實際載入。
 - 使用者原始需求（附右下兩個圖示截圖）：「右下，這部分，幫我刪除展開，僅留下左邊。然後左邊按下去，就會全部背景展開。」
