@@ -49,6 +49,9 @@
 - 程式 commit `9a3043f` 已成功推送到獨立分支 `work-w004-map-entry`（未推送 main）；本次固定程式 commit 網址 `https://raw.githack.com/dppss92044/yogacara/9a3043fb03ad57f33a8f5a66724516a35b1bb1b7/index.html`，避免沿用舊分支網址的快取。此雲端 egress proxy 先前對 raw.githack.com CONNECT 回 403，未在本環境驗證公網頁面載入；本機 Chromium 功能測試已完成。
 - 未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未執行其他歷史 fixtures 或舊版回歸套件。未升版、未改 sw.js／資料、未 push main、未開 PR、未部署正式站。
 
+## W004 第九十七輪（Claude，2026-10-10）
+- 單按 ＋／−（含注音鍵位）＝層級開合（呼叫 `step('d+'/'d-')`）；說明動畫鍵盤相關列點分「快捷鍵」列；新增景「快捷鍵總整理」「＋／− 一層一層開合」（現共 15 景，觸控裝置多雙指景）。測試：Chromium 電腦，以 key／code 模擬 −、ㄦ(Minus)、＋、ㄧ(Equal)，層數 7→6→5→6→7 正確、截圖見 `/mnt/project-files/W004/round97/`；未測真實注音輸入法、手機。
+
 ## W004 第九十六輪（Claude，2026-10-10）
 - 預覽建置每次開啟都強制跳 2.0 更新視窗（`window.__fu`，僅 `appVer`<2.0 時有效；`?preview=off` 可關）。**發布 2.0 時**升 `appVer` 即自動失效，不需另改程式。測試：Chromium 電腦／手機截圖已看（`/mnt/project-files/W004/round96/`）。
 
