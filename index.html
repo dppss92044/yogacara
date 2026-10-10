@@ -7330,6 +7330,9 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root #kmap .km-settings .km-tab{background:transparent!important;border-radius:999px!important;height:100%!important;font-weight:600;color:var(--fg,#222)}
 :root:root #kmap .km-settings .km-tab.on{background:transparent!important;color:#1f1d1a}
 :root:root #kmap .km-settings .km-tabs:not(:has(.km-tab:nth-child(2):last-child)) .km-tab.on{background:var(--acc,#d9a62e)!important;box-shadow:0 2px 4px rgba(0,0,0,.18)}</style>
+<style id="km-btn-switch">:root:root #kmap .km-settings .km-sec .km-row>button[aria-pressed]::after{content:"";flex:none;width:34px;height:20px;margin-left:10px;border-radius:999px;background-color:rgba(120,120,128,.3);background-image:radial-gradient(circle at 10px 10px,#fff 8px,transparent 8.5px);background-repeat:no-repeat;background-size:20px 20px;background-position:0 0;transition:background-color .25s,background-position .25s cubic-bezier(.3,.7,.3,1);filter:drop-shadow(0 1px 1px rgba(0,0,0,.15))}
+:root:root #kmap .km-settings .km-sec .km-row>button[aria-pressed="true"]::after{background-color:var(--acc,#d9a62e);background-position:14px 0}
+:root:root #kmap .km-settings .km-sec .km-row>button[aria-pressed="true"]{background:var(--pop,#fff)!important;color:inherit!important}</style>
 </body></html>
 <style>
 /* v1.63: three visual sections retain the original direct-child feature containers. */
