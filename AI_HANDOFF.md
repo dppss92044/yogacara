@@ -55,7 +55,10 @@
 - 最終 Chromium 功能：電腦1440×900、iPad820×1180／1180×820、手機390×844／844×390，各搭配藏／韓版，共10組260/260通過。檢查單欄22主題、移除來源／分支／選單縮放鍵、介面配置、卷次／層數標示、問號模式、各功能展開、卡片固定、動畫入口、關閉回問號、返回原閱讀捲動位置、無pageerror。腳本／結果 `/tmp/round81-test.cjs`、`/tmp/round81-test-complete.log`。
 - 動畫／還原128/128通過（電腦／手機直向兩版及減少動態偏好；`/tmp/round81-animation.cjs`／`.log`）。改自前輪動畫測試，選單／鍵盤入口改問號，架構與列印跨功能用暫存私有導覽呼叫，沒有更改產品測試斷言；6種架構、播放暫停、縮放、雙指示範、快捷鍵、列印限範圍示範與偏好還原均檢查。此測試在最後問號位置與主題單捲軸CSS微調前完成，動畫邏輯其後未改。
 - 最終原生操作46/46通過：桌面1440×390／手機橫向844×390兩版；主題面板原生滾輪／CDP觸控捲動、Ctrl滾輪／雙指縮放、切換版本保留完整層數、節點操作與普通列印開關。`/tmp/round81-native.cjs`、`/tmp/round81-native-final.log`；移除舊分支按鈕點選，改使用直接主題面板。主題篩選20/20通過（桌面兩版，本地分／攝事分／五識身相應地／無餘依地及全部還原、原位返回；`/tmp/round81-themes.cjs`／`-final.log`）。最終圖面問號位置另以手機直向26項通過、檢視置中卡截圖；`/tmp/round81-visual.cjs`、`/tmp/round81-visual-final.log`。
-- 全量 Analytics 執行中，完成後補記。以上 Chromium／hasTouch／CDP 模擬，不是 Safari／iPhone／iPad 實機；未重跑 W005 168項、PWA更新、PDF實際列印或歷史 fixtures。初輪回原位檢查在首頁初始定位過程取樣有差異，改為先選卷36科判穩定後取樣，產品返回邏輯未改；原生檢查找出主題雙捲軸後修正再通過。
+- 最終 Analytics 全量完整執行（既有W001／v1.91基底套件）：靜態152 features／92 rules／26 states，0失敗；動態55通過／97不適用／3手動／4失敗（mac／ipad／iphone的#reportBtn未收到report.open，及ipad #contentBtn未收到settings.page.content）；控制項掃描仍有#versionBtn及#mapBtn未登錄或排除，合計5類失敗、exit 1。此套件未全數通過。命令 `PLAYWRIGHT_PATH=/tmp/yogacara-registry-playwright.cjs CHROME_PATH=/usr/bin/chromium node tools/check-analytics-registry.cjs`；結果 `/tmp/round81-registry-complete.log`。helper同前輪，僅提示關閉與操作timeout調整，未改套件明定點選3秒或斷言。
+- ipad內容設定事件隔離：相同820×1180、hasTouch／isMobile、實際點選、攔截統計端點，前輪e10e643及本次各1/1收到settings.page.content（`/tmp/round81-content-isolation.cjs`、`/tmp/round81-content-ipad.log`）。全量該失敗未重現，但仍保留全量失敗，不把隔離成功當作套件通過；未為此更改產品。第一次隔離1024×768非觸控也各成功，非套件條件，僅作輔助。
+- 程式commit `a6455cfa986eb11d53eaf10784bcf4a1640ffa99`，已推送並以git ls-remote核對。固定預覽 `https://raw.githack.com/dppss92044/yogacara/a6455cfa986eb11d53eaf10784bcf4a1640ffa99/index.html`；此雲端前輪CONNECT403，本輪未再次驗證公網載入。最後HEAD以Git為準，後續僅測試／交接文件提交。
+- 以上 Chromium／hasTouch／CDP 模擬，不是 Safari／iPhone／iPad 實機；未重跑 W005 168項、PWA更新、PDF實際列印或歷史 fixtures。初輪回原位檢查在首頁初始定位過程取樣有差異，改為先選卷36科判穩定後取樣，產品返回邏輯未改；原生檢查找出主題雙捲軸後修正再通過。
 - 兩次 Analytics 檢查因後續圖面問號位置與主題內層捲軸修正中止；不能列為完整執行。未更改 Registry／客戶端／既有測試斷言／歷史 fixtures。
 
 ## 進行中：W004（q 2026-10-06 11:19「脈絡圖」）
