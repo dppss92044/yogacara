@@ -4122,6 +4122,12 @@
  ],
  "excluded": [
   {
+   "selector": "#kmap .km-controls button",
+   "what": "脈絡圖齒輪、問號、全部與全覽縮放",
+   "reason": "純圖面操作與說明入口，未新增產品分析維度；不蒐集目前科判、分支或畫面位置",
+   "css": "#kmap .km-controls button"
+  },
+  {
    "selector": "#settingsBack",
    "what": "設定頁「返回」",
    "reason": "純介面導覽，無產品問題",
