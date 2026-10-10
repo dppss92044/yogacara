@@ -50,7 +50,7 @@
 - 未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未執行其他歷史 fixtures 或舊版回歸套件。未升版、未改 sw.js／資料、未 push main、未開 PR、未部署正式站。
 
 ## W004 最新第八十七輪（Claude，2026-10-10）
-- Ctrl／⌘＋＋／− 縮放、簡介動畫改列點並加縮放鍵、選卷後右上「回全覽」（`.km-backall`，`volPicked`／`backAllShow`）。已記 D107 第八十七輪。**未做**：q 說「點下去閃五下」（脈絡圖／列印／生成 HTML）——電腦 Chromium 重現不出，已請 q 說明是哪個畫面。測試：Chromium 電腦，選卷出現回全覽、按後回進圖、無 pageerror；Ctrl＋＋／− 只按鍵無錯，未量測縮放倍率。未測 iPad／手機／韓藏版／實機。
+- Ctrl／⌘＋＋／− 縮放、簡介動畫改列點並加縮放鍵、選卷後右上「回全覽」（`.km-backall`，`volPicked`／`backAllShow`）。已記 D107 第八十七輪。閃爍：q 後來說明是「生成 HTML」檔中點（分N）跳到支脈的閃爍，已由 5 下／2.5 秒改為 2 下／3 秒（`go()` 內 `f.animate`），僅改關鍵影格與 duration，尚未在瀏覽器實測動畫。測試：Chromium 電腦，選卷出現回全覽、按後回進圖、無 pageerror；Ctrl＋＋／− 只按鍵無錯，未量測縮放倍率。未測 iPad／手機／韓藏版／實機。
 
 ## W004 最新第八十六輪（Claude，2026-10-10）
 - q 要求：左下百卷展開到頁面一半；預設編排改回一般；首次進圖加手勢動畫簡介。已記入 D107 第八十六輪。純 CSS 動畫五景（拖曳、滾輪、Ctrl＋滾輪、雙指、鍵盤），`window.introOpen`，「開始導覽」接 `tourStep(0)`。
