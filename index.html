@@ -1479,7 +1479,20 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var as = $("juans").children; for (var q = 0; q < as.length; q++) as[q].classList.toggle("on", q + 1 === j);
     $("jCur").textContent = "卷" + j;
   }
-  var railBusy = false, railProg = 0;
+  var railBusy = false, railProg = 0, railPositionHeld = false, railPosition = null;
+  function releaseRailPosition() { railPositionHeld = false; railPosition = null; }
+  function holdRailPosition() {
+    railPositionHeld = true; railAnchor = null;
+    var sc = $("rscroll");
+    if (railPosition && railPosition.j !== S.railJuan) railPosition = null;
+    if (sc.clientHeight) railPosition = { j: S.railJuan, top: sc.scrollTop, left: sc.scrollLeft };
+  }
+  function restoreRailPosition() {
+    var sc = $("rscroll");
+    if (!railPositionHeld || !railPosition || railPosition.j !== S.railJuan || !sc.clientHeight) return;
+    railProg = Date.now() + 700; sc._progX = Date.now();
+    sc.scrollTop = railPosition.top; sc.scrollLeft = railPosition.left;
+  }
   function railFill() {
     var sc = $("rscroll"), inner = $("rinner"), secs = inner.querySelectorAll(".rsec"); if (!secs.length || railBusy || !sc.clientHeight) return;
     railBusy = true;
@@ -1498,6 +1511,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var railAnchor = null;
   function railHold() { if (!railAnchor || Date.now() > railAnchor.until) { railAnchor = null; return; } var sc = $("rscroll"), x = $("rinner").querySelector('.rsec[data-j="' + railAnchor.j + '"]'); if (x && sc.clientHeight) { if (railAnchor.j === 100) x.style.minHeight = sc.clientHeight / (parseFloat(getComputedStyle(x.parentNode).zoom) || 1) + "px"; railProg = Date.now() + 300; sc.scrollTop += x.getBoundingClientRect().top - sc.getBoundingClientRect().top; } }
   function renderRail(j) {
+    releaseRailPosition();
     railMark(j); railProg = Date.now() + 900; railAnchor = { j: j, until: Date.now() + 1200 };
     setTimeout(railHold, 60); setTimeout(railHold, 300); setTimeout(railHold, 800);
     $("rinner").innerHTML = railHTML(j);
@@ -1517,6 +1531,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         var line = sc.getBoundingClientRect().top + sc.clientHeight * 0.5, cur = null;
         sc.querySelectorAll(".rsec").forEach(function (x) { var r = x.getBoundingClientRect(); if (r.top <= line && r.bottom > line) cur = +x.dataset.j; });
         if (cur && cur !== S.railJuan && Date.now() > railProg) railMark(cur);
+        if (railPositionHeld && sc.clientHeight) holdRailPosition();
       });
     }, { passive: true });
   }, 0);
@@ -1574,10 +1589,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function railFocus(i, contextJuan, keepPosition) {
     var j = nodeJuan(i,contextJuan||S.juan);
     if (!$("rinner").querySelector('.rsec[data-j="' + j + '"]')) renderRail(j); else if (S.railJuan !== j) railMark(j);
+    if (keepPosition) holdRailPosition();
     $("rinner").querySelectorAll("a.cur").forEach(function (x) { x.classList.remove("cur"); });
     var a = $("rinner").querySelector('.rsec[data-j="' + j + '"] a[data-n="' + i + '"]') || $("rinner").querySelector('a[data-n="' + i + '"]');
     if (a) {
-      a.classList.add("cur");focusRailCamera(a,keepPosition);
+      a.classList.add("cur");focusRailCamera(a,keepPosition || railPositionHeld);
     }
   }
   function markIn(root, i) {
@@ -1597,12 +1613,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   // Only reader scroll intent releases an explicit volume / heading destination.
   var readerTouch=null;
   document.addEventListener('touchstart',function(e){if(main.contains(e.target)&&e.touches.length===1)readerTouch=e.touches[0].clientY;else readerTouch=null;},{passive:true});
-  document.addEventListener('touchmove',function(e){if(readerTouch!=null&&e.touches.length===1&&Math.abs(e.touches[0].clientY-readerTouch)>12){var sel=getSelection();if(!sel||sel.isCollapsed){readingTargetJuan=0;spyLock=0;panelHold=false;}}},{passive:true});
-  document.addEventListener('wheel',function(e){if(main.contains(e.target)&&!e.ctrlKey){readingTargetJuan=0;spyLock=0;panelHold=false;}},{passive:true});
-  document.addEventListener('keydown',function(e){if(!editingField()&&['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(e.key)){readingTargetJuan=0;spyLock=0;panelHold=false;}});
-  document.addEventListener('pointerdown',function(e){if(e.target===document.documentElement&&e.clientX>=innerWidth-20){readingTargetJuan=0;spyLock=0;panelHold=false;}},{passive:true});
+  document.addEventListener('touchmove',function(e){if(readerTouch!=null&&e.touches.length===1&&Math.abs(e.touches[0].clientY-readerTouch)>12){var sel=getSelection();if(!sel||sel.isCollapsed){releaseRailPosition();readingTargetJuan=0;spyLock=0;panelHold=false;}}},{passive:true});
+  document.addEventListener('wheel',function(e){if(main.contains(e.target)&&!e.ctrlKey){releaseRailPosition();readingTargetJuan=0;spyLock=0;panelHold=false;}},{passive:true});
+  document.addEventListener('keydown',function(e){if(!editingField()&&['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(e.key)){releaseRailPosition();readingTargetJuan=0;spyLock=0;panelHold=false;}});
+  document.addEventListener('pointerdown',function(e){if(e.target===document.documentElement&&e.clientX>=innerWidth-20){releaseRailPosition();readingTargetJuan=0;spyLock=0;panelHold=false;}},{passive:true});
 
-  function restoreLinkedPane(screen){var i=S.cur,j=S.juan;spyLock=Date.now()+1800;requestAnimationFrame(function(){if(screen==='catalog'){if(S.railJuan!==j)renderRail(j);railFill();railHold();if(i!=null)railFocus(i);}else if(screen==='chart'){if(i!=null)panelPage(pageInJuan(i,j,linkedPage),i,j);else flushPendingPanel();}else if(screen==='read'&&i!=null)reveal('k'+localNode(i,j));});}
+  function restoreLinkedPane(screen){var i=S.cur,j=S.juan;spyLock=Date.now()+1800;requestAnimationFrame(function(){if(screen==='catalog'){if(S.railJuan!==j&&!railPositionHeld)renderRail(j);restoreRailPosition();railFill();railHold();if(i!=null)railFocus(i,j,railPositionHeld);}else if(screen==='chart'){if(i!=null)panelPage(pageInJuan(i,j,linkedPage),i,j);else flushPendingPanel();}else if(screen==='read'&&i!=null)reveal('k'+localNode(i,j));});}
   // When this volume inherits a title printed in an earlier volume, show that
   // same title in the existing metadata slot instead of highlighting a different child.
   function readerHeading(i,j) {
@@ -1622,14 +1638,16 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     // 不再用「該頁多數節點屬於哪一卷」推測（PJ），那會把祖先節點誤帶到後面卷次的後代處。
     var panelPick=from==='panel'||from==='panelhead'||from==='panelsync',explicitPage=(panelPick||from==='go')&&pg>=2;
     var scope=panelPick?null:contextJuan||(from==='rail'?S.railJuan:from==='text'?S.juan:null),j=nodeJuan(i,scope);readingTargetJuan=j;jumpUntil=0;linkedPage=explicitPage?pg:pageInJuan(i,j,pg || (from==='panel'?S.ppage:null));
+    var keepRailPosition = from === 'rail' || from === 'text' || panelPick;
+    if (keepRailPosition) holdRailPosition();
     if(narrowNow() && from==='rail'){setPanel(false);setRail(false);}
-    railFocus(i,j,from==='rail');
+    railFocus(i,j,keepRailPosition);
     if (S.view === "v") {
       S.hl = i; markIn(article, i);
       if (from !== "v") goPage(pg || APPEAR[i] || 2, i);
       return;
     }
-    var targetPage=linkedPage;if (S.view !== "t" || S.juan !== j) { noPin = true; if (panelPick || from === "go") panelJuan = j; openText(j); noPin = false; }panelHold = panelPick || from === "go";linkedPage=targetPage;railFocus(i,j,from==='rail');
+    var targetPage=linkedPage;if (S.view !== "t" || S.juan !== j) { noPin = true; if (panelPick || from === "go") panelJuan = j; openText(j); noPin = false; }panelHold = panelPick || from === "go";linkedPage=targetPage;railFocus(i,j,keepRailPosition);
     panelJuan = j; if (from === "panelsync") markIn($("pzoom"), i); else panelPage(linkedPage, i, j, from === "go");
     article.querySelectorAll(".kn.on").forEach(function (x) { x.classList.remove("on"); });
     var el=readerHeading(i,j),localId=localNode(i,j);
@@ -1643,6 +1661,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
   // 此卷沒有新科判（承接前卷）：留在此卷卷首，科判欄標出承接的那一科
   function carryFocus(i, j) {
+    holdRailPosition();
     readerTracking=true;
     if (S.view !== "t" || S.juan !== j) nav("#j" + j); else pinJump(j);
     jumpUntil=0;++jumpGen;S.cur = i;readingTargetJuan=j;linkedPage=pageInJuan(i,j);updateVolumeLabel();article.querySelectorAll(".kn.on").forEach(function(x){x.classList.remove("on");});var inherited=readerHeading(i,j);if(inherited){inherited.classList.add("on");centerReadingHeading(inherited);reveal("k"+i);}
@@ -1831,7 +1850,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     if (S.view !== "t" || spyT || !main.getClientRects().length || narrowNow() && (!panel.hidden || rail.classList.contains("open"))) return; spyT = true;
     requestAnimationFrame(function () {
       spyT = false;
-      if (readingTargetJuan) { if (rtMark[0] !== readingTargetJuan) rtMark = [readingTargetJuan, Date.now()]; else if (Date.now() - rtMark[1] > 2500 && Date.now() > spyLock) readingTargetJuan = 0; }
+      if (readingTargetJuan && !railPositionHeld) { if (rtMark[0] !== readingTargetJuan) rtMark = [readingTargetJuan, Date.now()]; else if (Date.now() - rtMark[1] > 2500 && Date.now() > spyLock) readingTargetJuan = 0; }
       if (Date.now() < spyLock || panelHold || readingTargetJuan || chartInteracting) return;
       var zb = document.querySelector(".zbar"), bandB = zb ? Math.max(0, zb.getBoundingClientRect().bottom) : 0, tabs = phoneMode() && document.querySelector(".device-tabs"), viewB = tabs ? tabs.getBoundingClientRect().top : innerHeight, hh = bandB + (viewB - bandB) * (2/6);
       var ks = (document.getElementById("volume-"+S.juan)||article).querySelectorAll(".kn"), cur = null, lo = 0, hi = ks.length - 1, line = VM ? main.getBoundingClientRect().right - 70 : 0;
@@ -3396,8 +3415,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   })();
   function focusRailCamera(a,keepPosition){railProg=Date.now()+700;railAnchor=null;
     var sc=$('rscroll');if(!a||!sc.clientHeight||railDrag)return;
+    if(keepPosition)return;
     var r=a.getBoundingClientRect(),s=sc.getBoundingClientRect();
-    if(!keepPosition)sc.scrollTop=Math.max(0,sc.scrollTop+r.top-s.top+(r.height-sc.clientHeight)/2);
+    sc.scrollTop=Math.max(0,sc.scrollTop+r.top-s.top+(r.height-sc.clientHeight)/2);
     if(!railUserX){sc._progX=Date.now();centerHeadingText(a.querySelector('.rail-title')||a,sc);}
   }
   function setPhoneChartPage(p,hl){
