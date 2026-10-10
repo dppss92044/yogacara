@@ -5309,7 +5309,7 @@ pg.blocks.forEach(function(b){
             else{var o=ordered(i),kbs=o.kbs,nor=o.nor,all=o.all,hasK=kbs.length>0,kd=keyed(i),cur=hasK?(kd.length?kd[Math.min(sb,kd.length-1)]:all.length-1):-1;
               all.forEach(function(x,n){if(hasK&&n===nor.length){var h=document.createElement('li');h.className='kbh';h.textContent='快捷鍵';dl.appendChild(h);}var li=document.createElement('li');if(n>=nor.length)li.className='kb';li.textContent=osT(x);if(n===cur)li.classList.add('cur');dl.appendChild(li);});
               var ks=cur>=0?kf(all[cur]):[];[].forEach.call(kbEl.querySelectorAll('.kk'),function(k){k.classList.toggle('hit',ks.indexOf(k.dataset.k)>=0);});
-              if(hasK)stage.dataset.run=(cur>=nor.length||ks.length)?'1':'0';else delete stage.dataset.run;}
+              if(hasK)stage.dataset.run=(cur>=nor.length||ks.length)?'1':'0';else delete stage.dataset.run;stage.dataset.step=String(sb);}
             markOs();[].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===i);});stage.classList.remove('go');void stage.offsetWidth;stage.classList.add('go');el.querySelector('[data-i=prev]').disabled=i===0&&sb===0;el.querySelector('[data-i=next]').textContent=(i===scenes.length-1&&sb===subsOf(i)-1)?'完成':'下一步';}
           function markOs(){[].forEach.call(ui.querySelectorAll('[data-os]'),function(b){b.classList.toggle('on',b.dataset.os===osv);});}
           function setOs(o){osv=o;try{localStorage.setItem('km-os',o);}catch(e){}kbHtml=buildKb(o);kbEl.innerHTML=kbHtml;scenes[scenes.length-1][2]=kbHtml;markOs();}
@@ -7627,3 +7627,4 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 <style>.upd-notice .upd-warn{display:flex;gap:8px;align-items:flex-start;margin:10px 0 0;font-size:14px;line-height:1.5;color:inherit}.upd-notice .upd-warn b{flex:none;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#d93025;color:#fff;font:800 14px/1 sans-serif;margin-top:1px}</style>
 <style>.upd-notice .upd-warn{margin-bottom:12px}</style>
 <style>#updBell{display:none!important;position:relative}@media (max-width:700px){:root:root:root:root .books-tools #updBell{display:inline-block!important;min-width:36px;width:36px;height:40px;padding:0}:root:root:root:root .books-tools #updBell:has(.upd-dot[hidden]){display:none!important}#updBell .upd-dot{top:7px;right:8px;width:9px;height:9px}}</style>
+<style>#kmap .ki-stage.go[data-sc="1"][data-step="1"] .ki-t{animation:kiDrag 3.2s ease-in-out infinite}#kmap .ki-stage.go[data-sc="1"][data-step="2"] .ki-t{animation:kiZoom 3.2s ease-in-out infinite}</style>

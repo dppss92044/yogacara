@@ -892,3 +892,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 ### W008（Claude，2026-10-10）：說明動畫排除 reduced-motion 全域關閉
 - index.html 第 147 行規則加 `:not(.km-intro):not(.km-intro *)`；已重跑 build_release 2.1（版號不變）。
 - 測試：Chromium emulate reducedMotion=reduce／no-preference，說明舞台 animationName 皆為 kiWheel（動畫執行）；修改前未對照實測，原因為推測。未測 q 實機。未合併 main，待 q 確認。
+
+### W009（Claude，2026-10-10）：滾輪頁逐條各自動畫（預覽）
+- index.html：show() 設 stage.dataset.step；CSS 對 sc=1 的 step 1／2 套 kiDrag／kiZoom。已重跑 build_release 2.1。
+- 測試：Chromium 取 transform 取樣，三步分別為 Y 位移、X 位移、縮放。未測實機。未合併 main，待 q 確認。
