@@ -400,6 +400,56 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-tour .tb button:disabled{opacity:.35;cursor:default}
 #kmap.km-guiding .km-hl{outline-style:dashed}
 @media(max-width:480px){#kmap .km-tour-content{padding:18px 18px 10px}#kmap .km-tour h3{font-size:20px}#kmap .km-tour .tb{padding:10px 12px}#kmap .km-tour .tb button{font-size:13px}}
+
+/* Animated examples and one connector per explanation point. */
+#kmap .km-tour-mask{z-index:30}
+#kmap .km-tour-link{z-index:31}
+#kmap .km-tour{z-index:32;height:min(480px,calc(100dvh - 32px))}
+#kmap .km-tour-head{flex:none;height:198px;box-sizing:border-box;padding:16px 20px 0}
+#kmap .km-tour h3{margin:5px 0 6px}
+#kmap .km-tour-content{padding:8px 20px}
+#kmap .km-tour .tt{padding-left:20px}
+#kmap .km-tour .tt li{margin:0 0 5px;padding:0;border-radius:8px;transition:background .2s}
+#kmap .km-tour .tt li.km-point-on{background:var(--hl,#f4e2a4)}
+#kmap .km-tour .tt button{display:block;width:100%;padding:5px 7px;text-align:left;border:0;border-radius:8px;background:none;color:inherit;font:inherit;line-height:1.5;cursor:pointer}
+#kmap .km-demo{height:110px;position:relative;border:1px solid var(--rule);border-radius:12px;background:rgba(160,150,120,.06);overflow:hidden}
+#kmap .km-demo-stage{display:block;width:100%;height:82px}
+#kmap .km-demo-stage path{fill:none;stroke:var(--muted);stroke-width:1.5}
+#kmap .km-demo-stage rect{fill:var(--bg);stroke:var(--rule);stroke-width:1}
+#kmap .km-demo-stage rect.selected{fill:var(--hl,#f4e2a4);stroke:var(--acc2,#c99520)}
+#kmap .km-demo-stage text{font:9px var(--ui),sans-serif;fill:var(--fg)}
+#kmap .km-demo-meta{position:absolute;inset:auto 7px 3px;display:flex;align-items:center;gap:5px;height:24px;font:11px var(--ui),sans-serif}
+#kmap .km-demo-caption{flex:1;white-space:nowrap}
+#kmap .km-demo-meta button{padding:2px 5px;border:1px solid var(--rule);border-radius:6px;background:var(--bg);color:inherit;font:inherit}
+#kmap .km-demo-keys{display:flex;gap:3px}
+#kmap .km-demo-keys kbd{font:10px var(--ui),sans-serif;padding:2px 4px;border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;background:var(--bg);animation:km-key 2.8s infinite}
+#kmap .km-demo-cursor{position:absolute;top:26px;left:55%;width:22px;height:28px;filter:drop-shadow(1px 2px 2px rgba(0,0,0,.15));animation:km-click 2.8s infinite;pointer-events:none}
+#kmap .km-demo-cursor svg{width:100%;height:100%;fill:var(--bg);stroke:var(--fg);stroke-width:1.5}
+#kmap .km-demo[data-kind=drag] .km-demo-cursor{animation-name:km-drag}
+#kmap .km-demo[data-kind=zoom] .km-demo-graph{transform-origin:160px 43px;animation:km-zoom 2.8s infinite}
+#kmap .km-demo[data-kind=print] .km-demo-paper{transform-origin:160px 43px;animation:km-paper 2.8s infinite}
+#kmap.km-demo-paused .km-demo *{animation-play-state:paused!important}
+#kmap.km-guiding .km-pr[data-guide]{z-index:7;background:none;backdrop-filter:none;pointer-events:none}
+#kmap.km-guiding .km-pr[data-guide] .card,#kmap .km-guide-read{position:fixed;right:16px;top:78px;width:min(540px,calc(100vw - 32px));height:auto;max-height:calc(100dvh - 100px);box-sizing:border-box;border-radius:20px}
+#kmap.km-guiding .km-pr[data-guide] .card{display:block}
+#kmap.km-guiding .km-pr[data-guide] .main{display:none}
+#kmap.km-guiding .km-pr[data-guide] .side{width:100%;box-sizing:border-box;max-height:calc(100dvh - 100px);overflow:auto;padding:12px;font-size:13px}
+#kmap .km-guide-read{display:flex!important;z-index:7;flex-direction:column;border:1px solid var(--rule);background:var(--bg);overflow:auto}
+#kmap .km-guide-read .km-rh{flex-wrap:wrap;padding:8px;font-size:13px}
+#kmap .km-guide-read .km-rb{min-height:60px;font-size:13px;padding:8px}
+@keyframes km-click{0%,100%{transform:translate(0,0)}45%{transform:translate(-22px,8px)}55%{transform:translate(-22px,8px) scale(.85)}70%{transform:translate(-22px,8px)}}
+@keyframes km-drag{0%,100%{transform:translate(-45px,5px)}50%{transform:translate(45px,-8px)}}
+@keyframes km-zoom{0%,100%{transform:scale(.82)}50%{transform:scale(1.16)}}
+@keyframes km-paper{0%,100%{transform:scale(.92) rotate(-3deg)}50%{transform:scale(1) rotate(2deg)}}
+@keyframes km-key{0%,100%{background:var(--bg)}50%{background:var(--hl,#f4e2a4)}}
+@media(prefers-reduced-motion:reduce){#kmap .km-demo *{animation:none!important}#kmap .km-tour .tt li{transition:none}}
+@media(max-width:480px){#kmap .km-tour-head{padding:14px 16px 0}#kmap .km-demo-meta{gap:3px;font-size:10px}#kmap .km-demo-keys kbd{font-size:9px;padding:2px}#kmap .km-tour-content{padding:6px 16px}}
+
+#kmap .km-demo-mouse{display:none;position:absolute;width:22px;height:32px;top:24px;left:70%}#kmap .km-demo-mouse svg{width:100%;height:100%;fill:var(--bg);stroke:var(--fg);stroke-width:1.5}#kmap .km-demo-mouse circle{fill:var(--acc);animation:km-wheel 1.4s infinite}#kmap .km-demo[data-kind=zoom] .km-demo-mouse{display:block}#kmap .km-demo-fingers{display:none;position:absolute;left:50%;top:32px;width:80px;height:22px}#kmap .km-demo-fingers i{position:absolute;width:18px;height:18px;border:2px solid var(--acc);border-radius:50%;left:0;animation:km-finger 2.8s infinite}#kmap .km-demo-fingers i+ i{left:48px;animation-direction:reverse}#kmap .km-demo[data-kind=pinch] .km-demo-fingers{display:block}#kmap .km-demo[data-kind=pinch] .km-demo-cursor{display:none}#kmap .km-demo[data-kind=pinch] .km-demo-graph{transform-origin:160px 43px;animation:km-zoom 2.8s infinite}#kmap .km-demo-keys kbd:nth-child(2){animation-delay:-.7s}#kmap .km-demo-keys kbd:nth-child(3){animation-delay:-1.4s}#kmap .km-demo-keys kbd:nth-child(4){animation-delay:-2.1s}@keyframes km-wheel{0%,100%{transform:translateY(-2px)}50%{transform:translateY(2px)}}@keyframes km-finger{0%,100%{transform:translateX(-12px)}50%{transform:translateX(12px)}}
+
+#kmap .km-demo[data-kind=collapse] .km-demo-child{animation:km-collapse 2.8s infinite}@keyframes km-collapse{0%,100%{opacity:1}35%,65%{opacity:0}}
+
+#kmap.km-guiding .km-pr[data-guide] .side .ddb,#kmap.km-guiding .km-pr[data-guide] .side select{min-width:0;max-width:100%}
 </style>
 </head><body>
 <title>瑜伽師地論科判綱要</title>
@@ -4590,13 +4640,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         if(code[0]==='p'){var rt=partRoots()[k];showBranch(rt==null?-1:rt,PN[k]);}
         else{var nm=(k+1)+' '+['五識身相應地','意地','有尋有伺地','無尋唯伺地','無尋無伺地','三摩呬多地','非三摩呬多地','有心地','無心地','聞所成地','思所成地','修所成地','聲聞地','獨覺地','菩薩地','有餘依地','無餘依地'][k];showBranch(findIn(brSrc,DI[k][0]),PN[brSrc]+'・'+nm.replace(/^\d+ /,''));}
       }
-      var tourI=-1,tourHl=null,tourOrigin=null,tourFrame=0,TOUR=[
+      var tourI=-1,tourP=0,tourHl=null,tourOrigin=null,tourFrame=0,tourTimer=0,tourAnim=0,tourPlaying=true,tourCycle=0,TOUR=[
         ['.km-map','先看目前的位置',['淡黃色的科判，就是你剛才選的科判。','開啟時，它會在圖的正中心。','預設大小是 100%，文字大小是 12。']],
         ['[data-a=whole]','看完整的圖',['按「全部」，看從甲一開始的完整脈絡圖。','所有分支都會展開，整張圖會縮小放進畫面。','旁邊會出現 −／＋，可以縮小或放大。']],
         ['.km-map','移動和放大',['電腦：按住滑鼠拖曳，就能移動圖。','滾輪上下移動；按住 Shift 再滾動，可左右移動。','按住 Ctrl（Mac 用 ⌘）再滾動，可放大、縮小。','手機和平板：一指拖曳、兩指捏合縮放。']],
         ['[data-a=settings]','打開所有功能',['按齒輪，就能看到所有設定。','再按一次齒輪，可以收起設定。','按「返回」，回到剛才的閱讀位置。','問號可以隨時重看這份說明。']],
         ['[data-p=br]','只看一個主題',['先選「主題」，再按「分支」。','可選五大部分，或十七地中的一個主題。','選好後，圖上只顯示這個主題。','想回到完整圖，按畫面上的「全部」。']],
-        ['[data-p=ly]','換一種圖的樣子',['按「架構」，選你喜歡的圖形。','可以選邏輯圖、心智圖、括弧圖等。','心智圖和時間軸，建議先選一個主題。']],
+        ['[data-p=ly]','換一種圖的樣子',['按「架構」，選你喜歡的圖形。','可選邏輯圖、心智圖等；按「換架構」看不同圖形。','心智圖和時間軸，建議先選一個主題。']],
         ['[data-p=sty]','調整文字和線條',['按「樣式」，可以改文字大小和科判標號。','也能改分支顏色、線條粗細、虛線和框線。','想讓圖緊密一些，可開啟「縮小空間」。','放大整張圖和改文字大小，是兩種不同的調整。']],
         ['[data-p=rng]','選要看的卷次',['先選「卷次」，再打開卷次範圍。','選起始卷和結束卷，就能看這幾卷。','旁邊的 −／＋，可以一卷一卷移動。','「全部卷次」改卷數；畫面上的「全部」會恢復完整圖。']],
         ['[data-p=dep]','選要展開幾層',['層級就是甲、乙、丙、丁等科判的深淺。','選「全部層」，就能看到所有下層。','旁邊的 −／＋，可以少看一層、多看一層。','節點旁的 ⊖／⊕，能收起或展開那一支。']],
@@ -4604,46 +4654,146 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         ['[data-z=cur]','回到選取的科判',['按「目前」，回到淡黃色的科判。','圖的大小也會回到 100%。','按「全覽」，把目前顯示的範圍放進畫面。','「橫／直書」可以切換文字的方向。']],
         ['[data-e=hk]','切換版本',['設定上方可選大藏經版或韓清淨版。','切換後，脈絡圖和並排正文會一起換版。','從閱讀器重新開啟時，會使用閱讀器目前的版本。']],
         ['[data-a=print]','列印或存成檔案',['按「列印」，先看列印預覽。','可以選紙張、範圍、字體大小和顏色。','選「儲存成 PDF」，再用瀏覽器存檔。','選「生成 HTML」，可以另存網頁。']],
-        ['.km-map','點科判，前往正文',['點一下科判，會出現「列印」「只看這個」。','「只看這個」可以選全部展開，或只看一部分。','點兩下科判，可以直接前往那段正文。','按「完成」回脈絡圖；按「返回」回原閱讀位置。']]
+        ['.km-map','點科判，前往正文',['點一下科判，會出現「列印」「只看這個」。','「只看這個」可以選全部展開，或只看一部分。','點兩下科判，可以直接前往那段正文。','也可以從齒輪按「返回」，回原閱讀位置。']],
+        ['.km-map','鍵盤快速操作',['方向鍵：上下左右移動圖面。','＋／−：放大、縮小；F：只看選取的分支。','C：收起或展開；E：展開全部下層。','Esc：關閉說明；「完成」回圖，「返回」回閱讀位置。']]
       ];
+      var TOUR_POP=['','','','','br','ly','sty','rng','dep','','','','','',''];
+      var TOUR_TARGETS=[
+        ['.km-map','.km-map','.km-map'],
+        ['[data-a=whole]','[data-a=whole]','[data-map-zoom=in]'],
+        ['.km-map','.km-map','.km-map','.km-map'],
+        ['[data-a=settings]','[data-a=settings]','.km-close','[data-a=guide]'],
+        ['[data-p=br]','[data-b=p0]','[data-b=d0]','[data-a=whole]'],
+        ['[data-p=ly]','[data-st="ly:1"]','[data-st="ly:6"]'],
+        ['[data-st="fs:4"]','[data-ck=color]','[data-ck=compact]','[data-st="fs:1"]'],
+        ['[data-p=rng]','[data-r=a]','[data-s="a+"]','[data-a=all]'],
+        ['[data-p=dep]','[data-r=d]','[data-s="d+"]','.km-map'],
+        ['[data-a=split]','.km-rb','.km-rb','[data-a=open]'],
+        ['[data-z=cur]','[data-z=cur]','[data-z=fit]','[data-a=orient]'],
+        ['[data-e=hk]','[data-e=zang]','[data-e=hk]'],
+        ['[data-a=print]','[data-pr=paper]','[data-pr=pdf]','[data-pr=html]'],
+        ['.km-map','.km-map','.km-map','.km-close'],
+        ['.km-map','.km-map','.km-map','.km-map']
+      ];
+      function tourMetrics(v){FS_H=v[0];FS_V=v[1];ROW=v[2];COL=v[3];CH=v[4];PADH=v[5];PADV=v[6];}
+      function tourBase(){
+        if(!tourOrigin)return;var v=tourOrigin.view;
+        model=v.model;col=v.col;selIds=v.only;focusI=v.focus;selI=v.sel;md=v.md;vert=v.vert;
+        Object.assign(ST,v.style);tourMetrics(v.metrics);sc=v.sc;tx=v.tx+(W-v.w)/2;ty=v.ty+(H-v.h)/2;
+        tourOrigin.pressed.forEach(function(r){r.el.setAttribute('aria-pressed',r.value);});
+        req();
+      }
       function tourEnd(){
+        clearTimeout(tourTimer);cancelAnimationFrame(tourAnim);cancelAnimationFrame(tourFrame);
         var t=box&&box.querySelector('.km-tour');if(t)t.hidden=true;
-        if(box){box.querySelector('.km-tour-mask').hidden=true;box.querySelector('.km-tour-link').setAttribute('hidden','');box.classList.remove('km-guiding');}
-        cancelAnimationFrame(tourFrame);if(tourHl)tourHl.classList.remove('km-hl');tourHl=null;tourI=-1;
-        if(tourOrigin){var origin=tourOrigin;tourOrigin=null;settingsEl.style.removeProperty('width');settingsEl.style.removeProperty('max-height');settings(origin.open);box.querySelectorAll('[data-sec]').forEach(function(x){x.classList.toggle('on',x.dataset.sec===origin.sec);});settingsEl.scrollTop=origin.top;if(origin.focus&&origin.focus.isConnected)origin.focus.focus({preventScroll:true});}
+        if(box){box.querySelector('.km-tour-mask').hidden=true;box.querySelector('.km-tour-link').setAttribute('hidden','');box.classList.remove('km-guiding','km-demo-paused');delete box.dataset.guidePoint;}
+        if(tourHl)tourHl.classList.remove('km-hl');tourHl=null;tourI=-1;
+        if(tourOrigin){var origin=tourOrigin;tourBase();prClose();tourOrigin=null;
+          readEl.classList.remove('km-guide-read');rbEl.innerHTML=origin.readHtml;rhEl.firstChild.textContent=origin.readTitle;rbEl.scrollTop=origin.readTop;readJ=origin.readJ;
+          wholeZoom.hidden=origin.zoomHidden;wholeBtn.setAttribute('aria-pressed',origin.whole);
+          settingsEl.style.removeProperty('width');settingsEl.style.removeProperty('max-height');settings(origin.open);
+          box.querySelectorAll('[data-sec]').forEach(function(x){x.classList.toggle('on',x.dataset.sec===origin.sec);});
+          if(origin.pop){var pp=box.querySelector('[data-pop='+origin.pop+']');pp.hidden=false;box.querySelector('[data-p='+origin.pop+']').setAttribute('aria-expanded','true');}
+          settingsEl.scrollTop=origin.top;if(origin.focus&&origin.focus.isConnected)origin.focus.focus({preventScroll:true});
+        }
+      }
+      function tourTarget(){
+        var selector=TOUR_TARGETS[tourI][tourP];
+        if(tourI===5&&tourP===1)selector='[data-st="ly:'+([0,1,2,4,5,6][tourCycle%6])+'"]';
+        var el=box.querySelector(selector);if(el&&el._dd)el=el._dd;
+        return{el:el,selector:selector};
       }
       function tourPosition(){
         if(tourI<0||!box||box.hidden)return;
-        var card=box.querySelector('.km-tour'),svg=box.querySelector('.km-tour-link'),el=box.querySelector(TOUR[tourI][0]);if(!el)return;
-        var c=card.getBoundingClientRect(),inside=settingsEl.contains(el);
-        settingsEl.style.removeProperty('width');settingsEl.style.removeProperty('max-height');
-        if(inside){var sr=settingsEl.getBoundingClientRect(),above=c.top-sr.top-14,side=(innerWidth-c.width)/2-24;
-          if(above>=110)settingsEl.style.maxHeight=above+'px';else if(side>=136)settingsEl.style.width=side+'px';
-          var r=el.getBoundingClientRect(),sr=settingsEl.getBoundingClientRect();if(r.bottom>sr.bottom-10)settingsEl.scrollTop+=r.bottom-sr.bottom+10;if(r.top<sr.top+10)settingsEl.scrollTop-=sr.top+10-r.top;
-        }
+        var card=box.querySelector('.km-tour'),svg=box.querySelector('.km-tour-link'),c=card.getBoundingClientRect();
+        var printSide=box.querySelector('.km-pr[data-guide] .side');
+        var panels=[settingsEl,readEl.classList.contains('km-guide-read')?readEl:null,printSide];
+        panels.forEach(function(panel){if(!panel||!panel.getClientRects().length)return;var outer=panel===printSide?panel.closest('.card'):panel;
+          outer.style.removeProperty('width');outer.style.removeProperty('max-height');panel.style.removeProperty('max-height');
+          var r=outer.getBoundingClientRect(),above=c.top-r.top-14,side=(innerWidth-c.width)/2-24;
+          if(above>=76){outer.style.maxHeight=above+'px';if(panel!==outer)panel.style.maxHeight=above+'px';}
+          else if(side>=126)outer.style.width=side+'px';
+        });
+        var target=tourTarget(),el=target.el;if(!el)return;
+        if(tourHl)tourHl.classList.remove('km-hl');tourHl=el===mapEl?null:el;if(tourHl)tourHl.classList.add('km-hl');
+        var panel=panels.find(function(p){return p&&p.contains(el);});
+        if(panel){var r=el.getBoundingClientRect(),pr=panel.getBoundingClientRect();if(r.bottom>pr.bottom-9)panel.scrollTop+=r.bottom-pr.bottom+9;r=el.getBoundingClientRect();if(r.top<pr.top+9)panel.scrollTop-=pr.top+9-r.top;}
         var r=el.getBoundingClientRect(),x=r.left,y=r.top,w=r.width,h=r.height;
         if(el===mapEl){x+=12;y+=12;w-=24;h-=24;}
-        if(inside){var sr=settingsEl.getBoundingClientRect(),right=Math.min(r.right,sr.right-4),bottom=Math.min(r.bottom,sr.bottom-4);x=Math.max(r.left,sr.left+4);y=Math.max(r.top,sr.top+4);w=Math.max(0,right-x);h=Math.max(0,bottom-y);}
+        if(panel){var pr=panel.getBoundingClientRect(),right=Math.min(r.right,pr.right-3),bottom=Math.min(r.bottom,pr.bottom-3);x=Math.max(r.left,pr.left+3);y=Math.max(r.top,pr.top+3);w=Math.max(0,right-x);h=Math.max(0,bottom-y);}
         var ex=el===mapEl?x+Math.min(68,w*.16):x+w/2,ey=el===mapEl?y+Math.min(28,h*.06):y+h/2,cx0=c.left+c.width/2,cy0=c.top+c.height/2,dx=ex-cx0,dy=ey-cy0;
         var f=Math.min(c.width/2/Math.max(Math.abs(dx),.001),c.height/2/Math.max(Math.abs(dy),.001));
-        svg.setAttribute('viewBox','0 0 '+innerWidth+' '+innerHeight);
+        svg.dataset.target=target.selector;svg.setAttribute('viewBox','0 0 '+innerWidth+' '+innerHeight);
         svg.querySelector('path').setAttribute('d','M '+(cx0+dx*f)+' '+(cy0+dy*f)+' L '+ex+' '+ey);
         var ring=svg.querySelector('rect');ring.setAttribute('x',x-3);ring.setAttribute('y',y-3);ring.setAttribute('width',w+6);ring.setAttribute('height',h+6);
         var dot=svg.querySelector('circle');dot.setAttribute('cx',ex);dot.setAttribute('cy',ey);
       }
+      function tourExample(ly,fs,compact){
+        var key=ly+'|'+fs+'|'+compact,o=tourOrigin;if(o.cache[key])return o.cache[key];
+        var q=o.view.sel>=0?o.view.sel:curI;if(q<0||q>=VR)q=model.first;
+        var root=q;while(root>=0&&root<VR&&subEnd(root)-root<5&&NN[root][4]>=0&&NN[root][4]<VR)root=NN[root][4];
+        var ids=[root,q],end=subEnd(root);for(var k=root+1;k<end&&ids.length<14;k++)if(ids.indexOf(k)<0)ids.push(k);
+        ST.ly=ly;ST.fs=fs;ST.compact=compact;
+        var m=build(1,100,maxD,false,null,root,ids),metrics=[FS_H,FS_V,ROW,COL,CH,PADH,PADV];
+        Object.assign(ST,o.view.style);tourMetrics(o.view.metrics);
+        return o.cache[key]={model:m,metrics:metrics,root:root,ids:ids,ly:ly,fs:fs,compact:compact};
+      }
+      function tourDemo(){
+        var t=box.querySelector('.km-tour'),stage=t.querySelector('.km-demo-stage'),keys=t.querySelector('.km-demo-keys'),caption=t.querySelector('.km-demo-caption');
+        var ly=tourI===5?(tourP===0?0:tourP===2?6:[0,1,2,4,5,6][tourCycle%6]):0,fs=tourI===6&&tourP===0?2:4,compact=tourI===6&&tourP===2?1:0,example=tourExample(ly,fs,compact),m=example.model;
+        var live=tourI===2||tourI===5||tourI===6||tourI===14;
+        if(live){model=m;col=m.col;selIds=example.ids;focusI=example.root;md=maxD;vert=false;ST.ly=ly;ST.fs=fs;ST.compact=compact;if(tourI===6&&tourP===1)ST.color=1;tourMetrics(example.metrics);
+          var card=t.getBoundingClientRect(),area=card.left>130?{x:18,y:100,w:Math.max(120,card.left-40),h:H-130}:{x:18,y:78,w:W-36,h:Math.max(60,card.top-90)};
+          sc=Math.max(MINS,Math.min(area.w/m.bw,area.h/Math.max(1,m.bh),1));tx=area.x+(area.w-m.bw*sc)/2-m.bx0*sc;ty=area.y+(area.h-m.bh*sc)/2-m.by0*sc;req();
+        }
+        var ratio=Math.min(300/Math.max(1,m.bw),70/Math.max(1,m.bh)),gx=160-(m.bx0+m.bw/2)*ratio,gy=42-(m.by0+m.bh/2)*ratio,edges='',nodes='';
+        m.ids.forEach(function(i){var a=wxy(m,i),p=NN[i][4];if(p>=0&&m.inc[p]){var b=wxy(m,p);edges+='<path d="M '+b[0]*ratio+' '+b[1]*ratio+' L '+a[0]*ratio+' '+a[1]*ratio+'"/>';}
+          var nw=Math.max(8,Math.min(50,m.w[i]*ratio-3)),nh=Math.max(4,Math.min(14,example.metrics[2]*ratio*.6));nodes+='<g class="'+(i===example.root?'':'km-demo-child')+'" transform="translate('+a[0]*ratio+' '+a[1]*ratio+')"><rect x="'+(-nw/2)+'" y="'+(-nh/2)+'" width="'+nw+'" height="'+nh+'" rx="3"'+(i===curI?' class="selected"':'')+'/><title>'+esc(NN[i][0])+'</title>'+(nw>28&&nh>=12?'<text text-anchor="middle" y="3" style="font-size:'+Math.min(9,nw/5)+'px">'+esc(NN[i][0].slice(0,5))+'</text>':'')+'</g>';});
+        stage.innerHTML='<g class="km-demo-graph"><g transform="translate('+gx+' '+gy+')">'+edges+nodes+'</g></g>';
+        var hints=[];if(tourI===2)hints=tourP===1?['Shift','滾輪']:tourP===2?['Ctrl / ⌘','滾輪']:tourP===3?['雙指捏合']:['滑鼠拖曳'];
+        if(tourI===14)hints=tourP===0?['↑','↓','←','→']:tourP===1?['＋','−','F']:tourP===2?['C','E']:['Esc'];
+        keys.replaceChildren();hints.forEach(function(v){var key=document.createElement('kbd');key.textContent=v;keys.appendChild(key);});
+        caption.textContent=tourI===5?['邏輯圖','心智圖','括弧圖','組織圖','樹狀圖','表格圖','時間軸'][ly]:tourI===12?'列印預覽示範':tourI===11?(tourP%2?'大藏經版示範':'韓清淨版示範'):'操作示範';
+        t.querySelector('.km-demo').dataset.kind=tourI===14&&tourP===2?'collapse':tourI===2&&tourP===3?'pinch':tourI===2&&tourP>=2||tourI===1||tourI===14&&tourP===1?'zoom':tourI===2||tourI===14?'drag':tourI===12?'print':'click';
+        if(tourI===12&&prCache&&prCache[0]){var options=prOpts();stage.innerHTML='<g class="km-demo-paper">'+prSvg(prCache[0],0,prCache.length,options,true).replace('<svg','<svg x="80" y="4" width="160" height="76"')+'</g>';}
+        if(tourI===9){stage.innerHTML='<g class="km-demo-split"><rect x="20" y="5" width="130" height="74" rx="5"/><rect x="170" y="5" width="130" height="74" rx="5"/><text x="85" y="25" text-anchor="middle">脈絡圖</text><text x="235" y="25" text-anchor="middle">正文</text><path d="M 40 38 H 120 M 80 38 V 64 M 55 64 H 120 M 187 40 H 286 M 187 52 H 282 M 187 64 H 272"/></g>';}
+        if(tourI===5)box.querySelectorAll('[data-st^="ly:"]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.st==='ly:'+ly));});t.querySelector('[data-t=replay]').textContent=tourI===5?'換架構':'重播';
+        var collapsed=null,wasCollapsed=false;if(tourI===14&&tourP===2)collapsed=build(1,100,maxD,false,null,example.root,[example.root]);
+        var base={sc:sc,tx:tx,ty:ty},start=performance.now();cancelAnimationFrame(tourAnim);
+        function animate(now){if(tourI<0||!tourPlaying)return;var wave=Math.sin((now-start)/750);
+          if(live){if(collapsed){var closed=wave>0;if(closed!==wasCollapsed){model=closed?collapsed:m;wasCollapsed=closed;}}if(tourI===2&&tourP>=2||tourI===14&&tourP===1){var next=base.sc*(1+.16*wave),factor=next/base.sc;sc=next;tx=W/2+(base.tx-W/2)*factor;ty=H/2+(base.ty-H/2)*factor;}
+            else if(tourI===2||tourI===14){tx=base.tx+24*wave;ty=base.ty+10*wave;}req();}
+          tourAnim=requestAnimationFrame(animate);
+        }
+        if(tourPlaying&&!matchMedia('(prefers-reduced-motion:reduce)').matches)tourAnim=requestAnimationFrame(animate);
+      }
+      function tourPoint(n,automatic){
+        if(tourI<0)return;clearTimeout(tourTimer);cancelAnimationFrame(tourAnim);tourBase();
+        tourP=n;if(tourI!==5||n===1)tourCycle++;box.dataset.guidePoint=String(n);var keepPrint=tourI===12&&box.querySelector('.km-pr[data-guide]');if(!keepPrint)prClose();readEl.classList.remove('km-guide-read');
+        var popup=TOUR_POP[tourI],show=tourI>=3&&tourI<=13;settings(show);
+        if(show){var sec=tourI===7||tourI===8?'1':tourI===9||tourI===10?'2':'0';box.querySelectorAll('[data-sec]').forEach(function(x){x.classList.toggle('on',x.dataset.sec===sec);});}
+        if(popup){box.querySelector('[data-pop='+popup+']').hidden=false;box.querySelector('[data-p='+popup+']').setAttribute('aria-expanded','true');}
+        wholeZoom.hidden=tourI===1?false:tourOrigin.zoomHidden;
+        if(tourI===9){readEl.classList.add('km-guide-read');showRead(curI>=0?curI:model.first);}
+        if(tourI===12&&!keepPrint){var q=curI>=0&&curI<VR?curI:0;prOpen(q,true);box.querySelector('.km-pr details').open=true;}
+        var content=box.querySelector('.km-tour-content');content.querySelectorAll('li').forEach(function(li,i){li.classList.toggle('km-point-on',i===n);li.querySelector('button').setAttribute('aria-pressed',String(i===n));});
+        var li=content.querySelectorAll('li')[n],r=li.getBoundingClientRect(),cr=content.getBoundingClientRect();if(r.bottom>cr.bottom-8)content.scrollTop+=r.bottom-cr.bottom+8;if(r.top<cr.top+8)content.scrollTop-=cr.top+8-r.top;
+        tourDemo();cancelAnimationFrame(tourFrame);tourFrame=requestAnimationFrame(tourPosition);
+        if(tourPlaying&&!matchMedia('(prefers-reduced-motion:reduce)').matches)tourTimer=setTimeout(function(){tourPoint((tourP+1)%TOUR[tourI][2].length,true);},3600);
+      }
+      function tourToggle(){tourPlaying=!tourPlaying;box.classList.toggle('km-demo-paused',!tourPlaying);var b=box.querySelector('[data-t=play]');b.textContent=tourPlaying?'暫停':'播放';b.setAttribute('aria-pressed',String(tourPlaying));if(tourPlaying)tourPoint(tourP);else{clearTimeout(tourTimer);cancelAnimationFrame(tourAnim);}}
       function tourStep(n){
         var t=box.querySelector('.km-tour');if(n>=TOUR.length){tourEnd();return;}if(n<0)return;
-        if(tourI<0)tourOrigin={open:!settingsEl.hidden,sec:box.querySelector('.km-tab.on').dataset.sec,top:settingsEl.scrollTop,focus:document.activeElement};
-        tourI=n;if(tourHl)tourHl.classList.remove('km-hl');
-        var el=box.querySelector(TOUR[n][0]),inside=settingsEl.contains(el);settings(inside);
-        if(inside){var sec=el.closest('.km-sec');if(sec)box.querySelectorAll('[data-sec]').forEach(function(x){x.classList.toggle('on',x.dataset.sec===sec.dataset.sec);});settingsEl.scrollTop=0;}
-        tourHl=el===mapEl?null:el;if(tourHl)tourHl.classList.add('km-hl');
+        if(!model||viewIntent){setTimeout(function(){if(!box.hidden)tourStep(n);},60);return;}
+        if(tourI<0){var pp=settingsEl.querySelector('.km-pop:not([hidden])');tourOrigin={open:!settingsEl.hidden,sec:box.querySelector('.km-tab.on').dataset.sec,top:settingsEl.scrollTop,pop:pp&&pp.dataset.pop,focus:document.activeElement,zoomHidden:wholeZoom.hidden,whole:wholeBtn.getAttribute('aria-pressed'),readHtml:rbEl.innerHTML,readTitle:rhEl.firstChild.textContent,readTop:rbEl.scrollTop,readJ:readJ,cache:{},pressed:Array.from(box.querySelectorAll('[aria-pressed]')).map(function(el){return{el:el,value:el.getAttribute('aria-pressed')};}),view:{model:model,col:col,only:selIds,focus:focusI,sel:selI,md:md,vert:vert,style:Object.assign({},ST),metrics:[FS_H,FS_V,ROW,COL,CH,PADH,PADV],sc:sc,tx:tx,ty:ty,w:W,h:H}};tourPlaying=!matchMedia('(prefers-reduced-motion:reduce)').matches;}
+        tourI=n;tourCycle=n===5?-1:0;tourP=0;
         t.querySelector('.ts').textContent='導覽 '+(n+1)+' / '+TOUR.length;t.querySelector('h3').textContent=TOUR[n][1];
-        var list=t.querySelector('.tt');list.replaceChildren();TOUR[n][2].forEach(function(line){var li=document.createElement('li');li.textContent=line;list.appendChild(li);});
+        var list=t.querySelector('.tt');list.replaceChildren();TOUR[n][2].forEach(function(line,i){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.dataset.guidePoint=i;b.textContent=line;li.appendChild(b);list.appendChild(li);});
         t.querySelector('.km-tour-content').scrollTop=0;t.querySelector('[data-t=prev]').disabled=n===0;
         t.querySelector('[data-t=next]').textContent=n===TOUR.length-1?'完成':'下一步';t.hidden=false;
-        box.classList.add('km-guiding');box.querySelector('.km-tour-mask').hidden=false;box.querySelector('.km-tour-link').removeAttribute('hidden');
-        cancelAnimationFrame(tourFrame);tourFrame=requestAnimationFrame(tourPosition);t.querySelector('[data-t=next]').focus({preventScroll:true});
+        box.classList.add('km-guiding');box.classList.toggle('km-demo-paused',!tourPlaying);t.querySelector('[data-t=play]').textContent=tourPlaying?'暫停':'播放';t.querySelector('[data-t=play]').setAttribute('aria-pressed',String(tourPlaying));
+        box.querySelector('.km-tour-mask').hidden=false;box.querySelector('.km-tour-link').removeAttribute('hidden');
+        tourPoint(0);t.querySelector('[data-t=next]').focus({preventScroll:true});
       }
       function setRange(a,b,keepDepth){brI=-1;brSpec=null;ra=a;rb=b;selIds=null;col=null;focusI=-1;selI=-1;if(!keepDepth)md=autoDepth(a,b);load();}
       function showReadJuan(j,i){
@@ -4934,7 +5084,7 @@ pg.blocks.forEach(function(b){
           for(q=1;q<=mxl;q++){var tx=lv==='1'?'甲 – '+(GZ[q-1]||q):lv==='2'?'部分 – '+(ZN[q-1]||q):'1 – '+q+' 層';h+='<option value="'+(q===mxl?0:q)+'">'+tx+(q===mxl?'（最後一層）':'')+'</option>';}
           se.innerHTML=h;se.value=[].some.call(se.options,function(o){return o.value===cur;})?cur:'0';d._nk=key;}})();
         prSync(d);prFitUI(d);
-        try{localStorage.setItem('km-print4',JSON.stringify({pno:o.pno,pn:o.pn,path:o.path,pt:d._pt||null,n:o.n,paper:o.paper,ori:o.ori,wr:o.v?'v':'h',sp:o.sp,pv:o.pv,mx:d._mx,my:d._my,lcol:v0('lcol'),lch:d._lc||null,ph2:o.ph2,font:o.font}));}catch(_){}}
+        if(!d.dataset.guide)try{localStorage.setItem('km-print4',JSON.stringify({pno:o.pno,pn:o.pn,path:o.path,pt:d._pt||null,n:o.n,paper:o.paper,ori:o.ori,wr:o.v?'v':'h',sp:o.sp,pv:o.pv,mx:d._mx,my:d._my,lcol:v0('lcol'),lch:d._lc||null,ph2:o.ph2,font:o.font}));}catch(_){}}
       var prML=null;function prMaxLvl(){if(prML&&prML.k===edKey)return prML.v;var m=1;for(var i=0;i<VR;i++)if(NN[i][3]>m)m=NN[i][3];prML={k:edKey,v:m};return m;}
       function prSync(d){d.querySelectorAll('select[data-pr]').forEach(function(se){var b=se._dd;if(!b)return;var op=se.options[se.selectedIndex],t=op?op.text:'',n=se.dataset.pr;
           if(n==='mxs'&&se.value==='c')t=(d._mx/10).toFixed(2).replace(/0$/,'')+'×'+(d._my/10).toFixed(2).replace(/0$/,'')+' cm';
@@ -4973,21 +5123,21 @@ pg.blocks.forEach(function(b){
         d.addEventListener('keydown',function(e){if(e.key==='Escape'&&d.querySelector('.ddl')){e.stopPropagation();e.preventDefault();prDdClose(d);}},true);}
       function prSnap(d){var k={v:{},p:{},pt:d._pt,lc:d._lc,mx:d._mx,my:d._my,cm:d._cm,cs:(d.querySelector('.card')||{}).scrollTop,ss:(d.querySelector('.side')||{}).scrollTop};d.querySelectorAll('select[data-pr]').forEach(function(se){k.v[se.dataset.pr]=se.value;});d.querySelectorAll('button.chk').forEach(function(b){k.p[b.dataset.pr]=b.getAttribute('aria-pressed');});var c=d.querySelector('[data-pr=lcol]');if(c)k.v.lcol=c.value;return k;}
       function prRestore(d,k){['scope','va','vb','pa','pb'].forEach(function(n){delete k.v[n];});Object.keys(k.v).forEach(function(n){var e=d.querySelector('[data-pr='+n+']');if(!e)return;if(e.tagName==='SELECT'&&![].some.call(e.options,function(o){return o.value===k.v[n];}))return;e.value=k.v[n];});Object.keys(k.p).forEach(function(n){var e=d.querySelector('[data-pr='+n+']');if(e)e.setAttribute('aria-pressed',k.p[n]);});d._pt=k.pt;d._lc=k.lc;d._mx=k.mx;d._my=k.my;d._cm=k.cm;prDraw();setTimeout(function(){var c=d.querySelector('.card'),sd=d.querySelector('.side');if(c)c.scrollTop=k.cs||0;if(sd)sd.scrollTop=k.ss||0;},0);}
-      function prFitUI(d){var sd=d.querySelector('.side'),dt=sd&&sd.querySelector('details');if(!sd)return;if(window.innerWidth<=760){sd.style.zoom='';return;}
+      function prFitUI(d){var sd=d.querySelector('.side'),dt=sd&&sd.querySelector('details');if(!sd)return;if(d.dataset.guide){sd.style.zoom='';return;}if(window.innerWidth<=760){sd.style.zoom='';return;}
         function over(){return sd.scrollHeight>sd.clientHeight+2;}
         function zf(){return Math.max(.74,sd.clientHeight/sd.scrollHeight*.985);}
         if(dt&&dt._u)return;sd.style.zoom='';if(dt){dt.open=true;dt.classList.remove('fold');}
         if(!over())return;sd.style.zoom=String(zf());
         if(over()&&dt){dt.open=false;dt.classList.add('fold');sd.style.zoom='';if(over())sd.style.zoom=String(zf());}}
-      function prClose(){var d=box.querySelector('.km-pr');if(d&&d._zk)document.removeEventListener('keydown',d._zk,true);if(d)d.remove();if(prObs)prObs.disconnect();prO=null;prCache=null;}
+      function prClose(){var d=box.querySelector('.km-pr');if(d&&d._zk)document.removeEventListener('keydown',d._zk,true);if(d){if(d._resize)window.removeEventListener('resize',d._resize);d.remove();}if(prObs)prObs.disconnect();prO=null;prCache=null;}
       function prScope(sc){var r=[];if(sc==='sel')r=[prO];else if(sc==='all')r=[VR];else if(sc[0]==='p')r=[partRoots()[+sc.slice(1)]];else if(sc[0]==='d'){var re=DI[+sc.slice(1)][0];[0,1].forEach(function(pt){var x=findIn(pt,re);if(x>=0)r.push(x);});}
         r=r.filter(function(x){return x!=null&&x>=0;});return r.length?r:[prO];}
       function prSpanOf(rs){var a=100,b=1;rs.forEach(function(r){var sp=prSpan(r);if(sp[0]<a)a=sp[0];if(sp[1]>b)b=sp[1];});return [a,b];}
       function prTarget(){var q=selI>=0&&selI<NN.length?selI:(curI>=0?curI:-1);while(q>=0&&q<VR&&model&&!model.inc[q])q=NN[q][4];if(q<0&&model&&model.first>=0)q=model.first;return q>=0?q:VR;}
       function prOpenZ(){if(edKey==='zang'){prOpen(prTarget());return;}var t0=Date.now(),iv=setInterval(function(){if(edKey==='zang'||Date.now()-t0>20000){clearInterval(iv);if(box&&!box.hidden)prOpen(prTarget());}},200);setEd('zang');}
-      function prOpen(i){
+      function prOpen(i,guide){
         if(i<0||!NN[i])return;prClose();prO=i;prPg=0;var sv={};try{sv=JSON.parse(localStorage.getItem('km-print4')||'{}')||{};}catch(_){}
-        var d=document.createElement('div');d.className='km-pr';
+        var d=document.createElement('div');d.className='km-pr';if(guide)d.dataset.guide='true';
         var nop='<option value="0">1 – 最後一層</option>';for(var k=1;k<=8;k++)nop+='<option value="'+k+'">1 – 第 '+k+' 層</option>';
         var pop=Object.keys(PAPERS).map(function(k){return '<option value="'+k+'">'+k+'（'+PAPERS[k][0]+'×'+PAPERS[k][1]+'）</option>';}).join('');
         var vop='';for(var vi=1;vi<=100;vi++)vop+='<option value="'+vi+'">第'+vi+'卷</option>';var mop=[[0,'無'],[6.35,'¼ 吋（0.64 cm）'],[12.7,'½ 吋（1.27 cm）'],[19.05,'¾ 吋（1.91 cm）'],[25.4,'1 吋（2.54 cm）'],[31.75,'1¼ 吋（3.18 cm）']].map(function(m){return '<option value="'+m[0]+'">'+m[1]+'</option>';}).join('')+'<option value="c">自訂…</option>';
@@ -5019,7 +5169,7 @@ pg.blocks.forEach(function(b){
         function sb(k,on){var b=d.querySelector('[data-pr='+k+']');b.setAttribute('aria-pressed',String(on));}
         sb('pno',sv.pno!==false);sb('pvt',false);sb('pn',sv.pn!==false);sb('path',sv.path!==false);
         function sv2(k,val,df){d.querySelector('[data-pr='+k+']').value=String(val==null?df:val);}
-        d._pt=sv.pt||null;d._mx=sv.mx==null?25.4:sv.mx;d._my=sv.my==null?15:sv.my;var sc1='all';sv2('scope',sc1,'all');sv2('va',1,1);sv2('vb',100,100);sv2('wr',sv.wr,'v');sv2('font',sv.font,'k');sv2('n',sv.n,0);sv2('sp',sv.sp,1);d._lc=sv.lch||null;sv2('lcol',/^[rkc]$/.test(sv.lcol)?sv.lcol:'r','r');sv2('rng','a','a');sv2('lab',1,1);sv2('paper',sv.paper,'A4');sv2('ori',sv.ori,'l');sv2('pv',sv.pv,'r');sv2('ph2',sv.ph2,'b');
+        d._pt=sv.pt||null;d._mx=sv.mx==null?25.4:sv.mx;d._my=sv.my==null?15:sv.my;var sc1=guide?'sel':'all';sv2('scope',sc1,'all');sv2('va',guide?Math.max(1,NN[i][6]):1,1);sv2('vb',guide?Math.max(1,NN[i][6]):100,100);sv2('wr',sv.wr,'v');sv2('font',sv.font,'k');sv2('n',guide?2:sv.n,0);sv2('sp',sv.sp,1);d._lc=sv.lch||null;sv2('lcol',/^[rkc]$/.test(sv.lcol)?sv.lcol:'r','r');sv2('rng','a','a');sv2('lab',1,1);sv2('paper',sv.paper,'A4');sv2('ori',sv.ori,'l');sv2('pv',sv.pv,'r');sv2('ph2',sv.ph2,'b');
         d.addEventListener('click',function(e){var b=e.target.closest('[data-pr]');if(e.target===d){prClose();return;}if(!b||b.tagName==='SELECT')return;var k=b.dataset.pr;
           if(k==='labg'||k==='labz'){var ls0=d.querySelector('[data-pr=lab]'),tv=k==='labg'?'1':'2';ls0.value=ls0.value===tv?'0':tv;prPg=0;prDraw();}
           else if(k==='pvt'||k==='pno'||k==='pn'||k==='path'||k==='plab'){b.setAttribute('aria-pressed',String(b.getAttribute('aria-pressed')!=='true'));prPg=0;prDraw();}
@@ -5033,7 +5183,7 @@ pg.blocks.forEach(function(b){
         d.addEventListener('change',function(e){var t0=e.target&&e.target.dataset.pr;if(t0==='mxs'){if(e.target.value==='c')d._cm=1;else{d._cm=0;d._mx=d._my=+e.target.value;}}if(t0==='mxs'&&e.target.value==='c'||t0==='rng'&&e.target.value==='r'||t0==='lcol'&&e.target.value==='c'){setTimeout(function(){prDraw();var bb=e.target._dd;if(bb){if(t0==='mxs')prPopMargin(d,bb);else if(t0==='lcol')prPopColor(d,bb);else prPopPages(d,bb);}},0);}prPg=0;if(e.target&&e.target.dataset.pr==='scope'){var sp1=prSpanOf(prScope(e.target.value));d.querySelector('[data-pr=va]').value=String(sp1[0]);d.querySelector('[data-pr=vb]').value=String(sp1[1]);}prDraw();});
         function prZoomBy(f){var pc=d._pz||100,np=Math.max(25,Math.min(300,Math.round(pc*f)));if(np===pc)np+=f>1?1:-1;d._pz=Math.max(25,Math.min(300,np));prDraw();}
         d.addEventListener('wheel',function(e){if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();prZoomBy(e.deltaY<0?1.1:1/1.1);},{passive:false});
-        d._zk=function(e){if(!(e.ctrlKey||e.metaKey)||!d.isConnected)return;var k=e.key;if(k==='+'||k==='='){e.preventDefault();prZoomBy(1.1);}else if(k==='-'||k==='_'){e.preventDefault();prZoomBy(1/1.1);}else if(k==='0'){e.preventDefault();d._pz=100;prDraw();}};
+        d._zk=function(e){if(d.dataset.guide)return;if(!(e.ctrlKey||e.metaKey)||!d.isConnected)return;var k=e.key;if(k==='+'||k==='='){e.preventDefault();prZoomBy(1.1);}else if(k==='-'||k==='_'){e.preventDefault();prZoomBy(1/1.1);}else if(k==='0'){e.preventDefault();d._pz=100;prDraw();}};
         document.addEventListener('keydown',d._zk,true);
         prEnh(d);
         (function(){var pv=d.querySelector('.pv'),dg=null;pv.style.cursor='grab';
@@ -5042,7 +5192,7 @@ pg.blocks.forEach(function(b){
           function up(e){if(!dg)return;dg=null;pv.style.cursor='grab';try{pv.releasePointerCapture(e.pointerId);}catch(_){}}
           pv.addEventListener('pointerup',up);pv.addEventListener('pointercancel',up);})();
         d.querySelector('details').addEventListener('click',function(e){if(e.target.closest('summary'))this._u=1;});
-        prDraw();window.addEventListener('resize',function(){var dd=box.querySelector('.km-pr');if(dd)prFitUI(dd);});}
+        prDraw();d._resize=function(){if(d.isConnected)prFitUI(d);};window.addEventListener('resize',d._resize);}
       function prHtml(){
         var o=prOpts(),ps=prPages(o.roots,o),nm=o.root<VR?labx(o.root)+NN[o.root][0]:'全部',ids=ps.map(function(p,i){return i;});
         if(o.rng==='r'){var pa=Math.min(o.pa,o.pb),pb=Math.max(o.pa,o.pb);ids=ids.filter(function(i){return i+1>=pa&&i+1<=pb;});}
@@ -5075,7 +5225,7 @@ pg.blocks.forEach(function(b){
         box=document.createElement('div');box.id='kmap';box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','脈絡圖');
         var ov='',dv='',k;for(k=1;k<=100;k++)ov+='<option value="'+k+'">第 '+k+' 卷</option>';
         var IC={ly:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="5" height="6" rx="1"/><path d="M8 12h4M12 6v12M12 6h4M12 18h4"/><rect x="16" y="3.5" width="5" height="5" rx="1"/><rect x="16" y="15.5" width="5" height="5" rx="1"/></svg>',ti:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7V5h14v2M12 5v14M9 19h6"/></svg>',st:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>',br:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 12h4a3 3 0 0 0 3-3V6h3M11 12h3a3 3 0 0 1 3 3v3"/></svg>',rng:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>',dep:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 3.5 9 12 14l8.5-5z"/><path d="m3.5 13 8.5 5 8.5-5"/></svg>',ori:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h9M5 18h12"/></svg>',spl:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M12 5v14"/></svg>',out:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4M8 11h6"/></svg>',inn:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4M8 11h6M11 8v6"/></svg>',fit:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V5h4M20 9V5h-4M4 15v4h4M20 15v4h-4"/></svg>',cur:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>'};
-        box.innerHTML='<button type="button" class="km-back2" aria-label="回到正文與科判欄" title="回到正文與科判欄"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M9 3.5v17M13 9h4M13 13h4"/></svg></button><button type="button" class="km-exp" aria-label="展開成全螢幕脈絡圖" title="展開成全螢幕"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></button><div class="km-etb"><button type="button" data-e2="d-" title="少一層">層−</button><button type="button" data-e2="d+" title="多一層">層＋</button><button type="button" data-e2="orient" title="橫書／直書">橫／直</button><button type="button" data-e2="fit" title="全覽">全覽</button><button type="button" data-e2="print" title="列印選取的分支">列印</button></div><div class="km-bar"><button type="button" class="km-close" aria-label="關閉科判圖">‹ 返回</button><span class="km-title">科判圖</span><button type="button" class="km-help" data-a="print">列印</button><button type="button" class="km-help" data-a="tour">導覽</button>'+
+        box.innerHTML='<button type="button" class="km-back2" aria-label="回到正文與科判欄" title="回到正文與科判欄"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M9 3.5v17M13 9h4M13 13h4"/></svg></button><button type="button" class="km-exp" aria-label="展開成全螢幕脈絡圖" title="展開成全螢幕"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></button><div class="km-etb"><button type="button" data-e2="d-" title="少一層">層−</button><button type="button" data-e2="d+" title="多一層">層＋</button><button type="button" data-e2="orient" title="橫書／直書">橫／直</button><button type="button" data-e2="fit" title="全覽">全覽</button><button type="button" data-e2="print" title="列印選取的分支">列印</button></div><div class="km-bar"><button type="button" class="km-close" aria-label="關閉科判圖">‹ 返回</button><span class="km-title">科判圖</span><button type="button" class="km-help" data-a="print">列印</button>'+
           '<span class="km-seg" role="group" aria-label="版本"><button type="button" data-e="zang" aria-pressed="true">大藏經版</button><button type="button" data-e="hk" aria-pressed="false">韓清淨版</button></span></div>'+
           '<div class="km-main"><div class="km-map"><canvas></canvas><div class="km-msg" hidden></div><div class="km-tip" hidden></div><div class="km-chip" hidden></div><div class="km-hint"></div>'+
           '<div class="km-pop" data-pop="rng" hidden><div class="row"><button type="button" class="pst" data-s="a-" aria-label="起始卷減一">−</button><select data-r="a" aria-label="起始卷次">'+ov+'</select><button type="button" class="pst" data-s="a+" aria-label="起始卷加一">＋</button></div><div class="row"><span>到</span></div><div class="row"><button type="button" class="pst" data-s="b-" aria-label="結束卷減一">−</button><select data-r="b" aria-label="結束卷次">'+ov+'</select><button type="button" class="pst" data-s="b+" aria-label="結束卷加一">＋</button></div><button type="button" class="big" data-a="all">全部卷次</button></div>'+
@@ -5083,7 +5233,7 @@ pg.blocks.forEach(function(b){
           '<div class="km-pop km-br" data-pop="br" hidden><div class="hd">五大部分</div><div class="grid g1"><button type="button" data-b="p0">本地分</button><button type="button" data-b="p1">攝決擇分</button><button type="button" data-b="p2">攝釋分</button><button type="button" data-b="p3">攝異門分</button><button type="button" data-b="p4">攝事分</button></div><div class="hd"><span>十七地</span><span class="seg2"><button type="button" data-bs="0" aria-pressed="true">本地分</button><button type="button" data-bs="1" aria-pressed="false">攝決擇分</button></span></div><div class="grid g2"><button type="button" data-b="d0">1　五識身相應地</button><button type="button" data-b="d1">2　意地</button><button type="button" data-b="d2">3　有尋有伺地</button><button type="button" data-b="d3">4　無尋唯伺地</button><button type="button" data-b="d4">5　無尋無伺地</button><button type="button" data-b="d5">6　三摩呬多地</button><button type="button" data-b="d6">7　非三摩呬多地</button><button type="button" data-b="d7">8　有心地</button><button type="button" data-b="d8">9　無心地</button><button type="button" data-b="d9">10　聞所成地</button><button type="button" data-b="d10">11　思所成地</button><button type="button" data-b="d11">12　修所成地</button><button type="button" data-b="d12">13　聲聞地</button><button type="button" data-b="d13">14　獨覺地</button><button type="button" data-b="d14">15　菩薩地</button><button type="button" data-b="d15">16　有餘依地</button><button type="button" data-b="d16">17　無餘依地</button></div><div class="note">點選後只顯示該主題的獨立分支；晶片上的「還原全部」可回到原本範圍。</div></div>'+
           '<div class="km-pop km-sty" data-pop="sty" hidden><div class="r2"><span>科判標號</span><span class="seg2"><button type="button" data-st="lab:0" aria-pressed="false">無</button><button type="button" data-st="lab:1" aria-pressed="false">干支</button><button type="button" data-st="lab:2" aria-pressed="false">章節</button></span></div><button type="button" class="chk" data-ck="compact" aria-pressed="false"><i></i>縮小空間，緊密圖面</button><button type="button" class="chk" data-ck="equal" aria-pressed="false"><i></i>同層主題長度等齊</button><button type="button" class="chk" data-ck="color" aria-pressed="false"><i></i>彩色分支</button><div class="r2"><span>線條粗細</span><span class="seg2"><button type="button" data-st="lw:0" aria-pressed="false">極細</button><button type="button" data-st="lw:1" aria-pressed="false">細</button><button type="button" data-st="lw:2" aria-pressed="false">中</button><button type="button" data-st="lw:3" aria-pressed="false">粗</button></span></div><div class="r2"><span>文字大小</span><span class="seg2"><button type="button" data-st="fs:4" aria-pressed="false">12px</button><button type="button" data-st="fs:0" aria-pressed="false">小</button><button type="button" data-st="fs:1" aria-pressed="false">中</button><button type="button" data-st="fs:2" aria-pressed="false">大</button><button type="button" data-st="fs:3" aria-pressed="false">特大</button></span></div><div class="r2"><span>線條終點</span><span class="seg2"><button type="button" data-st="end:0" aria-pressed="false">無</button><button type="button" data-st="end:1" aria-pressed="false">圓點</button><button type="button" data-st="end:2" aria-pressed="false">箭頭</button></span></div><div class="r2"><span>線型</span><span class="seg2"><button type="button" data-st="dash:0" aria-pressed="false">實線</button><button type="button" data-st="dash:1" aria-pressed="false">虛線</button></span></div><div class="r2"><span>主題框</span><span class="seg2"><button type="button" data-st="shape:0" aria-pressed="false">無</button><button type="button" data-st="shape:1" aria-pressed="false">框線</button><button type="button" data-st="shape:2" aria-pressed="false">填色</button></span></div><button type="button" class="reset" data-st="reset">重設樣式</button></div>'+
           '<div class="km-pop km-br" data-pop="ly" hidden><div class="hd">架構</div><div class="grid g2"><button type="button" data-st="ly:0" aria-pressed="false">邏輯圖</button><button type="button" data-st="ly:1" aria-pressed="false">心智圖</button><button type="button" data-st="ly:2" aria-pressed="false">括弧圖</button><button type="button" data-st="ly:4" aria-pressed="false">樹狀圖</button><button type="button" data-st="ly:5" aria-pressed="false">表格圖</button><button type="button" data-st="ly:6" aria-pressed="false">時間軸</button></div><div class="note">心智圖、時間軸建議先用「分支」選一個主題。橫／直書只適用邏輯圖、括弧圖。</div></div>'+
-          '<div class="km-tour-mask" hidden></div><svg class="km-tour-link" aria-hidden="true" hidden><path/><rect rx="12"/><circle r="4"/></svg><div class="km-tour" role="dialog" aria-modal="true" aria-labelledby="km-guide-title" hidden><div class="km-tour-content" aria-live="polite"><div class="ts"></div><h3 id="km-guide-title"></h3><ul class="tt"></ul></div><div class="tb"><button type="button" data-t="return">返回</button><button type="button" data-t="skip">關閉說明</button><button type="button" data-t="prev">上一步</button><button type="button" data-t="next">下一步</button></div></div>'+
+          '<div class="km-tour-mask" hidden></div><svg class="km-tour-link" aria-hidden="true" hidden><path/><rect rx="12"/><circle r="4"/></svg><div class="km-tour" role="dialog" aria-modal="true" aria-labelledby="km-guide-title" hidden><div class="km-tour-head"><div class="ts"></div><h3 id="km-guide-title"></h3><div class="km-demo"><svg class="km-demo-stage" viewBox="0 0 320 86" aria-hidden="true"></svg><span class="km-demo-mouse" aria-hidden="true"><svg viewBox="0 0 28 38"><rect x="5" y="2" width="18" height="33" rx="9"/><path d="M14 3 V15"/><circle cx="14" cy="10" r="2"/></svg></span><span class="km-demo-fingers" aria-hidden="true"><i></i><i></i></span><span class="km-demo-cursor" aria-hidden="true"><svg viewBox="0 0 28 34"><path d="M3 2 23 19 14 20 19 30 14 33 9 22 3 28Z"/></svg></span><div class="km-demo-meta"><span class="km-demo-caption"></span><span class="km-demo-keys"></span><button type="button" data-t="play" aria-pressed="true">暫停</button><button type="button" data-t="replay">重播</button></div></div></div><div class="km-tour-content" aria-live="polite"><ul class="tt"></ul></div><div class="tb"><button type="button" data-t="return">返回</button><button type="button" data-t="skip">關閉說明</button><button type="button" data-t="prev">上一步</button><button type="button" data-t="next">下一步</button></div></div>'+
           '<div class="km-dock" role="toolbar" aria-label="科判圖功能">'+
             '<span class="km-tabs"><button type="button" class="km-tab on" data-sec="0">主題</button><button type="button" class="km-tab" data-sec="1">卷次</button><button type="button" class="km-tab" data-sec="2">介面</button></span>'+
             '<span class="km-sec on" data-sec="0"><span class="km-row">'+
@@ -5147,8 +5297,8 @@ pg.blocks.forEach(function(b){
           var tab=e.target.closest('[data-sec].km-tab');if(tab){e.stopPropagation();closePops();box.querySelectorAll('[data-sec]').forEach(function(x){x.classList.toggle('on',x.dataset.sec===tab.dataset.sec);});return;}
           var b=e.target.closest('[data-b]');if(b){e.stopPropagation();pickBranch(b.dataset.b);return;}
           var s2=e.target.closest('[data-bs]');if(s2){e.stopPropagation();brSrc=+s2.dataset.bs;box.querySelectorAll('[data-bs]').forEach(function(x){x.setAttribute('aria-pressed',String(+x.dataset.bs===brSrc));});return;}
-          var t=e.target.closest('[data-t]');if(t){e.stopPropagation();if(t.dataset.t==='skip')tourEnd();else if(t.dataset.t==='return')close();else tourStep(tourI+(t.dataset.t==='prev'?-1:1));return;}
-          var a=e.target.closest('[data-a=tour]');if(a){e.stopPropagation();closePops();tourStep(0);return;}
+          var point=e.target.closest('button[data-guide-point]');if(point){e.stopPropagation();tourPoint(+point.dataset.guidePoint);return;}
+          var t=e.target.closest('[data-t]');if(t){e.stopPropagation();if(t.dataset.t==='skip')tourEnd();else if(t.dataset.t==='return')close();else if(t.dataset.t==='play')tourToggle();else if(t.dataset.t==='replay'){if(!tourPlaying&&tourI!==5&&!matchMedia('(prefers-reduced-motion:reduce)').matches)tourToggle();else tourPoint(tourP);}else tourStep(tourI+(t.dataset.t==='prev'?-1:1));return;}
           var sb=e.target.closest('[data-st]'),ck=e.target.closest('[data-ck]'),tb=e.target.closest('[data-a=title]');
           if(tb){e.stopPropagation();if(ST.lab){ST.lastLab=ST.lab;ST.lab=0;}else ST.lab=ST.lastLab||1;styApply(true);return;}
           if(ck){e.stopPropagation();ST[ck.dataset.ck]=ST[ck.dataset.ck]?0:1;styApply(ck.dataset.ck!=='color');return;}
