@@ -60,7 +60,9 @@
 - 支線幾何58/58（桌面兩版：邏輯直／橫、心智、括弧直／橫、樹狀、時間軸，共14組，`/tmp/round83-geometries.cjs`、`/tmp/round83-geometries.log`）：原生灰色hover、點線選實際母標題，倍率／範圍／層數／節點數／分支限制不變。
 - 鍵盤12/12（桌面兩版，`/tmp/round83-keyboard.cjs`、`/tmp/round83-keyboard.log`）：C收合、F進分支／回去後收合與入口狀態還原，Enter可操作節點次選單／全部／回去，觸控防誤點未封鎖鍵盤。
 - 原生觸控找出真正誤點：canvas點線後出現的新節點選單可能接到該手勢合成click，意外開列印。節點選單click現在須有始於同一按鈕的pointerdown（鍵盤／程式click仍可用）；韓版手機隔離66/66及最終全矩陣均通過，沒有用更慢操作時間掩蓋產品bug。
-- 初輪矩陣中止：iPad隱藏主頁清單導致複製縮放0（產品已修）；手機分支回去被工具列遮住（產品已修）；helper只取長線的整段百分比，或只掃支線其中一段，未找到放大後可見線段，改成實際畫面內截取各段並仍用原生點選；誤開列印隔離後修產品並全量重跑。中止執行不得算完整。Analytics先前執行因後續修正中止，最終全量仍在完成；程式commit及固定預覽於提交後補記。
+- 初輪矩陣中止：iPad隱藏主頁清單導致複製縮放0（產品已修）；手機分支回去被工具列遮住（產品已修）；helper只取長線的整段百分比，或只掃支線其中一段，未找到放大後可見線段，改成實際畫面內截取各段並仍用原生點選；誤開列印隔離後修產品並全量重跑。中止執行不得算完整。Analytics先前執行因後續修正中止，只有最後verified執行算完整，結果如下。
+- 最終Analytics完整執行：靜態152 features／92 rules／26 states，0失敗；動態56通過／97不適用／3手動／3失敗（mac／ipad／iphone的#reportBtn未收到report.open）；控制掃描#versionBtn／#mapBtn仍未登錄或排除，合計4類失敗，exit 1。`PLAYWRIGHT_PATH=/tmp/yogacara-registry-playwright.cjs CHROME_PATH=/usr/bin/chromium node tools/check-analytics-registry.cjs`；`/tmp/round83-registry-verified.log`。既有W001／v1.91基底套件，未更改registry、統計客戶端、套件斷言或歷史fixtures；未把失敗列為通過。
+- 最終4段inline JS語法及git diff --check通過。程式commit `dcaa08b5cdb7c933ecbfa60cbf7b4b8d9f86ebcd` 已推送並git ls-remote核對；固定預覽 `https://raw.githack.com/dppss92044/yogacara/dcaa08b5cdb7c933ecbfa60cbf7b4b8d9f86ebcd/index.html`。此雲端前輪CONNECT403，本輪未驗證公網載入；後續只提交測試／交接文件，預覽程式SHA不變。未升版本、未改sw.js、未發布main或PR。
 - 均為Chromium／hasTouch模擬，非Safari或實機；未測真正紙張／PDF列印、PWA更新。
 
 ## W004 第八十二輪紀錄（Codex，2026-10-10，預覽施工）
