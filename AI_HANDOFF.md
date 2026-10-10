@@ -49,6 +49,10 @@
 - 程式 commit `9a3043f` 已成功推送到獨立分支 `work-w004-map-entry`（未推送 main）；本次固定程式 commit 網址 `https://raw.githack.com/dppss92044/yogacara/9a3043fb03ad57f33a8f5a66724516a35b1bb1b7/index.html`，避免沿用舊分支網址的快取。此雲端 egress proxy 先前對 raw.githack.com CONNECT 回 403，未在本環境驗證公網頁面載入；本機 Chromium 功能測試已完成。
 - 未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未執行其他歷史 fixtures 或舊版回歸套件。未升版、未改 sw.js／資料、未 push main、未開 PR、未部署正式站。
 
+## W004 第八十八輪（Claude，2026-10-10）：2.0 更新通知預覽（未發布）
+- q 要求整理 1.92→2.0 功能簡介、發布後首次開啟通知（除非關閉）、特別介紹脈絡圖，並給預覽。已記 D109。`versionNotes["2.0"]`（含 `hero`、`cta` 按鈕開脈絡圖）；`appVer`／`sw.js` **未升**；預覽網址加 `?preview=update`。通知多列「操作改善」，並加 `.upd-hero` 樣式。
+- 測試（Chromium 電腦 1440×900、手機 390×844）：預覽網址顯示 v2.0 通知、「開啟脈絡圖」可開脈絡圖；一般網址（版本 1.92）不顯示 2.0。未測 iPad／Safari／實機；正式發布時須用 `tools/build_release.py` 升版並確認 `hk-update-notice` 關閉者不受打擾（沿用既有邏輯，未改）。
+
 ## W004 最新第八十七輪（Claude，2026-10-10）
 - Ctrl／⌘＋＋／− 縮放、簡介動畫改列點並加縮放鍵、選卷後右上「回全覽」（`.km-backall`，`volPicked`／`backAllShow`）。已記 D107 第八十七輪。閃爍：q 後來說明是「生成 HTML」檔中點（分N）跳到支脈的閃爍，已由 5 下／2.5 秒改為 2 下／3 秒（`go()` 內 `f.animate`），僅改關鍵影格與 duration，尚未在瀏覽器實測動畫。測試：Chromium 電腦，選卷出現回全覽、按後回進圖、無 pageerror；Ctrl＋＋／− 只按鍵無錯，未量測縮放倍率。未測 iPad／手機／韓藏版／實機。
 
