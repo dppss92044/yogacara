@@ -809,3 +809,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 ### W004 第九十九輪
 - index.html：說明動畫 tree SVG 改直式；.ki-stage 去框、間距縮小（檔尾 CSS）。
 - 測試：桌面 Chromium 截圖 /mnt/project-files/W004/round100/。未測：手機／iPad／Safari。
+
+### W004 第一〇〇輪
+- 說明動畫示意圖節點文字改為實際干支與標題（直書 SVG text）；舞台高度 200。
+- 測試：桌面 Chromium 截圖；干支／標題層級關係是依畫面截圖判讀，未逐筆對 data/ 核對。未測手機／Safari。
