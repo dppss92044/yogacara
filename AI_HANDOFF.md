@@ -837,3 +837,6 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 
 ### W004 第一〇七輪
 - index.html：卡片固定高度（檔尾 CSS＋kbEl.style.visibility）。測試：桌面 Chromium 逐頁量卡片高度皆 598px；截圖 round107。未測手機（卡片較高，有內捲）／Safari。
+
+### W004 第一〇八輪
+- index.html：subsOf 非總整理頁恒為 1；說明列點去重（滾輪／F／列印／＋−）。測試：桌面 Chromium 逐頁，卡片高度恒 598px，鍵盤標黃；截圖 round108。未測手機／Safari。
