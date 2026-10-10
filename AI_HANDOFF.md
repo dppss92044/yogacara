@@ -876,3 +876,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 - 依 q「用2.1發布 合併」：appVer v2.1、`build_release.py 2.1`（sw.js VERSION=2.1）、versionNotes 新增 2.1（hero＋warn＋items）；文件已同步（CHANGELOG、PROJECT_STATE、MASTER_HISTORY H157、DECISIONS D112）；W006 封存。
 - 測試：桌面 Chromium：seen=1.92／2.0 會跳「已更新2.1」含 ! 提醒，seen=2.1 不跳；語法檢查。未測 Safari／iPhone／iPad／實機 SW 更新。
 - 已合併 main（快轉）。
+
+### W007（Claude，2026-10-10）：手機右上角更新鈴鐺（預覽）
+- index.html：版本紅點 IIFE 內新增 #updBell（插入 #searchButton 所在 .books-tools 首位，重試至 5 秒等其建立）、CSS 僅 ≤700px 顯示；點擊＝點「版本」。已重跑 build_release 2.1 更新 sw.js 雜湊，版號仍 2.1。
+- 測試：Chromium 手機模擬（390px）：未讀顯示紅點鈴鐺、點擊開版本頁後消失、已讀不顯示；桌面 1440px 不顯示。未測 iPhone／iPad／Safari 實機。未合併 main，待 q 確認。

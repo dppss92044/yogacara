@@ -3897,6 +3897,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function upd(){var l=document.documentElement.dataset.layout||deviceLayout;sv.innerHTML=IC[l]||IC.mac;}
       upd();new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['data-layout']});})();
     (function(){var vb=$('versionBtn');if(!vb)return;var dots=[].slice.call(vb.querySelectorAll('.upd-dot'));var mb=$('menuBtn');if(mb&&!mb.querySelector('.upd-dot')){var md=document.createElement('i');md.className='upd-dot';md.hidden=true;mb.appendChild(md);dots.push(md);}
+      (function mk(n){var sb=document.getElementById('searchButton'),cap=sb&&sb.closest('.books-tools');if(!cap){if(n<20)setTimeout(function(){mk(n+1);},250);return;}if(document.getElementById('updBell'))return;
+        var bt=document.createElement('button');bt.type='button';bt.id='updBell';bt.setAttribute('aria-label','有更新，點開查看更新內容');bt.title='有更新';
+        bt.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 21h4"/></svg><i class="upd-dot"></i>';
+        cap.insertBefore(bt,cap.firstChild);dots.push(bt.querySelector('.upd-dot'));
+        bt.addEventListener('click',function(){vb.click();});window.dispatchEvent(new Event('upd-dot'));})(0);
       var ver=($('appVer').textContent||'').replace(/^v/,'');
       function st(k){try{return localStorage.getItem(k);}catch(e){return null;}}
       var forcedDot=(window.__fu===true);
@@ -7626,3 +7631,4 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 <style>#kmap .osp button[data-os=win] span{color:#2b2b2b}</style>
 <style>.upd-notice .upd-warn{display:flex;gap:8px;align-items:flex-start;margin:10px 0 0;font-size:14px;line-height:1.5;color:inherit}.upd-notice .upd-warn b{flex:none;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#d93025;color:#fff;font:800 14px/1 sans-serif;margin-top:1px}</style>
 <style>.upd-notice .upd-warn{margin-bottom:12px}</style>
+<style>#updBell{display:none!important;position:relative}@media (max-width:700px){:root:root:root:root .books-tools #updBell{display:inline-block!important;min-width:36px;width:36px;height:40px;padding:0}:root:root:root:root .books-tools #updBell:has(.upd-dot[hidden]){display:none!important}#updBell .upd-dot{top:7px;right:8px;width:9px;height:9px}}</style>
