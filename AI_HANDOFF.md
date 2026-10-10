@@ -7,7 +7,28 @@
 ---
 
 ## 進行中：W005（卷次欄置頂與點選穩定）
-### 最新補正（Codex，2026-10-10）
+### 最新位置微調（Codex，2026-10-10）
+- q 預覽後追加：「點科判欄位的標題時，左邊卷次……五等份……改到2等份」「中間……標題顯示，太高了，請再下來一點」「某卷……置頂……多一點空白……空白而不是字」。同一個 W005，已先補 D108 位置微調，沿用 `work-w004-map-entry`。程式 commit `543ec08bbd8d28d7af9db83e133844b0d6354009`，已成功推送。
+- 右側單擊／頁首／往上層／（分N）選取後，左欄反白標題中心改到百卷清單下方可捲動區的 30%（五等份第二格）；單欄返回卷次頁沿用此位置。直接點左欄仍保留位置；主動正文閱讀的左欄對焦保留原 50%，避免將此次明確點選要求套用到閱讀追蹤。
+- 正文定位從兩行改為兩行加半行留白，即 2.5 行高度，比前一預覽稍微下移。獨立以 Range 量相鄰正文行距：46.71875px，黃底頂端距工具列 116.421875px，即 2.492 行；桌面視覺截圖已檢視（`/tmp/yogacara-position-adjust-visual-test.cjs`、`/tmp/yogacara-position-adjust-preview.png`）。承接科判真實目標 id／返回正文／清除舊書籤的前輪修正保留。
+- 左欄可捲動區頂部下移 12px，將純空白放在捲動區外；卷次起點仍對齊捲動區頂部，避免前插鄰卷文字被拿來充當空白。保留最後一卷的捲動空間補償與另選卷置頂。
+- 跨卷／承接測試：桌面 1440×900、iPad 直向 820×1180、手機直向 390×844，各搭配藏／韓版，6 組、138/138 通過。DOM 點擊覆蓋右側祖先頁首、根標題、桌面／平板雙擊往上層、韓版（分N）、單欄返回正文／卷次頁、卷 2 承接科判。手機雙擊依既有三頁循環驗證同節點同步；藏版當頁無（分N），3 組列為不適用。`/tmp/yogacara-position-adjust-ancestor-test.cjs`、`/tmp/yogacara-position-adjust-ancestor-test.log`；此巡檢使用 DOM 事件，非實機觸控。
+- 最終程式正常標題定位：桌面 1440×900、iPad 820×1180／1180×820、手機 390×844／844×390，另桌面正文與卷次倍率 80%／140%，各搭配藏／韓版，14 組、168/168 通過；包含右側點選左欄反白中心位於可捲動區 30%、12px 空白區高度、正文下移、單擊科判停原頁、單欄返回、無 pageerror。左欄位置回歸同 14 組、84/84 通過，含水平／垂直位置保持、延遲同步、返回卷次頁與 36／100 卷置頂。三份最終功能測試合計 390 項通過。腳本／結果：`/tmp/yogacara-position-adjust-test.cjs`／`.log`、`/tmp/yogacara-title-test.cjs`、`/tmp/yogacara-position-adjust-left-regression.log`。hasTouch 模擬觸控、isMobile=false 固定 viewport，非實機。
+- Analytics 最終全量完整執行（既有 W001／v1.91 基底套件）：靜態 152 features／92 rules／26 states，0 失敗；動態 56 通過／97 不適用／3 手動／3 失敗（mac／ipad／iphone #reportBtn 未收到 report.open）；控制項掃描 #versionBtn、#mapBtn 未登錄或排除，合計 4 類失敗、exit 1，與前輪已記錄結果一致。此檢查未全數通過，未改 Registry／統計客戶端／測試斷言。命令 `PLAYWRIGHT_PATH=/tmp/yogacara-registry-playwright.cjs CHROME_PATH=/usr/bin/chromium node tools/check-analytics-registry.cjs`，helper 僅使用 hk-update-notice=off 與操作 timeout 500ms、navigation／waitForSelector 30 秒（套件明定點選仍 3 秒）；結果 `/tmp/yogacara-position-adjust-registry.log`。三個先前啟動的全量檢查因後續程式修正／新需求中止，未算完整執行。中止前曾見 iPad 分頁統計事件未收到，隔離同操作基底 b0f9eec／本次 92baede 各 1/1 收到 phone.screen.catalog（`/tmp/yogacara-screen-analytics-isolation.cjs`／`.log`）；最終全量該規則通過，未為此更改程式。
+- 最新固定程式預覽：`https://raw.githack.com/dppss92044/yogacara/543ec08bbd8d28d7af9db83e133844b0d6354009/index.html`。Git 推送成功；前一程式預覽的 curl 仍遭雲端 CONNECT 403，未驗證本公網網址載入。
+- 未測 Safari、iPhone／iPad 實機、PWA 更新、列印或其他歷史 fixtures。未升正式版本、未改 sw.js／資料、未推 main、未開 PR、未部署正式站。暫存檔僅本次使用。
+
+### 前輪補正：右側同步與正文標題上移（Codex，2026-10-10）
+- q 本次明確要求：「點右邊科判後，左邊卷次有些不會跟著跳，修正」「點左邊卷次或是右邊科判欄位，中間的標題黃底的標籤……上面預留前文的兩排字就好」。同一個 W005，從 `7d44897` 接續，已先記錄 D108 再補充，取代前輪右側點選保留左欄位置的部分。正式發布仍由 q 另行通知。
+- 程式 commit：`92baedef2f9995e2c484b1dbf396dfe5c0288528`，已推送 `work-w004-map-entry`。右側科判／頁首／雙擊往上層／（分N）明確選取時，釋放先前左欄保存位置與手動水平對焦鎖定，左欄同標題捲入可見處；直接點左欄／正文仍保留左欄水平、垂直位置。保留 W002 的節點自身卷次來源及單擊科判不換頁契約。
+- 正文明確定位改為工具列下兩行正文的實際行高（含 CSS zoom／文字倍率），以可見底部及底部分頁列為界；手動閱讀的 2/6 追蹤線未改。改用 `readerHeading` 回傳的真實元素 id，避免承接標題定位到前卷原始標題或當前卷子科。單欄回正文與雙擊回正文沿用相同目標；`carryFocus` 清除舊正文書籤，避免返回時舊閱讀位置覆蓋明確選取。
+- Chromium 固定 viewport／觸控模擬：桌面 1440×900、iPad 820×1180／1180×820、手機 390×844／844×390，另桌面正文與卷次倍率 80%／140%，各搭配藏／韓版，共 14 組。一般標題定位／右側單擊同步 140/140 通過（先點左欄保存位置、手動把左欄目標移出畫面、再點右側；檢查節點自身卷次、單擊科判停原頁、正文黃底標題上移、單欄返回左欄同標題可見、無 pageerror）。左欄位置回歸 84/84 通過（水平＋垂直取樣、3.5 秒延遲同步、單欄返回、36／100 卷置頂）。腳本與結果：`/tmp/yogacara-right-sync-test.cjs`、`/tmp/yogacara-right-sync-test-final.log`、`/tmp/yogacara-title-test.cjs`、`/tmp/yogacara-title-right-sync-left-final.log`；固定 viewport、isMobile=false，非實機。
+- 額外檢查：桌面兩版部分可見標題點選保持位置、真實正文滾輪恢復跟隨均通過（`/tmp/yogacara-title-right-sync-edge.log`）；正文前文以 Range 測得相鄰文字行距 46.71875px，黃底頂端距工具列 93.421875px，即 1.9997 行（`/tmp/yogacara-two-lines-visual-test.cjs`、`/tmp/yogacara-two-lines-preview.png`）。
+- 前輪跨卷／承接與 Analytics 未完整完成，後續位置微調的最終結果見上方；手機雙擊初輪錯把既有三頁循環當作平板的往上層，已修正測試預期，未改手機雙擊行為。中途跨卷檢查找出 iPad 承接標題返回正文被舊書籤覆蓋（63.58px 而非約 132px），已修正並隔離重跑 20/20 通過（`/tmp/yogacara-carry-position-fixed.log`）。前三次 Analytics 執行因後續定位修正及 q 新的位置要求而中止，不能算完整執行或通過。
+- 新固定程式預覽：`https://raw.githack.com/dppss92044/yogacara/92baedef2f9995e2c484b1dbf396dfe5c0288528/index.html`。Git 推送成功；雲端對 raw.githack.com 的 CONNECT 仍回 403／HTTP 000，未在此環境驗證公網載入。
+- 未測 Safari、iPhone／iPad 實機、PWA 更新、列印或其他歷史 fixtures。未升正式版本、未改 sw.js／資料、未推 main、未開 PR、未部署正式站。暫存測試檔僅本任務使用，不假設下次仍存在。
+
+### 前輪補正（Codex，2026-10-10）
 - q 接續回報：「但是點下去某卷的科判標題時，就又會跳轉，這部分也修正」。後續明確要求做完並提供預覽，正式發布由 q 另行通知。本次從 `bee983d` 接續同一個 W005，沿用 `work-w004-map-entry`；程式 commit `b0f9eece76d086ec101e3a6f4afc49c1b94c1e2d`。已先補 D108 決定，再改程式與規格。
 - 根因實測：桌面點卷次欄標題仍水平移動約 56px；點正文標題／右側科判仍走 `focusRailCamera` 垂直置中（藏版正文例 −90px、韓版例 −121px）。單欄介面回到卷次頁亦無位置還原；2.5 秒的正文定位解鎖可能使後續程式 scroll 重新反白其他標題。
 - 修正：標題點選保存卷次欄水平／垂直位置，直接定位與後續自動同步不再重新置中；返回卷次頁先還原保存位置，再填充相鄰卷與反白。卷次欄手動捲動會更新保存位置；主動正文滾輪／觸控捲動／閱讀按鍵／正文捲軸操作釋放保存狀態、恢復既有跟隨。另選卷號／重建卷次欄仍置頂並清除保存狀態。承接科判同樣保存位置並取消遲到的卷首定位。正文／科判仍依原有節點與卷次連動，保留 W002 的卷次來源規則。
