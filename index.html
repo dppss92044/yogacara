@@ -189,7 +189,7 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 :root:root:root:root #labBadge{display:inline-flex;align-items:center;justify-content:center;line-height:1;padding-block:0;box-sizing:border-box}
 </style>
 <style id="v178">.kscale .chart-fit .nd,.kscale .chart-fit .ref{pointer-events:auto}.kscale{-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
-<style id="kmapCss">/* W004: 脈絡圖 */
+<style id="kmapCss">/* W004: 科判圖 */
 #kmap{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;background:var(--bg);color:var(--fg);font:16px/1.4 "PMingLiU","新細明體","MingLiU","Songti TC","STSong",var(--ui),serif;-webkit-user-select:none;user-select:none;touch-action:none;overscroll-behavior:none}
 #kmap[hidden]{display:none}
 #kmap button,#kmap select{font:inherit;color:var(--fg);-webkit-tap-highlight-color:transparent}
@@ -3827,13 +3827,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var settingsPage='root',versionBack='about';
   var VN_KIND={new:'新增功能',fix:'修正 Bug',improve:'操作改善'};
   /* 版本更新資料（單一來源）：[類型, 說明, 1=重要項目→出現在更新提醒]；全部項目→「關於 → 版本內容」。新版本請加在最前面。 */
-  var versionNotes={"2.0":{date:"2026年10月",hero:{title:"全新「脈絡圖」",lines:["點科判欄右下角的「脈絡圖」圖示，整個畫面變成一張大圖，從甲一到全書所有科判一目了然。","滾輪上下移、Ctrl／⌘＋滾輪或兩指縮放，拖曳移動；點科判跳到正文，點支線回到上一層。","點科判再按 F，只看那一支；左下的一百卷圓球可直接選卷，按「回全覽」回來。","可換邏輯圖、心智圖、括弧圖、樹狀圖、表格圖、時間軸；可並排正文、列印或存成 PDF、HTML。","第一次進去有動畫簡介，之後按「？」隨時看說明。"],cta:"開啟脈絡圖"},items:[
-    ["new","右下角新增「脈絡圖」：全屏顯示全書科判，可縮放、拖曳、只看一支、依五大部分或十七地選主題。"],
-    ["new","脈絡圖左下一百卷圓球：點卷號只看該卷，可收合成卷軸圖示，按「回全覽」回到進圖時的分支。"],
-    ["new","脈絡圖可換六種圖形、調整文字與線條、並排正文。"],
-    ["new","脈絡圖可列印、存成 PDF，或生成 HTML 網頁（點（分N）跳到對應支脈）。"],
-    ["new","第一次進脈絡圖有操作動畫簡介；各功能旁的「？」可看說明。"],
-    ["improve","百卷清單預設展開；點卷號會把該卷對齊卷次欄頂端，點科判標題不再讓卷次欄晃動。",1],
+  var versionNotes={"2.0":{date:"2026年10月",hero:{title:"新增：完整展開的科判圖",lines:["點科判欄右下角的「科判圖」圖示，就能看到完整展開的科判圖。"],cta:"開啟科判圖"},items:[
+    ["new","右下角新增「科判圖」：完整展開全書科判，可縮放、拖曳、只看一支。",1],
+    ["new","科判圖左下可選一百卷，並可列印、存成 PDF 或 HTML。"],
+    ["new","第一次進科判圖有操作動畫簡介，各功能旁的「？」可看說明。"],
+    ["improve","百卷清單預設展開；點卷號會把該卷對齊卷次欄頂端，點科判標題不再讓卷次欄晃動。"],
     ["improve","點科判標題時，正文標題停在工具列下方約兩行半處，更好閱讀。"],
     ["improve","正文頁面的「大小」按鍵移除，介面更簡潔。"]
   ]},"1.92":{date:"2026年10月6日",items:[
@@ -4236,7 +4234,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       box.querySelector('h4').textContent='已更新'+ver;
       var gbox=box.querySelector('.upd-groups');
       if(vn.hero){var hb=document.createElement('div');hb.className='upd-hero';var hh=document.createElement('h5'),hu=document.createElement('ul'),hc=document.createElement('button');hh.textContent=vn.hero.title;vn.hero.lines.forEach(function(t){var li=document.createElement('li');li.textContent=t;hu.appendChild(li);});hc.type='button';hc.className='upd-cta';hc.textContent=vn.hero.cta;hc.onclick=function(){close();var m=document.getElementById('mapBtn');if(m)m.click();};hb.appendChild(hh);hb.appendChild(hu);hb.appendChild(hc);gbox.appendChild(hb);}
-      ['new','fix','improve'].forEach(function(k){var g=items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h5'),ul=document.createElement('ul');h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});gbox.appendChild(h);gbox.appendChild(ul);});
+      (vn.hero?[]:['new','fix','improve']).forEach(function(k){var g=items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h5'),ul=document.createElement('ul');h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});gbox.appendChild(h);gbox.appendChild(ul);});
       function close(){if(!forced)remember();if(box.querySelector('#updSkip').checked)try{localStorage.setItem('hk-notice-hide',ver);}catch(e){}box.remove();}
       box.querySelector('.upd-ok').onclick=close;
       box.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();close();}});
@@ -4244,10 +4242,10 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       setTimeout(show,900);
     })();
 
-    // W004: 脈絡圖（科判樹狀圖；卷次範圍、層級、橫／直書、並排正文；滾輪縮放、拖曳移動）
+    // W004: 科判圖（科判樹狀圖；卷次範圍、層級、橫／直書、並排正文；滾輪縮放、拖曳移動）
     (function(){
       var btn=document.getElementById('mapBtn');
-      if(!btn){var pnl=$('panel');if(!pnl)return;btn=document.createElement('button');btn.type='button';btn.id='mapBtn';btn.className='chart-top map-go';btn.setAttribute('aria-label','開啟全畫面脈絡圖');btn.title='開啟全畫面脈絡圖';btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="9.5" width="5" height="5" rx="1.4"/><rect x="16.5" y="3.5" width="5" height="4.5" rx="1.4"/><rect x="16.5" y="16" width="5" height="4.5" rx="1.4"/><path d="M7.5 12h3.5M11 12V5.8h5.5M11 12v8.3h5.5"/></svg>';pnl.appendChild(btn);
+      if(!btn){var pnl=$('panel');if(!pnl)return;btn=document.createElement('button');btn.type='button';btn.id='mapBtn';btn.className='chart-top map-go';btn.setAttribute('aria-label','開啟全畫面科判圖');btn.title='開啟全畫面科判圖';btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="9.5" width="5" height="5" rx="1.4"/><rect x="16.5" y="3.5" width="5" height="4.5" rx="1.4"/><rect x="16.5" y="16" width="5" height="4.5" rx="1.4"/><path d="M7.5 12h3.5M11 12V5.8h5.5M11 12v8.3h5.5"/></svg>';pnl.appendChild(btn);
       }
       var FONT_H='"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif',FONT_V='"TWKai","TWKai2","BiauKai","DFKai-SB","標楷體","Kaiti TC","STKaiti",serif';
       var FS_H=14,FS_V=16,ROW=24,COL=27,CH=17,PADH=7,PADV=5,GAP=32,BAND=640,MINS=0.00001,MAXS=4,AUTO_N=800;
@@ -4649,17 +4647,17 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       }
       var tourI=-1,tourP=0,tourHl=null,tourOrigin=null,tourFrame=0,tourTimer=0,tourAnim=0,tourPlaying=true,tourCycle=0,TOUR=[
         ['.km-map','先看目前的位置',['淡黃色的科判，就是你剛才選的科判。','點支線後，上位標題會移到中央偏上，文字保持清楚。','預設大小是 100%，文字大小是 12。']],
-        ['[data-a=whole]','看完整的圖',['按「全部」，看從甲一開始的完整脈絡圖。','所有分支都會展開，整張圖會縮小放進畫面。','旁邊會出現 −／＋，可以縮小或放大。','字樣變成「返回」後，再按一下回到上一步。']],
+        ['[data-a=whole]','看完整的圖',['按「全部」，看從甲一開始的完整科判圖。','所有分支都會展開，整張圖會縮小放進畫面。','旁邊會出現 −／＋，可以縮小或放大。','字樣變成「返回」後，再按一下回到上一步。']],
         ['.km-map','移動和放大',['電腦：按住滑鼠拖曳移動圖，移到圖的邊緣就會停住。','滾輪上下移動；按住 Shift 再滾動，可左右移動。','按住 Ctrl（Mac 用 ⌘）再滾動，可放大、縮小。','手機和平板：一指拖曳、兩指捏合縮放。']],
         ['[data-a=settings]','打開所有功能',['按齒輪，就能看到所有設定。','再按一次齒輪，可以收起設定。','按右下「回主頁」，回到剛才的閱讀位置。','按問號，再點功能旁的小問號，查看該功能說明。']],
-        ['.km-catalog-grid','選擇一卷',['下方圓球是第 1 到 100 卷，每個數字是一卷。','左右滑動這一排，就能找到後面的卷數。','點卷號，只顯示該卷的脈絡圖。','左下角的卷軸圖示，可以收起或展開這一排。']],
+        ['.km-catalog-grid','選擇一卷',['下方圓球是第 1 到 100 卷，每個數字是一卷。','左右滑動這一排，就能找到後面的卷數。','點卷號，只顯示該卷的科判圖。','左下角的卷軸圖示，可以收起或展開這一排。']],
         ['[data-p=ly]','換一種圖的樣子',['在「介面」按圖形按鈕，選你喜歡的圖形。','可選邏輯圖、心智圖、括弧圖等圖形。','心智圖和時間軸，建議先點科判，再按 F 只看這一支。']],
         ['[data-p=sty]','調整文字和線條',['按「樣式」，可以改文字大小和科判標號。','也能改分支顏色、線條粗細、虛線和框線。','想讓圖緊密一些，可開啟「縮小空間」。','放大整張圖和改文字大小，是兩種不同的調整。']],
         ['[data-p=rng]','選要看的卷次',['先選「卷次」，再打開卷次範圍。','選起始卷和結束卷，就能看這幾卷。','旁邊的 −／＋，可以一卷一卷移動。','「全部卷次」改卷數；左上卷號可直接選某一卷。']],
         ['[data-p=dep]','選要展開幾層',['層級就是甲、乙、丙、丁等科判的深淺。','選「全部層」，就能看到所有下層。','旁邊的 −／＋，可以少看一層、多看一層。','節點旁的 ⊖／⊕，能收起或展開那一支。']],
-        ['[data-a=split]','一邊看圖，一邊讀正文',['先選「介面」，再按「並排」。','畫面會同時顯示脈絡圖和正文。','選取一段正文，就能看這一段的科判。','按「在閱讀器開啟」，回到完整閱讀畫面。']],
+        ['[data-a=split]','一邊看圖，一邊讀正文',['先選「介面」，再按「並排」。','畫面會同時顯示科判圖和正文。','選取一段正文，就能看這一段的科判。','按「在閱讀器開啟」，回到完整閱讀畫面。']],
         ['[data-a=whole]','返回上一步',['按「全部」、選一卷、或按 F 只看一支後，畫面會改變。','字樣變成「返回」或「回去」時，按下去回到上一步。','不是跳回最開始進來的畫面，可以一步一步退回去。']],
-        ['[data-e=hk]','切換版本',['設定上方可選大藏經版或韓清淨版。','切換後，脈絡圖和並排正文會一起換版。','從閱讀器重新開啟時，會使用閱讀器目前的版本。']],
+        ['[data-e=hk]','切換版本',['設定上方可選大藏經版或韓清淨版。','切換後，科判圖和並排正文會一起換版。','從閱讀器重新開啟時，會使用閱讀器目前的版本。']],
         ['[data-a=print]','列印或存成檔案',['按「列印」，先看列印預覽。','可以選紙張、範圍、字體大小和顏色。','選「儲存成 PDF」，再用瀏覽器存檔。','選「生成 HTML」，可以另存網頁。']],
         ['.km-map','點科判，前往正文',['點一下科判，會出現「按F開合」；按 F 可以只看這一支，再按一次回去。','小分支會直接展開；放不下時才選「全部」或「一部」（五層）。','「全部」維持可讀字級；超出螢幕的部分，拖曳就能查看。','也可以從齒輪按「返回」，回原閱讀位置。']],
         ['.km-map','鍵盤快速操作',['方向鍵：上下左右移動圖面。','＋／−：放大、縮小；F：只看選取的分支。','C：收起或展開；E：展開全部下層。','Esc：關閉說明；「完成」回圖，「返回」回閱讀位置。']],
@@ -5221,10 +5219,10 @@ pg.blocks.forEach(function(b){
 
       }
       function make(){
-        box=document.createElement('div');box.id='kmap';box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','脈絡圖');
+        box=document.createElement('div');box.id='kmap';box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','科判圖');
         var ov='',dv='',k;for(k=1;k<=100;k++)ov+='<option value="'+k+'">第 '+k+' 卷</option>';
         var IC={ly:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="5" height="6" rx="1"/><path d="M8 12h4M12 6v12M12 6h4M12 18h4"/><rect x="16" y="3.5" width="5" height="5" rx="1"/><rect x="16" y="15.5" width="5" height="5" rx="1"/></svg>',ti:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7V5h14v2M12 5v14M9 19h6"/></svg>',st:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>',br:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 12h4a3 3 0 0 0 3-3V6h3M11 12h3a3 3 0 0 1 3 3v3"/></svg>',rng:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>',dep:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 3.5 9 12 14l8.5-5z"/><path d="m3.5 13 8.5 5 8.5-5"/></svg>',ori:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h9M5 18h12"/></svg>',spl:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M12 5v14"/></svg>',out:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4M8 11h6"/></svg>',inn:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4M8 11h6M11 8v6"/></svg>',fit:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V5h4M20 9V5h-4M4 15v4h4M20 15v4h-4"/></svg>',cur:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>'};
-        box.innerHTML='<button type="button" class="km-back2" aria-label="回到正文與科判欄" title="回到正文與科判欄"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M9 3.5v17M13 9h4M13 13h4"/></svg></button><button type="button" class="km-exp" aria-label="展開成全螢幕脈絡圖" title="展開成全螢幕"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></button><div class="km-etb"><button type="button" data-e2="d-" title="少一層">層−</button><button type="button" data-e2="d+" title="多一層">層＋</button><button type="button" data-e2="orient" title="橫書／直書">橫／直</button><button type="button" data-e2="fit" title="全覽">全覽</button><button type="button" data-e2="print" title="列印選取的分支">列印</button></div><div class="km-bar"><button type="button" class="km-close" aria-label="關閉科判圖">‹ 返回</button><span class="km-title">科判圖</span>'+
+        box.innerHTML='<button type="button" class="km-back2" aria-label="回到正文與科判欄" title="回到正文與科判欄"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M9 3.5v17M13 9h4M13 13h4"/></svg></button><button type="button" class="km-exp" aria-label="展開成全螢幕科判圖" title="展開成全螢幕"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></button><div class="km-etb"><button type="button" data-e2="d-" title="少一層">層−</button><button type="button" data-e2="d+" title="多一層">層＋</button><button type="button" data-e2="orient" title="橫書／直書">橫／直</button><button type="button" data-e2="fit" title="全覽">全覽</button><button type="button" data-e2="print" title="列印選取的分支">列印</button></div><div class="km-bar"><button type="button" class="km-close" aria-label="關閉科判圖">‹ 返回</button><span class="km-title">科判圖</span>'+
           '<span class="km-seg" role="group" aria-label="版本"><button type="button" data-e="zang" aria-pressed="true">大藏經版</button><button type="button" data-e="hk" aria-pressed="false">韓清淨版</button></span></div>'+
           '<div class="km-main"><div class="km-map"><canvas></canvas><div class="km-msg" hidden></div><div class="km-tip" hidden></div><div class="km-chip" hidden></div><div class="km-hint"></div>'+
           '<div class="km-pop" data-pop="rng" hidden><div class="row"><button type="button" class="pst" data-s="a-" aria-label="起始卷減一">−</button><select data-r="a" aria-label="起始卷次">'+ov+'</select><button type="button" class="pst" data-s="a+" aria-label="起始卷加一">＋</button></div><div class="row"><span>到</span></div><div class="row"><button type="button" class="pst" data-s="b-" aria-label="結束卷減一">−</button><select data-r="b" aria-label="結束卷次">'+ov+'</select><button type="button" class="pst" data-s="b+" aria-label="結束卷加一">＋</button></div><button type="button" class="big" data-a="all">全部卷次</button></div>'+
@@ -5253,9 +5251,9 @@ pg.blocks.forEach(function(b){
             '<button type="button" class="km-fold" aria-label="收起功能列" aria-expanded="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><span>收起</span></button></div></div>'+
           '<div class="km-read"><div class="km-rh"><span></span><button type="button" data-a="kp" aria-pressed="true" title="顯示／隱藏正文中的科判標題">科判</button><button type="button" data-a="tx" aria-pressed="true" title="顯示／隱藏正文">正文</button><button type="button" data-a="prev" aria-label="上一卷">‹</button><button type="button" data-a="next" aria-label="下一卷">›</button><button type="button" data-a="open">在閱讀器開啟</button></div><div class="km-rb"></div></div></div>';
         var surface=box.querySelector('.km-map');
-        var controls=document.createElement('div');controls.className='km-controls';controls.setAttribute('role','toolbar');controls.setAttribute('aria-label','脈絡圖操作');
-        controls.innerHTML='<button type="button" data-a="settings" aria-label="脈絡圖設定" aria-expanded="false" aria-controls="km-settings"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m9 3-.7 2.4-2 .9L4 5.6l-2 3.5 1.7 1.8v2.2L2 14.9l2 3.5 2.3-.7 2 .9L9 21h6l.7-2.4 2-.9 2.3.7 2-3.5-1.7-1.8v-2.2L22 9.1l-2-3.5-2.3.7-2-.9L15 3z"/><circle cx="12" cy="12" r="3.2"/></svg></button><button type="button" data-a="guide" aria-label="脈絡圖詳細導覽">?</button><button type="button" data-a="whole" aria-pressed="false">全部</button><button type="button" data-a="print" aria-label="列印脈絡圖"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7zM17 11h1"/></svg></button><span class="km-whole-zoom" hidden><button type="button" data-map-zoom="out" aria-label="縮小脈絡圖">−</button><button type="button" data-map-zoom="in" aria-label="放大脈絡圖">＋</button></span>';
-        settingsEl=document.createElement('div');settingsEl.id='km-settings';settingsEl.className='km-settings';settingsEl.hidden=true;settingsEl.setAttribute('role','region');settingsEl.setAttribute('aria-label','脈絡圖所有功能');
+        var controls=document.createElement('div');controls.className='km-controls';controls.setAttribute('role','toolbar');controls.setAttribute('aria-label','科判圖操作');
+        controls.innerHTML='<button type="button" data-a="settings" aria-label="科判圖設定" aria-expanded="false" aria-controls="km-settings"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m9 3-.7 2.4-2 .9L4 5.6l-2 3.5 1.7 1.8v2.2L2 14.9l2 3.5 2.3-.7 2 .9L9 21h6l.7-2.4 2-.9 2.3.7 2-3.5-1.7-1.8v-2.2L22 9.1l-2-3.5-2.3.7-2-.9L15 3z"/><circle cx="12" cy="12" r="3.2"/></svg></button><button type="button" data-a="guide" aria-label="科判圖詳細導覽">?</button><button type="button" data-a="whole" aria-pressed="false">全部</button><button type="button" data-a="print" aria-label="列印科判圖"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7zM17 11h1"/></svg></button><span class="km-whole-zoom" hidden><button type="button" data-map-zoom="out" aria-label="縮小科判圖">−</button><button type="button" data-map-zoom="in" aria-label="放大科判圖">＋</button></span>';
+        settingsEl=document.createElement('div');settingsEl.id='km-settings';settingsEl.className='km-settings';settingsEl.hidden=true;settingsEl.setAttribute('role','region');settingsEl.setAttribute('aria-label','科判圖所有功能');
         settingsEl.appendChild(box.querySelector('.km-bar'));settingsEl.appendChild(box.querySelector('.km-dock'));
         catalogEl=document.createElement('aside');catalogEl.className='km-catalog';catalogEl.setAttribute('aria-label','一百卷卷次');catalogEl.innerHTML='<button type="button" class="km-cat-toggle" aria-label="收起或展開一百卷" aria-expanded="true" title="收起／展開百卷"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M8 4v16M12 9h4M12 13h4"/></svg></button><div class="juans km-catalog-grid" aria-label="左右滑動選擇卷次"></div>';var ctg=catalogEl.querySelector('.km-cat-toggle');ctg.addEventListener('click',function(e){e.stopPropagation();var f=!catalogEl.classList.contains('folded');catalogEl.classList.toggle('folded',f);ctg.setAttribute('aria-expanded',String(!f));});
         var grid=catalogEl.querySelector('.juans');for(var j=1;j<=100;j++){var link=document.createElement('a');link.href='#';link.dataset.mapJuan=j;link.textContent=j;grid.appendChild(link);}grid.addEventListener('wheel',function(e){if(e.ctrlKey||e.metaKey)return;var delta=e.deltaX||e.deltaY;if(delta){e.preventDefault();grid.scrollLeft+=delta;}},{passive:false});
@@ -7437,6 +7435,10 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 #kmap .km-chip{zoom:calc(var(--kui,1)*.6)!important}
 #kmap .km-chip .km-chip-never{border-style:dashed;color:var(--muted)}
 </style>
+<style>
+.upd-notice .upd-card{width:min(520px,calc(100% - 24px))!important}
+</style>
+
 
 
 
