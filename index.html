@@ -7367,6 +7367,8 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 }
 </style>
 <script id="km-fly-js">(function(){if(!(matchMedia('(min-width:701px) and (hover:hover) and (pointer:fine)').matches))return;document.addEventListener('mouseover',function(e){var t=e.target.closest&&e.target.closest('#kmap .km-settings .km-tabs>.km-tab');if(t&&!t.classList.contains('on'))t.click();});})();</script>
+<style id="upd-bell-all">:root:root:root:root:root[data-notice-off] .books-tools #updBell:not(:has(.upd-dot[hidden])){display:inline-block!important;min-width:36px;width:36px;height:40px;padding:0}:root:root:root:root:root:not([data-notice-off]) .books-tools #updBell{display:none!important}</style>
+<script id="upd-bell-js">(function(){function f(){var off=false;try{off=localStorage.getItem('hk-update-notice')==='off'||localStorage.getItem('hk-notice-hide')===(document.getElementById('appVer').textContent||'').replace(/^v/,'');}catch(e){}var d=document.documentElement;if(off)d.setAttribute('data-notice-off','');else d.removeAttribute('data-notice-off');}f();setInterval(f,700);window.addEventListener('storage',f);})();</script>
 </body></html>
 <style>
 /* v1.63: three visual sections retain the original direct-child feature containers. */
