@@ -864,3 +864,6 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 - 文件：CHANGELOG（Unreleased→2.0）、PROJECT_STATE、MASTER_HISTORY H156、DECISIONS D110。W 編號封存。
 - 測試：桌面 Chromium：appVer v2.0、seen=1.92 會跳 2.0 通知、seen=2.0 不跳；語法檢查。未測 Safari／iPhone／iPad、實機 Service Worker 更新。
 - 尚未做：合併到 main／部署（需 q 明確指示）。
+
+### W006（Claude，2026-10-10）：2.0 發布後小修
+- q 要求「window 改成跟 mac 一樣的灰色漸層，刪除藍色」。index.html 選機種頁 Windows 標誌漸層改灰、文字改深灰；已重跑 `tools/build_release.py 2.0` 更新 sw.js 檔案雜湊（版號仍為 2.0，未升版）。測試：桌面 Chromium 截圖 round115。
