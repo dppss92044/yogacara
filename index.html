@@ -7358,6 +7358,14 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 :root:root #kmap .km-settings .km-tab.on{font-weight:600}
 :root:root #kmap .km-settings .km-tab.on::after{content:"✓";font-size:18px;font-weight:700;color:var(--acc,#d9a62e)}
 </style>
+<style id="km-fly">
+@media (min-width:701px) and (hover:hover) and (pointer:fine){
+:root:root:root #kmap .km-settings{left:max(16px,env(safe-area-inset-left))!important;right:auto!important;width:320px!important;overflow:visible!important;max-height:none!important}
+:root:root:root #kmap .km-settings .km-sec.on{position:absolute!important;left:calc(100% + 12px)!important;top:0!important;width:340px!important;box-sizing:border-box!important;padding:12px!important;border:1px solid var(--rule)!important;border-radius:20px!important;background:var(--pop,var(--bg))!important;box-shadow:0 8px 32px rgba(0,0,0,.14)!important;flex-direction:column!important;flex:none!important;height:max-content!important;min-height:0!important;display:block!important}
+:root:root:root #kmap .km-settings .km-sec.on .km-row{flex:none!important;height:auto!important;min-height:max-content!important;display:flex!important;flex-direction:column!important;border:0!important;margin-top:0!important;border-radius:12px!important}
+}
+</style>
+<script id="km-fly-js">(function(){if(!(matchMedia('(min-width:701px) and (hover:hover) and (pointer:fine)').matches))return;document.addEventListener('mouseover',function(e){var t=e.target.closest&&e.target.closest('#kmap .km-settings .km-tabs>.km-tab');if(t&&!t.classList.contains('on'))t.click();});})();</script>
 </body></html>
 <style>
 /* v1.63: three visual sections retain the original direct-child feature containers. */
