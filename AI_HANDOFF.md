@@ -867,3 +867,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 
 ### W006（Claude，2026-10-10）：2.0 發布後小修
 - q 要求「window 改成跟 mac 一樣的灰色漸層，刪除藍色」。index.html 選機種頁 Windows 標誌漸層改灰、文字改深灰；已重跑 `tools/build_release.py 2.0` 更新 sw.js 檔案雜湊（版號仍為 2.0，未升版）。測試：桌面 Chromium 截圖 round115。
+
+### W006 續（Claude，2026-10-10）：更新通知加紅色「!」提醒（預覽）
+- index.html：versionNotes['2.0'].warn＋通知卡片渲染；`?preview=update` 強制顯示。版號仍 2.0（已重跑 build_release 更新雜湊）。未合併 main。
+- 測試：桌面與手機尺寸 Chromium 截圖 round116。待 q 決定是否升 2.1（升版後已看過 2.0 通知的人才會再看到）。
