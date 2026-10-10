@@ -880,3 +880,7 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 ### W007（Claude，2026-10-10）：手機右上角更新鈴鐺（預覽）
 - index.html：版本紅點 IIFE 內新增 #updBell（插入 #searchButton 所在 .books-tools 首位，重試至 5 秒等其建立）、CSS 僅 ≤700px 顯示；點擊＝點「版本」。已重跑 build_release 2.1 更新 sw.js 雜湊，版號仍 2.1。
 - 測試：Chromium 手機模擬（390px）：未讀顯示紅點鈴鐺、點擊開版本頁後消失、已讀不顯示；桌面 1440px 不顯示。未測 iPhone／iPad／Safari 實機。未合併 main，待 q 確認。
+
+### W007 併入 2.1（Claude，2026-10-10）
+- 依 q 指示靜默併入：版號仍 2.1；CHANGELOG 併入 2.1 條目；已合併 main。W007 封存。
+- 驗證：版號 v2.1、已讀者不跳通知／不亮鈴鐺（Chromium 手機尺寸）。未測 iPhone／Safari 實機。
