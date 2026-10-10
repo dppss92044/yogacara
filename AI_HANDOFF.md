@@ -49,14 +49,17 @@
 - 未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未執行其他歷史 fixtures 或舊版回歸套件。未升版、未改 sw.js／資料、未 push main、未開 PR、未部署正式站。
 
 ## W004 最新第八十二輪（Codex，2026-10-10，預覽施工）
-- q 要求移除動畫操作示範及示範預覽、缩小五部分／十七地清單並修正對齊、空白處關閉功能／說明、節點加減旁的問號、分支列印圖示預設全部支脈、只看此支的「全部／一部」，以及低倍率全圖長線點選回最近母標題。先追加 D107 第八十二輪，沿用 work-w004-map-entry；不升正式版、不改 sw.js。
+- q 要求移除動畫操作示範及示範預覽、縮小五部分／十七地清單並修正對齊、空白處關閉功能／說明、節點加減旁的問號、分支列印圖示預設全部支脈、只看此支的「全部／一部」，以及低倍率全圖長線點選回最近母標題。先追加 D107 第八十二輪，沿用 work-w004-map-entry；不升正式版、不改 sw.js。
 - 動畫、播放／重播、示範區與自動輪播移除。說明只保留固定置中卡、短句列點、上一點／下一點與虛線，展開相應實際選單。正常列印功能本身的預覽保留，說明不開示範預覽。
-- 主題面板最高寬320px，22項單欄，每項34px、文字置左且垂直置中；空白圖面／說明遮罩可關閉選單、齒輪與問號模式。問號模式才顯示當前可展開節點的減號，問號位於它上方；說明涵蓋−、＋、（分幾）及Ctrl／⌘滾輪／双指。葉節點沒有不可用的加減問號。
+- 主題面板最高寬320px，22項單欄，每項34px、文字置左且垂直置中；空白圖面／說明遮罩可關閉選單、齒輪與問號模式。問號模式才顯示當前可展開節點的減號，問號位於它上方；說明涵蓋−、＋、（分幾）及Ctrl／⌘滾輪／雙指。葉節點沒有不可用的加減問號。
 - 節點列印改SVG圖示，預設所選支脈、全部層數、完整跨卷範圍。只看這個後選「全部」完整支脈或「一部」根層＋四層；以固定淡黃根標題置頂中央，圖面完整符合剩餘空間。窄螢幕根標籤避開控制列，低倍率節點小選單也避開控制列，修正手機按不到「只看這個」。切版／改範圍／回完整全圖不保留舊根標籤。
 - 完整全圖低於32%時，真正點長支線會找最近命中的實際父節點並顯示五層；同距離優先較高層，甲一到各乙的共同長線回甲一。虛擬根連線不套用。範圍／樣式重建、螢幕旋轉後重新符合分支。
 - Chromium 分支功能兩版×電腦／iPad直橫／手機直橫10組366/366；含原生點擊、全層／五層數量、完整跨卷範圍、根標籤置中、全圖真實長線點擊、旋轉後符合、列印全部後代與根路徑。`/tmp/round82-branch-qa.cjs`、`/tmp/round82-branch-final.log`。此執行在最後手機橫向說明控制位置修正之前，分支程式其後未改。
 - 主題篩選20/20（`/tmp/round81-themes.cjs`、`/tmp/round82-themes.log`）；原生操作46/46（`/tmp/round81-native.cjs`、`/tmp/round82-native.log`）。W005既有位置回歸168/168（`/tmp/yogacara-context-reader-regression.cjs`、`/tmp/round82-reader-regression.log`），最後修正只涉及小選單／分支標籤與橫向說明位置，讀者位置程式未改。
-- 最終說明／介面10組1030/1030通過（`/tmp/round82-ui-verified.cjs`、`/tmp/round82-ui-verified.log`），含22主題大小／文字對齊、實際空白關閉、相應選單展開、問號在加減上方、固定卡片／翻頁鈕／虛線、無動畫／示範預覽、瀏覽器返回及說明返回原位、無pageerror。已檢視手機直向主題、手機橫向節點導覽截圖。最終4段inline JS語法及git diff --check通過。Analytics全量結果待本輪執行完成後記錄。最終程式commit／固定預覽待提交後補記。未正式發布。
+- 最終說明／介面10組1030/1030通過（`/tmp/round82-ui-verified.cjs`、`/tmp/round82-ui-verified.log`），含22主題大小／文字對齊、實際空白關閉、相應選單展開、問號在加減上方、固定卡片／翻頁鈕／虛線、無動畫／示範預覽、瀏覽器返回及說明返回原位、無pageerror。已檢視手機直向主題、手機橫向節點導覽截圖。最終4段inline JS語法及git diff --check通過。Analytics全量結果如下；未正式發布。
+- 最終Analytics完整執行：靜態152 features／92 rules／26 states，0失敗；動態55通過／97不適用／3手動／4失敗（mac／ipad／iphone的#reportBtn未收到report.open，iphone #ftBtn未收到settings.page.font）；控制掃描#versionBtn及#mapBtn仍未登錄／排除，合計5類失敗，exit 1。命令 `PLAYWRIGHT_PATH=/tmp/yogacara-registry-playwright.cjs CHROME_PATH=/usr/bin/chromium node tools/check-analytics-registry.cjs`，結果 `/tmp/round82-registry-final.log`。本輪第一次執行因橫向說明位置修正中止，只有final結果算完整；未修改registry、統計客戶端或既有套件。
+- 程式commit `e404fe8fe38a25920f97c0aed1da81fdae83570b` 已推送，git ls-remote核對相同SHA。固定預覽 `https://raw.githack.com/dppss92044/yogacara/e404fe8fe38a25920f97c0aed1da81fdae83570b/index.html`；此雲端前輪CONNECT403，本輪未驗證公網載入。後續只提交檢查／交接文件，預覽程式SHA不變。
+- 全量手機字體事件未捕捉後，以同390×844、hasTouch／isMobile、clock、真實點選與端點攔截隔離：上一版a6455cf與本版均1/1收到settings.page.font（`/tmp/round82-font-isolation.cjs`、`/tmp/round82-font-isolation.log`），全量失敗不因此改列通過；未更改統計程式或測試斷言。
 - 均為Chromium／hasTouch／CDP模擬，未測Safari、iPhone／iPad實機、實際列印或PWA更新；既有Analytics失敗不得視為通過。兩次UI巡檢因helper空白候選只掃面板覆蓋區／連點觸發既有雙擊縮放而中止，改實際空白座標與操作間隔重跑，未放寬產品斷言。
 
 ## W004 第八十一輪紀錄（Codex，2026-10-10，預覽施工）
