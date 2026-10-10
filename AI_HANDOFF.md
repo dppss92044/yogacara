@@ -6,7 +6,17 @@
 
 ---
 
-## 進行中：W005（Codex，2026-10-09，卷次欄置頂與點選穩定）
+## 進行中：W005（卷次欄置頂與點選穩定）
+### 最新補正（Codex，2026-10-10）
+- q 接續回報：「但是點下去某卷的科判標題時，就又會跳轉，這部分也修正」。後續明確要求做完並提供預覽，正式發布由 q 另行通知。本次從 `bee983d` 接續同一個 W005，沿用 `work-w004-map-entry`；程式 commit `b0f9eece76d086ec101e3a6f4afc49c1b94c1e2d`。已先補 D108 決定，再改程式與規格。
+- 根因實測：桌面點卷次欄標題仍水平移動約 56px；點正文標題／右側科判仍走 `focusRailCamera` 垂直置中（藏版正文例 −90px、韓版例 −121px）。單欄介面回到卷次頁亦無位置還原；2.5 秒的正文定位解鎖可能使後續程式 scroll 重新反白其他標題。
+- 修正：標題點選保存卷次欄水平／垂直位置，直接定位與後續自動同步不再重新置中；返回卷次頁先還原保存位置，再填充相鄰卷與反白。卷次欄手動捲動會更新保存位置；主動正文滾輪／觸控捲動／閱讀按鍵／正文捲軸操作釋放保存狀態、恢復既有跟隨。另選卷號／重建卷次欄仍置頂並清除保存狀態。承接科判同樣保存位置並取消遲到的卷首定位。正文／科判仍依原有節點與卷次連動，保留 W002 的卷次來源規則。
+- 最終程式 Chromium 固定 viewport：桌面 1440×900、iPad 820×1180／1180×820、手機 390×844／844×390；另桌面卷次倍率 80%／140%，各搭配藏／韓版，共 14 組、84/84 通過。檢查水平＋垂直連續取樣不移動、延遲 3.5 秒後再觸發程式 scroll 不改選取、單欄返回後同一標題的相對位置不變、重選 36 卷與 100 卷置頂、無 pageerror。桌面主要倍率 120%，平板／手機 100%，正文 100%；hasTouch 模擬觸控、isMobile=false 固定 viewport。`/tmp/yogacara-title-test.cjs`、`/tmp/yogacara-title-test-final.log`。初輪發現韓版直向 iPad 的延遲同步改選取，已修正再重跑，最終通過。
+- 額外操作檢查：桌面與手機直向、兩版在選卷後 150ms 立即點第 2 卷標題（藏版為承接科判），24/24 通過，仍在 #j2；`/tmp/yogacara-title-carry-test.cjs`／`.log`。兩版桌面視窗下緣部分可見標題點選不移動，真實正文滾輪恢復選取與卷次欄跟隨，均通過；`/tmp/yogacara-title-edge-test.cjs`／`.log`。兩版桌面卷次／正文／右側科判標題點擊 6/6 保持兩個捲軸位置；`/tmp/yogacara-title-debug.cjs`、`/tmp/yogacara-title-fixed.log`。這些 /tmp 檔案僅本次暫存，下一任務不假設存在。
+- Analytics 完整套件本輪執行（原 W001／v1.91 基底）：靜態 152 features／92 rules／26 states，0 失敗；動態 56 通過／97 不適用／3 手動／3 失敗（mac／ipad／iphone #reportBtn），控制項掃描 #versionBtn、#mapBtn 未登錄或排除，合計 4 類失敗、exit 1，與前輪初次檢查一致。未算通過、未修改統計／Registry／測試斷言。命令 `PLAYWRIGHT_PATH=/tmp/yogacara-registry-playwright.cjs CHROME_PATH=/usr/bin/chromium node tools/check-analytics-registry.cjs`；helper 設定支援的 hk-update-notice=off 偏好、操作預設 timeout 500ms、navigation／waitForSelector 30 秒，原套件點選仍為 3 秒。結果 `/tmp/yogacara-w005-followup-registry.log`。
+- 本次固定程式預覽網址：`https://raw.githack.com/dppss92044/yogacara/b0f9eece76d086ec101e3a6f4afc49c1b94c1e2d/index.html`。只推獨立預覽分支，不推 main；正式 v1.92、sw.js／資料維持原值，未開 PR、未正式部署。尚未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未重新執行前輪全部 100 卷巡檢或其他歷史 fixtures（本輪針對標題定位／返回捲動，保留前輪測試歷史）。
+
+### 前輪紀錄（Codex，2026-10-09；下列水平對焦行為已由上方補正取代）
 - 正式基底 v1.92（main `4b7cac1`），接續 W004 獨立預覽 `1df6008`；沿用工作／預覽分支 `work-w004-map-entry`。程式修改 commit：`9a3043fb03ad57f33a8f5a66724516a35b1bb1b7`。最新交接 HEAD 以 Git 為準。
 - 使用者原始需求（附卷目次截圖）：「把左上設為預設開啟。然後點下去每一個卷的時候，下面的卷次欄位的該卷，都要在下面的卷次欄位置頂。比如點36卷……目前是還會看到35卷的後段。而點36卷的內容，卷次欄位頁面不要上下晃動。」已先記錄 D108，取代 D019 預設收起要求，再改程式；同步 PROJECT_SPEC、UI_SPEC、PROJECT_STATE、CHANGELOG。
 - 桌面／平板百卷清單初始化為展開、仍可手動收起；手機獨立浮窗保持原操作。選卷包含重選目前卷都重建卷次欄並置頂；以實際畫面座標補償 CSS zoom 與前插／移除鄰卷，預填後續短卷、補足第 100 卷最後捲動空間、略過隱藏欄位填充。卷次欄點科判時只保留垂直位置，既有水平對焦、正文與科判欄連動仍保留；選卷／科判點選重設正文同步等待計時，避免重選同卷被舊計時提前解除鎖定。
