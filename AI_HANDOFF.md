@@ -825,3 +825,6 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 ### W004 第一〇三輪
 - index.html：說明動畫新增 sub 子步驟（subsOf/show(i,sb)）與每頁共用鍵盤 .ki-kb；上一步／下一步先走同頁子步驟。
 - 測試：桌面 Chromium 逐頁點「下一步」，確認有快捷鍵的頁（滾輪、縮放、F、列印、＋／−）會多一步並標黃對應鍵；截圖 /mnt/project-files/W004/round103/。未測手機／Safari。
+
+### W004 第一〇四輪
+- index.html 檔尾 CSS：.ki-wheel 黃色。測試：桌面 Chromium 截圖 round104。未測手機／Safari。
