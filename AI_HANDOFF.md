@@ -3,6 +3,7 @@
 > 本檔是 Claude Code、GPT Work、Codex 之間切換時最重要的文件。
 > **每個 AI 工作結束或即將切換時，必須更新本檔。** 規則見 `AGENTS.md` §7。
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
+> **目前最新整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
 ---
 
@@ -53,7 +54,8 @@
 - 已實作：支線實際父階以max(100%,目前倍率)定位到水平中央、可用圖面上部；保留模型／範圍／層數和收合。百卷36px圓球、14px字、單排可滑動／滾輪。功能類型去重問號；現有靜態置中卡及虛線保留。根據完整分支在100%的實際尺寸判定直接展開或選全部／一部；全部與一部均sc=1，可容納分支完整留在螢幕內。所有平移入口共用實際圖邊界與有限定位邊距限制，保留原入口狀態返回。
 - 功能10組929/929通過（藏／韓×電腦1440×900、iPad820×1180／1180×820、手機390×844／844×390）：原生滑鼠／觸控、圓球單排尺寸／移動、卷次選擇、同類問號縮減、小分支直接／大分支全部及五層一部且100%、支線在入口／全覽／160%下選實際父階並置中偏上、hover、四方向有界平移與倍率、入口／分支返回精確狀態、返回原閱讀位置及無pageerror。`/tmp/round84-test.cjs`、`/tmp/round84-matrix-final.log`。其後僅補色彩變數沿用明暗主題與移除無效空行，未改功能。早輪矩陣919/919亦通過，但只計最後929；早輪圓球CSS層疊被舊規則覆蓋已修正，小分支另補可用圖面邊界定位。
 - 邏輯直／橫、心智、括弧直／橫、樹狀及時間軸桌面兩版14組72/72（`/tmp/round84-geometries.cjs`、`.log`）：實際支線點擊、父階淡灰提示、置中偏上與可讀倍率，保留圖面範圍／層數／數量。原生滾輪／方向鍵／拖曳停在同一圖面邊界、百卷列滾輪首尾、有界捲動、小分支全部在可用區、深色主題22/22（`/tmp/round84-native.cjs`、`/tmp/round84-native-complete.log`）。此測試最初在既有0.6秒背景色過渡完成前判定色彩，後改等待實際顏色穩定；未為此改App動效。
-- 4段inline JS語法及git diff --check通過。說明10組130/130通過（`/tmp/round84-help-final.cjs`、`.log`）：百卷說明與固定卡／虛線、介面必要子選單、無動畫預覽、當前節點減號與對應虛線、入口版本還原；初次簡版說明110/110亦通過。完整統計進行中，最終結果／程式SHA待最後提交填入。前輪原主題／原倍率規格與測試為歷史紀錄，不當作本輪驗證。
+- 4段inline JS語法及git diff --check通過。說明10組130/130通過（`/tmp/round84-help-final.cjs`、`.log`）：百卷說明與固定卡／虛線、介面必要子選單、無動畫預覽、當前節點減號與對應虛線、入口版本還原；初次簡版說明110/110亦通過。最終Analytics全量完整執行：靜態152 features／92 rules／26 states，0失敗；動態56通過／97不適用／3手動／3失敗（mac／ipad／iphone的#reportBtn未收到report.open），控制掃描#versionBtn／#mapBtn未登錄或排除，合計4類失敗、exit 1，與前輪一致，未全數通過。命令 `PLAYWRIGHT_PATH=/tmp/yogacara-registry-playwright.cjs CHROME_PATH=/usr/bin/chromium node tools/check-analytics-registry.cjs`，`/tmp/round84-registry-final.log`。既有W001／v1.91基底套件、helper同前輪；未改Registry／統計／既有測試斷言。首次全量在補明暗色彩變數時中止（exit130），不算完整。前輪原主題／原倍率規格與測試為歷史紀錄，不當作本輪驗證。
+- 程式commit `26f3d3d7bfa981d92de9794930a471e110e6d4e1` 已推送並git ls-remote核對；固定預覽 `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。此雲端先前CONNECT403，本輪未驗證公網載入；已以本機Chromium功能驗證。後續只提交交接紀錄，固定程式SHA不變。
 - 只修改index及現行交接／規格文件；未升正式版本、未改sw.js／資料、未push main、未開PR。Safari與實機、真正紙張／PDF列印及PWA更新尚未驗證。
 
 ## W004 第八十三輪紀錄（Codex，2026-10-10，預覽施工）
