@@ -852,3 +852,6 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 
 ### W004 第一一二輪
 - index.html：subsOf＝列點數；show() 對非總整理頁逐條標示並依文字推算鍵位（kf）；隱藏 .ki-wheel。測試：桌面 Chromium Mac 選擇逐步點下一步，鍵位標示符合；卡片高度恒 598px；截圖 round112。未測手機／Safari／Windows 實機。
+
+### W004 第一一三輪
+- index.html：刪並排正文頁、gear 文案併入；keyed() 決定分步；刪「注音、英文鍵盤都可以」。測試：桌面 Chromium（Mac 選擇）逐步點下一步，只有滾輪頁三步＋總整理分步，卡片高度恒 598px。未測手機／Safari／Windows 實機。
