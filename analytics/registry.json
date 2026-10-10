@@ -4122,10 +4122,10 @@
  ],
  "excluded": [
   {
-   "selector": "#kmap .km-controls button, #kmap [data-st=\"fs:4\"]",
-   "what": "脈絡圖齒輪、問號、全部、全覽縮放與 12px 字級選項",
+   "selector": "#kmap .km-controls button, #kmap [data-st=\"fs:4\"], #kmap [data-t]",
+   "what": "脈絡圖齒輪、問號、全部、全覽縮放、12px 字級與逐步說明操作",
    "reason": "純圖面操作與說明入口，未新增產品分析維度；不蒐集目前科判、分支或畫面位置",
-   "css": "#kmap .km-controls button, #kmap [data-st=\"fs:4\"]"
+   "css": "#kmap .km-controls button, #kmap [data-st=\"fs:4\"], #kmap [data-t]"
   },
   {
    "selector": "#settingsBack",

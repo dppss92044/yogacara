@@ -49,6 +49,18 @@
 - 未測 Safari、iPhone／iPad 實機、PWA 更新、列印；未執行其他歷史 fixtures 或舊版回歸套件。未升版、未改 sw.js／資料、未 push main、未開 PR、未部署正式站。
 
 ## 進行中：W004（q 2026-10-06 11:19「脈絡圖」）
+### 最新接續（Codex，2026-10-10，第七十九輪，待預覽確認）
+- q 原始需求：「說明欄位，要寫的簡單易懂。然後不要集中在左下，要在正中間……按下一步不會跑來跑去……有虛線連到對應位置，詳細說明，列點。換行。」追加：「按上一頁、滑鼠上一頁的按鍵，或是頁面中的返回，都可以回到本來的地方。」先補 D107 第七十九輪，再改程式；沿用同一 W004 與 `work-w004-map-entry`，從 `a724ae3` 接續。程式 commit 待本輪提交後補登。
+- 問號的14頁說明改固定正中央卡片，標題與3–4點短句分行列點。卡片高度、底部返回／關閉說明／上一步／下一步固定，第一頁上一步停用，最後下一步變完成。內容區可捲動；金色虛線連到對應功能並框示目標。導覽自動選對設定頁籤，調整設定面板的可見區與捲動位置，不移動說明卡；resize／orientationchange 重算連線。SVG 使用 hidden attribute 管理顯示，避免 SVGElement 的 hidden expando 不會反映 DOM 的問題。
+- 上一步回前一說明頁；關閉說明／完成／Esc 恢復開啟說明前的設定頁籤與捲動位置。對話框補標題、aria-live、Tab循環與圖面快捷鍵隔離，避免導覽期間背景移動。
+- 開圖增加同網址 history 項目；瀏覽器上一頁、原生滑鼠側鍵返回、齒輪返回、說明卡返回與關圖 Esc 回原閱讀位置，瀏覽器前進可重開圖。共用 popstate／hashchange 加入圖面歷史守衛，避免原 route 先重繪正文／把手機切回正文頁。保存根頁與七個既有捲動容器的位置；history.scrollRestoration 暫用 manual，返回時恢復原設定。以相對 scrollBy 恢復根頁位置，避免 scrollTo 被既有 scroll-snap 拉到卷首。刻意點節點／並排「在閱讀器開啟」則等返回歷史完成後才選目標，保留跨版前往正文。
+- 導覽／歷史最終矩陣：藏／韓版×桌面1440×900、iPad直向820×1180／橫向1180×820、手機直向390×844／橫向844×390，共10組、1,480/1,480通過。每組14頁卡片與下一步座標完全固定，3–4点短句、SVG實際可見／虛線／端點在畫面內且不被卡遮住，上一步、完成、重播／關閉恢复設定，以及頁面／說明返回、瀏覽器Back／Forward、CDP原生滑鼠back、Esc精確恢复頁面與全部捲動位置，原正文DOM保留，離圖後一般卷次歷史仍正常。入口用實際 mouse.click／touchscreen.tap，避免 Playwright locator.click 的自動 scrollIntoView 先改變閱讀位置。`/tmp/yogacara-guide-test.cjs`、`/tmp/yogacara-guide-test-final2.log`。
+- 原生互動回歸沿用第七十八輪測試：桌面矮視窗1440×390／手機橫向844×390×兩版，4組、46/46通過，包含設定原生滑動、Ctrl滾輪／雙指縮放、換版全層、選節點、雙擊回正文、藏版分支列印預覽取消；`/tmp/yogacara-context-interactions.cjs`、`/tmp/yogacara-guide-interactions-final.log`。並排選取新節點再「在閱讀器開啟」補查桌面／手機×兩版互換，4組、16/16通過，前往所選節點與新版且延遲後仍相同；`/tmp/yogacara-guide-new-node.cjs`／`.log`。補查初稿在換版後全圖根節點尚無正文時找標題失敗，改用既有下一卷載入第一卷再選標題，未為測試改 App。
+- W005回歸沿用前輪測試：兩版×五種版面，另桌面正文與左欄倍率80%／140%，14組、168/168通過；右點科判左欄30%、12px純空白、正文2.5行定位、同頁與單欄返回。`/tmp/yogacara-context-reader-regression.cjs`、`/tmp/yogacara-guide-reader-final.log`。本輪功能檢查合計1,710項通過；不是 Safari／iPhone／iPad 實機結果。
+- 檢視最終桌面、手機直／橫向說明截圖，確認置中、短句列點、固定按鈕、金色虛線；`/tmp/yogacara-guide-zang-desktop.png`、`/tmp/yogacara-guide-zang-phone-portrait.png`、`/tmp/yogacara-guide-hk-phone-landscape.png`。Inline JS四區／Registry JSON解析與git diff --check通過。Analytics只在既有純圖面 excluded 項追加逐步說明按鈕，未改 feature／rule／state、事件維度、統計客戶端或舊測試。
+- 最終 Analytics 全量檢查執行中，結果待完成後補登；命令 `PLAYWRIGHT_PATH=/tmp/yogacara-registry-playwright.cjs CHROME_PATH=/usr/bin/chromium node tools/check-analytics-registry.cjs`，helper沿用前輪timeout與更新通知設定。最終結果檔 `/tmp/yogacara-guide-registry-final2.log`。前兩次全量因後續返回／SVG修正中止，exit130，不算完整執行。
+- 未測 Safari、實機、PWA更新、瀏覽器真正列印或其他歷史fixtures。正式 App 仍v1.92，未改sw.js／資料／正式版本摘要、未推main、未開PR；q另行確認才可正式發布。公網預覽載入先前遭 egress proxy CONNECT403，Git推送與網址將在本輪提交後補登。
+
 ### 最新接續（Codex，2026-10-10，第七十八輪，待預覽確認）
 - q 原始需求：「後面的那個脈絡圖，幫我點下去之後，會呈現在目前的分支。這分支，一樣是全部展開的圖，只不過以當前所選取的科判脈絡為正中心，並且標記淡色黃。大小100趴。字的大小約莫12。然後頁面很乾淨，只有一個齒輪的按鍵跟『全部』的按鍵。按下齒輪，就會看到現在所有的功能都打包在上面。按下全部，就會看到從甲一開始的整張展開的圖。按下全部就會看到加減的按鈕，可放大縮小畫面。然後齒輪旁邊要有一個問號，按下去就會詳細導覽說明。」
 - 同一 W004、預覽分支 `work-w004-map-entry`，從 `2b3633a` 接續；程式 commit `8302fe69d7f3922b52502cfbbe5f966c4866b655` 已推送，遠端 Git hash 已核對。先在 D107 第七十八輪記錄 q 對舊三層／無預選／控制列規格的明確取代，再改程式。正式 app 仍 v1.92；正式發布等待 q 另行指示。
