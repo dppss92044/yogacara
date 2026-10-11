@@ -5513,7 +5513,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
           try{if(localStorage.getItem('km-tour-off')!=='1'&&sessionStorage.getItem('km-tour-seen')!=='1'){sessionStorage.setItem('km-tour-seen','1');setTimeout(function(){if(!box.hidden&&tourI<0)introOpen();},500);}}catch(e){}
         }).catch(function(){setStatus('版本資料無法載入，請確認連線後再試。');});
       }
-      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(true);setTimeout(function(){if(emb&&box&&!box.hidden&&!box.classList.contains('km-whole')&&wholeBtn){wholeBtn.click();embLast={c:S.cur!=null?S.cur:-9,e:edKey};}},450);});
+      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(true);});
     })();
   }).catch(function () { article.innerHTML = '<div class="loading">資料無法載入。請改用最新版的 Chrome、Edge 或 Safari 開啟這個網頁。</div>'; });
 })();
