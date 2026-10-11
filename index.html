@@ -5493,7 +5493,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
           var j0=S.juan,c=S.cur!=null?S.cur:(JLL&&JLL[j0]&&JLL[j0][0]!=null?JLL[j0][0]:(CRY&&CRY[j0]!=null?CRY[j0]:null));if(c==null||c<0||c>=VR||!model||!model.n||(embLast&&embLast.c===c&&embLast.e===edKey))return;
           embLast={c:c,e:edKey};curI=c;selI=-1;
           if(box.classList.contains('km-whole')&&wholeBtn){wholeBtn.click();}
-          setTimeout(function(){if(!emb||box.hidden||!model||!model.inc[c])return;centerOn(c,1);req();},350);
+          setTimeout(function(){if(!emb||box.hidden||!model||!model.inc[c])return;centerOn(c,14/12);req();},350);
           },500);
         W=0;requestAnimationFrame(function(){resize();if(on){var f=box.querySelector('[data-z=fit]');if(f)f.click();}});}
       function open(asEmb,fromHistory){
