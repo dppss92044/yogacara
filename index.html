@@ -4314,7 +4314,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         var col=colIn;if(!col){col=new Uint8Array(n);for(i=0;i<n;i++)if(R[i]&&kc[i]>0&&NN[i][3]>=depthMax&&!ctx[i])col[i]=1;}
         for(i=0;i<n;i++){if(!R[i])continue;p=NN[i][4];if(p>=0&&R[p]&&(col[p]||hid[p]))hid[i]=1;else inc[i]=1;}
         var ly=ST.ly|0,tm=ly===3?2:(vr&&(ly===0||ly===2))?1:0,vt=tm===1,org=ly===3,table=ly===5,tree=ly===4,fb=false,sp=ly>=6,spanB=ly===5||ly>=8,head=-1,axisY=0,spine=null,ba=null,bx0A=null,SL=0.4;
-        var fm=[0.85,1,1.25,1.6,0.75][ST.fs|0]||1;FS_H=ST.fs===4?12:14*fm;FS_V=ST.fs===4?12:16*fm;ROW=24*fm;COL=27*fm;CH=17*fm;PADH=7;PADV=5;
+        var fm=[0.85,1,1.25,1.6,0.875][ST.fs|0]||1;FS_H=ST.fs===4?14:14*fm;FS_V=ST.fs===4?14:16*fm;ROW=24*fm;COL=27*fm;CH=17*fm;PADH=7;PADV=5;
         var ids=[],fc=new Int32Array(n).fill(-1),lc=new Int32Array(n).fill(-1),ns=new Int32Array(n).fill(-1),
           x=new Float32Array(n),y=new Float32Array(n),w=new Float32Array(n),vw=new Float32Array(n),ct=new Float32Array(n),cb=new Float32Array(n),sd=new Int8Array(n).fill(1),dep=new Uint8Array(n),lbs=new Array(n),tts=new Array(n),kL=new Uint8Array(n).fill(1),tls=new Array(n);
         var m=document.createElement('canvas').getContext('2d');m.font=FS_H+'px '+FONT_H;var wc={},kk=ST.compact?0.72:1,step=(vt?COL:ROW)*kk,gap=ST.compact?18:GAP,bc=new Int16Array(n),bcn=0;
@@ -4457,7 +4457,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         function curve(i,a,c,qa,qc,b,d){var x=a,y=c;for(var k=1;k<=8;k++){var t=k/8,u=1-t,nx=u*u*a+2*u*t*qa+t*t*b,ny=u*u*c+2*u*t*qc+t*t*d;test(i,x,y,nx,ny);x=nx;y=ny;}}
         for(var band=lo;band<=hi;band++){var ids=M.be[band]||[];ids.forEach(function(i){if(seen.has(i))return;seen.add(i);var p=NN[i][4];if(p<0||!M.inc[p])return;var yp=M.y[p],yi=M.y[i],side=M.sd[i];if(M.ly===4||M.ly===6){if(M.ly===6&&p===M.head)return;var x=M.x[p]+9;test(p,x,yp,x,yi);test(p,x,yi,M.x[i]-2,yi);}else if(M.ly<3){var pe=side>0?M.x[p]+M.w[p]:M.x[p],ce=side>0?M.x[i]:M.x[i]+M.w[i],bus=pe+side*M.gap/2;if(M.ly===2){var bx=pe+M.gap*.5,yt=M.y[M.fc[p]],yb=M.y[M.lc[p]],rb=Math.min(9,(yb-yt)/4);if(yb-yt<8)test(p,pe,yp,ce,yi);else{test(p,pe,yp,bx-rb,yp);curve(p,bx+rb,yt,bx,yt,bx,yt+rb);test(p,bx,yt+rb,bx,yp-rb);curve(p,bx,yp-rb,bx,yp,bx-rb,yp);curve(p,bx-rb,yp,bx,yp,bx,yp+rb);test(p,bx,yp+rb,bx,yb-rb);curve(p,bx,yb-rb,bx,yb,bx+rb,yb);test(p,yi===yt||yi===yb?bx+rb:bx,yi,ce,yi);}}else{test(p,pe,yp,bus,yp);test(p,bus,yp,bus,yi);test(p,bus,yi,ce,yi);}}});}return best;}
       function foldCatalogOnPhone(){}
-      function edgeTap(p){if(!emb){goLineParent(p);return;}embSkip=Date.now()+1800;selI=p;hoverEdge=null;animCenter(p,Math.max(14/12,sc));if(edKey===EDITION)try{goNode(p);}catch(e){}}
+      function edgeTap(p){if(!emb){goLineParent(p);return;}embSkip=Date.now()+1800;selI=p;hoverEdge=null;animCenter(p,Math.max(1,sc));if(edKey===EDITION)try{goNode(p);}catch(e){}}
       function goLineParent(i){if(i<0)return;dismissOverlays();foldCatalogOnPhone();selI=i;lastTap=null;hoverEdge=null;animCenter(i,Math.max(1,sc),mapTop());catalogSync();updChip();req();}
       function fitScale(){if(!model||!model.n)return 1;return Math.min((W-48)/model.bw,(H-48)/Math.max(model.bh,1));}
       var animId=0;
@@ -4643,7 +4643,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           if(!(model&&model.a===ra&&model.b===rb&&model.md===md&&model.vr===vert&&model.key===key&&model.col===col&&model.focus===focusI&&model.only===selIds&&model.sig===ST.lab+'|'+ST.compact+'|'+ST.equal+'|'+ST.ly+'|'+(ST.fs|0))){model=build(ra,rb,md,vert,col,focusI,selIds);col=model.col;}
           setStatus(model.n?'':'此卷沒有科判');
           hintEl.textContent=(window.matchMedia&&matchMedia('(pointer:coarse)').matches?'雙指縮放、拖曳移動':'滾輪上下移、Shift＋滾輪左右移、Ctrl／⌘＋滾輪縮放')+(selIds?'　選取範圍':'')+'、點選科判、點兩下前往正文'+(focusI>=0&&focusI===brI?'　分支：'+brName:'')+(model.fb?'　心智圖需單一分支，請先點科判並按 F（目前以邏輯圖顯示）':'')+(model.own?'　顯示 '+model.own+' 科':'');
-          if(viewIntent==='entry'){if(emb){var q0=shownCur()>=0?shownCur():model.first;centerOn(q0,14/12);var c0=wxy(model,q0);ty=H/3-c0[1]*sc;clampPan();embLast={c:curI,e:edKey};}else centerOn(shownCur()>=0?shownCur():model.first,1);}else if(viewIntent==='whole'){overview();}else if(viewIntent==='branch'){branchFit();}else homeView();
+          if(viewIntent==='entry'){if(emb){var q0=shownCur()>=0?shownCur():model.first;centerOn(q0,1);var c0=wxy(model,q0);ty=H/3-c0[1]*sc;clampPan();embLast={c:curI,e:edKey};}else centerOn(shownCur()>=0?shownCur():model.first,1);}else if(viewIntent==='whole'){overview();}else if(viewIntent==='branch'){branchFit();}else homeView();
           if(viewIntent==='entry')saveEntry();viewIntent='';updChip();req();
         },30);
       }
@@ -5533,7 +5533,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
           var j0=S.juan,c=S.cur!=null?S.cur:(JLL&&JLL[j0]&&JLL[j0][0]!=null?JLL[j0][0]:(CRY&&CRY[j0]!=null?CRY[j0]:null));if(c==null||c<0||c>=VR||!model||!model.n||(embLast&&embLast.c===c&&embLast.e===edKey))return;if(Date.now()<embSkip){embLast={c:c,e:edKey};return;}
           embLast={c:c,e:edKey};curI=c;selI=-1;var fc=embForce;embForce=false;
           if(box.classList.contains('km-whole')&&wholeBtn){wholeBtn.click();}
-          req();if(fc||needJump(c))setTimeout(function(){if(!emb||box.hidden||!model||!model.inc[c])return;animCenter(c,14/12);},fc?0:350);
+          req();if(fc||needJump(c))setTimeout(function(){if(!emb||box.hidden||!model||!model.inc[c])return;animCenter(c,1);},fc?0:350);
           },250);
         W=0;requestAnimationFrame(function(){resize();});}
       function open(asEmb,fromHistory){
