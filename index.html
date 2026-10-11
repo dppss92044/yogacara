@@ -4605,17 +4605,18 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             else if(Math.abs(al-mkA(M,i))<=r&&Math.abs(ac-mkC(M,i))<=r)return i;}}
         return-1;
       }
+      function tipSet(parts){tipEl.textContent='';parts.forEach(function(t){var c=document.createElement('div');Array.from(String(t)).forEach(function(ch){var n=document.createElement('i');n.textContent=ch;c.appendChild(n);});tipEl.appendChild(c);});tipEl.style.maxHeight='';}
       function hideTip(){if(tipEl)tipEl.hidden=true;}
       function showEdgeTip(i,px,py){
         if(i<0||!model||!model.inc[i]){hideTip();return;}
-        tipEl.textContent=model.lbs[i]+model.tts[i];tipEl.hidden=false;tipEl.style.whiteSpace='nowrap';
-        var tw=tipEl.offsetWidth,th=tipEl.offsetHeight;tipEl.style.left=Math.max(6,Math.min(W-tw-6,px+14))+'px';tipEl.style.top=Math.max(6,Math.min(H-th-6,py+16))+'px';
+        tipSet([model.lbs[i]+model.tts[i]]);tipEl.hidden=false;
+        var tw=tipEl.offsetWidth,th=tipEl.offsetHeight;tipEl.style.left=Math.max(6,(px+14+tw>W-6?px-tw-14:px+14))+'px';tipEl.style.top=Math.max(6,Math.min(H-th-(emb?64:6),py+16))+'px';
       }
       function showTip(i,px,py){
         if(i<0){hideTip();return;}
         var parts=[],q=i;while(q>=0&&model.inc[q]){parts.unshift(model.lbs[q]+model.tts[q]);q=NN[q][4];}
-        tipEl.textContent=parts.slice(-5).join(' › ');tipEl.hidden=false;
-        var tw=tipEl.offsetWidth,th=tipEl.offsetHeight;tipEl.style.left=Math.max(6,Math.min(W-tw-6,px+14))+'px';tipEl.style.top=Math.max(6,Math.min(H-th-6,py+16))+'px';
+        tipSet(parts.slice(-5));tipEl.hidden=false;
+        var tw=tipEl.offsetWidth,th=tipEl.offsetHeight;tipEl.style.left=Math.max(6,(px+14+tw>W-6?px-tw-14:px+14))+'px';tipEl.style.top=Math.max(6,Math.min(H-th-(emb?64:6),py+16))+'px';
       }
       function setUi(v){uiS=Math.max(0.7,Math.min(1.6,v));if(box)box.style.setProperty('--kui',uiS);}
       function fold(on){if(!box)return;var d=box.querySelector('.km-dock');d.classList.toggle('folded',on);foldBtn.setAttribute('aria-expanded',String(!on));foldBtn.setAttribute('aria-label',on?'展開功能列':'收起功能列');foldBtn.querySelector('span').textContent=on?'展開':'收起';closePops();}
@@ -7409,6 +7410,7 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 <style id="km-eopt-css">:root:root:root #kmap .km-eopt{display:none}:root:root:root #kmap.km-emb .km-eopt{display:flex;position:absolute;z-index:6;top:10px;right:10px;gap:8px}:root:root:root #kmap .km-eopt button{height:34px;padding:0 14px;border:1px solid var(--rule);border-radius:999px;background:var(--bg);color:var(--muted,#666);font-size:14px;cursor:pointer}:root:root:root #kmap .km-eopt button[aria-pressed=true]{background:#f4e2a4;border-color:#f4c430;color:#4a3a00}</style>
 <style id="km-eopt-css">:root:root:root #kmap.km-emb .km-eopt{zoom:.75}:root:root:root #kmap .km-eopt button{display:flex;align-items:center;gap:8px;height:38px;padding:0 4px 0 8px;border:0;border-radius:999px;background:transparent;color:var(--fg,#222);font-size:15px;box-shadow:none}:root:root:root #kmap .km-eopt button[aria-pressed=true]{background:transparent;border:0;color:var(--fg,#222)}:root:root:root #kmap .km-eopt button i{flex:none;display:inline-block;position:relative;width:44px;height:26px;border-radius:999px;background:rgba(120,120,128,.28);transition:background .25s}:root:root:root #kmap .km-eopt button i:after{content:'';position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .25s}:root:root:root #kmap .km-eopt button[aria-pressed=true] i{background:var(--acc,#d9a62e)}:root:root:root #kmap .km-eopt button[aria-pressed=true] i:after{transform:translateX(18px)}:root:root:root #kmap .km-mm{display:none}:root:root:root #kmap.km-emb .km-mm{display:block;position:absolute;z-index:6;left:12px;bottom:12px;right:68px;max-height:4.6em;overflow:hidden;padding:8px 12px;border:1px solid var(--rule);border-radius:12px;background:var(--bg);color:var(--fg,#222);font-size:14px;line-height:1.5;word-break:break-all;pointer-events:none}</style>
 <style id="km-swap-css">:root:root:root body:has(.wrap.panes-swapped) #kmap.km-emb{border-left:0;border-right:1px solid var(--rule)}:root:root:root body:has(#kmap.km-emb:not([hidden])) .gut{z-index:70}:root:root:root body:has(#kmap.km-emb:not([hidden])) .zbar{z-index:65}</style>
+<style id="km-tip-v">:root:root:root #kmap .km-tip{display:flex;flex-direction:row-reverse;align-items:flex-start;gap:7px;width:max-content;height:auto;padding:0;border:0;border-radius:0;background:none;box-shadow:none;max-width:none;white-space:normal;line-height:1.3;color:var(--fg,#222);text-shadow:0 0 3px var(--bg,#fff),0 0 3px var(--bg,#fff),0 0 6px var(--bg,#fff)}:root:root:root #kmap .km-tip[hidden]{display:none}:root:root:root #kmap .km-tip i{display:block;font-style:normal;text-align:center;min-width:1em}</style>
 </body></html>
 <style>
 /* v1.63: three visual sections retain the original direct-child feature containers. */
