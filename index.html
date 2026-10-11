@@ -4262,7 +4262,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var FONT_H='"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif',FONT_V='"TWKai","TWKai2","BiauKai","DFKai-SB","標楷體","Kaiti TC","STKaiti",serif';
       var FS_H=14,FS_V=16,ROW=24,COL=27,CH=17,PADH=7,PADV=5,GAP=32,BAND=640,MINS=0.00001,MAXS=4,AUTO_N=800;
       var box,cv,cx,mapEl,readEl,rbEl,rhEl,msgEl,tipEl,hintEl,pctEl,dEl,selA,selB,allBtn,vBtn,sBtn,hBtn;
-      var labAny,emb=false,embT=0,VR=-1,stub=null,nst=null,hoverMk=-1,ST={fs:1,end:0,ly:0,lab:1,lastLab:1,compact:0,equal:0,color:0,lw:0,dash:0,shape:0},brSpec=null,brI=-1,brName='',brSrc=0,NN,JLL,CRY,TXX,labx,fullx,edKey='',edBtns,selIds=null,readJ=0,sTimer=0,noteEl,uiS=1,foldBtn,oBtn,rngBtn,depBtn,model=null,col=null,focusI=-1,lastTap=null,chipEl,ra=1,rb=1,md=1,maxD=1,vert=true,split=false,tx=0,ty=0,sc=1,W=0,H=0,dpr=1,raf=0,hover=-1,curI=-1,selI=-1,stamp=null,frame=0,buildSeq=0,lastFocus=null;
+      var labAny,emb=false,embT=0,embLast=null,VR=-1,stub=null,nst=null,hoverMk=-1,ST={fs:1,end:0,ly:0,lab:1,lastLab:1,compact:0,equal:0,color:0,lw:0,dash:0,shape:0},brSpec=null,brI=-1,brName='',brSrc=0,NN,JLL,CRY,TXX,labx,fullx,edKey='',edBtns,selIds=null,readJ=0,sTimer=0,noteEl,uiS=1,foldBtn,oBtn,rngBtn,depBtn,model=null,col=null,focusI=-1,lastTap=null,chipEl,ra=1,rb=1,md=1,maxD=1,vert=true,split=false,tx=0,ty=0,sc=1,W=0,H=0,dpr=1,raf=0,hover=-1,curI=-1,selI=-1,stamp=null,frame=0,buildSeq=0,lastFocus=null;
       var ptrs={},tap=null,pinch=null,gz0=1,PUNC='、，。,.；：;:';
       var viewIntent='',settingsEl,gearBtn,wholeBtn,wholeZoom,catalogEl,entryView=null,hoverEdge=null;
       var volPicked=false;
@@ -5487,8 +5487,13 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
       function setEmb(on){
         emb=on;box.classList.toggle('km-emb',on);clearInterval(embT);box._ew=0;embPos();
         var back=box.querySelector('.km-back2');back.title='回主頁';
+        embLast=null;
         if(on)embT=setInterval(function(){if(!emb||box.hidden){clearInterval(embT);return;}embPos();
-          var j=S.juan;if(j>=1&&j<=100&&j!==ra&&brI<0){setRange(j,j);}
+          if(edKey!==EDITION){embLast=null;setEd(EDITION);return;}
+          var j0=S.juan,c=S.cur!=null?S.cur:(JLL&&JLL[j0]&&JLL[j0][0]!=null?JLL[j0][0]:(CRY&&CRY[j0]!=null?CRY[j0]:null));if(c==null||c<0||c>=VR||!model||!model.n||(embLast&&embLast.c===c&&embLast.e===edKey))return;
+          embLast={c:c,e:edKey};curI=c;selI=-1;
+          if(box.classList.contains('km-whole')&&wholeBtn){wholeBtn.click();}
+          setTimeout(function(){if(!emb||box.hidden||!model||!model.inc[c])return;centerOn(c,1);req();},350);
           },500);
         W=0;requestAnimationFrame(function(){resize();if(on){var f=box.querySelector('[data-z=fit]');if(f)f.click();}});}
       function open(asEmb,fromHistory){
@@ -5508,7 +5513,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
           try{if(localStorage.getItem('km-tour-off')!=='1'&&sessionStorage.getItem('km-tour-seen')!=='1'){sessionStorage.setItem('km-tour-seen','1');setTimeout(function(){if(!box.hidden&&tourI<0)introOpen();},500);}}catch(e){}
         }).catch(function(){setStatus('版本資料無法載入，請確認連線後再試。');});
       }
-      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(true);setTimeout(function(){if(emb&&box&&!box.hidden&&!box.classList.contains('km-whole')&&wholeBtn)wholeBtn.click();},450);});
+      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(true);setTimeout(function(){if(emb&&box&&!box.hidden&&!box.classList.contains('km-whole')&&wholeBtn){wholeBtn.click();embLast={c:S.cur!=null?S.cur:-9,e:edKey};}},450);});
     })();
   }).catch(function () { article.innerHTML = '<div class="loading">資料無法載入。請改用最新版的 Chrome、Edge 或 Safari 開啟這個網頁。</div>'; });
 })();
