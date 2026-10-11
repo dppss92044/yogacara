@@ -4592,6 +4592,11 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         return-1;
       }
       function hideTip(){if(tipEl)tipEl.hidden=true;}
+      function showEdgeTip(i,px,py){
+        if(i<0||!model||!model.inc[i]){hideTip();return;}
+        tipEl.textContent=model.lbs[i]+model.tts[i];tipEl.hidden=false;tipEl.style.whiteSpace='nowrap';
+        var tw=tipEl.offsetWidth,th=tipEl.offsetHeight;tipEl.style.left=Math.max(6,Math.min(W-tw-6,px+14))+'px';tipEl.style.top=Math.max(6,Math.min(H-th-6,py+16))+'px';
+      }
       function showTip(i,px,py){
         if(i<0){hideTip();return;}
         var parts=[],q=i;while(q>=0&&model.inc[q]){parts.unshift(model.lbs[q]+model.tts[q]);q=NN[q][4];}
@@ -5391,7 +5396,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         });
         cv.addEventListener('pointermove',function(e){
           var pt=ptrs[e.pointerId],r=cv.getBoundingClientRect();
-          if(!pt){if(e.pointerType==='mouse'){var h=hit(e.clientX-r.left,e.clientY-r.top),mk=hitMark(e.clientX-r.left,e.clientY-r.top),oldEdge=hoverEdge&&hoverEdge.parent,edge=(sc<.32||h<0&&mk<0)?hitBranchLine(e.clientX-r.left,e.clientY-r.top):-1;if(sc<.32&&edge>=0)h=-1;if(h>=0||mk>=0)hoverEdge=null;if(edge>=0||oldEdge!=null)req();if(h!==hover){hover=h;req();}if(mk!==hoverMk){hoverMk=mk;req();}cv.classList.toggle('km-hit',h>=0||mk>=0||edge>=0);if(h>=0)showTip(h,e.clientX-r.left,e.clientY-r.top);else hideTip();}return;}
+          if(!pt){if(e.pointerType==='mouse'){var h=hit(e.clientX-r.left,e.clientY-r.top),mk=hitMark(e.clientX-r.left,e.clientY-r.top),oldEdge=hoverEdge&&hoverEdge.parent,edge=(sc<.32||h<0&&mk<0)?hitBranchLine(e.clientX-r.left,e.clientY-r.top):-1;if(sc<.32&&edge>=0)h=-1;if(h>=0||mk>=0)hoverEdge=null;if(edge>=0||oldEdge!=null)req();if(h!==hover){hover=h;req();}if(mk!==hoverMk){hoverMk=mk;req();}cv.classList.toggle('km-hit',h>=0||mk>=0||edge>=0);if(h>=0)showTip(h,e.clientX-r.left,e.clientY-r.top);else if(edge>=0)showEdgeTip(edge,e.clientX-r.left,e.clientY-r.top);else hideTip();}return;}
           var ids=Object.keys(ptrs);
           if(ids.length>=2&&pinch){var a=ptrs[ids[0]],b=ptrs[ids[1]];pt.x=e.clientX;pt.y=e.clientY;var d=Math.hypot(a.x-b.x,a.y-b.y)||1,mx=(a.x+b.x)/2-r.left,my=(a.y+b.y)/2-r.top;zoomAt(Math.max(MINS,Math.min(MAXS,pinch.s*d/pinch.d))/sc,mx,my);return;}
           var dx=e.clientX-pt.x,dy=e.clientY-pt.y;pt.x=e.clientX;pt.y=e.clientY;
