@@ -3865,18 +3865,18 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   }
   function setupSettingsNavigation(){
     var panel=$('menu').querySelector('.mpop');
-    function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent='v'+v;$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
+    function versionPage(v,back){versionBack=back;$('versionDetail').querySelector('b').textContent=(v==='2.1'?'beta 2.1':'v'+v);$('versionDetail').querySelector('p').textContent=versionSummaries[v]||'目前缺少更新紀錄。';showSettingsPage('version');}
     $('appVer').setAttribute('role','button');$('appVer').tabIndex=0;$('appVer').onclick=function(){showSettingsPage('history');};$('appVer').onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();showSettingsPage('history');}};
     $('versionHistory').onclick=null;
     (function(){var box=$('versionDoc'),vs=Object.keys(versionNotes).sort(function(a,b){var x=a.split('.').map(Number),y=b.split('.').map(Number);return (y[0]-x[0])||(y[1]-x[1]);});
       vs.forEach(function(v,n){var d=document.createElement('details'),sm=document.createElement('summary'),ul=document.createElement('ul');d.className='vc-item';d.open=n===0;
-        sm.innerHTML='<b></b><small></small>';sm.querySelector('b').textContent='v'+v;sm.querySelector('small').textContent=versionNotes[v].date||'';
+        sm.innerHTML='<b></b><small></small>';sm.querySelector('b').textContent=(v==='2.1'?'beta 2.1':'v'+v);sm.querySelector('small').textContent=versionNotes[v].date||'';
         ['new','fix','improve'].forEach(function(k){var g=versionNotes[v].items.filter(function(i){return i[0]===k;});if(!g.length)return;var h=document.createElement('h6'),gl=document.createElement('ul');h.className='vc-h';h.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];gl.appendChild(li);});d.appendChild(h);d.appendChild(gl);});
         d.insertBefore(sm,d.firstChild);box.appendChild(d);});})();
     (function(){var row=document.querySelector('.ver-menu-row');if(!row||row.querySelector('.verpop'))return;
       var vs=Object.keys(versionNotes).sort(function(a,b){var x=a.split('.').map(Number),y=b.split('.').map(Number);return (y[0]-x[0])||(y[1]-x[1]);}),v=vs[0],pop=document.createElement('div');
       pop.className='verpop';pop.setAttribute('aria-hidden','true');
-      var h=document.createElement('div');h.className='vp-h';h.innerHTML='<b></b><small></small>';h.querySelector('b').textContent='版本內容　v'+v;h.querySelector('small').textContent=versionNotes[v].date||'';pop.appendChild(h);
+      var h=document.createElement('div');h.className='vp-h';h.innerHTML='<b></b><small></small>';h.querySelector('b').textContent='版本內容　'+(v==='2.1'?'beta 2.1':'v'+v);h.querySelector('small').textContent=versionNotes[v].date||'';pop.appendChild(h);
       var all=versionNotes[v].items,imp=all.filter(function(i){return i[2];});if(!imp.length)imp=all;
       function fillNotes(host,items,kinds){kinds.forEach(function(k){var g=items.filter(function(i){return i[0]===k;});if(!g.length)return;var t=document.createElement('h6'),ul=document.createElement('ul');t.textContent=VN_KIND[k];g.forEach(function(i){var li=document.createElement('li');li.textContent=i[1];ul.appendChild(li);});host.appendChild(t);host.appendChild(ul);});}
       var shortC=document.createElement('div'),fullC=document.createElement('div');shortC.className='vp-card';fullC.className='vp-card';fullC.hidden=true;
@@ -3920,7 +3920,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       f.addEventListener('change',function(){setN(f.checked);});if(pf)pf.addEventListener('change',function(){setN(pf.checked);});
       vh.insertBefore(box,vh.firstChild);
       var vb0=window.versionBrief;if(vb0&&!$('vBrief')){var br=document.createElement('div');br.className='vbrief';br.id='vBrief';
-        var hd=document.createElement('div');hd.className='vb-h';hd.innerHTML='<b></b><small></small><button type="button" class="vp-more">詳情</button>';hd.querySelector('b').textContent='v'+vb0.v;hd.querySelector('small').textContent=versionNotes[vb0.v].date||'';
+        var hd=document.createElement('div');hd.className='vb-h';hd.innerHTML='<b></b><small></small><button type="button" class="vp-more">詳情</button>';hd.querySelector('b').textContent=(vb0.v==='2.1'?'beta 2.1':'v'+vb0.v);hd.querySelector('small').textContent=versionNotes[vb0.v].date||'';
         var body=document.createElement('div');body.className='vb-body';vb0.fill(body,vb0.imp,['new','fix']);br.appendChild(hd);br.appendChild(body);
         var mb=hd.querySelector('button');mb.addEventListener('click',function(){var x=vh.classList.toggle('expanded');mb.textContent=x?'收起':'詳情';});
         box.after(br);}})();
