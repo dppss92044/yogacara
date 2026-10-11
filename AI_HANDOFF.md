@@ -989,3 +989,4 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 - W010 實驗版32（橫書第二卷起 .reading-volume padding-top 24→14px、h1.jt padding-block-end 8→18px，卷首名稱在兩線間置中；確認點卷次科判標題正文會上捲）commit da22036，已還原回 3780a5e 內容，僅供預覽。
 - W010 實驗版33（jstart：開頁 5 秒內使用者未操作時，程式跳轉重設 y0、若卷目次被收起則重新展開）commit 7ef342f，已還原回 3780a5e 內容，僅供預覽。
 - W010 實驗版34（#trackLock 於搜尋鍵右側，x-track 預設開，鎖住時 spy() 不更新；啟用原本停用的點空白清除選取並擴及 #rv/#pview；點一百卷選卷後重新進入 jstart 不收起）commit cf8b9da，已還原回 3780a5e 內容，僅供預覽。涉及 DECISIONS D097（點空白是否停止追蹤），q 2026-10-11 明確要求點空白取消淡黃選取。
+- W010 beta 2.2 預覽（main cfb6666＋#trackLock＋點空白清除選取；appVer 顯示 beta 2.2、versionNotes['2.2'].quiet 不跳通知改亮鈴鐺；尚未跑 build_release、未改 sw.js、未合併 main，等 q 確認）commit 2164e95，已還原回 3780a5e 內容。
