@@ -1529,11 +1529,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function panelFocus(i) { panelJuan = N[i][6]; panelPage(APPEAR[i] || 2, i, N[i][6]); }
 
   // ---------- left rail: 卷 + its 干支科判 (rubber band into adjacent 卷) ----------
+  var ROOT_N = null, ROOT_D = 0;
+  // 干支階層以全書最上層為 0：不因本卷第一條是丙、丁…而把它縮成最左
+  function rootDepth() { if (ROOT_N !== N) { ROOT_N = N; ROOT_D = 99; for (var i = 0; i < N.length; i++) if (N[i][3] < ROOT_D) ROOT_D = N[i][3]; } return ROOT_D; }
   function railHTML(j) {
     var carried = !JL[j] && CARRY[j] != null, list = JL[j] || (carried ? pathOf(CARRY[j]) : []), out = [];
     out.push('<button type="button" class="rhead" data-juan-go="' + j + '" aria-label="閱讀第' + cn(j) + '卷">第' + cn(j) + "卷</button>");
     out.push('<div class="rsub">' + (carried ? "承接前卷科判" : list.length + "科") + "</div><div class=\"rol\">");
-    var minD = 99; list.forEach(function (i) { minD = Math.min(minD, N[i][3]); });
+    var minD = rootDepth();
     var dl = list.map(function (k) { return N[k][3] - minD; });
     var maxD = 1; dl.forEach(function (d) { if (d > maxD) maxD = d; });
     var avail = Math.max(120, ($("rscroll").clientWidth || 270) / ((Z.r || 1) * (FT.s || 1)) - 120);
