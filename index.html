@@ -5332,9 +5332,9 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         selA=box.querySelector('[data-r=a]');selB=box.querySelector('[data-r=b]');dEl=box.querySelector('[data-r=d]');allBtn=box.querySelector('[data-a=all]');sBtn=box.querySelector('[data-a=split]');
         noteEl=box.querySelector('.km-pop .note');foldBtn=box.querySelector('.km-fold');foldBtn.addEventListener('click',function(e){e.stopPropagation();fold(!box.querySelector('.km-dock').classList.contains('folded'));});oBtn=box.querySelector('[data-a=orient]');rngBtn=box.querySelector('[data-p=rng]');depBtn=box.querySelector('[data-p=dep]');
         box.querySelector('.km-close').addEventListener('click',function(){close();});
-        var homeBtn=box.querySelector('.km-back2');homeBtn.innerHTML=btn.innerHTML+'<span>回主頁</span>';homeBtn.setAttribute('aria-label','回主頁');homeBtn.addEventListener('click',function(){close();});
+        var homeBtn=box.querySelector('.km-back2');homeBtn.innerHTML='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 5v7a3 3 0 0 1-3 3H5"/><path d="M9 11l-4 4 4 4"/></svg>';homeBtn.setAttribute('aria-label','返回');homeBtn.addEventListener('click',function(){close();});
         box.querySelector('[data-a=print]').addEventListener('click',function(e){e.stopPropagation();prOpenZ();});
-        box.querySelector('.km-exp').addEventListener('click',function(){setEmb(false);});
+        box.querySelector('.km-exp').addEventListener('click',function(){setEmb(false);setTimeout(function(){try{overview();}catch(e){}},450);});
         (function(){var dk=box.querySelector('.km-dock'),hT=0;
           function act(sec){box.querySelectorAll('[data-sec]').forEach(function(x){x.classList.toggle('on',x.dataset.sec===sec);});subjectOpen();}
           dk.querySelectorAll('.km-tab').forEach(function(t){
@@ -5508,7 +5508,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
           try{if(localStorage.getItem('km-tour-off')!=='1'&&sessionStorage.getItem('km-tour-seen')!=='1'){sessionStorage.setItem('km-tour-seen','1');setTimeout(function(){if(!box.hidden&&tourI<0)introOpen();},500);}}catch(e){}
         }).catch(function(){setStatus('版本資料無法載入，請確認連線後再試。');});
       }
-      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(false);});
+      btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(true);setTimeout(function(){if(emb&&box&&!box.hidden&&!box.classList.contains('km-whole')&&wholeBtn)wholeBtn.click();},450);});
     })();
   }).catch(function () { article.innerHTML = '<div class="loading">資料無法載入。請改用最新版的 Chrome、Edge 或 Safari 開啟這個網頁。</div>'; });
 })();
@@ -7369,6 +7369,7 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 <script id="km-fly-js">(function(){if(!(matchMedia('(min-width:701px) and (hover:hover) and (pointer:fine)').matches))return;document.addEventListener('mouseover',function(e){var t=e.target.closest&&e.target.closest('#kmap .km-settings .km-tabs>.km-tab');if(t&&!t.classList.contains('on'))t.click();});})();</script>
 <style id="upd-bell-all">:root:root:root:root:root[data-notice-off] .books-tools #updBell:not(:has(.upd-dot[hidden])){display:inline-block!important;min-width:36px;width:36px;height:40px;padding:0}:root:root:root:root:root:not([data-notice-off]) .books-tools #updBell{display:none!important}</style>
 <script id="upd-bell-js">(function(){function f(){var off=false;try{off=localStorage.getItem('hk-update-notice')==='off'||localStorage.getItem('hk-notice-hide')===(document.getElementById('appVer').textContent||'').replace(/^(v|beta\s*)/i,'');}catch(e){}var d=document.documentElement;if(off)d.setAttribute('data-notice-off','');else d.removeAttribute('data-notice-off');}f();setInterval(f,700);window.addEventListener('storage',f);})();</script>
+<style id="km-emb-flow">:root:root:root #kmap.km-emb .km-exp{display:grid!important}:root:root:root #kmap.km-emb .km-controls,:root:root:root #kmap.km-emb .km-catalog,:root:root:root #kmap.km-emb .km-settings{display:none!important}:root:root:root #kmap.km-emb .km-back2{display:none!important}:root:root:root #kmap .km-exp{width:48px;height:48px;border-radius:12px}</style>
 </body></html>
 <style>
 /* v1.63: three visual sections retain the original direct-child feature containers. */
