@@ -986,3 +986,4 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 - W010 實驗版29（#swapPanes 設 type=button 免誤送搜尋表單、全頁科判圖右上顯示開鎖並讓動畫依開鎖、reveal 直書改捲 #main 橫向、橫書置換 equal-panes 兩側等寬）commit acbe1e4，已還原回 3780a5e 內容，僅供預覽。
 - W010 實驗版30（橫書 #kmMargin --ox 改為原值四分之一，左側空白少 3/4）commit 1262e66，已還原回 3780a5e 內容，僅供預覽。
 - W010 實驗版31（橫書 #rv 滾輪不再改 yOff，改為 window.scrollBy，科判綁正文捲動；取代實驗版22 的科判獨立捲動）commit 13c78cd，已還原回 3780a5e 內容，僅供預覽。
+- W010 實驗版32（橫書第二卷起 .reading-volume padding-top 24→14px、h1.jt padding-block-end 8→18px，卷首名稱在兩線間置中；確認點卷次科判標題正文會上捲）commit da22036，已還原回 3780a5e 內容，僅供預覽。
