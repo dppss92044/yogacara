@@ -4458,10 +4458,10 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         for(var band=lo;band<=hi;band++){var ids=M.be[band]||[];ids.forEach(function(i){if(seen.has(i))return;seen.add(i);var p=NN[i][4];if(p<0||!M.inc[p])return;var yp=M.y[p],yi=M.y[i],side=M.sd[i];if(M.ly===4||M.ly===6){if(M.ly===6&&p===M.head)return;var x=M.x[p]+9;test(p,x,yp,x,yi);test(p,x,yi,M.x[i]-2,yi);}else if(M.ly<3){var pe=side>0?M.x[p]+M.w[p]:M.x[p],ce=side>0?M.x[i]:M.x[i]+M.w[i],bus=pe+side*M.gap/2;if(M.ly===2){var bx=pe+M.gap*.5,yt=M.y[M.fc[p]],yb=M.y[M.lc[p]],rb=Math.min(9,(yb-yt)/4);if(yb-yt<8)test(p,pe,yp,ce,yi);else{test(p,pe,yp,bx-rb,yp);curve(p,bx+rb,yt,bx,yt,bx,yt+rb);test(p,bx,yt+rb,bx,yp-rb);curve(p,bx,yp-rb,bx,yp,bx-rb,yp);curve(p,bx-rb,yp,bx,yp,bx,yp+rb);test(p,bx,yp+rb,bx,yb-rb);curve(p,bx,yb-rb,bx,yb,bx+rb,yb);test(p,yi===yt||yi===yb?bx+rb:bx,yi,ce,yi);}}else{test(p,pe,yp,bus,yp);test(p,bus,yp,bus,yi);test(p,bus,yi,ce,yi);}}});}return best;}
       function foldCatalogOnPhone(){}
       function edgeTap(p){if(!emb){goLineParent(p);return;}embSkip=Date.now()+1800;selI=p;hoverEdge=null;animCenter(p,Math.max(14/12,sc));if(edKey===EDITION)try{goNode(p);}catch(e){}}
-      function goLineParent(i){if(i<0)return;dismissOverlays();foldCatalogOnPhone();selI=i;lastTap=null;hoverEdge=null;centerOn(i,Math.max(1,sc));var pt=wxy(model,i);ty=mapTop()-pt[1]*sc;catalogSync();updChip();req();}
+      function goLineParent(i){if(i<0)return;dismissOverlays();foldCatalogOnPhone();selI=i;lastTap=null;hoverEdge=null;animCenter(i,Math.max(1,sc),mapTop());catalogSync();updChip();req();}
       function fitScale(){if(!model||!model.n)return 1;return Math.min((W-48)/model.bw,(H-48)/Math.max(model.bh,1));}
       var animId=0;
-      function animCenter(i,s){if(i<0||!model||!model.inc[i])return;var s0=sc,x0=tx,y0=ty;sc=s;var c=wxy(model,i);tx=W/2-c[0]*sc;ty=H/3-c[1]*sc;clampPan();var s1=sc,x1=tx,y1=ty;sc=s0;tx=x0;ty=y0;
+      function animCenter(i,s,yt){if(i<0||!model||!model.inc[i])return;var s0=sc,x0=tx,y0=ty;sc=s;var c=wxy(model,i);tx=W/2-c[0]*sc;ty=(yt==null?H/3:yt)-c[1]*sc;clampPan();var s1=sc,x1=tx,y1=ty;sc=s0;tx=x0;ty=y0;
         var dd=Math.hypot(x1-x0,y1-y0)+Math.abs(s1-s0)*400,e=1.2+Math.min(3.2,dd/900),N=240,tb=new Float32Array(N+1),a=0,m;
         for(m=1;m<=N;m++){a+=Math.pow(Math.sin(Math.PI*(m-.5)/N),e);tb[m]=a;}for(m=1;m<=N;m++)tb[m]/=a;
         var t0=performance.now(),D=2000,id=++animId;
@@ -4478,7 +4478,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         if(model.tm===1&&fi>=0&&wxy(model,fi)[1]*sc<H*0.6)ty=16-model.by0*sc;
       }
       function overview(){if(focusI>=0&&branchTitle&&!branchTitle.hidden){branchFit();return;}if(!model||!model.n)return;sc=Math.max(MINS,Math.min(fitScale(),1.4));tx=(W-model.bw*sc)/2-model.bx0*sc;ty=Math.max(16,(H-model.bh*sc)/2)-model.by0*sc;req();}
-      function toCurrent(){var q=shownCur();if(q>=0){centerOn(q,1);req();}}
+      function toCurrent(){var q=shownCur();if(q>=0){animCenter(q,1,H/2);}}
       function req(){clampPan();if(!raf)raf=requestAnimationFrame(draw);}
       function vcw(s){if(numLab(s)){var mq=/^([0-9][0-9\-–]*)(.*?)\s*$/.exec(s);return 1+Array.from(mq[2]).length+(/\s$/.test(s)?.5:0);}var a=0;Array.from(s).forEach(function(c){a+=c===' '?.5:1;});return a;}
       function vchars(s){var o=[];Array.from(s).forEach(function(c){o.push(VMAP[c]||c);});return o;}
@@ -4608,10 +4608,10 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function tipSet(parts){tipEl.textContent='';parts.forEach(function(t){var c=document.createElement('div');Array.from(String(t)).forEach(function(ch){var n=document.createElement('i');n.textContent=ch;c.appendChild(n);});tipEl.appendChild(c);});tipEl.style.maxHeight='';}
       function hideTip(){if(tipEl)tipEl.hidden=true;}
       function showEdgeTip(i,px,py){
-        hideTip();return;
         if(i<0||!model||!model.inc[i]){hideTip();return;}
-        tipSet([model.lbs[i]+model.tts[i]]);tipEl.hidden=false;
-        var tw=tipEl.offsetWidth,th=tipEl.offsetHeight;tipEl.style.left=Math.max(6,(px+14+tw>W-6?px-tw-14:px+14))+'px';tipEl.style.top=Math.max(6,Math.min(H-th-(emb?64:6),py+16))+'px';
+        var parts=[],q=i;while(q>=0&&model.inc[q]){parts.unshift(model.lbs[q]+model.tts[q]);q=NN[q][4];}
+        tipEl.textContent=parts.join(' / ');tipEl.hidden=false;tipEl.style.whiteSpace='normal';tipEl.style.maxWidth=Math.max(160,W-24)+'px';
+        var tw=tipEl.offsetWidth,th=tipEl.offsetHeight;tipEl.style.left=Math.max(6,Math.min(W-tw-6,px+14))+'px';tipEl.style.top=Math.max(6,Math.min(H-th-6,py+16))+'px';
       }
       function showTip(i,px,py){
         hideTip();return;
@@ -7420,7 +7420,6 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 <style id="km-eopt-css">:root:root:root #kmap .km-eopt{display:none}:root:root:root #kmap.km-emb .km-eopt{display:flex;position:absolute;z-index:6;top:10px;right:10px;gap:8px}:root:root:root #kmap .km-eopt button{height:34px;padding:0 14px;border:1px solid var(--rule);border-radius:999px;background:var(--bg);color:var(--muted,#666);font-size:14px;cursor:pointer}:root:root:root #kmap .km-eopt button[aria-pressed=true]{background:#f4e2a4;border-color:#f4c430;color:#4a3a00}</style>
 <style id="km-eopt-css">:root:root:root #kmap.km-emb .km-eopt{zoom:.75}:root:root:root #kmap .km-eopt button{display:flex;align-items:center;gap:8px;height:38px;padding:0 4px 0 8px;border:0;border-radius:999px;background:transparent;color:var(--fg,#222);font-size:15px;box-shadow:none}:root:root:root #kmap .km-eopt button[aria-pressed=true]{background:transparent;border:0;color:var(--fg,#222)}:root:root:root #kmap .km-eopt button i{flex:none;display:inline-block;position:relative;width:44px;height:26px;border-radius:999px;background:rgba(120,120,128,.28);transition:background .25s}:root:root:root #kmap .km-eopt button i:after{content:'';position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .25s}:root:root:root #kmap .km-eopt button[aria-pressed=true] i{background:var(--acc,#d9a62e)}:root:root:root #kmap .km-eopt button[aria-pressed=true] i:after{transform:translateX(18px)}:root:root:root #kmap .km-mm{display:none}:root:root:root #kmap.km-emb .km-mm{display:block;position:absolute;z-index:6;right:12px;left:auto;top:52px;bottom:auto;width:max-content;height:auto;padding:12px 8px;border:1px solid var(--rule);border-radius:12px;background:var(--bg);color:var(--fg,#222);font-size:14px;line-height:1.35;cursor:grab;touch-action:none;user-select:none}:root:root:root #kmap .km-mm i{display:block;font-style:normal;text-align:center;min-width:1em;line-height:1.3}</style>
 <style id="km-swap-css">:root:root:root body:has(.wrap.panes-swapped) #kmap.km-emb{border-left:0;border-right:1px solid var(--rule)}:root:root:root body:has(#kmap.km-emb:not([hidden])) .gut{z-index:70}:root:root:root body:has(#kmap.km-emb:not([hidden])) .zbar{z-index:65}</style>
-<style id="km-tip-v">:root:root:root #kmap .km-tip{display:flex;flex-direction:row-reverse;align-items:flex-start;gap:7px;width:max-content;height:auto;padding:0;border:0;border-radius:0;background:none;box-shadow:none;max-width:none;white-space:normal;line-height:1.3;color:var(--fg,#222);text-shadow:0 0 3px var(--bg,#fff),0 0 3px var(--bg,#fff),0 0 6px var(--bg,#fff)}:root:root:root #kmap .km-tip[hidden]{display:none}:root:root:root #kmap .km-tip i{display:block;font-style:normal;text-align:center;min-width:1em}</style>
 </body></html>
 <style>
 /* v1.63: three visual sections retain the original direct-child feature containers. */
