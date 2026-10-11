@@ -4655,7 +4655,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         a.forEach(function(x,xi){if(xi){var sp=document.createElement('span');sp.className='psep';sp.textContent=' / ';mm.appendChild(sp);}var e=document.createElement('span');e.textContent=x.replace(/（/g,'(').replace(/）/g,')').replace(/／/g,'/');if(xi===a.length-1&&mk)e.className='cur';mm.appendChild(e);});
         mm.title=a.join(' / ');mm.scrollLeft=mm.scrollWidth;}
       function mmWire(){var mm=box.querySelector('.km-mm'),tm=0;try{embSync=localStorage.getItem('km-emb-sync')==='1';}catch(x){}document.addEventListener('pointerdown',function(e){if(box&&!box.contains(e.target))embClickT=Date.now();},true);document.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key==='ArrowUp'||e.key==='ArrowDown'){}},true);mm.addEventListener('scroll',function(){mm.classList.add('sc');clearTimeout(tm);tm=setTimeout(function(){mm.classList.remove('sc');},900);});}
-      function eoSync(){if(!box)return;var sy=box.querySelector('[data-eo=sync]');if(sy){sy.setAttribute('aria-pressed',String(embSync));sy.setAttribute('aria-label',embSync?'自動追蹤：開':'自動追蹤：關');}var l=box.querySelector('[data-eo=lab]'),c=box.querySelector('[data-eo=compact]');if(l)l.setAttribute('aria-pressed',String(!!ST.lab));if(c)c.setAttribute('aria-pressed',String(!!ST.compact));}
+      function trackAttr(){document.documentElement.setAttribute('data-km-track',(box&&!box.hidden&&emb&&!embSync)?'off':'on');}
+      function eoSync(){if(!box)return;trackAttr();var sy=box.querySelector('[data-eo=sync]');if(sy){sy.setAttribute('aria-pressed',String(embSync));sy.setAttribute('aria-label',embSync?'自動追蹤：開':'自動追蹤：關');}var l=box.querySelector('[data-eo=lab]'),c=box.querySelector('[data-eo=compact]');if(l)l.setAttribute('aria-pressed',String(!!ST.lab));if(c)c.setAttribute('aria-pressed',String(!!ST.compact));}
       function styApply(rebuild){
         try{localStorage.setItem('km-style',JSON.stringify(ST));}catch(e){}
         if(box){box.querySelectorAll('[data-st]').forEach(function(b){var kv=b.dataset.st.split(':');if(kv.length===2)b.setAttribute('aria-pressed',String(ST[kv[0]]===+kv[1]));});
@@ -5476,7 +5477,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         setTimeout(restore,0);
       }
       function hideMap(){
-        helpMode=false;cancelAnimationFrame(helpFrame);if(helpLayer)helpLayer.remove();helpLayer=null;tourEnd();if(branchTitle)branchTitle.hidden=true;box.hidden=true;emb=false;box.classList.remove('km-emb','km-dk');clearInterval(embT);buildSeq++;ptrs={};tap=null;pinch=null;hideTip();
+        helpMode=false;cancelAnimationFrame(helpFrame);if(helpLayer)helpLayer.remove();helpLayer=null;tourEnd();if(branchTitle)branchTitle.hidden=true;box.hidden=true;emb=false;document.documentElement.setAttribute('data-km-track','on');box.classList.remove('km-emb','km-dk');clearInterval(embT);buildSeq++;ptrs={};tap=null;pinch=null;hideTip();
       }
       function close(noFocus,after){
         if(!box||box.hidden)return;hideMap();
@@ -5524,7 +5525,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9,i,z,hit=false;for(i=0;i<model.n;i++){if(!model.inc[i])continue;z=i;while(z>=0&&z!==c)z=NN[z][4];if(z!==c)continue;var p=wxy(model,i);if(p[0]<x0)x0=p[0];if(p[0]>x1)x1=p[0];if(p[1]<y0)y0=p[1];if(p[1]>y1)y1=p[1];hit=true;}
         if(!hit)return false;var X0=x0*sc+tx,X1=x1*sc+tx,Y0=y0*sc+ty,Y1=y1*sc+ty,fx=X1-X0<1?1:(Math.min(X1,W)-Math.max(X0,0))/(X1-X0),fy=Y1-Y0<1?1:(Math.min(Y1,H)-Math.max(Y0,0))/(Y1-Y0);return Math.min(fx,fy)<.6;}
       function setEmb(on){
-        emb=on;box.classList.toggle('km-emb',on);clearInterval(embT);box._ew=0;embPos();
+        emb=on;box.classList.toggle('km-emb',on);clearInterval(embT);box._ew=0;embPos();trackAttr();
         if(on&&window.ResizeObserver&&!box._ro){box._ro=new ResizeObserver(function(){if(emb)embPos();});box._ro.observe($('panel'));}
         if(!on&&catalogEl){catalogEl.classList.add('folded');var ctg0=catalogEl.querySelector('.km-cat-toggle');if(ctg0)ctg0.setAttribute('aria-expanded','false');}
         var back=box.querySelector('.km-back2');back.title='回主頁';
@@ -7425,6 +7426,7 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 <style id="km-cat-wide">:root:root:root #kmap .km-catalog:not(.folded){width:calc(100% - 96px)!important}:root:root:root #kmap .km-catalog:not(.folded) .km-catalog-grid{justify-content:flex-start}</style>
 <style id="km-path-scroll">:root:root:root #kmap .km-mm::-webkit-scrollbar{width:3px;height:3px;background:transparent}:root:root:root #kmap .km-mm::-webkit-scrollbar-track{background:transparent}:root:root:root #kmap .km-mm::-webkit-scrollbar-thumb{background:transparent;border-radius:2px}:root:root:root #kmap .km-mm.sc::-webkit-scrollbar-thumb{background:rgba(120,120,128,.55)}@supports not selector(::-webkit-scrollbar){:root:root:root #kmap .km-mm{scrollbar-width:none}}:root:root:root #kmap .km-mm .cur{padding:2px 7px;border-radius:6px;background:rgba(244,226,164,.75)}:root:root:root #kmap .km-mm .psep{white-space:pre;background:none;border:0;margin:0;padding:0;display:inline;width:auto;height:auto}</style>
 <style id="km-eopt-tip">:root:root:root #kmap.km-emb .km-eopt{z-index:8}:root:root:root #kmap .km-eopt button{position:relative}:root:root:root #kmap .km-eopt button svg{width:20px;height:20px;flex:none}:root:root:root #kmap .km-eopt button[data-eo=sync] .lk-o{display:none}:root:root:root #kmap .km-eopt button[data-eo=sync][aria-pressed=true] .lk-o{display:block}:root:root:root #kmap .km-eopt button[data-eo=sync][aria-pressed=true] .lk-c{display:none}:root:root:root #kmap .km-eopt button[data-tip]:hover::after{content:attr(data-tip);position:absolute;top:calc(100% + 6px);right:0;width:max-content;max-width:300px;white-space:normal;padding:8px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--pop,var(--bg));color:var(--fg,#222);box-shadow:0 6px 20px rgba(0,0,0,.18);font-size:18.7px;line-height:1.5;font-weight:400;z-index:30;pointer-events:none}</style>
+<style id="km-track-off">:root[data-km-track=off] #juans a.on,:root[data-km-track=off] .juans a.on{background:transparent!important;box-shadow:none!important;color:inherit!important;font-weight:inherit!important}:root[data-km-track=off] .rail a.cur,:root[data-km-track=off] a.cur{background:transparent!important}:root[data-km-track=off] .kn.on,:root[data-km-track=off] .nd.tt.on,:root[data-km-track=off] .nd.tt.on *{background:transparent!important;box-shadow:none!important}</style>
 </body></html>
 <style>
 /* v1.63: three visual sections retain the original direct-child feature containers. */
