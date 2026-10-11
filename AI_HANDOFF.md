@@ -983,3 +983,4 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 - W010 實驗版26（橫書剛進入一百卷格子展開 data-jstart、往下滑>40px 自動收合；頁首科判貼 rv 頂）commit 9d58d41，已還原回 3780a5e 內容，僅供預覽。
 - W010 實驗版27（--rail 淺色 #f6f6f6→#fafafa）commit 178e3b5，已還原回 3780a5e 內容，僅供預覽。
 - W010 實驗版28（拿掉頁首貼頂位移改回對齊正文、一百卷格高度隨捲動遞減、#swapPanes 移到 #vertBtn 前）commit 60797b2，已還原回 3780a5e 內容，僅供預覽。
+- W010 實驗版29（#swapPanes 設 type=button 免誤送搜尋表單、全頁科判圖右上顯示開鎖並讓動畫依開鎖、reveal 直書改捲 #main 橫向、橫書置換 equal-panes 兩側等寬）commit acbe1e4，已還原回 3780a5e 內容，僅供預覽。
