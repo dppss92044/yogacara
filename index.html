@@ -4234,7 +4234,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         else setTimeout(function(){if(!ReaderUI.bookmark&&upd.y)window.scrollTo(0,upd.y);if(ReaderUI.single&&(upd.screen==='catalog'||upd.screen==='chart'))selectReaderPane(upd.screen);if(upd.ppage&&S.panel)panelPage(upd.ppage);},400);
       }}catch(e){}
     var seen = null; try { seen = localStorage.getItem("hk-tour"); } catch (e) {}
-    if(!seen&&!(window.__fu===true))setTimeout(function(){try{localStorage.setItem("hk-tour","9");}catch(e){}if(window.__helpAnim&&!document.getElementById("updAnim"))window.__helpAnim("app");},600);
+    if(!seen&&!(window.__fu===true))setTimeout(function(){try{localStorage.setItem("hk-tour","9");}catch(e){}},600);
     (function(){
       var ver=($('appVer').textContent||'').replace(/^(v|beta\s*)/i,''),KEY='hk-seen-version',last=null;
       try{last=localStorage.getItem(KEY);}catch(e){}
