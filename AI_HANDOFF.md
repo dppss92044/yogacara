@@ -12,6 +12,12 @@
 - #upNav 點擊改為 `panelPage(APPEAR[n]||2, n, N[n][6], true)`（只在 #pzoom 反黃並置中母枝，不呼叫 focusNode）；說明卡在半頁科判開啟時放進 #kmap（`.ha.ha-in`，透明底）。
 - 測試：僅電腦版 Chromium（深節點 己二→丁五 反黃、說明卡在半頁內）；iPad／手機／韓版／藏版未測。
 
+## W020（已靜默合併 main，Claude Code，2026-10-12）
+- q：「在科判半頁圖，不管哪版本，最上面的瑜伽師地論，一樣要有說明中的快捷鍵的功能介面的適用。另外，同時加上不管分什麼輸入法，按到相應的快捷按鍵都要可以操作，直接默默合併發布。」
+- 根節點是虛擬節點 VR：原本選它按 F 會 toggleFocus(VR) 讓整張圖變空白；＋／− 走 branchStep 但 subEnd(VR) 只含自己，無作用。改為 branchStep 對 VR 涵蓋 0..VR；toggleFocus 對 VR 只做還原（不聚焦）。科判圖 ⌘／Ctrl ＋／− 與正文 ⌘／Ctrl ＋／−／0 加認 `e.code`（Equal／Minus／Numpad*／Digit0）；F 與 ＋／− 本來就有 `e.code` 判斷。
+- 註：統計串在 main 也用了 W011 前綴（c6b0b90、bfe043a），與本串 W011（科判顏色）撞號，待整理。
+- 測試：僅電腦版 Chromium（根節點 F 不再空白、− 收一層；以 key「ㄑ」code KeyF、key「ㄦ」code Minus、key「Process」code Equal、⌘「≠」code Equal 模擬輸入法）；全屏科判、韓版、藏版共用同一段程式但未實測；iPad／手機、真實輸入法未測。
+
 ## W019（已靜默合併 main，Claude Code，2026-10-12）
 - q：「刪除這段說明文字。好了就直接默默合併發布」（附半頁科判「說明」鈕的提示泡泡截圖）。移除 `.km-help-a` 的 `data-tip`。只併這一處；W018（去上一層跳母枝反黃、說明框只在半頁圖內）仍是分支上的預覽，未合併。測試：僅電腦版 Chromium 未實測此改動（純刪屬性），iPad／手機／韓版／藏版未測。
 
