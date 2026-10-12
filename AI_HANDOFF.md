@@ -995,3 +995,4 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 - W010 beta 2.2 預覽（四）（2.2 quiet：不跳通知、不亮鈴鐺；#trackLock 加 .upd-dot 1 點鐘貼邊，隨 hk-ver-opened 消失；鎖說明改原生 title；齒輪／版本列紅點沿用；仍未跑 build_release、未合併 main）commit 8bfef76，已還原回 3780a5e 內容。建置腳本在 scratchpad patch22.py（以 main cfb6666 為底）。
 - W010 beta 2.2 預覽（五）（focusNode：__trackLocked 時不呼叫 centerReadingHeading／reveal，點標題只加 .on；說明文字同步；仍未跑 build_release、未合併 main）commit 08f6c7b，已還原回 3780a5e 內容。
 - W010 beta 2.2 預覽（六）（取消預覽五的鎖住不 reveal；鎖住時 focusNode from=text 不保留卷次位置，3×3 點擊同步；說明文字同步；仍未跑 build_release、未合併 main）commit 6efd77c，已還原回 3780a5e 內容。
+- 2026-10-12 beta 2.2 預覽（七）`110c0db`：右下科判圖三段同位置、全頁時卷次預設收起；紅點：開通知→鈴鐺＋鎖＋科判圖示；關通知→齒輪、版本、詳情＋鎖＋科判圖示；點過即消失。未合併 main。index.html 已還原為 3780a5e。
