@@ -38,7 +38,7 @@
 ## W011（2.2 後緊急修正，已靜默合併 main，Claude Code，2026-10-12）
 - q：「緊急更新bug，直接合併不用通知。半頁的科判圖在正文改科判顏色的時候，他不會跟著改」。原因：科判圖是 canvas，`pal()` 只讀 `--cinnabar`，且改色時不重畫。修正：`pal()` 有自訂色時用 `--custom-kepan-color`，並監看根元素 style／data-custom-kepan-color 變化重畫。
 - 測試：Chromium 1470×900 藏版，半頁與展開圖改色後 canvas 紅字像素全變為新色、按恢復預設變回。未測手機／平板版面、韓版、Safari 與實機。未改 appVer 與 sw.js 的 VERSION（仍 2.2）；sw.js 只重算 index.html 雜湊（同 cfb6666 的靜默合併做法），讓已安裝的 App 能取得修正。
-## 進行中：W011（統計：本人旗標＋App 版本＋「概況」；Claude Code，2026-10-12，**未發布、未 migration、未 deploy**）
+## W011（統計：本人旗標＋App 版本＋「概況」；Claude Code，2026-10-12，**已發布：q 已套用遠端 D1 migration 0004 並部署 Worker（版本 ccfc1967）；App 靜默合併進 main，版本仍 2.2，已重算 sw.js**）
 - 基底：App 2.2（main `f88bb94`）。q 原話：「如果我想增加一個版本更新之後的統計呢？我現在想把主要的統計，改成實際停留查看的人數、使用時間。可以的話區分我本人跟其他人。之前太多指令都不實用，」；本人區分方式 q 在決策卡選「裝置標記」。工作分支 `work/W011-analytics-me-version`；推送到 `claude/project-thread-3ws881`。決定 D160–D162。
 - 內容：客戶端送 `me`（關於頁連點版本號 7 下，或 control 事件）與 `av`；Worker 新增欄位、migration `analytics/worker/migrations/0004-me-version.sql`、`/admin/engaged`、其餘端點 `who=me|other`；CLI 新增 `概況`、`--本人`／`--其他`／`--門檻`，`使用者`／`實例` 顯示本人與版本；registry 的 `jfold` 預設值由 fold 改為 open（W005 已改預設展開，registry 過期，否則 Mac 會把預設狀態誤記為非預設）。
 - 已測：`node --test analytics/worker/test/`（35 項 Worker／schema／migration）；`python3 -m unittest discover analytics/cli`（20 項）；`node tools/stats-test.cjs`（Chromium 電腦／iPad／iPhone 模擬，含新增 T16 me／av）已 rebase 到最新 main 後 17/17 通過（含 T01 jfold 預設改依版面）。Worker 35 項、CLI 21 項亦通過。另新增 `瑜伽統計 2.2`（版本號當指令，看該版本的實際使用人數／時間）與 `/admin/engaged?av=`。
