@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>瑜伽統計後台</title>
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--fg:#1d1d1f;--mute:#6b6b70;--line:#e4e2dc;--me:#c0392b;--ot:#2f6f8f;--ok:#2e7d4f}
+@media (prefers-color-scheme:dark){:root{--bg:#161618;--card:#222226;--fg:#ececee;--mute:#9a9aa2;--line:#34343a;--me:#e8776a;--ot:#6fb0d0;--ok:#5cc08a}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 -apple-system,"PingFang TC","Noto Sans TC",sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:16px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
+h1{font-size:20px;margin:0}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg button,select,input{font:inherit;color:var(--fg);background:var(--card);border:1px solid var(--line);padding:6px 12px;cursor:pointer}
+.seg button{border-radius:0;margin-left:-1px}.seg button:first-child{border-radius:8px 0 0 8px;margin-left:0}.seg button:last-child{border-radius:0 8px 8px 0}
+.seg button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+select,input{border-radius:8px}input{width:64px;cursor:text}
+.grid{display:grid;gap:12px}.k4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}.k2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card h2{font-size:13px;color:var(--mute);margin:0 0 8px;font-weight:600}
+.big{font-size:30px;font-weight:700;line-height:1.1}.sub{color:var(--mute);font-size:13px;margin-top:4px}
+.split{display:flex;gap:16px;margin-top:8px;font-size:13px}.split b{font-size:15px}.split span{white-space:nowrap}.split{flex-wrap:wrap}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:right;padding:6px 4px;border-bottom:1px solid var(--line)}th:first-child,td:first-child{text-align:left}th{color:var(--mute);font-weight:600;font-size:12px}
+.bar{height:8px;border-radius:4px;background:var(--ot);opacity:.85;display:inline-block;vertical-align:middle}
+#err{display:none;background:#fdecea;color:#8a1f11;border-radius:8px;padding:10px 14px;margin-bottom:12px}
+.mute{color:var(--mute);font-size:12.5px;margin-top:14px}
+svg text{fill:var(--mute);font-size:11px}
+.live{color:var(--ok);font-weight:700}
+</style></head><body><div class="wrap">
+<header><h1>瑜伽統計後台</h1>
+<div class="ctl"><span class="seg" id="rng"><button data-v="today">今天</button><button data-v="week" class="on">本週</button><button data-v="month">本月</button></span>
+<select id="dev"><option value="">全部裝置</option><option value="desktop">電腦</option><option value="tablet">平板</option><option value="phone">手機</option></select>
+<label style="font-size:13px;color:var(--mute)">實際使用門檻 <input id="min" type="number" min="1" max="3600" value="30"> 秒</label></div></header>
+<div id="err"></div>
+<div class="grid k4" id="kpi"></div>
+<div class="grid k2" style="margin-top:12px">
+ <div class="card"><h2>每日實際使用人數（藍＝其他人　紅＝本人）</h2><div id="days"></div></div>
+ <div class="card"><h2>即時在線 <span class="live" id="liveN"></span></h2><div id="live"></div></div>
+</div>
+<div class="grid k2" style="margin-top:12px">
+ <div class="card"><h2>各 App 版本</h2><div id="ver"></div></div>
+ <div class="card"><h2>最常讀的卷（有效閱讀時間）</h2><div id="juan"></div></div>
+</div>
+<div class="card" style="margin-top:12px"><h2>功能使用排行</h2><div id="feat"></div></div>
+<p class="mute">「實際使用」＝期間內有效使用達門檻的裝置（畫面開著且有操作）。一台裝置算一個「人」，不代表真實人數。「本人」是你在自己的裝置上標記過的；沒標記的都算其他人。資料只讀自你自己的統計伺服器，本頁只在這台 Mac 開啟。<span id="upd"></span></p>
+</div>
+<script>
+var K=new URLSearchParams(location.search).get('k')||'';
+var S={rng:'week',dev:'',min:30},DEVN={desktop:'電腦',tablet:'平板',phone:'手機'};
+function $(i){return document.getElementById(i)}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function dur(s){s=Math.round(s||0);if(s<60)return s+' 秒';var m=s/60;if(m<60)return(m>=10?Math.round(m):m.toFixed(1))+' 分鐘';return(s/3600).toFixed(1)+' 小時'}
+function api(path,q){var u='/api/'+path+'?'+new URLSearchParams(Object.assign({},q||{}));return fetch(u,{headers:{'X-K':K}}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||('HTTP '+r.status));return j})})}
+function base(){var q={range:S.rng};if(S.dev)q.dev=S.dev;return q}
+function card(title,big,sub,me,ot){var c=el('div','card');c.appendChild(el('h2','',title));c.appendChild(el('div','big',big));if(sub)c.appendChild(el('div','sub',sub));
+ var sp=el('div','split');[['本人',me,'var(--me)'],['其他人',ot,'var(--ot)']].forEach(function(a){var s=el('span');var d=el('span','dot');d.style.background=a[2];s.appendChild(d);s.appendChild(document.createTextNode(a[0]+' '));s.appendChild(el('b','',a[1]));sp.appendChild(s)});c.appendChild(sp);return c}
+function kpi(e){var m=e.me,o=e.other,K=$('kpi');K.textContent='';
+ var te=m.engaged+o.engaged,ts=m.engaged_seconds+o.engaged_seconds;
+ K.appendChild(card('實際使用人數',te,'開過的裝置共 '+(m.instances+o.instances)+' 台',m.engaged,o.engaged));
+ K.appendChild(card('實際使用總時間',dur(ts),te?'平均每人 '+dur(ts/te):'—',dur(m.engaged_seconds),dur(o.engaged_seconds)));
+ K.appendChild(card('閱讀總時間',dur(m.read_seconds+o.read_seconds),'',dur(m.read_seconds),dur(o.read_seconds)));
+ K.appendChild(card('開啟次數',m.opens+o.opens,'新裝置 '+(m.new+o.new)+' 台',m.opens,o.opens))}
+function days(e){var D=$('days');D.textContent='';var by={};(e.days||[]).forEach(function(x){(by[x.day]=by[x.day]||{})[x.me?'me':'o']=x.engaged});
+ var ks=Object.keys(by).sort();if(!ks.length){D.appendChild(el('div','sub','（此期間尚無資料）'));return}
+ var mx=1;ks.forEach(function(k){mx=Math.max(mx,(by[k].me||0)+(by[k].o||0))});
+ var W=Math.max(320,ks.length*34),H=170,ns='http://www.w3.org/2000/svg',s=document.createElementNS(ns,'svg');s.setAttribute('viewBox','0 0 '+W+' '+H);s.setAttribute('width','100%');
+ function r(x,y,w,h,f){var a=document.createElementNS(ns,'rect');a.setAttribute('x',x);a.setAttribute('y',y);a.setAttribute('width',w);a.setAttribute('height',Math.max(h,0));a.setAttribute('rx',2);a.setAttribute('fill',f);s.appendChild(a)}
+ function t(x,y,x2,anc){var a=document.createElementNS(ns,'text');a.setAttribute('x',x);a.setAttribute('y',y);a.setAttribute('text-anchor',anc||'middle');a.textContent=x2;s.appendChild(a)}
+ ks.forEach(function(k,i){var o=by[k].o||0,m=by[k].me||0,bw=Math.min(24,W/ks.length-8),x=i*(W/ks.length)+(W/ks.length-bw)/2,ho=(H-34)*o/mx,hm=(H-34)*m/mx;
+  r(x,H-20-ho,bw,ho,'var(--ot)');r(x,H-20-ho-hm,bw,hm,'var(--me)');t(x+bw/2,H-6,k.slice(5));if(o+m)t(x+bw/2,H-24-ho-hm,String(o+m))});
+ D.appendChild(s)}
+function table(el0,head,rows){el0.textContent='';if(!rows.length){el0.appendChild(el('div','sub','（尚無資料）'));return}var t=el('table'),h=el('tr');head.forEach(function(x){h.appendChild(el('th','',x))});t.appendChild(h);rows.forEach(function(r){var tr=el('tr');r.forEach(function(c){var td=el('td');if(c&&c.nodeType)td.appendChild(c);else td.textContent=c;tr.appendChild(td)});t.appendChild(tr)});el0.appendChild(t)}
+function ver(e){table($('ver'),['版本','身分','實際使用','開過','有效使用'],(e.versions||[]).map(function(x){return[x.av?'v'+x.av:'未知',x.me?'本人':'其他人',x.engaged,x.instances,dur(x.active_seconds)]}))}
+function live(p){$('liveN').textContent=p.active_5m+' 人（5 分鐘內）';table($('live'),['裝置','城市','模式','幾秒前'],(p.online||[]).slice(0,12).map(function(x){return[DEVN[x.device]||'未知',x.city||'—',x.mode==='pwa'?'PWA':'網頁',x.ago]}))}
+function juan(r){var mx=1;(r.juans||[]).forEach(function(x){mx=Math.max(mx,x.sec)});table($('juan'),['卷','人數','有效閱讀',''],(r.juans||[]).slice(0,10).map(function(x){var b=el('span','bar');b.style.width=Math.round(90*x.sec/mx)+'px';return['卷'+x.juan,x.u,dur(x.sec),b]}))}
+function feat(f){var rows=(f.features||[]).filter(function(x){return x.n>0}).slice(0,15).map(function(x){return[x.name,x.n,x.u]});table($('feat'),['功能','次數','使用裝置'],rows)}
+var busy=false;
+function load(){if(busy)return;busy=true;$('err').style.display='none';var b=base();
+ Promise.all([api('engaged',Object.assign({min:S.min,by:'day'},b)),api('engaged',Object.assign({min:S.min,by:'version'},b)),api('presence',{}),api('reading',Object.assign({by:'juan'},b)),api('features',b)])
+ .then(function(a){kpi(a[0]);days(a[0]);ver(a[1]);live(a[2]);juan(a[3]);feat(a[4]);$('upd').textContent=' 更新於 '+new Date().toLocaleTimeString()})
+ .catch(function(e){$('err').textContent='讀取失敗：'+e.message;$('err').style.display='block'}).then(function(){busy=false})}
+$('rng').onclick=function(e){var v=e.target.dataset&&e.target.dataset.v;if(!v)return;S.rng=v;[].forEach.call($('rng').children,function(b){b.classList.toggle('on',b.dataset.v===v)});load()};
+$('dev').onchange=function(){S.dev=this.value;load()};
+$('min').onchange=function(){var n=parseInt(this.value,10);S.min=n>=1&&n<=3600?n:30;this.value=S.min;load()};
+load();setInterval(function(){if(!document.hidden)load()},60000);
+</script></body></html>

@@ -41,6 +41,11 @@
 - q：「緊密二字，改成寬鬆。功能不變。默默合併發布，不用通知」。只改科判圖右上開關的文字、aria-label、title；列印「疏密」選單的「緊密」選項與已隱藏的介面說明未改。sw.js 只重算雜湊，VERSION 仍 2.2。
 - 測試：Chromium 1470×900，開關顯示「寬鬆」、點擊切換正常。未測手機／平板、韓版、Safari、實機。
 
+## W020（統計後台網頁；Claude Code，2026-10-12，**預覽中，未合併 main**）
+- 基底 main `bfe043a` 之後。q 原話：「我可以把這統計做成一個html的介面自己看嗎？像yt那樣的後台」→「做」。工作分支 `work/W020-stats-dashboard`，推送 `claude/project-thread-3ws881`。D163。
+- 內容：`analytics/cli/dashboard.html`（單檔、無外部資源）＋ `yoga_stats.py` 的 `網頁` 指令（`serve_dashboard`）。顯示：實際使用人數／時間／閱讀／開啟（本人 vs 其他人）、每日圖、即時在線、各版本、卷排行、功能排行；本週／今天／本月、裝置、門檻可選，每 60 秒自動更新。
+- 已測：CLI 22 項（含新增伺服器安全測試：無密鑰 403、無 X-K 403、非白名單 403、Host 偽造 403、token 不在頁面）；Chromium 用假資料截圖淺色／深色／窄螢幕（`/mnt/project-files/W020/`），無頁面錯誤。**未測**：真實線上資料、Safari、`webbrowser` 自動開啟（只在 Mac 實測）。未改 App、Worker。
+
 ## W011（2.2 後緊急修正，已靜默合併 main，Claude Code，2026-10-12）
 - q：「緊急更新bug，直接合併不用通知。半頁的科判圖在正文改科判顏色的時候，他不會跟著改」。原因：科判圖是 canvas，`pal()` 只讀 `--cinnabar`，且改色時不重畫。修正：`pal()` 有自訂色時用 `--custom-kepan-color`，並監看根元素 style／data-custom-kepan-color 變化重畫。
 - 測試：Chromium 1470×900 藏版，半頁與展開圖改色後 canvas 紅字像素全變為新色、按恢復預設變回。未測手機／平板版面、韓版、Safari 與實機。未改 appVer 與 sw.js 的 VERSION（仍 2.2）；sw.js 只重算 index.html 雜湊（同 cfb6666 的靜默合併做法），讓已安裝的 App 能取得修正。

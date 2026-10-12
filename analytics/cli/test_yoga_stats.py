@@ -79,6 +79,33 @@ class T(unittest.TestCase):
         self.assertEqual((SEEN[-1][0], SEEN[-1][1].get('av'), SEEN[-1][1].get('range')), ('/admin/engaged', '2.2', 'month')); self.assertIn('實際使用', out)
         SEEN.clear(); out, err = run(['v2.1', '本週']); self.assertIsNone(err); self.assertEqual((SEEN[-1][1].get('av'), SEEN[-1][1].get('range')), ('2.1', 'week'))
 
+    def test_dashboard(self):
+        import urllib.request, urllib.error
+        got = {}; ev = threading.Event()
+        def ready(srv, url):
+            got['srv'], got['url'] = srv, url; ev.set()
+        os.environ['YOGA_STATS_TOKEN'] = 'tok'
+        th = threading.Thread(target=yoga_stats.serve_dashboard, kwargs={'port': 0, 'open_browser': False, 'ready': ready}, daemon=True); th.start()
+        self.assertTrue(ev.wait(5)); url = got['url']; base = url.split('?')[0]; key = url.split('k=')[1]
+        def get(path, hdr=None, host=None):
+            r = urllib.request.Request(base.rstrip('/') + path, headers=dict(hdr or {}, **({'Host': host} if host else {})))
+            try:
+                with urllib.request.urlopen(r, timeout=5) as x:
+                    return x.status, x.read()
+            except urllib.error.HTTPError as e:
+                return e.code, e.read()
+        try:
+            self.assertEqual(get('/')[0], 403)                         # 沒有密鑰
+            st, body = get('/?k=' + key); self.assertEqual(st, 200); self.assertIn('瑜伽統計後台'.encode(), body)
+            self.assertNotIn(b'tok', body)                              # token 不在網頁裡
+            self.assertEqual(get('/api/engaged?range=week')[0], 403)   # 沒有 X-K
+            self.assertEqual(get('/api/registry', {'X-K': key})[0], 403)  # 不在白名單
+            self.assertEqual(get('/api/engaged', {'X-K': key}, host='evil.example')[0], 403)   # DNS rebinding
+            SEEN.clear(); st, body = get('/api/engaged?range=week&min=30', {'X-K': key}); self.assertEqual(st, 200)
+            self.assertEqual(json.loads(body)['me']['engaged'], 2); self.assertEqual(SEEN[-1][0], '/admin/engaged'); self.assertEqual(SEEN[-1][2], 'Bearer tok')
+        finally:
+            got['srv'].shutdown(); th.join(5)
+
     def test_who_filter_passed(self):
         SEEN.clear(); out, err = run(['功能', '本週', '--其他']); self.assertIsNone(err); self.assertEqual(SEEN[-1][1].get('who'), 'other')
         SEEN.clear(); out, err = run(['本週', '--本人']); self.assertIsNone(err); self.assertEqual(SEEN[-1][1].get('who'), 'me')
