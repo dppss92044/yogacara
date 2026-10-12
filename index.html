@@ -7924,6 +7924,37 @@ function put(){var bar=document.querySelector('#kmap .km-eopt');if(!bar||bar.que
   bar.insertBefore(b,bar.firstChild);}
 put();setInterval(put,800);
 })();</script>
+<style id="dark-row-css">
+#darkBtn .dk-tr{position:relative;margin-left:auto;flex:none;width:34px;height:20px;border-radius:999px;background:rgba(120,120,128,.24);transition:background .25s ease}
+#darkBtn .dk-tr::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.18),0 0 1px rgba(0,0,0,.2);transition:transform .25s cubic-bezier(.3,.7,.3,1)}
+#darkBtn[aria-checked=true] .dk-tr{background:var(--acc,#d9a62e)}
+#darkBtn[aria-checked=true] .dk-tr::after{transform:translateX(14px)}
+</style>
+<script id="dark-row-js">(function(){
+var KEY='hk-theme',mq=matchMedia('(prefers-color-scheme: dark)'),orig=new WeakMap();
+function mode(){try{var m=localStorage.getItem(KEY);return m==='dark'||m==='light'?m:'';}catch(e){return '';}}
+function scan(list,m){for(var i=0;i<list.length;i++){var r=list[i];if(r.media&&r.cssRules){var t=orig.has(r)?orig.get(r):r.media.mediaText;if(/prefers-color-scheme:\s*dark/.test(t)){if(!orig.has(r))orig.set(r,t);var want=m==='dark'?'all':m==='light'?'not all':t;if(r.media.mediaText!==want)r.media.mediaText=want;}}}}
+function apply(){var m=mode(),root=document.documentElement;
+  if(m)root.dataset.theme=m;else delete root.dataset.theme;
+  for(var i=0;i<document.styleSheets.length;i++){try{scan(document.styleSheets[i].cssRules,m);}catch(e){}}
+  var b=document.getElementById('darkBtn');if(b)b.setAttribute('aria-checked',String(isDark()));}
+function isDark(){var m=mode();return m?m==='dark':mq.matches;}
+function toggle(){var want=!isDark();try{if(want===mq.matches)localStorage.removeItem(KEY);else localStorage.setItem(KEY,want?'dark':'light');}catch(e){}apply();}
+var ICON='<svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="10" cy="10" r="7.2"/><path d="M10 2.8a7.2 7.2 0 0 1 0 14.4z" fill="currentColor" stroke="none"/></svg>';
+function put(){var ft=document.getElementById('ftWrap');if(!ft||document.getElementById('darkWrap')||ft.dataset.settingsGroup==null)return;
+  var w=document.createElement('div');w.className='ft';w.id='darkWrap';
+  w.innerHTML='<button class="mi" id="darkBtn" type="button" role="switch" aria-checked="false" title="深色：開＝畫面反黑，關＝白底">'+ICON+'<span>深色</span><i class="dk-tr" aria-hidden="true"></i></button>';
+  ft.after(w);
+  w.dataset.settingsGroup=ft.dataset.settingsGroup;var d=ft.getAttribute('aria-describedby');if(d)w.setAttribute('aria-describedby',d);
+  if(ft.classList.contains('group-last')){ft.classList.remove('group-last');w.classList.add('group-last');}
+  w.querySelector('button').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggle();});
+  apply();}
+apply();put();
+document.addEventListener('DOMContentLoaded',function(){apply();put();});window.addEventListener('load',function(){apply();put();});
+new MutationObserver(function(ms){for(var i=0;i<ms.length;i++)for(var j=0;j<ms[i].addedNodes.length;j++){var n=ms[i].addedNodes[j];if(n.nodeName==='STYLE'||n.nodeName==='LINK'){apply();return;}}}).observe(document.documentElement,{childList:true,subtree:true});
+mq.addEventListener&&mq.addEventListener('change',apply);
+var tk=setInterval(function(){put();if(document.getElementById('darkWrap'))clearInterval(tk);},300);
+})();</script>
 
 </body></html>
 <style>
