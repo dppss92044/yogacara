@@ -27,14 +27,18 @@
 - 保存期限：`instance_day_*` 60 天；`instance_day_node` 40 天；`term_seen` 7 天；`recover_agg` 30 天；`term_agg` 90 天；`roll` 日資料 400 天；`instances` 180 天（客戶端 ID 每 180 天輪替）。
 
 ## 傳送協定
-- `POST /v`（`text/plain`、無 preflight、`keepalive`、8 秒逾時、204）：`{v:4,id,o,s,d,m,t,f?,ss?,r?,nd?,q?,k?,x?,hv?}`。頂層 `ss`＝設定狀態時間。嚴格結構（多餘欄位 400）、內容依 Registry 過濾、上限見 D052。`t:'b'` 只收 `o,s,d,m`。v2 仍接受，v1 丟棄。
+- `POST /v`（`text/plain`、無 preflight、`keepalive`、8 秒逾時、204）：`{v:4,id,o,s,d,m,t,f?,ss?,r?,nd?,q?,k?,x?,hv?,me?,av?}`。`me`＝0|1 本人旗標（W011，D155）、`av`＝App 版本（D156），基本版也可帶。頂層 `ss`＝設定狀態時間。嚴格結構（多餘欄位 400）、內容依 Registry 過濾、上限見 D052。`t:'b'` 只收 `o,s,d,m,me,av`。v2 仍接受，v1 丟棄。
 - `POST /p`：presence 心跳 `{v:1,id,d,m}`／離開 `{v:1,id,x:1}`；回 204＋標頭 `x-p`（客戶端心跳間隔秒，20–300，`0`＝停止）。只在頁面可見且 90 秒內有互動才送；WITHOUT ROWID upsert＋「距上次 ≥10 秒才寫」守衛。環境變數 `PRESENCE=on|watch|off`（`watch`＝只有 CLI 監看期間才寫 D1）。
 - `POST /forget`：刪 `instances`、`instance_days`、`instance_day_*`、`term_seen`、`presence`；聚合保留；不告知是否存在。
-- 管理端點（`Authorization: Bearer`，常數時間比對）：`stats overview features state reading nodes search dict export registry nav display font label notes instances instance size presence trend`。**沒有任何端點能列出單一實例的節點／詞／設定值**。
+- 管理端點（`Authorization: Bearer`，常數時間比對）：`stats engaged overview features state reading nodes search dict export registry nav display font label notes instances instance size presence trend`。**沒有任何端點能列出單一實例的節點／詞／設定值**。
 - k 門檻：地區 `K_MIN=5`；節點、詞、卷排行 `K_TERM=3`，不足者併入「其他」。
 
+## 本人旗標與 App 版本（W011，未上線）
+- 標記本人：在該裝置的「關於」頁連點版本號 7 下（再 7 下取消；輕震一下），沒有任何畫面提示；每台裝置各標一次。CLI `使用者`／`實例` 會顯示「本人」。
+- 上線需先套用 `worker/migrations/0004-me-version.sql`（遠端 D1），再 deploy Worker，最後才發布含新客戶端的 App；順序見 `AI_HANDOFF.md` W011。
+
 ## 查詢（Mac CLI）
-`analytics/cli/yoga_stats.py`：`瑜伽統計 今天｜本週｜本月｜<主題> [期間]`；主題：回訪、地區、使用者、實例、閱讀、科判、版本、註釋、搜尋、辭典、匯出、導航、顯示、字體、科標、功能（`--全部`／`--未使用`／`--類型`）、裝置、即時（`--監看`、`--timeout`）、趨勢、資料量、登錄；`--裝置`、`--最近`、`--by`、`--day`、`--json`。token 預設由鑰匙圈 `yoga-stats-admin` 讀取；`./analytics/cli/install-mac.sh` 把指令加進 `~/.zshrc`（不寫 token）。測試：`python3 -m unittest discover analytics/cli`。
+`analytics/cli/yoga_stats.py`：`瑜伽統計 今天｜本週｜本月｜<主題> [期間]`；主題：**概況**（實際使用人數與時間，本人／其他人，`--by 日|版本`、`--門檻`）、回訪、地區、使用者、實例、閱讀、科判、版本、註釋、搜尋、辭典、匯出、導航、顯示、字體、科標、功能（`--全部`／`--未使用`／`--類型`）、裝置、即時（`--監看`、`--timeout`）、趨勢、資料量、登錄；`--本人`／`--其他`、`--裝置`、`--最近`、`--by`、`--day`、`--json`。token 預設由鑰匙圈 `yoga-stats-admin` 讀取；`./analytics/cli/install-mac.sh` 把指令加進 `~/.zshrc`（不寫 token）。測試：`python3 -m unittest discover analytics/cli`。
 
 ## 新增功能時的 Analytics 規則（D050，不可省）
 1. 判斷這個功能有沒有產品分析價值。

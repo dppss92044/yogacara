@@ -7,6 +7,12 @@ import yoga_stats
 
 FX = json.load(open(os.path.join(os.path.dirname(__file__), 'fixtures', 'canned.json'), encoding='utf-8'))
 SEEN = []
+# 概況（W011）：Worker 測試已驗證端點本身，這裡只回放同形狀的合成回應
+FX['engaged'] = {'range': 'week', 'period': {'start': '2026-10-06', 'end': '2026-10-12'}, 'dev': None, 'min_seconds': 30,
+                 'me': {'instances': 2, 'engaged': 2, 'active_seconds': 5400, 'engaged_seconds': 5400, 'read_seconds': 3600, 'opens': 9, 'new': 0},
+                 'other': {'instances': 11, 'engaged': 6, 'active_seconds': 7200, 'engaged_seconds': 7000, 'read_seconds': 4000, 'opens': 40, 'new': 3},
+                 'days': [{'day': '2026-10-12', 'me': False, 'instances': 4, 'engaged': 2, 'active_seconds': 900}, {'day': '2026-10-12', 'me': True, 'instances': 1, 'engaged': 1, 'active_seconds': 1800}],
+                 'versions': [{'av': '2.2', 'me': False, 'instances': 3, 'engaged': 2, 'active_seconds': 800, 'read_seconds': 500}, {'av': None, 'me': False, 'instances': 8, 'engaged': 4, 'active_seconds': 6400, 'read_seconds': 3500}]}
 
 
 class H(BaseHTTPRequestHandler):
@@ -19,7 +25,7 @@ class H(BaseHTTPRequestHandler):
             self.send_response(409); self.send_header('Content-Type', 'application/json'); self.end_headers(); self.wfile.write(json.dumps({'error': '短代號對到多個實例，請多給幾碼（最多 8 碼）'}).encode()); return
         key = {'/admin/overview': 'overview', '/admin/instances': 'instances', '/admin/instance': 'instance', '/admin/nodes': 'nodes', '/admin/notes': 'notes', '/admin/nav': 'nav',
                '/admin/display': 'display', '/admin/font': 'font', '/admin/label': 'label', '/admin/search': 'search', '/admin/dict': 'dict', '/admin/export': 'export',
-               '/admin/trend': 'trend', '/admin/size': 'size', '/admin/registry': 'registry', '/admin/presence': 'presence'}.get(p)
+               '/admin/trend': 'trend', '/admin/size': 'size', '/admin/registry': 'registry', '/admin/presence': 'presence', '/admin/engaged': 'engaged'}.get(p)
         if p == '/admin/reading':
             key = 'reading_edition' if q.get('by') == 'edition' else 'reading'
         elif p == '/admin/features':
@@ -57,6 +63,26 @@ def run(args, token='tok', **kw):
 
 
 class T(unittest.TestCase):
+    def test_engaged(self):
+        SEEN.clear()
+        out, err = run(['概況', '--本人', '--門檻', '60', '--by', '版本'])
+        self.assertIsNone(err); q = SEEN[-1][1]; self.assertEqual(SEEN[-1][0], '/admin/engaged')
+        self.assertEqual((q.get('min'), q.get('by'), q.get('range')), ('60', 'version', 'week')); self.assertNotIn('who', q)
+        for w in ('實際使用', '本人', '其他人', 'v2.2', '未知'):
+            self.assertIn(w, out)
+        out, err = run(['概況', '本月', '--by', '日']); self.assertIsNone(err); self.assertIn('2026-10-12', out); self.assertEqual(SEEN[-1][1]['range'], 'month')
+        out, err = run(['概況', '--本人', '--其他']); self.assertIsNotNone(err)
+        out, err = run(['概況', '--門檻', '0']); self.assertIsNotNone(err)
+
+    def test_version_command(self):
+        SEEN.clear(); out, err = run(['2.2']); self.assertIsNone(err)
+        self.assertEqual((SEEN[-1][0], SEEN[-1][1].get('av'), SEEN[-1][1].get('range')), ('/admin/engaged', '2.2', 'month')); self.assertIn('實際使用', out)
+        SEEN.clear(); out, err = run(['v2.1', '本週']); self.assertIsNone(err); self.assertEqual((SEEN[-1][1].get('av'), SEEN[-1][1].get('range')), ('2.1', 'week'))
+
+    def test_who_filter_passed(self):
+        SEEN.clear(); out, err = run(['功能', '本週', '--其他']); self.assertIsNone(err); self.assertEqual(SEEN[-1][1].get('who'), 'other')
+        SEEN.clear(); out, err = run(['本週', '--本人']); self.assertIsNone(err); self.assertEqual(SEEN[-1][1].get('who'), 'me')
+
     def test_summary_and_aliases(self):
         out, err = run(['今天']); self.assertIsNone(err)
         for s in ['匿名使用實例：6', '回訪率', '有效閱讀時間合計', '熱門卷', '搜尋：', '辭典查詢', '功能使用', '使用頻率', '城市']:

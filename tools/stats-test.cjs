@@ -23,7 +23,7 @@ async function boot(o = {}) {
   if (o.layout === '') o.layout = null;
   const ctx = { c, mode: o.mode || 'ok', reqs: [], errors: [], geo: 0 };
   await c.addInitScript(({ layout, init, dnt, gpc, edition }) => {
-    try { localStorage.setItem('hk-tour', '9'); if (layout) localStorage.setItem('hk-device-layout-v146', layout); if (edition) localStorage.setItem('hk-edition-v154', edition); } catch (e) {}
+    try { localStorage.setItem('hk-tour', '9'); localStorage.setItem('hk-seen-version', '2.2'); localStorage.setItem('km-tour-off', '1'); localStorage.setItem('hk-update-notice', 'off'); if (layout) localStorage.setItem('hk-device-layout-v146', layout); if (edition) localStorage.setItem('hk-edition-v154', edition); } catch (e) {}
     if (init) for (const k in init) try { if (!localStorage.getItem('__seeded') ) localStorage.setItem(k, typeof init[k] === 'string' ? init[k] : JSON.stringify(init[k])); } catch (e) {}
     try { localStorage.setItem('__seeded', '1'); } catch (e) {}
     if (dnt) Object.defineProperty(navigator, 'doNotTrack', { value: '1', configurable: true });
@@ -95,7 +95,7 @@ async function t(name, fn) {
     assert.ok(/text\/plain/.test(q.headers['content-type'])); assert.ok(!q.headers.cookie && !q.headers.referer);
     const b = JSON.parse(q.body); assert.strictEqual(b.v, 4); assert.strictEqual(b.t, 'f'); assert.strictEqual(b.d, 'desktop'); assert.strictEqual(b.m, 'web');
     assert.match(b.id, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/); assert.strictEqual(b.o, 1);
-    for (const k of Object.keys(b)) assert.ok(['v', 'id', 'o', 's', 'd', 'm', 't', 'f', 'ss', 'r', 'nd', 'q', 'k', 'x', 'hv'].includes(k), k);
+    for (const k of Object.keys(b)) assert.ok(['v', 'id', 'o', 's', 'd', 'm', 't', 'f', 'ss', 'r', 'nd', 'q', 'k', 'x', 'hv', 'me', 'av'].includes(k), k);
     assert.deepStrictEqual(await x.c.cookies(), []); assert.ok(!x.reqs.some(r => r.method === 'OPTIONS'));
     assert.strictEqual(await x.p.evaluate(() => window.__geo), 0); noErr(x); await x.c.close();
   });
@@ -165,7 +165,7 @@ async function t(name, fn) {
     assert.strictEqual(x.reqs.length, n); assert.ok(!(await x.ls('hk-analytics-forget-v1')), '墓碑已清');
     await x.p.evaluate(() => window.dispatchEvent(new CustomEvent('hk-analytics-control', { detail: { mode: 'basic' } }))); await x.run(8000, true);
     await x.p.click('#menuBtn'); await x.p.evaluate(() => window.dispatchEvent(new CustomEvent('hk-analytics-control', { detail: { mode: 'basic' } }))); await x.run(30000, true); await flushNow(x);
-    const bs = x.vbodies().filter(b => b.t === 'b'); assert.ok(bs.length >= 1); for (const b of bs) for (const k of Object.keys(b)) assert.ok(['v', 'id', 'o', 's', 'd', 'm', 't'].includes(k), 'basic 不得含 ' + k);
+    const bs = x.vbodies().filter(b => b.t === 'b'); assert.ok(bs.length >= 1); for (const b of bs) for (const k of Object.keys(b)) assert.ok(['v', 'id', 'o', 's', 'd', 'm', 't', 'me', 'av'].includes(k), 'basic 不得含 ' + k);
     assert.notStrictEqual((await x.state()).id, id, 'off 後重開為新編號'); noErr(x); await x.c.close();
     x = await boot({ clock: true }); await x.run(4000, true); await x.c.setOffline(true);
     await x.p.evaluate(() => window.dispatchEvent(new CustomEvent('hk-analytics-control', { detail: { mode: 'off' } }))); await x.p.clock.runFor(1000);
@@ -193,6 +193,21 @@ async function t(name, fn) {
   await t('T15 presence 關閉（presence:false）不送 /p，仍送 /v', async () => {
     const x = await boot({ clock: true, init: { 'hk-analytics-mode-v2': { m: 'full', p: false } } }); await x.run(4000, true); await x.run(70000, true); await flushNow(x);
     assert.strictEqual(x.pbodies().length, 0); assert.ok(x.vbodies().length >= 1); await x.c.close();
+  });
+
+  await t('T16 本人旗標 me 與版本 av：預設不送 me；control {me:true} 送 me:1；av＝meta 版本；basic 也帶；off 後保留', async () => {
+    let x = await boot({ clock: true }); await x.run(4000, true); await flushNow(x);
+    const ver = await x.p.evaluate(() => document.querySelector('meta[name="app-version"]').content);
+    let bs = x.vbodies(); assert.ok(bs.length >= 1); for (const b of bs) { assert.strictEqual(b.av, ver); assert.strictEqual(b.me, undefined, '未標記不送 me'); }
+    const n = bs.length;
+    await x.p.evaluate(() => window.dispatchEvent(new CustomEvent('hk-analytics-control', { detail: { me: true } }))); await x.run(8000, true); await flushNow(x);
+    const after = x.vbodies().slice(n); assert.ok(after.some(b => b.me === 1), 'me:1 應送出（僅旗標變動也要送）');
+    assert.strictEqual(JSON.parse(await x.ls('hk-analytics-mode-v2')).me, 1);
+    await x.p.evaluate(() => window.dispatchEvent(new CustomEvent('hk-analytics-control', { detail: { mode: 'basic' } }))); await x.run(8000, true); await flushNow(x);
+    assert.strictEqual(JSON.parse(await x.ls('hk-analytics-mode-v2')).me, 1, '切 basic 保留 me');
+    const m = x.vbodies().length;
+    await x.p.evaluate(() => window.dispatchEvent(new CustomEvent('hk-analytics-control', { detail: { me: false } }))); await x.run(8000, true); await flushNow(x);
+    assert.ok(x.vbodies().slice(m).some(b => b.me === 0), 'me:0 應送出以取消標記'); noErr(x); await x.c.close();
   });
 
   await browser.close(); server.close();

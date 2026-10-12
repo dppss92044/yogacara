@@ -4069,7 +4069,11 @@
    "devices": "全部",
    "source": "#jFold aria-expanded",
    "via": "s",
-   "default": "fold",
+   "default": {
+    "mac": "open",
+    "ipad": "open",
+    "iphone": "fold"
+   },
    "values": [
     "open",
     "fold"

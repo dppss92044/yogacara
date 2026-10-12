@@ -34,8 +34,8 @@ export async function collect(request, env) {
   const stmts = [];
   if (!row) {
     for (const t of ['d', 'w', 'm']) { stmts.push(incAgg(t, 'new')); stmts.push(incAgg(t, 'active')); }
-    stmts.push(DB.prepare('INSERT INTO instances (h, first_day, last_day, opens_total, active_sec, city, device, mode, tier, read_sec, search_total, dict_total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
-      .bind(h, today, today, p.o, p.s, city, p.d, p.m, p.t, read, search, dict));
+    stmts.push(DB.prepare('INSERT INTO instances (h, first_day, last_day, opens_total, active_sec, city, device, mode, tier, read_sec, search_total, dict_total, me, av) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      .bind(h, today, today, p.o, p.s, city, p.d, p.m, p.t, read, search, dict, p.me || 0, p.av));
   } else {
     const last = row.last_day;
     if (last !== today) stmts.push(incAgg('d', 'active'));
@@ -43,11 +43,11 @@ export async function collect(request, env) {
     if (monthKey(last) !== monthKey(today)) stmts.push(incAgg('m', 'active'));
     // city、device、mode、tier 只覆寫為「最新一次」的值，不保留歷史。
     stmts.push(DB.prepare('UPDATE instances SET last_day = ?, opens_total = opens_total + ?, active_sec = active_sec + ?, city = ?, device = COALESCE(?, device), mode = COALESCE(?, mode), tier = COALESCE(?, tier), ' +
-      'read_sec = read_sec + ?, search_total = search_total + ?, dict_total = dict_total + ? WHERE h = ?').bind(today, p.o, p.s, city, p.d, p.m, p.t, read, search, dict, h));
+      'read_sec = read_sec + ?, search_total = search_total + ?, dict_total = dict_total + ?, me = COALESCE(?, me), av = COALESCE(?, av) WHERE h = ?').bind(today, p.o, p.s, city, p.d, p.m, p.t, read, search, dict, p.me, p.av, h));
   }
   stmts.push(DB.prepare(
-    'INSERT INTO instance_days (h, day, opens, active_sec, read_sec) VALUES (?, ?, ?, ?, ?) ' +
-    'ON CONFLICT(h, day) DO UPDATE SET opens = opens + excluded.opens, active_sec = MIN(active_sec + excluded.active_sec, ' + MAX_DAY_SEC + '), read_sec = read_sec + excluded.read_sec').bind(h, today, p.o, p.s, read));
+    'INSERT INTO instance_days (h, day, opens, active_sec, read_sec, av) VALUES (?, ?, ?, ?, ?, ?) ' +
+    'ON CONFLICT(h, day) DO UPDATE SET av = COALESCE(excluded.av, av), opens = opens + excluded.opens, active_sec = MIN(active_sec + excluded.active_sec, ' + MAX_DAY_SEC + '), read_sec = read_sec + excluded.read_sec').bind(h, today, p.o, p.s, read, p.av));
   stmts.push(DB.prepare(
     'INSERT INTO agg_vol (day, city, opens, active_sec) VALUES (?, ?, ?, ?) ' +
     'ON CONFLICT(day, city) DO UPDATE SET opens = opens + excluded.opens, active_sec = active_sec + excluded.active_sec').bind(today, city, p.o, p.s));

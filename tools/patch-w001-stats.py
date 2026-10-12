@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """W001 Analytics v2 補丁（不綁版本號；未發布前不改 appVer／sw.js）。
 用法：python3 tools/patch-w001-stats.py index.html index.html
+（已含客戶端的 index.html 會就地換成新版客戶端；全新 v1.91 基底則注入。）
 只做一件事：把 tools/stats-client.js 注入 index.html，並把 /*W001_CFG*/null 換成
 由 analytics/registry.json 與內嵌科判資料雜湊（dv）產生的設定。
 不加任何 UI、不改文案、不改 CSS（D059：App 無統計 UI）。"""
@@ -11,8 +12,7 @@ sys.path.insert(0, here)
 mk = __import__('make-kepan-registry')
 s = open(SRC, encoding='utf-8').read()
 MARK = 'hk-analytics-mode-v2'
-if MARK in s:
-    raise SystemExit('已套用過 W001 Analytics v2 補丁，不重複套用')
+REPLACE = MARK in s        # 已有客戶端（例如 2.2 之後）：就地換成新版客戶端，不重複注入
 reg = json.load(open(os.path.join(root, 'analytics', 'registry.json'), encoding='utf-8'))
 zang = open(os.path.join(root, 'data', 'zang.js'), encoding='utf-8').read()
 cfg = {
@@ -24,8 +24,15 @@ cfg = {
 js = open(os.path.join(here, 'stats-client.js'), encoding='utf-8').read()
 if js.count('/*W001_CFG*/null') != 1: raise SystemExit('客戶端缺少 CFG 佔位')
 js = js.replace('/*W001_CFG*/null', json.dumps(cfg, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/'))
-anchor = '</script>\n</body></html>\n<style>'
-if s.count(anchor) != 1: raise SystemExit('注入點數量不符')
-s = s.replace(anchor, '</script>\n<script>\n' + js + '</script>\n</body></html>\n<style>')
+if REPLACE:
+    head = '<script>\n/* W001 Analytics v2 客戶端'
+    i = s.find(head)
+    if i < 0 or s.count(head) != 1: raise SystemExit('找不到既有客戶端區塊（或出現多次）')
+    j = s.index('</script>\n', i)
+    s = s[:i] + '<script>\n' + js + s[j:]
+else:
+    anchor = '</script>\n</body></html>\n<style>'
+    if s.count(anchor) != 1: raise SystemExit('注入點數量不符')
+    s = s.replace(anchor, '</script>\n<script>\n' + js + '</script>\n</body></html>\n<style>')
 open(DST, 'w', encoding='utf-8').write(s)
 print('已套用 W001 Analytics v2 補丁 →', DST, '（ids %d, rules %d, dims %d, dv %s）' % (len(cfg['ids']), len(cfg['rules']), len(cfg['dims']), cfg['dv']))

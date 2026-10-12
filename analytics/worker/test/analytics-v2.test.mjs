@@ -288,3 +288,49 @@ test('wrangler.toml／Registry 一致性：變數與 cron；Registry 欄位與 i
   for (const f of REG.features) for (const k of ['id', 'name', 'model', 'type', 'selector', 'devices', 'metrics', 'status', 'why', 'privacy', 'retention', 'raw']) assert.ok(k in f, f.id + ':' + k);
   assert.ok(REG.features.every(f => f.raw === false));
 });
+
+// ---- W011：本人旗標 me、App 版本 av、概況 engaged（D155–D157）----
+test('me／av：驗證（me 只能 0／1、av 須為 x.y 版本）；基本層可帶；舊客戶端沒有也行', () => {
+  const ok = o => parsePayload(JSON.stringify({ v: 4, id: ID(1), o: 1, s: 30, d: 'phone', ...o }));
+  assert.ok(ok({ me: 1, av: '2.2' })); assert.equal(ok({ me: 1, av: '2.2' }).me, 1); assert.equal(ok({}).me, null); assert.equal(ok({}).av, null);
+  assert.ok(ok({ t: 'b', m: 'web', me: 0, av: '2.2' }));
+  for (const bad of [{ me: 2 }, { me: true }, { me: '1' }, { av: 'beta 2.2' }, { av: '2' }, { av: 22 }, { av: '123.4' }]) assert.equal(ok(bad), null, JSON.stringify(bad));
+});
+
+test('me／av 入庫：instances 存最新、instance_days 存當天版本；缺欄位不覆寫；me 可改回 0；forget 一併刪除', async () => {
+  const { env, db } = makeEnv();
+  await at(T0, async () => { assert.equal((await post(env, full(1, { me: 1, av: '2.1' }))).status, 204); });
+  let i = rows(db, 'SELECT me, av FROM instances')[0]; assert.deepEqual(i, { me: 1, av: '2.1' });
+  assert.equal(rows(db, 'SELECT av FROM instance_days')[0].av, '2.1');
+  await at('2026-10-05T05:00:00Z', async () => { await post(env, full(1, { o: 0, s: 60, f: undefined })); });
+  i = rows(db, 'SELECT me, av FROM instances')[0]; assert.deepEqual(i, { me: 1, av: '2.1' }, '沒帶欄位時不覆寫');
+  await at('2026-10-06T05:00:00Z', async () => { await post(env, { v: 4, id: ID(1), o: 1, s: 60, d: 'phone', av: '2.2', me: 0 }); });
+  i = rows(db, 'SELECT me, av FROM instances')[0]; assert.deepEqual(i, { me: 0, av: '2.2' });
+  assert.deepEqual(rows(db, 'SELECT day, av FROM instance_days ORDER BY day').map(r => r.av), ['2.1', '2.2']);
+  await forgetReq(env, { id: ID(1) }); assert.equal(rows(db, 'SELECT COUNT(*) c FROM instances')[0].c, 0);
+});
+
+test('概況 /admin/engaged：本人與其他分開；停留門檻；依日、依版本；who 篩選；實例列表帶 me', async () => {
+  const { env } = makeEnv();
+  const b = (n, s, extra = {}) => ({ v: 4, id: ID(n), o: 1, s, d: 'phone', m: 'web', t: 'b', ...extra });
+  await at(T0, async () => {
+    await post(env, b(1, 600, { me: 1, av: '2.2' }));      // 本人，停留
+    await post(env, b(2, 120, { av: '2.2' }));             // 其他，停留
+    await post(env, b(3, 10, { av: '2.1' }));              // 其他，點開就走
+    await post(env, b(4, 45, { av: '2.2', d: 'desktop' }));
+  });
+  await at('2026-10-05T10:00:00Z', async () => {
+    const e = await admin(env, '/admin/engaged?range=today&min=30&by=version');
+    assert.equal(e.me.instances, 1); assert.equal(e.me.engaged, 1); assert.equal(e.me.active_seconds, 600);
+    assert.equal(e.other.instances, 3); assert.equal(e.other.engaged, 2); assert.equal(e.other.engaged_seconds, 165); assert.equal(e.other.active_seconds, 175);
+    const v = (av, me) => e.versions.find(x => x.av === av && x.me === me);
+    assert.equal(v('2.2', true).instances, 1); assert.equal(v('2.2', false).engaged, 2); assert.equal(v('2.1', false).engaged, 0);
+    const d = await admin(env, '/admin/engaged?range=today&min=30&dev=desktop'); assert.equal(d.other.instances, 1); assert.equal(d.me.instances, 0);
+    const f22 = await admin(env, '/admin/engaged?range=today&av=2.2'); assert.equal(f22.av, '2.2'); assert.equal(f22.me.instances, 1); assert.equal(f22.other.instances, 2); assert.equal(f22.other.engaged, 2);
+    const dd = await admin(env, '/admin/engaged?range=today&by=day'); assert.equal(dd.days.length, 2);
+    const ov = await admin(env, '/admin/overview?range=today&who=other'); assert.equal(ov.instances, 3); assert.equal(ov.who, 'other');
+    const ovm = await admin(env, '/admin/overview?range=today&who=me'); assert.equal(ovm.instances, 1);
+    const us = await admin(env, '/admin/instances?range=today&who=me'); assert.equal(us.total, 1); assert.equal(us.instances[0].me, true); assert.equal(us.instances[0].av, '2.2');
+    const all = await admin(env, '/admin/instances?range=today'); assert.equal(all.instances.filter(x => x.me).length, 1);
+  });
+});

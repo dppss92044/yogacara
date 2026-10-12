@@ -6,7 +6,7 @@ export const MAX_BODY = 8192;
 export const MAX_OPENS = 20;
 export const MAX_SECONDS = 3 * 3600;
 const MAX_F = 60, MAX_SS = 40, MAX_R = 30, MAX_ND_NS = 2, MAX_ND = 40, MAX_QT = 10, MAX_QRP = 5, MAX_K = 10, MAX_X = 5, MAX_HV = 5;
-const KEYS_V4 = ['v', 'id', 'o', 's', 'd', 'm', 't', 'f', 'ss', 'r', 'nd', 'q', 'k', 'x', 'hv'];
+const KEYS_V4 = ['v', 'id', 'o', 's', 'd', 'm', 't', 'me', 'av', 'f', 'ss', 'r', 'nd', 'q', 'k', 'x', 'hv'];
 const FMTS = ['pdf', 'docx', 'html', 'md', 'txt'], PARTS = ['kp', 'text', 'px', 'cb'];
 
 const isInt = (n, max, min = 0) => Number.isInteger(n) && n >= min && n <= max;
@@ -34,11 +34,13 @@ export function parsePayload(text) {
   if (typeof j.id !== 'string' || !/^[0-9a-fA-F-]{32,36}$/.test(j.id)) return null;
   if (!isInt(j.o, MAX_OPENS) || !isInt(j.s, MAX_SECONDS)) return null;
   if (!DEVICES.includes(j.d)) return null;
-  const p = { v: j.v, id: j.id.toLowerCase(), o: j.o, s: j.s, d: j.d, m: null, t: null, f: {}, ss: [], r: [], nd: [], terms: [], rp: [], dj: [], x: [], hv: [] };
+  const p = { v: j.v, id: j.id.toLowerCase(), o: j.o, s: j.s, d: j.d, m: null, t: null, me: null, av: null, f: {}, ss: [], r: [], nd: [], terms: [], rp: [], dj: [], x: [], hv: [] };
   if (j.v === 2) return (p.o === 0 && p.s === 0) ? null : p;
 
   if (j.m !== undefined) { if (!MODES.includes(j.m)) return null; p.m = j.m; }
   if (j.t !== undefined) { if (j.t !== 'b' && j.t !== 'f') return null; p.t = j.t; }
+  if (j.me !== undefined) { if (j.me !== 0 && j.me !== 1) return null; p.me = j.me; }                                   // 本人旗標（D155）
+  if (j.av !== undefined) { if (typeof j.av !== 'string' || !/^\d{1,2}\.\d{1,3}$/.test(j.av)) return null; p.av = j.av; }   // App 版本（D156）
   if (p.t === 'b' && ['f', 'ss', 'r', 'nd', 'q', 'k', 'x', 'hv'].some(k => j[k] !== undefined)) return null;   // 基本層只含 o、s、d、m
 
   if (j.f !== undefined) {

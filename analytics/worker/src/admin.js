@@ -27,10 +27,13 @@ const devOf = url => { const d = url.searchParams.get('dev'); return DEV.include
 const K = env => ({ term: num(env.K_TERM, 3, 1, 50), city: num(env.K_MIN, 5, 1, 50) });
 const periodOut = r => ({ type: r.type, key: r.key, start: r.start, end: r.end });
 // 裝置篩選：以 instances.device 關聯（只在查詢時關聯，不寫進明細表）
-const jn = (alias, dev) => dev ? ` JOIN instances i ON i.h = ${alias}.h AND i.device = '${dev}'` : '';
+const WHO = { me: 1, other: 0 };
+const whoOf = url => { const w = url.searchParams.get('who'); return w in WHO ? w : null; };   // 本人｜其他（instances.me；D155）
+const jn = (alias, dev, who) => (dev || who) ? ` JOIN instances i ON i.h = ${alias}.h${dev ? ` AND i.device = '${dev}'` : ''}${who ? ` AND i.me = ${WHO[who]}` : ''}` : '';
+const whoSql = (who, col = 'me') => who ? ` AND ${col} = ${WHO[who]}` : '';
 
-async function activeCount(env, r, dev) {
-  const x = await env.DB.prepare(`SELECT COUNT(DISTINCT d.h) AS n, COALESCE(SUM(d.active_sec),0) AS sec, COALESCE(SUM(d.read_sec),0) AS rsec FROM instance_days d${jn('d', dev)} WHERE d.day BETWEEN ? AND ?`).bind(r.start, r.end).first();
+async function activeCount(env, r, dev, who) {
+  const x = await env.DB.prepare(`SELECT COUNT(DISTINCT d.h) AS n, COALESCE(SUM(d.active_sec),0) AS sec, COALESCE(SUM(d.read_sec),0) AS rsec FROM instance_days d${jn('d', dev, who)} WHERE d.day BETWEEN ? AND ?`).bind(r.start, r.end).first();
   return { instances: x.n, active_sec: x.sec, read_sec: x.rsec };
 }
 
@@ -60,18 +63,18 @@ async function stats(url, env) { const r = rangeOf(url); if (!r || r.type === 'x
 // ---- 總覽（stats 的延伸）----
 async function overview(url, env) {
   const r = rangeOf(url); if (!r) return bad();
-  const k = K(env), dev = devOf(url), DB = env.DB;
-  const a = await activeCount(env, r, dev);
-  const vol = await DB.prepare('SELECT COALESCE(SUM(opens),0) AS opens FROM instance_days d' + jn('d', dev) + ' WHERE d.day BETWEEN ? AND ?').bind(r.start, r.end).first();
-  const fresh = await DB.prepare('SELECT COUNT(*) AS n FROM instances i WHERE first_day BETWEEN ? AND ?' + (dev ? " AND device = '" + dev + "'" : '')).bind(r.start, r.end).first();
-  const devs = (await DB.prepare('SELECT COALESCE(i.device, \'?\') AS d, COUNT(DISTINCT x.h) AS n FROM instance_days x JOIN instances i ON i.h = x.h WHERE x.day BETWEEN ? AND ? GROUP BY i.device').bind(r.start, r.end).all()).results || [];
-  const modes = (await DB.prepare('SELECT COALESCE(i.mode, \'?\') AS m, COUNT(DISTINCT x.h) AS n FROM instance_days x JOIN instances i ON i.h = x.h WHERE x.day BETWEEN ? AND ?' + (dev ? " AND i.device = '" + dev + "'" : '') + ' GROUP BY i.mode').bind(r.start, r.end).all()).results || [];
-  const top = (await DB.prepare(`SELECT rd.juan AS juan, COUNT(DISTINCT rd.h) AS u, SUM(rd.sec) AS sec FROM instance_day_reading rd${jn('rd', dev)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.juan ORDER BY sec DESC LIMIT 5`).bind(r.start, r.end).all()).results || [];
-  const feat = await DB.prepare(`SELECT COALESCE(SUM(f.n),0) AS n, COUNT(DISTINCT f.feature) AS kinds FROM instance_day_feature f${jn('f', dev)} WHERE f.day BETWEEN ? AND ?`).bind(r.start, r.end).first();
-  const sd = await DB.prepare(`SELECT COALESCE(SUM(CASE WHEN f.feature = 'search.submit' THEN f.n END),0) AS s, COALESCE(SUM(CASE WHEN f.feature LIKE 'dict.lookup.%' THEN f.n END),0) AS d FROM instance_day_feature f${jn('f', dev)} WHERE f.day BETWEEN ? AND ?`).bind(r.start, r.end).first();
+  const k = K(env), dev = devOf(url), who = whoOf(url), DB = env.DB;
+  const a = await activeCount(env, r, dev, who);
+  const vol = await DB.prepare('SELECT COALESCE(SUM(opens),0) AS opens FROM instance_days d' + jn('d', dev, who) + ' WHERE d.day BETWEEN ? AND ?').bind(r.start, r.end).first();
+  const fresh = await DB.prepare('SELECT COUNT(*) AS n FROM instances i WHERE first_day BETWEEN ? AND ?' + (dev ? " AND device = '" + dev + "'" : '') + whoSql(who)).bind(r.start, r.end).first();
+  const devs = (await DB.prepare('SELECT COALESCE(i.device, \'?\') AS d, COUNT(DISTINCT x.h) AS n FROM instance_days x JOIN instances i ON i.h = x.h WHERE x.day BETWEEN ? AND ?' + whoSql(who, 'i.me') + ' GROUP BY i.device').bind(r.start, r.end).all()).results || [];
+  const modes = (await DB.prepare('SELECT COALESCE(i.mode, \'?\') AS m, COUNT(DISTINCT x.h) AS n FROM instance_days x JOIN instances i ON i.h = x.h WHERE x.day BETWEEN ? AND ?' + (dev ? " AND i.device = '" + dev + "'" : '') + whoSql(who, 'i.me') + ' GROUP BY i.mode').bind(r.start, r.end).all()).results || [];
+  const top = (await DB.prepare(`SELECT rd.juan AS juan, COUNT(DISTINCT rd.h) AS u, SUM(rd.sec) AS sec FROM instance_day_reading rd${jn('rd', dev, who)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.juan ORDER BY sec DESC LIMIT 5`).bind(r.start, r.end).all()).results || [];
+  const feat = await DB.prepare(`SELECT COALESCE(SUM(f.n),0) AS n, COUNT(DISTINCT f.feature) AS kinds FROM instance_day_feature f${jn('f', dev, who)} WHERE f.day BETWEEN ? AND ?`).bind(r.start, r.end).first();
+  const sd = await DB.prepare(`SELECT COALESCE(SUM(CASE WHEN f.feature = 'search.submit' THEN f.n END),0) AS s, COALESCE(SUM(CASE WHEN f.feature LIKE 'dict.lookup.%' THEN f.n END),0) AS d FROM instance_day_feature f${jn('f', dev, who)} WHERE f.day BETWEEN ? AND ?`).bind(r.start, r.end).first();
   const returning = Math.max(0, a.instances - fresh.n);
-  const core = !dev && r.type !== 'x' ? await statsCore(r, env) : null;
-  return json({ range: r.range, period: periodOut(r), k_min: k.city, dev, instances: a.instances, new: fresh.n, returning, returning_rate: a.instances ? returning / a.instances : 0,
+  const core = !dev && !who && r.type !== 'x' ? await statsCore(r, env) : null;
+  return json({ range: r.range, period: periodOut(r), k_min: k.city, dev, who, instances: a.instances, new: fresh.n, returning, returning_rate: a.instances ? returning / a.instances : 0,
     opens: vol.opens, active_seconds: a.active_sec, read_seconds: a.read_sec, ...(core ? { instances: core.instances, new: core.new, returning: core.returning, returning_rate: core.returning_rate, opens: core.opens, active_seconds: core.active_seconds, avg_active_seconds_per_open: core.avg_active_seconds_per_open, frequency: core.frequency, cities: core.cities } : {}), devices: devs.filter(x => x.n >= k.city || true), modes,
     top_juan: top, features_total: feat.n, features_used: feat.kinds, search_total: sd.s, dict_total: sd.d, registry_total: FEATURES.size });
 }
@@ -79,13 +82,13 @@ async function overview(url, env) {
 // ---- 功能 ----
 async function features(url, env) {
   const r = rangeOf(url); if (!r) return bad();
-  const p = url.searchParams, dev = devOf(url), DB = env.DB;
+  const p = url.searchParams, dev = devOf(url), who = whoOf(url), DB = env.DB;
   const all = p.get('all') === '1', unused = p.get('unused') === '1', type = p.get('type'), prefix = p.get('prefix');
   const rows = (await DB.prepare(
     `SELECT feature, SUM(tot) AS n, COUNT(*) AS u, SUM(tot >= 2) AS rep, SUM(days >= 2) AS rep_days FROM (` +
-    `SELECT f.feature AS feature, f.h AS h, SUM(f.n) AS tot, COUNT(DISTINCT f.day) AS days FROM instance_day_feature f${jn('f', dev)} WHERE f.day BETWEEN ? AND ? GROUP BY f.feature, f.h) GROUP BY feature`).bind(r.start, r.end).all()).results || [];
+    `SELECT f.feature AS feature, f.h AS h, SUM(f.n) AS tot, COUNT(DISTINCT f.day) AS days FROM instance_day_feature f${jn('f', dev, who)} WHERE f.day BETWEEN ? AND ? GROUP BY f.feature, f.h) GROUP BY feature`).bind(r.start, r.end).all()).results || [];
   const used = new Map(rows.map(x => [x.feature, x]));
-  const a = await activeCount(env, r, dev);
+  const a = await activeCount(env, r, dev, who);
   const out = [];
   for (const [id, f] of FEATURES) {
     if (type && f.model !== type) continue;
@@ -106,12 +109,12 @@ const READ_DIMS = {   // 由閱讀聯合列推得（遮罩位元 1 披尋記開�
 };
 async function state(url, env) {
   const r = rangeOf(url); if (!r) return bad();
-  const dev = devOf(url), DB = env.DB;
+  const dev = devOf(url), who = whoOf(url), DB = env.DB;
   const want = (url.searchParams.get('dims') || url.searchParams.get('dim') || '').split(',').filter(Boolean);
   const dims = REGISTRY.states.filter(s => !want.length || want.includes(s.dim));
-  const a = await activeCount(env, r, dev);
-  const rows = (await DB.prepare(`SELECT s.dim AS dim, s.val AS val, SUM(s.sec) AS sec, COUNT(DISTINCT s.h) AS u FROM instance_day_state s${jn('s', dev)} WHERE s.day BETWEEN ? AND ? GROUP BY s.dim, s.val`).bind(r.start, r.end).all()).results || [];
-  const rd = (await DB.prepare(`SELECT rd.e AS e, rd.st AS st, rd.h AS h, SUM(rd.sec) AS sec FROM instance_day_reading rd${jn('rd', dev)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.e, rd.st, rd.h`).bind(r.start, r.end).all()).results || [];
+  const a = await activeCount(env, r, dev, who);
+  const rows = (await DB.prepare(`SELECT s.dim AS dim, s.val AS val, SUM(s.sec) AS sec, COUNT(DISTINCT s.h) AS u FROM instance_day_state s${jn('s', dev, who)} WHERE s.day BETWEEN ? AND ? GROUP BY s.dim, s.val`).bind(r.start, r.end).all()).results || [];
+  const rd = (await DB.prepare(`SELECT rd.e AS e, rd.st AS st, rd.h AS h, SUM(rd.sec) AS sec FROM instance_day_reading rd${jn('rd', dev, who)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.e, rd.st, rd.h`).bind(r.start, r.end).all()).results || [];
   const out = [];
   for (const d of dims) {
     if (d.via === 'r') {
@@ -135,10 +138,10 @@ async function state(url, env) {
 // ---- 閱讀 ----
 async function reading(url, env) {
   const r = rangeOf(url); if (!r) return bad();
-  const dev = devOf(url), by = url.searchParams.get('by') || 'juan', sort = url.searchParams.get('sort') || 'sec', DB = env.DB, k = K(env);
-  const a = await activeCount(env, r, dev);
+  const dev = devOf(url), who = whoOf(url), by = url.searchParams.get('by') || 'juan', sort = url.searchParams.get('sort') || 'sec', DB = env.DB, k = K(env);
+  const a = await activeCount(env, r, dev, who);
   if (by === 'juan') {
-    const rows = (await DB.prepare(`SELECT juan, SUM(sec) AS sec, SUM(opens) AS opens, COUNT(*) AS u, SUM(days >= 2) AS rep FROM (SELECT rd.juan AS juan, rd.h AS h, SUM(rd.sec) AS sec, SUM(rd.opens) AS opens, COUNT(DISTINCT rd.day) AS days FROM instance_day_reading rd${jn('rd', dev)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.juan, rd.h) GROUP BY juan`).bind(r.start, r.end).all()).results || [];
+    const rows = (await DB.prepare(`SELECT juan, SUM(sec) AS sec, SUM(opens) AS opens, COUNT(*) AS u, SUM(days >= 2) AS rep FROM (SELECT rd.juan AS juan, rd.h AS h, SUM(rd.sec) AS sec, SUM(rd.opens) AS opens, COUNT(DISTINCT rd.day) AS days FROM instance_day_reading rd${jn('rd', dev, who)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.juan, rd.h) GROUP BY juan`).bind(r.start, r.end).all()).results || [];
     const shown = rows.filter(x => x.u >= k.term), hidden = rows.filter(x => x.u < k.term);
     const seen = new Set(rows.map(x => x.juan)), zero = []; for (let j = 1; j <= 100; j++) if (!seen.has(j)) zero.push(j);
     const key = { users: 'u', opens: 'opens', sec: 'sec', avg: 'avg' }[sort] || 'sec';
@@ -146,13 +149,13 @@ async function reading(url, env) {
     return json({ range: r.range, period: periodOut(r), dev, by, instances: a.instances, k: k.term, juans: list, other: { juans: hidden.length, u: hidden.reduce((s, x) => s + x.u, 0), sec: hidden.reduce((s, x) => s + x.sec, 0) }, zero_juans: zero });
   }
   if (by === 'edition') {
-    const rows = (await DB.prepare(`SELECT rd.e AS e, rd.src AS src, SUM(rd.sec) AS sec, SUM(rd.opens) AS opens, COUNT(DISTINCT rd.h) AS u FROM instance_day_reading rd${jn('rd', dev)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.e, rd.src`).bind(r.start, r.end).all()).results || [];
-    const both = await DB.prepare(`SELECT COUNT(*) AS n FROM (SELECT rd.h FROM instance_day_reading rd${jn('rd', dev)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.h HAVING COUNT(DISTINCT rd.e) = 2)`).bind(r.start, r.end).first();
-    const ei = (await DB.prepare(`SELECT rd.e AS e, COUNT(DISTINCT rd.h) AS u FROM instance_day_reading rd${jn('rd', dev)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.e`).bind(r.start, r.end).all()).results || [];
+    const rows = (await DB.prepare(`SELECT rd.e AS e, rd.src AS src, SUM(rd.sec) AS sec, SUM(rd.opens) AS opens, COUNT(DISTINCT rd.h) AS u FROM instance_day_reading rd${jn('rd', dev, who)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.e, rd.src`).bind(r.start, r.end).all()).results || [];
+    const both = await DB.prepare(`SELECT COUNT(*) AS n FROM (SELECT rd.h FROM instance_day_reading rd${jn('rd', dev, who)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.h HAVING COUNT(DISTINCT rd.e) = 2)`).bind(r.start, r.end).first();
+    const ei = (await DB.prepare(`SELECT rd.e AS e, COUNT(DISTINCT rd.h) AS u FROM instance_day_reading rd${jn('rd', dev, who)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.e`).bind(r.start, r.end).all()).results || [];
     return json({ range: r.range, period: periodOut(r), dev, by, instances: a.instances, editions: ei, rows, both_instances: both.n });
   }
   if (by === 'state') {
-    const rows = (await DB.prepare(`SELECT rd.e AS e, rd.st AS st, SUM(rd.sec) AS sec, COUNT(DISTINCT rd.h) AS u FROM instance_day_reading rd${jn('rd', dev)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.e, rd.st`).bind(r.start, r.end).all()).results || [];
+    const rows = (await DB.prepare(`SELECT rd.e AS e, rd.st AS st, SUM(rd.sec) AS sec, COUNT(DISTINCT rd.h) AS u FROM instance_day_reading rd${jn('rd', dev, who)} WHERE rd.day BETWEEN ? AND ? GROUP BY rd.e, rd.st`).bind(r.start, r.end).all()).results || [];
     return json({ range: r.range, period: periodOut(r), dev, by, instances: a.instances, rows });
   }
   return json({ error: 'by 須為 juan、edition、state' }, 400);
@@ -161,9 +164,9 @@ async function reading(url, env) {
 // ---- 科判節點排行（只有排行；u<K_TERM 併入其他；沒有實例）----
 async function nodes(url, env) {
   const r = rangeOf(url); if (!r) return bad();
-  const dev = devOf(url), sort = url.searchParams.get('sort') || 'users', limit = num(url.searchParams.get('limit'), 20, 1, 100), k = K(env);
+  const dev = devOf(url), who = whoOf(url), sort = url.searchParams.get('sort') || 'users', limit = num(url.searchParams.get('limit'), 20, 1, 100), k = K(env);
   const key = { users: 'u', count: 'n', rep: 'rep' }[sort] || 'u';
-  const rows = (await env.DB.prepare(`SELECT ns, node, SUM(tot) AS n, COUNT(*) AS u, SUM(tot >= 2) AS rep, SUM(days >= 2) AS rep_days FROM (SELECT x.ns AS ns, x.node AS node, x.h AS h, SUM(x.n) AS tot, COUNT(DISTINCT x.day) AS days FROM instance_day_node x${jn('x', dev)} WHERE x.day BETWEEN ? AND ? GROUP BY x.ns, x.node, x.h) GROUP BY ns, node`).bind(r.start, r.end).all()).results || [];
+  const rows = (await env.DB.prepare(`SELECT ns, node, SUM(tot) AS n, COUNT(*) AS u, SUM(tot >= 2) AS rep, SUM(days >= 2) AS rep_days FROM (SELECT x.ns AS ns, x.node AS node, x.h AS h, SUM(x.n) AS tot, COUNT(DISTINCT x.day) AS days FROM instance_day_node x${jn('x', dev, who)} WHERE x.day BETWEEN ? AND ? GROUP BY x.ns, x.node, x.h) GROUP BY ns, node`).bind(r.start, r.end).all()).results || [];
   const shown = rows.filter(x => x.u >= k.term).sort((p, q) => q[key] - p[key] || q.n - p.n).slice(0, limit), hidden = rows.filter(x => x.u < k.term);
   return json({ range: r.range, period: periodOut(r), dev, k: k.term, nodes: shown, other: { nodes: hidden.length, n: hidden.reduce((s, x) => s + x.n, 0) } });
 }
@@ -226,12 +229,39 @@ async function instances(url, env) {
   const r = rangeOf(url); if (!r) return bad();
   const limit = num(url.searchParams.get('limit'), 30, 1, 200);
   const order = url.searchParams.get('sort') === 'opens' ? 'opens DESC, sec DESC' : 'sec DESC, opens DESC';
-  const total = await env.DB.prepare('SELECT COUNT(DISTINCT h) AS n FROM instance_days WHERE day BETWEEN ? AND ?').bind(r.start, r.end).first();
+  const who = whoOf(url);
+  const total = await env.DB.prepare('SELECT COUNT(DISTINCT d.h) AS n FROM instance_days d' + jn('d', null, who) + ' WHERE d.day BETWEEN ? AND ?').bind(r.start, r.end).first();
   const rows = (await env.DB.prepare(
-    'SELECT d.h AS h, i.city AS city, i.device AS device, i.mode AS mode, i.first_day AS first_day, i.last_day AS last_day, i.search_total AS stot, i.dict_total AS dtot, SUM(d.opens) AS opens, SUM(d.active_sec) AS sec, SUM(d.read_sec) AS rsec ' +
-    'FROM instance_days d JOIN instances i ON i.h = d.h WHERE d.day BETWEEN ? AND ? GROUP BY d.h ORDER BY ' + order + ' LIMIT ?').bind(r.start, r.end, limit).all()).results || [];
+    'SELECT d.h AS h, i.city AS city, i.device AS device, i.mode AS mode, i.first_day AS first_day, i.last_day AS last_day, i.search_total AS stot, i.dict_total AS dtot, i.me AS me, i.av AS av, SUM(d.opens) AS opens, SUM(d.active_sec) AS sec, SUM(d.read_sec) AS rsec ' +
+    'FROM instance_days d JOIN instances i ON i.h = d.h WHERE d.day BETWEEN ? AND ?' + whoSql(who, 'i.me') + ' GROUP BY d.h ORDER BY ' + order + ' LIMIT ?').bind(r.start, r.end, limit).all()).results || [];
   return json({ range: r.range, period: periodOut(r), total: total ? total.n : 0, limit,
-    instances: rows.map(x => ({ code: shortCode(x.h), city: x.city || '未知', device: x.device || null, mode: x.mode || null, first_day: x.first_day, last_day: x.last_day, opens: x.opens, active_seconds: x.sec, read_seconds: x.rsec, search_total: x.stot, dict_total: x.dtot })) });
+    instances: rows.map(x => ({ code: shortCode(x.h), city: x.city || '未知', device: x.device || null, mode: x.mode || null, first_day: x.first_day, last_day: x.last_day, opens: x.opens, active_seconds: x.sec, read_seconds: x.rsec, search_total: x.stot, dict_total: x.dtot, me: x.me === 1, av: x.av || null })) });
+}
+// ---- 概況：實際停留的人數與使用時間（D157）；依「本人／其他」拆開；可依日或版本分組 ----
+async function engaged(url, env) {
+  const r = rangeOf(url); if (!r) return bad();
+  const dev = devOf(url), min = num(url.searchParams.get('min'), 30, 1, 3600), by = url.searchParams.get('by') || '';
+  const av = /^\d{1,2}\.\d{1,3}$/.test(url.searchParams.get('av') || '') ? url.searchParams.get('av') : '';
+  const jd = (dev ? ` AND i.device = '${dev}'` : '') + (av ? ` AND d.av = '${av}'` : '');
+  const tot = (await env.DB.prepare(
+    'SELECT t.me AS me, COUNT(*) AS inst, SUM(t.sec >= ?1) AS eng, SUM(t.sec) AS sec, SUM(CASE WHEN t.sec >= ?1 THEN t.sec ELSE 0 END) AS esec, SUM(t.rsec) AS rsec, SUM(t.opens) AS opens, SUM(t.fresh) AS fresh FROM (' +
+    'SELECT d.h AS h, i.me AS me, SUM(d.active_sec) AS sec, SUM(d.read_sec) AS rsec, SUM(d.opens) AS opens, (i.first_day BETWEEN ?2 AND ?3) AS fresh FROM instance_days d JOIN instances i ON i.h = d.h ' +
+    'WHERE d.day BETWEEN ?2 AND ?3' + jd + ' GROUP BY d.h) t GROUP BY t.me').bind(min, r.start, r.end).all()).results || [];
+  const pack = x => ({ instances: x.inst, engaged: x.eng || 0, active_seconds: x.sec || 0, engaged_seconds: x.esec || 0, read_seconds: x.rsec || 0, opens: x.opens || 0, new: x.fresh || 0 });
+  const get = m => { const x = tot.find(y => y.me === m); return x ? pack(x) : pack({ inst: 0 }); };
+  const out = { range: r.range, period: periodOut(r), dev, min_seconds: min, av: av || null, me: get(1), other: get(0) };
+  if (by === 'day') {
+    out.days = ((await env.DB.prepare(
+      'SELECT d.day AS day, i.me AS me, COUNT(*) AS inst, SUM(d.active_sec >= ?1) AS eng, SUM(d.active_sec) AS sec FROM instance_days d JOIN instances i ON i.h = d.h WHERE d.day BETWEEN ?2 AND ?3' + jd + ' GROUP BY d.day, i.me ORDER BY d.day').bind(min, r.start, r.end).all()).results || [])
+      .map(x => ({ day: x.day, me: x.me === 1, instances: x.inst, engaged: x.eng || 0, active_seconds: x.sec || 0 }));
+  }
+  if (by === 'version') {
+    out.versions = ((await env.DB.prepare(
+      'SELECT t.av AS av, t.me AS me, COUNT(*) AS inst, SUM(t.sec >= ?1) AS eng, SUM(t.sec) AS sec, SUM(t.rsec) AS rsec FROM (' +
+      'SELECT d.h AS h, d.av AS av, i.me AS me, SUM(d.active_sec) AS sec, SUM(d.read_sec) AS rsec FROM instance_days d JOIN instances i ON i.h = d.h WHERE d.day BETWEEN ?2 AND ?3' + jd + ' GROUP BY d.h, d.av) t GROUP BY t.av, t.me ORDER BY t.av DESC').bind(min, r.start, r.end).all()).results || [])
+      .map(x => ({ av: x.av || null, me: x.me === 1, instances: x.inst, engaged: x.eng || 0, active_seconds: x.sec || 0, read_seconds: x.rsec || 0 }));
+  }
+  return json(out);
 }
 async function instanceDetail(url, env) {
   const code = url.searchParams.get('code') || '';
@@ -245,7 +275,7 @@ async function instanceDetail(url, env) {
     const v = await env.DB.prepare('SELECT COALESCE(SUM(opens),0) AS opens, COALESCE(SUM(active_sec),0) AS sec, COALESCE(SUM(read_sec),0) AS rsec FROM instance_days WHERE h = ? AND day BETWEEN ? AND ?').bind(i.h, start, end).first();
     periods[name] = { start, end, opens: v.opens, active_seconds: v.sec, read_seconds: v.rsec };
   }
-  const out = { code: shortCode(i.h), city: i.city || '未知', device: i.device || null, mode: i.mode || null, first_day: i.first_day, last_day: i.last_day,
+  const out = { me: i.me === 1, av: i.av || null, code: shortCode(i.h), city: i.city || '未知', device: i.device || null, mode: i.mode || null, first_day: i.first_day, last_day: i.last_day,
     opens_total: i.opens_total, active_seconds_total: i.active_sec, read_seconds_total: i.read_sec, search_total: i.search_total, dict_total: i.dict_total, periods };
   const dre = /^\d{4}-\d{2}-\d{2}$/, day = url.searchParams.get('day');
   if (day) {
@@ -305,5 +335,5 @@ export const ROUTES = {
   '/admin/font': (u, e) => bundle(u, e, ['font.', 'zoom.', 'early.'], ['font.family', 'font.weight', 'font.size', 'font.line', 'kepan.color', 'zoom.r', 'zoom.m', 'zoom.p']),
   '/admin/label': (u, e) => bundle(u, e, ['label.'], ['label']),
   '/admin/notes': (u, e) => bundle(u, e, ['content.', 'search.opt_'], ['px', 'cb', 'kp', 'dict']),
-  '/admin/instances': instances, '/admin/instance': instanceDetail, '/admin/size': size, '/admin/presence': presenceNow, '/admin/trend': trend,
+  '/admin/engaged': engaged, '/admin/instances': instances, '/admin/instance': instanceDetail, '/admin/size': size, '/admin/presence': presenceNow, '/admin/trend': trend,
 };
