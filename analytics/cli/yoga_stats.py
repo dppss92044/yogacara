@@ -20,7 +20,7 @@
   YOGA_STATS_URL    接收端網址（預設為公開的 Worker 網址）
   YOGA_STATS_TOKEN  管理 token；未設定時從 macOS 鑰匙圈讀取（服務名 yoga-stats-admin）
 """
-import argparse, gzip, re, json, os, subprocess, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
+import argparse, gzip, http.server, re, secrets, webbrowser, json, os, subprocess, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
 
 DEFAULT_URL = 'https://yogacara-stats.dppss92044.workers.dev'
 KEYCHAIN_SERVICE = 'yoga-stats-admin'
@@ -28,7 +28,7 @@ RANGES = {'今天': 'today', '今日': 'today', 'today': 'today', '本週': 'wee
 RANGE_LABEL = {'today': '今日', 'week': '本週', 'month': '本月', 'custom': '指定期間'}
 TOPICS = {'回訪': 'returning', '地區': 'regions', '地区': 'regions', '使用者': 'users', '實例': 'instance', '实例': 'instance', '閱讀': 'reading', '阅读': 'reading',
           '科判': 'nodes', '版本': 'edition', '註釋': 'notes', '注釋': 'notes', '搜尋': 'search', '辭典': 'dict', '匯出': 'export', '導航': 'nav', '顯示': 'display',
-          '字體': 'font', '科標': 'label', '功能': 'features', '裝置': 'devices', '即時': 'presence', '趨勢': 'trend', '資料量': 'size', '登錄': 'registry', '概況': 'engaged'}
+          '字體': 'font', '科標': 'label', '功能': 'features', '裝置': 'devices', '即時': 'presence', '趨勢': 'trend', '資料量': 'size', '登錄': 'registry', '概況': 'engaged', '網頁': 'dashboard'}
 DEVICE = {'phone': '手機', 'tablet': '平板', 'desktop': '電腦'}
 DEV_IN = {'手機': 'phone', '平板': 'tablet', '電腦': 'desktop', 'phone': 'phone', 'tablet': 'tablet', 'desktop': 'desktop'}
 MODE = {'web': '網頁', 'pwa': 'PWA'}
@@ -412,7 +412,7 @@ def render_registry(d):
 # ---- 主程式 ----
 def build_parser():
     ap = argparse.ArgumentParser(prog='瑜伽統計', description='查詢《瑜伽師地論》匿名 App 分析')
-    ap.add_argument('what', help='全部｜概況｜版本號（例 2.2）｜今天｜本週｜本月｜使用者｜實例｜閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標｜功能｜裝置｜即時｜回訪｜地區｜趨勢｜資料量｜登錄')
+    ap.add_argument('what', help='全部｜概況｜網頁｜版本號（例 2.2）｜今天｜本週｜本月｜使用者｜實例｜閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標｜功能｜裝置｜即時｜回訪｜地區｜趨勢｜資料量｜登錄')
     ap.add_argument('period', nargs='?', help='範圍：今天｜本週｜本月；實例請給短代號；趨勢請給 7 或 30')
     ap.add_argument('--limit', type=int, default=30)
     ap.add_argument('--sort', default=None)
@@ -424,6 +424,7 @@ def build_parser():
     ap.add_argument('--by', default=None, help='（閱讀）juan｜edition｜state')
     ap.add_argument('--本人', dest='who_me', action='store_true', help='只看你標記過的裝置'); ap.add_argument('--其他', dest='who_other', action='store_true', help='排除你標記過的裝置')
     ap.add_argument('--門檻', dest='min_sec', type=int, default=None, help='（概況）算「實際使用」的有效秒數門檻，預設 30')
+    ap.add_argument('--port', type=int, default=0); ap.add_argument('--不開啟', dest='no_open', action='store_true', help='（網頁）只印網址、不自動開瀏覽器')
     ap.add_argument('--json', action='store_true')
     return ap
 
@@ -462,6 +463,58 @@ def render_engaged(d, by=None):
                                                        total_dur(x['active_seconds']), total_dur(x['read_seconds'])))
     out += ['', '註：一台裝置（或瀏覽器）算一個「人」，不代表真實人數；「本人」是你在自己裝置上標記過的（關於頁連點版本號 7 下），', '    沒標記的一律算其他人；未更新到含標記的版本之前的資料都算其他人。']
     return '\n'.join(out)
+
+
+DASH_API = ('engaged', 'presence', 'features', 'reading', 'overview', 'trend', 'instances')
+
+
+def serve_dashboard(port=0, open_browser=True, ready=None):
+    """本機儀表板：只綁 127.0.0.1；token 只在這個程序裡（鑰匙圈），瀏覽器拿不到。每次啟動產生一次性密鑰 k。"""
+    os.environ['YOGA_STATS_TOKEN'] = get_token()   # 啟動時讀一次鑰匙圈，之後不再問；找不到 token 就在這裡結束
+    key = secrets.token_urlsafe(16)
+    page = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard.html'), 'rb').read()
+
+    class H(http.server.BaseHTTPRequestHandler):
+        def _send(self, code, body, ctype):
+            self.send_response(code); self.send_header('Content-Type', ctype); self.send_header('Cache-Control', 'no-store')
+            self.send_header('X-Content-Type-Options', 'nosniff'); self.send_header('Content-Length', str(len(body))); self.end_headers(); self.wfile.write(body)
+
+        def do_GET(self):
+            u = urllib.parse.urlparse(self.path); q = dict(urllib.parse.parse_qsl(u.query))
+            host = (self.headers.get('Host') or '').split(':')[0]
+            if host not in ('127.0.0.1', 'localhost'):
+                return self._send(403, b'{"error":"forbidden"}', 'application/json')
+            if u.path == '/':
+                if q.get('k') != key:
+                    return self._send(403, '請用終端機印出的網址開啟'.encode(), 'text/plain; charset=utf-8')
+                return self._send(200, page, 'text/html; charset=utf-8')
+            if u.path.startswith('/api/'):
+                name = u.path[5:]
+                if self.headers.get('X-K') != key or name not in DASH_API:
+                    return self._send(403, b'{"error":"forbidden"}', 'application/json')
+                try:
+                    d = call('/admin/' + name, q)
+                except SystemExit as e:
+                    return self._send(502, json.dumps({'error': str(e.code)}, ensure_ascii=False).encode(), 'application/json')
+                return self._send(200, json.dumps(d, ensure_ascii=False).encode(), 'application/json')
+            self._send(404, b'', 'text/plain')
+
+        def log_message(self, *a):
+            pass
+
+    srv = http.server.ThreadingHTTPServer(('127.0.0.1', port), H)
+    url = 'http://127.0.0.1:%d/?k=%s' % (srv.server_port, key)
+    if ready:
+        ready(srv, url)
+    print('瑜伽統計後台已開啟：%s\n（只有這台 Mac 看得到；按 Ctrl+C 關閉）' % url, flush=True)
+    if open_browser:
+        webbrowser.open(url)
+    try:
+        srv.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        srv.server_close()
 
 
 def valid_date(s):
@@ -519,7 +572,7 @@ def main(argv=None, sleep=time.sleep):
         default = 'today' if topic in ('users',) else 'week' if topic == 'engaged' else 'month'
         rng = RANGES[a.period] if a.period in RANGES else default
     else:
-        sys.exit('不認得「%s」。可用：概況、今天、本週、本月、使用者、實例、閱讀、科判、版本、註釋、搜尋、辭典、匯出、導航、顯示、字體、科標、功能、裝置、即時、回訪、地區、趨勢、資料量、登錄' % a.what)
+        sys.exit('不認得「%s」。可用：概況、網頁、今天、本週、本月、使用者、實例、閱讀、科判、版本、註釋、搜尋、辭典、匯出、導航、顯示、字體、科標、功能、裝置、即時、回訪、地區、趨勢、資料量、登錄' % a.what)
     if a.who_me and a.who_other:
         sys.exit('--本人 與 --其他 只能選一個')
     if a.min_sec is not None and not 1 <= a.min_sec <= 3600:
@@ -532,6 +585,8 @@ def main(argv=None, sleep=time.sleep):
         if not (4 <= len(code) <= 8) or any(c not in '0123456789abcdefABCDEF' for c in code):
             sys.exit('請給 4 到 8 碼的短代號（十六進位），例如：瑜伽統計 實例 A7F3C2')
         d = call('/admin/instance', {'code': code, 'day': a.day}); return emit(a, d, render_instance(d))
+    if topic == 'dashboard':
+        return serve_dashboard(a.port, not a.no_open)
     if topic == 'engaged':
         by = {'日': 'day', 'day': 'day', '版本': 'version', 'version': 'version'}.get(a.by or '')
         if a.by and not by:

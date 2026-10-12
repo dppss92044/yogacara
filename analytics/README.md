@@ -38,7 +38,7 @@
 - 上線需先套用 `worker/migrations/0004-me-version.sql`（遠端 D1），再 deploy Worker，最後才發布含新客戶端的 App；順序見 `AI_HANDOFF.md` W011。
 
 ## 查詢（Mac CLI）
-`analytics/cli/yoga_stats.py`：`瑜伽統計 今天｜本週｜本月｜<主題> [期間]`；主題：**概況**（實際使用人數與時間，本人／其他人，`--by 日|版本`、`--門檻`）、回訪、地區、使用者、實例、閱讀、科判、版本、註釋、搜尋、辭典、匯出、導航、顯示、字體、科標、功能（`--全部`／`--未使用`／`--類型`）、裝置、即時（`--監看`、`--timeout`）、趨勢、資料量、登錄；`--本人`／`--其他`、`--裝置`、`--最近`、`--by`、`--day`、`--json`。token 預設由鑰匙圈 `yoga-stats-admin` 讀取；`./analytics/cli/install-mac.sh` 把指令加進 `~/.zshrc`（不寫 token）。測試：`python3 -m unittest discover analytics/cli`。
+`analytics/cli/yoga_stats.py`：`瑜伽統計 今天｜本週｜本月｜<主題> [期間]`；主題：**網頁**（Mac 本機儀表板，`--port`、`--不開啟`）、**概況**（實際使用人數與時間，本人／其他人，`--by 日|版本`、`--門檻`）、回訪、地區、使用者、實例、閱讀、科判、版本、註釋、搜尋、辭典、匯出、導航、顯示、字體、科標、功能（`--全部`／`--未使用`／`--類型`）、裝置、即時（`--監看`、`--timeout`）、趨勢、資料量、登錄；`--本人`／`--其他`、`--裝置`、`--最近`、`--by`、`--day`、`--json`。token 預設由鑰匙圈 `yoga-stats-admin` 讀取；`./analytics/cli/install-mac.sh` 把指令加進 `~/.zshrc`（不寫 token）。測試：`python3 -m unittest discover analytics/cli`。
 
 ## 新增功能時的 Analytics 規則（D050，不可省）
 1. 判斷這個功能有沒有產品分析價值。
