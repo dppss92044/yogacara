@@ -1790,7 +1790,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var t = N[i][4]; while (t >= 0 && onScreen(t)) t = N[t][4];
       if (t < 0 || !APPEAR[t]) { b.hidden = true; return; }
       var depth = 0, q = N[t][4]; while (q >= 0) { depth++; q = N[q][4]; }
-      b.querySelector(".ut").innerHTML = "上層 <b>" + esc(full(t)) + "</b><small>第 " + APPEAR[t] + " 頁" + (depth ? "・再上 " + depth + " 層" : "・源頭") + "</small>";
+      b.querySelector(".ut").textContent = "去上一層"; b.title = "上層 " + full(t) + "・第 " + APPEAR[t] + " 頁" + (depth ? "・再上 " + depth + " 層" : "・源頭");
       b.dataset.n = t; b.hidden = false;
     }, 120);
   }
@@ -7612,6 +7612,7 @@ var off=st('hk-update-notice')==='off'||st('hk-notice-hide')===ver;
 if(off||st('hk-ver-opened')===ver||st('hk-anim-auto')===ver)return;
 function go(){if(document.getElementById('tour')||!window.__updAnim){setTimeout(go,800);return;}try{localStorage.setItem('hk-anim-auto',ver);}catch(e){}window.__updAnim();}
 setTimeout(go,900);})();</script>
+<style id="upnav-small">:root:root:root #upNav.upnav{gap:0;padding:3px 10px;font:12px var(--ui);opacity:1;background:var(--bg);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;border-color:color-mix(in srgb,var(--cinnabar) 35%,var(--rule))}:root:root:root #upNav.upnav .ua{display:none}</style>
 <style id="help-anim-css">
 .ha{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:#0006}
 .ha-card{box-sizing:border-box;width:min(440px,calc(100% - 28px));max-height:calc(100% - 28px);overflow:auto;padding:16px 18px;border-radius:20px;background:var(--pop,var(--bg));color:var(--fg);border:1px solid var(--rule);box-shadow:0 12px 40px #0004;font-family:var(--ui)}
