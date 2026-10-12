@@ -11,12 +11,12 @@
 修改程式**之前**，必須讀完：
 
 1. `AGENTS.md`（本檔）
-2. `PROJECT_STATE.md`（現況）
-3. `AI_HANDOFF.md`（目前有沒有進行中的 W 工作、上一個 AI 做到哪）
-4. `PROJECT_SPEC.md`（現行功能規格）
-5. `UI_SPEC.md`（現行 UI／UX 規格）
-6. `DECISIONS.md`（不可改回去的決定）
-7. `CHANGELOG.md`（正式發布紀錄與 Unreleased）
+2. `docs/PROJECT_STATE.md`（現況）
+3. `docs/AI_HANDOFF.md`（目前有沒有進行中的 W 工作、上一個 AI 做到哪）
+4. `docs/PROJECT_SPEC.md`（現行功能規格）
+5. `docs/UI_SPEC.md`（現行 UI／UX 規格）
+6. `docs/DECISIONS.md`（不可改回去的決定）
+7. `docs/CHANGELOG.md`（正式發布紀錄與 Unreleased）
 
 沒有讀完不得動手改 App 程式。只問問題或讀碼則不受此限。
 
@@ -25,8 +25,8 @@
 | 問題 | 依據 |
 |---|---|
 | 實際程式現在長怎樣 | **Git repo**（`main`、HEAD、檔案內容）。文件寫的與程式不同時，程式是事實，文件是待修的錯誤或待確認的差異 |
-| 現行規格是什麼 | `PROJECT_SPEC.md`、`UI_SPEC.md`、`DECISIONS.md`（三者為主要依據） |
-| 現在進行到哪 | `PROJECT_STATE.md`、`AI_HANDOFF.md` |
+| 現行規格是什麼 | `docs/PROJECT_SPEC.md`、`docs/UI_SPEC.md`、`docs/DECISIONS.md`（三者為主要依據） |
+| 現在進行到哪 | `docs/PROJECT_STATE.md`、`docs/AI_HANDOFF.md` |
 | 過去發生過什麼 | `docs/history/MASTER_HISTORY.md` |
 
 - `docs/history/` 全部是**歷史史料**。歷史中出現的舊需求**不得直接視為目前有效規格**，也不得因為歷史上提過就「恢復」。
@@ -51,9 +51,9 @@
 
 - 尚未正式發布的工作使用 `W001`、`W002`、`W003`…，全專案唯一遞增，不重用。
 - 一項工作從開始到發布，**無論中間換幾個 AI**（Claude Code → GPT Work → Codex → Claude Code…），都使用**同一個 W 編號**，**不得因換 AI 而增加正式版本號或另開 W 編號**。
-- 同一時間若有多項獨立工作，各自一個 W；每個 W 必須在 `AI_HANDOFF.md` 與 `CHANGELOG.md` 的 `Unreleased` 有條目。
-- W 編號只存在於：`AI_HANDOFF.md`、`CHANGELOG.md`（Unreleased）、commit 訊息前綴（例：`W001: 修正 …`）、工作分支名（例：`work/W001-…`）。**不寫進 App 的 `appVer`、`sw.js` 的 `VERSION`、關於頁或版本摘要。**
-- 開 W 時，在 `AI_HANDOFF.md` 登記：W 編號、正式基底版本與 commit、使用者原始需求。
+- 同一時間若有多項獨立工作，各自一個 W；每個 W 必須在 `docs/AI_HANDOFF.md` 與 `docs/CHANGELOG.md` 的 `Unreleased` 有條目。
+- W 編號只存在於：`docs/AI_HANDOFF.md`、`docs/CHANGELOG.md`（Unreleased）、commit 訊息前綴（例：`W001: 修正 …`）、工作分支名（例：`work/W001-…`）。**不寫進 App 的 `appVer`、`sw.js` 的 `VERSION`、關於頁或版本摘要。**
+- 開 W 時，在 `docs/AI_HANDOFF.md` 登記：W 編號、正式基底版本與 commit、使用者原始需求。
 
 ### 3.4 W 轉為正式版本（發布）的三個條件，缺一不可
 
@@ -64,7 +64,7 @@
 三者齊備後，才由當下負責的 AI 做**一次**發布動作：
 - 將 `W00x` 發布為下一個正式版本（例 v1.92）；
 - 同步升級 `index.html` 的版本、最後更新日、`versionSummaries`、`sw.js` 快取版本（使用 `tools/build_release.py` 與 `tools/sw-template.js` 的既有機制）；
-- 更新 `CHANGELOG.md`（Unreleased → 新版本）、`PROJECT_STATE.md`、`AI_HANDOFF.md`；
+- 更新 `docs/CHANGELOG.md`（Unreleased → 新版本）、`docs/PROJECT_STATE.md`、`docs/AI_HANDOFF.md`；
 - 追加 `MASTER_HISTORY.md` 事件（H156 起）；
 - 此後 W 編號封存，不再使用。
 
@@ -83,7 +83,7 @@ v1.49／v10.9 倒退、v1.54 缺 `data/zang.js` 等歷史異常：
 - **無關重構**；
 - **大規模改寫**；
 - **擅自改 UI**（含間距、圓角、顏色、尺寸、文案、動畫）；
-- **擅自恢復已被撤回的功能**（見 `DECISIONS.md`）；
+- **擅自恢復已被撤回的功能**（見 `docs/DECISIONS.md`）；
 - **擅自刪除既有功能**。
 
 優先採**最小修改**：能用最小的 CSS／JS 增量完成就不要動 DOM 結構；不為「順手」而改無關程式。
@@ -98,20 +98,20 @@ v1.49／v10.9 倒退、v1.54 缺 `data/zang.js` 等歷史異常：
 - 韓版
 - 藏版
 
-並在 `AI_HANDOFF.md` 的測試結果欄寫明**實際檢查了哪些、沒檢查哪些**。
+並在 `docs/AI_HANDOFF.md` 的測試結果欄寫明**實際檢查了哪些、沒檢查哪些**。
 
 ## 6. 文件與程式矛盾
 
-若 `PROJECT_SPEC.md`／`UI_SPEC.md`／`DECISIONS.md`、`PROJECT_STATE.md`、Git 程式、歷史史料**互相矛盾**：
+若 `docs/PROJECT_SPEC.md`／`docs/UI_SPEC.md`／`docs/DECISIONS.md`、`docs/PROJECT_STATE.md`、Git 程式、歷史史料**互相矛盾**：
 - **不得自行猜測**，不得自行裁定哪一個才是使用者真意；
 - 必須**向使用者指出差異**（列出各方說法與出處，例如 H 編號、檔案路徑、行號），由使用者裁定；
 - 裁定前，維持程式現況不動。
 
 ## 7. AI 切換時的交接（強制）
 
-- 每個 AI 工作結束，**或即將切換**（流量用盡、換工具），**必須更新 `AI_HANDOFF.md`**，使下一個 AI 能從**同一個 W** 繼續。
-- 未提交的修改必須先在工作分支 commit，並在 `AI_HANDOFF.md` 寫明最後 commit hash；不得讓進度只存在於某個 AI 的對話或本機暫存。
-- 接手的 AI 第一件事：讀完第 1 條的七份文件，核對 `AI_HANDOFF.md` 的「最後 commit」與 `git log`／`git status` 是否一致；不一致依第 6 條回報。
+- 每個 AI 工作結束，**或即將切換**（流量用盡、換工具），**必須更新 `docs/AI_HANDOFF.md`**，使下一個 AI 能從**同一個 W** 繼續。
+- 未提交的修改必須先在工作分支 commit，並在 `docs/AI_HANDOFF.md` 寫明最後 commit hash；不得讓進度只存在於某個 AI 的對話或本機暫存。
+- 接手的 AI 第一件事：讀完第 1 條的七份文件，核對 `docs/AI_HANDOFF.md` 的「最後 commit」與 `git log`／`git status` 是否一致；不一致依第 6 條回報。
 
 ## 8. Git 規則
 
@@ -120,12 +120,28 @@ v1.49／v10.9 倒退、v1.54 缺 `data/zang.js` 等歷史異常：
 - **不得 push 到 `main`、不得開 PR、不得 force-push，除非使用者明確要求。**
 - 不得提交 `.DS_Store`、時間戳暫存圖示等雜物；不得新增亂碼檔名的說明檔。
 
+### 8.1 檔案放置（預設，2026-10-12 依使用者要求新增）
+
+根目錄只放「網站運作或 GitHub／AI 工具必須在根目錄」的檔案：`index.html`、`sw.js`、`manifest.webmanifest`、`icon-192.png`、`icon-512.png`、`.nojekyll`、`.gitignore`、`README.md`、`AGENTS.md`。其餘一律放進資料夾，**新增檔案預設不放根目錄**：
+
+| 類型 | 位置 |
+|---|---|
+| 專案文件（STATE／HANDOFF／SPEC／UI_SPEC／DECISIONS／CHANGELOG、契約文件） | `docs/` |
+| 歷史史料 | `docs/history/` |
+| 舊版更新與驗證說明（歷史，檔名不改） | `docs/legacy-version-notes/` |
+| 截圖、示意圖、未被網站引用的圖片 | `shots/`、`assets/` |
+| 內容資料、字型、PDF | `data/` |
+| 測試、建置、patch 工具 | `tools/` |
+| 統計後台、CLI | `analytics/` |
+
+網站實際引用的檔案（圖示等）若要搬離根目錄，須同步更新 `manifest.webmanifest`、`index.html`、`sw.js` 並驗證後才可。
+
 ## 9. 測試與驗證
 
 - 使用 `tools/` 內既有測試（`*.cjs`）與 `fixtures/` 時，要明示該測試是針對哪一版寫的、本次實際跑了什麼。
 - 測試通過**不等於**使用者驗收，也不等於實機無 bug。Chromium 模擬**不能取代** Safari／iPhone／iPad 實機。
 - 報告結果須誠實：失敗就寫失敗，沒跑就寫沒跑，不得把未驗證的寫成已驗證。
-- 目前專案**沒有**統一的自動化測試入口；既有結果檔只針對 v1.61–v1.63、v1.76–v1.79 當時的版本（見 `PROJECT_STATE.md`）。
+- 目前專案**沒有**統一的自動化測試入口；既有結果檔只針對 v1.61–v1.63、v1.76–v1.79 當時的版本（見 `docs/PROJECT_STATE.md`）。
 
 ## 10. 不得動的檔案（除非該 W 明確需要）
 
@@ -137,11 +153,11 @@ v1.49／v10.9 倒退、v1.54 缺 `data/zang.js` 等歷史異常：
 ## 11. 不確定就問
 
 遇到以下情況，停下來問使用者，不要自己決定：
-- 兩個歷史需求互相衝突（見 `DECISIONS.md` 的「待使用者確認」）；
-- 新需求會推翻 `DECISIONS.md` 已記錄的決定；
+- 兩個歷史需求互相衝突（見 `docs/DECISIONS.md` 的「待使用者確認」）；
+- 新需求會推翻 `docs/DECISIONS.md` 已記錄的決定；
 - 不確定是否該發布、是否該升版本。
 
-使用者明確推翻某決定時：**先**更新 `DECISIONS.md`（新增條目，標明取代哪一條、來源），再改程式。
+使用者明確推翻某決定時：**先**更新 `docs/DECISIONS.md`（新增條目，標明取代哪一條、來源），再改程式。
 
 ## 12. 本檔維護
 
