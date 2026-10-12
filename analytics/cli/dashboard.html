@@ -31,6 +31,7 @@ svg text{fill:var(--mute);font-size:11px}
 <select id="dev"><option value="">全部裝置</option><option value="desktop">電腦</option><option value="tablet">平板</option><option value="phone">手機</option></select>
 <label style="font-size:13px;color:var(--mute)">實際使用門檻 <input id="min" type="number" min="1" max="3600" value="30"> 秒</label></div></header>
 <div id="err"></div>
+<div class="card" style="margin-bottom:12px"><h2>大概位置（滑鼠移上去看縣市，點一下看使用狀況）</h2><div class="mapwrap"><div id="map"></div><div id="mapinfo"></div></div></div>
 <div class="grid k4" id="kpi"></div>
 <div class="grid k2" style="margin-top:12px">
  <div class="card"><h2>每日實際使用人數（藍＝其他人　紅＝本人）</h2><div id="days"></div></div>
@@ -40,7 +41,6 @@ svg text{fill:var(--mute);font-size:11px}
  <div class="card"><h2>各 App 版本</h2><div id="ver"></div></div>
  <div class="card"><h2>最常讀的卷（有效閱讀時間）</h2><div id="juan"></div></div>
 </div>
-<div class="card" style="margin-top:12px"><h2>大概位置（滑鼠移上去看縣市，點一下看使用狀況）</h2><div class="mapwrap"><div id="map"></div><div id="mapinfo"></div></div></div>
 <div class="card" style="margin-top:12px"><h2 id="instT">每台裝置（短代號只用來區分裝置，不代表任何人）</h2><div id="inst"></div></div>
 <div class="card" style="margin-top:12px"><h2>功能使用排行</h2><div id="feat"></div></div>
 <p class="mute">「實際使用」＝期間內有效使用達門檻的裝置（畫面開著且有操作）。一台裝置算一個「人」，不代表真實人數。「本人」是你在自己的裝置上標記過的；沒標記的都算其他人。資料只讀自你自己的統計伺服器，本頁只在這台 Mac 開啟。<span id="upd"></span></p>
@@ -87,8 +87,8 @@ function cityBox(c,a,pinned){var d=el('div');d.appendChild(el('b','',c));if(!a){
  var L=[['裝置',a.n+' 台'+(a.me?'（含本人 '+a.me+'）':'')],['實際使用',a.eng+' 台'],['累計有效使用',dur(a.act)],['累計閱讀',dur(a.read)],['開啟',a.opens+' 次'],['最近使用',a.last.slice(5)],['裝置類型',Object.keys(a.dev).map(function(k){return(DEVN[k]||'未知')+' '+a.dev[k]}).join('、')],['App 版本',Object.keys(a.av).map(function(k){return k+' '+a.av[k]}).join('、')]];
  var t=el('table','tt');L.forEach(function(r){var tr=el('tr');tr.appendChild(el('td','',r[0]));tr.appendChild(el('td','',r[1]));t.appendChild(tr)});d.appendChild(t);if(pinned)d.appendChild(el('div','sub','再點一次取消，下面裝置表只列此縣市'));return d}
 function drawMap(list){var A=agg(list),mx=0;Object.keys(A).forEach(function(k){if(CITYSET[k])mx=Math.max(mx,A[k].act)});
- var ns='http://www.w3.org/2000/svg',M=$('map');M.textContent='';var s=document.createElementNS(ns,'svg');s.setAttribute('viewBox','0 0 310 350');s.setAttribute('width','100%');
- Object.keys(GEO).forEach(function(u){var c=UNIT[u],a=A[c],e=document.createElementNS(ns,'path');e.setAttribute('d',GEO[u]);e.setAttribute('class','unit'+(SELC===c?' on':''));var f=shade(a&&a.act);if(f)e.style.fill=f;
+ var ns='http://www.w3.org/2000/svg',M=$('map');M.textContent='';var s=document.createElementNS(ns,'svg');s.setAttribute('viewBox','0 62 310 288');s.setAttribute('width','100%');
+ Object.keys(GEO).forEach(function(u){var c=UNIT[u],a=A[c],e=document.createElementNS(ns,'path');e.setAttribute('d',GEO[u]);if(u==='連江縣')e.setAttribute('transform','translate(0,62)');e.setAttribute('class','unit'+(SELC===c?' on':''));var f=shade(a&&a.act);if(f)e.style.fill=f;
   e.onmousemove=function(ev){tipShow(ev,el('b','',u.replace('台','臺')+(a?'':'（無資料）')))};e.onmouseleave=tipHide;
   e.onclick=function(ev){pick(c);tipShow(ev,cityBox(c,A[c],true))};s.appendChild(e)});
  M.appendChild(s);
