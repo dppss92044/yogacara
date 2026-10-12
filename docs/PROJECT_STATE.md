@@ -24,8 +24,8 @@
 - App：`index.html`（約 6.7MB，內嵌原文與資料）、`sw.js`、`manifest.webmanifest`、`icon-192.png`、`icon-512.png`、`.nojekyll`。
 - `data/`（約 65MB，33 個檔）：`zang.js`（藏經版）、`kepan.pdf`、`kepan-pdf.js`、`notes-01…20.js`（披尋記／註解）、字型（`heil.woff2`、`kai2.woff2`、`ming.woff2`、PDF 字型 js）、`pdf-lib.min.js`、`fontkit.umd.min.js`。
 - `tools/`：建置與補丁（`build_release.py`、`sw-template.js`、`patch154…191.py`〔不連號〕、`v154…v191.css`、`layout160/162–167.js`、`zangkp180.js`、`v191.js`）；測試腳本與結果；`fixtures/`。
-- 根目錄說明檔：`審查與更新說明.md`、`既有版本紀錄_v1.60.md`、`更新與驗證說明_v1.61–63/76–79.md`、17 份亂碼檔名的 `更新與驗證說明_v1.64…v1.91.md`（歷史產物，不改）。
-- 雜物（已知，不處理除非有 W）：`.DS_Store`、`icon-192-20261004215829.png`、`icon-512-20261004215829.png`。
+- 舊版說明檔（已於整理根目錄時移到 `docs/legacy-version-notes/`，檔名未改）：`審查與更新說明.md`、`既有版本紀錄_v1.60.md`、`更新與驗證說明_v1.61–63/76–79.md`、17 份亂碼檔名的 `更新與驗證說明_v1.64…v1.91.md`（歷史產物，不改）。
+- 雜物（已整理）：時間戳圖示與 `col.png` 移到 `assets/`；`.DS_Store` 已移除並加入 `.gitignore`。
 
 ## 3. 現在的主要功能（依 v1.91 程式與版本摘要；**除註明外未經使用者逐項驗收**）
 

@@ -1,6 +1,6 @@
 # analytics/ — W001 匿名 App 分析（Analytics v2）
 
-決定依據：`DECISIONS.md` D049–D060（取代 D040–D048 中 App 內開關、告知文案與 v2 payload 的部分）。最終規格：`/mnt/project-files/W001/W001-analytics-v2-final-spec.md`。
+決定依據：`docs/DECISIONS.md` D049–D060（取代 D040–D048 中 App 內開關、告知文案與 v2 payload 的部分）。最終規格：`/mnt/project-files/W001/W001-analytics-v2-final-spec.md`。
 狀態：**施工中，未驗收，未發布**。**本目錄程式碼可公開；任何 secret（`PEPPER`、`ADMIN_TOKEN`）都不得進 repository**，只能用 `wrangler secret put` 設定。
 
 > **App 內沒有任何統計 UI**（D059）：無開關、無告知文字、關於頁與導覽不變。【2026-10-06 D101】q 裁定維持 App 內零統計 UI，不再以新增告知／控制介面作為發布條件。
@@ -35,7 +35,7 @@
 
 ## 本人旗標與 App 版本（W011，未上線）
 - 標記本人：在該裝置的「關於」頁連點版本號 7 下（再 7 下取消；輕震一下），沒有任何畫面提示；每台裝置各標一次。CLI `使用者`／`實例` 會顯示「本人」。
-- 上線需先套用 `worker/migrations/0004-me-version.sql`（遠端 D1），再 deploy Worker，最後才發布含新客戶端的 App；順序見 `AI_HANDOFF.md` W011。
+- 上線需先套用 `worker/migrations/0004-me-version.sql`（遠端 D1），再 deploy Worker，最後才發布含新客戶端的 App；順序見 `docs/AI_HANDOFF.md` W011。
 
 ## 查詢（Mac CLI）
 `analytics/cli/yoga_stats.py`：`瑜伽統計 今天｜本週｜本月｜<主題> [期間]`；主題：**網頁**（Mac 本機儀表板，`--port`、`--不開啟`）、**概況**（實際使用人數與時間，本人／其他人，`--by 日|版本`、`--門檻`）、回訪、地區、使用者、實例、閱讀、科判、版本、註釋、搜尋、辭典、匯出、導航、顯示、字體、科標、功能（`--全部`／`--未使用`／`--類型`）、裝置、即時（`--監看`、`--timeout`）、趨勢、資料量、登錄；`--本人`／`--其他`、`--裝置`、`--最近`、`--by`、`--day`、`--json`。token 預設由鑰匙圈 `yoga-stats-admin` 讀取；`./analytics/cli/install-mac.sh` 把指令加進 `~/.zshrc`（不寫 token）。測試：`python3 -m unittest discover analytics/cli`。
@@ -46,7 +46,7 @@
 3. 選正確模型（action／toggle／choice／continuous／navigation／export／read state／flow／system），**不得一律記 click**。
 4. 加必要測試：該功能的計數＋負面測試（`tools/stats-test.cjs`），並讓 `node tools/check-analytics-registry.cjs` 通過。
 5. 明確不追蹤的控制項，加進 `excluded`（寫 `css` 與原因）。
-6. 不因新增一般功能而重新設計核心或新增 D1 schema；只有出現**新的資料維度**才可，且須 q 批准並在 `DECISIONS.md` 立條。
+6. 不因新增一般功能而重新設計核心或新增 D1 schema；只有出現**新的資料維度**才可，且須 q 批准並在 `docs/DECISIONS.md` 立條。
 每次修改 `index.html` 都要跑完整性檢查。已知限制：模擬走訪不保證涵蓋所有動態 UI（深層面板仍可能漏），所以第 1–6 步的人為判斷不能省。
 
 ## 測試
@@ -58,7 +58,7 @@ node tools/stats-test.cjs                                   # 客戶端（Playwr
 node tools/sim-volume.mjs 50 200 700 1000                   # 資料量（本機模擬）
 ```
 本機端到端／量測：`cd analytics/worker && wrangler dev --local --persist-to <暫存資料夾> -c test/meter/wrangler.toml`，再 `curl localhost:8787/__init` 建 schema；`HTTP=http://localhost:8787 node tools/sim-volume.mjs 200`（`--local` 用本機模擬的 D1，不碰線上資料庫）。
-**這些都是 Chromium／Node 模擬，不能取代 Safari、iPhone、iPad 實機（P5）。** 實際跑了什麼、沒跑什麼，記在 `AI_HANDOFF.md`。
+**這些都是 Chromium／Node 模擬，不能取代 Safari、iPhone、iPad 實機（P5）。** 實際跑了什麼、沒跑什麼，記在 `docs/AI_HANDOFF.md`。
 
 ## 隱私重點
 - 程式不讀取、不儲存、不記錄 IP 或任何請求標頭（只讀 `Origin`、`Authorization`）；沒有 `console` 輸出；`wrangler.toml` 設 `observability.enabled = false`，也不要設 Logpush。
@@ -66,4 +66,4 @@ node tools/sim-volume.mjs 50 200 700 1000                   # 資料量（本機
 - 給使用者的隱私說明草稿：`PRIVACY-DRAFT.md`（**未發布**，待 q 定稿後才放上網站）。
 
 ## 部署（由 q 在 Mac 終端機操作；**需 q 逐階段同意，施工階段不做**）
-Migration 與部署的順序、備份與回滾見 `AI_HANDOFF.md`（W001 條目）；步驟包含：套用 `worker/migrations/0003-analytics-v2.sql`（遠端 D1）、`wrangler deploy`、核對 Logs 關閉、驗證 `/p` 與 `x-p`、一次一個階段回報。上線前恢復正式 `ALLOWED_ORIGIN`（`https://dppss92044.github.io`），並清掉測試資料。
+Migration 與部署的順序、備份與回滾見 `docs/AI_HANDOFF.md`（W001 條目）；步驟包含：套用 `worker/migrations/0003-analytics-v2.sql`（遠端 D1）、`wrangler deploy`、核對 Logs 關閉、驗證 `/p` 與 `x-p`、一次一個階段回報。上線前恢復正式 `ALLOWED_ORIGIN`（`https://dppss92044.github.io`），並清掉測試資料。
