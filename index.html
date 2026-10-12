@@ -7808,6 +7808,32 @@ setTimeout(go,900);})();</script>
 @keyframes haP4f{0%,16%{opacity:0;left:calc(50% - 44px);top:19px}18%,20%{opacity:1}24%,100%{opacity:0;left:calc(50% - 44px);top:19px}}
 .ha-st[data-k=p4] .ha-menu{left:calc(50% - 50px);top:30px;width:96px}
 
+/* ===== app d7 / phone p5: outline map (2.2) ===== */
+.ha-mb{position:absolute;right:8px;bottom:8px;width:24px;height:24px;border-radius:12px;display:grid;place-items:center;color:var(--fg);background:var(--pop,var(--bg));border:1px solid var(--rule);z-index:7}
+.ha-mb svg{width:15px;height:15px}
+.ha-half,.ha-full{position:absolute;opacity:0;background:var(--bg);overflow:hidden}
+.ha-half{left:64%;right:0;top:0;bottom:0;border-left:1px solid var(--rule);z-index:5}
+.ha-full{inset:0;z-index:6}
+.ha-half .ha-tree{transform:scale(.62);transform-origin:50% 0;left:-40%;right:-40%}
+.ha-full .ha-tree{transform:scale(.9);transform-origin:50% 0}
+.ha-ph .ha-half{left:0;right:0;top:auto;height:58%;border-left:0;border-top:1px solid var(--rule)}
+.ha-ph .ha-full{inset:0}
+.ha-ph .ha-half .ha-tree,.ha-ph .ha-full .ha-tree{left:-60%;right:-60%;transform:scale(.45)}
+.ha-ph .ha-mb{right:6px;bottom:30px}
+.ha-st[data-k=d7] .ha-cur{animation:haD7c 8s ease-in-out infinite!important}
+.ha-st[data-k=d7] .ha-cur::after{animation:haD7k 8s ease-out infinite!important}
+.ha-st[data-k=d7] .ha-half,.ha-st[data-k=p5] .ha-half{animation:haD7h 8s step-end infinite!important}
+.ha-st[data-k=d7] .ha-full,.ha-st[data-k=p5] .ha-full{animation:haD7f 8s step-end infinite!important}
+.ha-st[data-k=d7] .ha-half .nB,.ha-st[data-k=d7] .t1,.ha-st[data-k=p5] .ha-half .nB,.ha-st[data-k=p5] .t1{animation:haD7y 8s step-end infinite!important}
+.ha-st[data-k=p5] .ha-fin{animation:haP5f 8s ease infinite!important}
+@keyframes haD7c{0%{left:40%;top:85%}10%,14%{left:calc(100% - 22px);top:calc(100% - 22px)}22%,27%{left:calc(82% + 2px);top:44px}38%,100%{left:calc(100% - 22px);top:calc(100% - 22px)}}
+@keyframes haD7k{0%,13%{opacity:0;transform:scale(.4)}14%{opacity:.8;transform:scale(1)}18%,25%{opacity:0;transform:scale(1.7)}26%{opacity:.8;transform:scale(1)}30%,43%{opacity:0;transform:scale(1.7)}44%{opacity:.8;transform:scale(1)}48%,73%{opacity:0;transform:scale(1.7)}74%{opacity:.8;transform:scale(1)}78%,100%{opacity:0;transform:scale(1.7)}}
+@keyframes haD7h{0%{opacity:0}14%{opacity:1}44%{opacity:0}}
+@keyframes haD7f{0%{opacity:0}44%{opacity:1}74%{opacity:0}}
+@keyframes haD7y{0%{background:var(--bg)}26%{background:#efd27a}74%{background:var(--bg)}}
+.ha-st[data-k=d7] .t1:not(b),.ha-st[data-k=p5] .t1:not(b){animation-name:haD7t!important}
+@keyframes haD7t{0%{background:color-mix(in srgb,var(--fg) 22%,transparent)}26%{background:#efd27a}74%{background:color-mix(in srgb,var(--fg) 22%,transparent)}}
+@keyframes haP5f{0%,12%{opacity:0;left:calc(50% + 43px);top:calc(100% - 37px)}13%,15%{opacity:1;left:calc(50% + 43px);top:calc(100% - 37px)}17%,24%{opacity:0;left:50%;top:110px}25%,27%{opacity:1;left:50%;top:110px}29%,42%{opacity:0;left:calc(50% + 43px);top:calc(100% - 37px)}43%,45%{opacity:1}47%,72%{opacity:0}73%,75%{opacity:1}77%,100%{opacity:0;left:calc(50% + 43px);top:calc(100% - 37px)}}
 /* half-map help button */
 :root:root:root #kmap .km-eopt button.km-help-a{display:none}
 :root:root:root #kmap.km-emb .km-eopt button.km-help-a{display:flex;padding:0 14px;background:rgba(118,118,128,.14);color:var(--fg,#222)}
@@ -7861,12 +7887,16 @@ function sets(kind){
     {k:'p1',h:'三個分頁',st:phone()+fin,li:['下面三個分頁：卷次、正文、科判。','點一下就換頁。']},
     {k:'p2',h:'查辭典',st:phone('<span class="ha-sel" style="left:calc(50% - 40px);top:66px"></span><div class="ha-pop" style="left:calc(50% - 50px);right:auto;width:100px;top:90px"><b></b></div>')+fin,li:['設定裡先把「辭典」亮燈。','在正文連點兩下詞語，辭典就跳出來。','點外面就關掉。']},
     {k:'p3',h:'科判',st:phone()+fin,li:['在「科判」頁點一下標題：跳到正文那一段。','點兩下標題：回到上一層。']},
+    {k:'p5',h:'科判圖',st:phone('<div class="ha-half">'+tree()+'</div><div class="ha-full">'+tree()+'</div><span class="ha-mb">'+ic('#mapBtn svg')+'</span>')+fin,
+      li:['點右下圓鈕：科判圖打開半頁；再點展開整頁，再點回原畫面。','點圖上的標籤：正文一起跳過去並反黃；點空白處取消。']},
     {k:'p4',h:'設定',st:phone('<div class="ha-menu"><div>字體</div><div>版本</div><div>匯出</div><div>說明</div></div>')+fin,li:['點左上齒輪：字體、版本、匯出都在這裡。','想再看這段動畫，點「說明」。']}]};
   var tc=touch();
   return {title:'說明',sc:[
     {k:'d1',h:'三欄閱讀',st:screen(),li:['左邊卷次，中間正文，右邊科判。','三欄會一起跟著走。']},
     {k:'d2',h:'換卷',st:screen(cur),li:['點左上的卷號，換到那一卷。','往下讀，會自動接到下一卷。']},
     {k:'d3',h:'點標題',st:screen(cur),li:['點一下標題：三欄一起跳到這一段。','點兩下標題：回到上一層。','右上的鎖：打開＝自動追蹤，鎖上＝手動追蹤。']},
+    {k:'d7',h:'科判圖',st:screen('<div class="ha-half">'+tree()+'</div><div class="ha-full">'+tree()+'</div><span class="ha-mb">'+ic('#mapBtn svg')+'</span>'+(tc?fin:cur)),
+      li:['點右下圓鈕：科判圖在右邊半頁打開；再點展開整頁，再點回原畫面。','點圖上的標籤：三欄一起反黃跳過去；點空白處取消。','半頁右上「說明」：看 ＋／−、縮放、F 的用法。']},
     {k:'d4',h:'查辭典',st:screen('<span class="ha-sel" style="left:31%;top:62px"></span><div class="ha-pop"><b></b>'+lines(2)+'</div>'+(tc?fin:cur)),
       li:tc?['設定裡先把「辭典」亮燈。','連點兩下正文詞語，辭典就跳出來。','點外面就關掉。']:['設定裡先把「辭典」亮燈。','用滑鼠反白一個詞，辭典就跳出來。','點外面或按 Esc 關掉。']},
     {k:'d5',h:'搜尋',st:screen('<span class="ha-q"><em>瑜伽</em></span>'+cur+'<div class="ha-keys"><kbd class="kE">Enter</kbd></div>'),li:['點右上放大鏡。','輸入要找的字，按 Enter。']},
