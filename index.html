@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><script id="rev-22b">(function(){try{var R='2.2b',V='2.2',L=localStorage;if(L.getItem('hk-anim-rev')===R)return;L.setItem('hk-anim-rev',R);if(L.getItem('hk-ver-opened')===V||L.getItem('hk-anim-auto')===V){L.removeItem('hk-ver-opened');L.setItem('hk-anim-auto',V);}}catch(e){}})();</script><meta charset=utf8><meta name="app-version" content="2.2"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><script id="fresh-dev">(function(){try{var L=localStorage,n=0;for(var i=0;i<L.length;i++){if(/^hk/.test(L.key(i))){n=1;break;}}if(!n){window.__hkFresh=1;L.setItem('hk-anim-auto','2.2');}}catch(e){}})();</script><script id="rev-22b">(function(){try{var R='2.2b',V='2.2',L=localStorage;if(L.getItem('hk-anim-rev')===R)return;L.setItem('hk-anim-rev',R);if(L.getItem('hk-ver-opened')===V||L.getItem('hk-anim-auto')===V){L.removeItem('hk-ver-opened');L.setItem('hk-anim-auto',V);}}catch(e){}})();</script><meta charset=utf8><meta name="app-version" content="2.2"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -7643,6 +7643,7 @@ setTimeout(go,900);})();</script>
 .ha-b button{height:40px;padding:0 16px;border-radius:20px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);font:600 15px var(--ui);cursor:pointer}
 .ha-b button.go{background:#d9a62b;border-color:#d9a62b;color:#fff}
 .ha-b button:disabled{opacity:.4;cursor:default}
+.ha-b .ha-skip{margin-right:auto}
 /* shared bits */
 .ha-cur{position:absolute;width:22px;height:22px;z-index:9;filter:drop-shadow(0 1px 2px #0004)}
 .ha-cur svg{width:22px;height:22px}
@@ -7982,7 +7983,7 @@ function sets(kind){
 window.__helpAnim=function(kind){if(document.getElementById('helpAnim'))return;
   var S=sets(kind),SC=S.sc;
   var el=document.createElement('div');el.className='ha';el.id='helpAnim';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label',S.title);
-  el.innerHTML='<div class="ha-card"><div class="ha-ts">'+S.title+'</div><h3 class="ha-h"></h3><div class="ha-st"></div><ul class="ha-d"></ul><div class="ha-dots"></div><div class="ha-b"><button type="button" data-u="prev">上一步</button><button type="button" class="go" data-u="next">下一步</button></div></div>';
+  el.innerHTML='<div class="ha-card"><div class="ha-ts">'+S.title+'</div><h3 class="ha-h"></h3><div class="ha-st"></div><ul class="ha-d"></ul><div class="ha-dots"></div><div class="ha-b"><button type="button" class="ha-skip" data-u="skip">略過</button><button type="button" data-u="prev">上一步</button><button type="button" class="go" data-u="next">下一步</button></div></div>';
   var st=el.querySelector('.ha-st'),dots=el.querySelector('.ha-dots'),i=0;
   SC.forEach(function(x,n){var d=document.createElement('button');d.type='button';d.setAttribute('aria-label',x.h);d.onclick=function(){show(n);};dots.appendChild(d);});
   function show(n){i=n;st.dataset.k=SC[n].k;st.innerHTML=SC[n].st;
@@ -7990,7 +7991,7 @@ window.__helpAnim=function(kind){if(document.getElementById('helpAnim'))return;
     [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===n);});
     el.querySelector('[data-u=prev]').disabled=n===0;el.querySelector('[data-u=next]').textContent=n===SC.length-1?'知道了':'下一步';}
   function close(){el.remove();}
-  el.querySelector('[data-u=prev]').onclick=function(){if(i>0)show(i-1);};
+  el.querySelector('[data-u=skip]').onclick=close;el.querySelector('[data-u=prev]').onclick=function(){if(i>0)show(i-1);};
   el.querySelector('[data-u=next]').onclick=function(){if(i<SC.length-1)show(i+1);else close();};
   el.addEventListener('click',function(e){if(e.target===el)close();});
   el.addEventListener('keydown',function(e){e.stopPropagation();if(e.key==='Escape')close();else if(e.key==='ArrowRight')el.querySelector('[data-u=next]').click();else if(e.key==='ArrowLeft')el.querySelector('[data-u=prev]').click();});
@@ -8000,7 +8001,9 @@ function put(){var bar=document.querySelector('#kmap .km-eopt');if(!bar||bar.que
   b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();window.__helpAnim('map');});
   bar.insertBefore(b,bar.firstChild);}
 put();setInterval(put,800);
-})();</script>
+})();
+if(window.__hkFresh){(function go(){if(document.getElementById('tour')||document.getElementById('updAnim')||!document.getElementById('appVer')){setTimeout(go,800);return;}window.__helpAnim('app');})();}
+</script>
 <style id="dark-row-css">
 :root:root:root .settings-panel .layout-choices #darkBtn{order:99;flex:none;width:auto;height:42px;margin-left:9px;position:relative;overflow:visible;border-radius:10px;background:transparent}
 :root:root:root .settings-panel .layout-choices #darkBtn::before{content:"";position:absolute;left:-6px;top:9px;bottom:9px;width:1px;background:var(--rule)}
