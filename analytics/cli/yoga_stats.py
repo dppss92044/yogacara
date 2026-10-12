@@ -20,7 +20,7 @@
   YOGA_STATS_URL    接收端網址（預設為公開的 Worker 網址）
   YOGA_STATS_TOKEN  管理 token；未設定時從 macOS 鑰匙圈讀取（服務名 yoga-stats-admin）
 """
-import argparse, gzip, json, os, subprocess, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
+import argparse, gzip, re, json, os, subprocess, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
 
 DEFAULT_URL = 'https://yogacara-stats.dppss92044.workers.dev'
 KEYCHAIN_SERVICE = 'yoga-stats-admin'
@@ -412,7 +412,7 @@ def render_registry(d):
 # ---- 主程式 ----
 def build_parser():
     ap = argparse.ArgumentParser(prog='瑜伽統計', description='查詢《瑜伽師地論》匿名 App 分析')
-    ap.add_argument('what', help='全部｜概況｜今天｜本週｜本月｜使用者｜實例｜閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標｜功能｜裝置｜即時｜回訪｜地區｜趨勢｜資料量｜登錄')
+    ap.add_argument('what', help='全部｜概況｜版本號（例 2.2）｜今天｜本週｜本月｜使用者｜實例｜閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標｜功能｜裝置｜即時｜回訪｜地區｜趨勢｜資料量｜登錄')
     ap.add_argument('period', nargs='?', help='範圍：今天｜本週｜本月；實例請給短代號；趨勢請給 7 或 30')
     ap.add_argument('--limit', type=int, default=30)
     ap.add_argument('--sort', default=None)
@@ -434,7 +434,7 @@ def who_label(w):
 
 def render_engaged(d, by=None):
     mn = d['min_seconds']
-    out = ['《瑜伽師地論》匿名 App 分析', '', '概況｜' + head(d)]
+    out = ['《瑜伽師地論》匿名 App 分析', '', ('版本 %s｜' % d['av'] if d.get('av') else '概況｜') + head(d)]
     if d.get('dev'):
         out.append('裝置：%s' % DEVICE[d['dev']])
     out += ['「實際使用」＝期間內有效使用達 %s 的裝置（有效使用＝畫面開著且有操作）' % dur(mn).replace(' ', ''), '']
@@ -504,7 +504,13 @@ def main(argv=None, sleep=time.sleep):
         for name in ('趨勢', '資料量', '登錄', '即時'):
             print('\n' + '=' * 12, name, '=' * 12); main([name] + (['7'] if name == '趨勢' else []), sleep)
         return
-    if a.what in RANGES:
+    ver = a.what if re.fullmatch(r'v?\d{1,2}\.\d{1,3}', a.what) else None
+    if ver:
+        ver = ver.lstrip('v')
+        if a.period and a.period not in RANGES:
+            sys.exit('範圍須為 今天、本週 或 本月')
+        topic, rng = 'engaged', RANGES.get(a.period, 'month')
+    elif a.what in RANGES:
         topic, rng = 'summary', RANGES[a.what]
     elif a.what in TOPICS:
         topic = TOPICS[a.what]
@@ -530,7 +536,7 @@ def main(argv=None, sleep=time.sleep):
         by = {'日': 'day', 'day': 'day', '版本': 'version', 'version': 'version'}.get(a.by or '')
         if a.by and not by:
             sys.exit('--by 須為 日 或 版本')
-        d = call('/admin/engaged', {**{k: v for k, v in P.items() if k != 'who'}, 'min': a.min_sec, 'by': by}); return emit(a, d, render_engaged(d, by))
+        d = call('/admin/engaged', {**{k: v for k, v in P.items() if k != 'who'}, 'min': a.min_sec, 'by': by, 'av': ver}); return emit(a, d, render_engaged(d, by))
     if topic == 'summary':
         d = call('/admin/overview', P); return emit(a, d, render_summary(d))
     if topic in ('returning', 'regions'):

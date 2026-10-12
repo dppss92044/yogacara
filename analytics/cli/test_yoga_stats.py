@@ -74,6 +74,11 @@ class T(unittest.TestCase):
         out, err = run(['概況', '--本人', '--其他']); self.assertIsNotNone(err)
         out, err = run(['概況', '--門檻', '0']); self.assertIsNotNone(err)
 
+    def test_version_command(self):
+        SEEN.clear(); out, err = run(['2.2']); self.assertIsNone(err)
+        self.assertEqual((SEEN[-1][0], SEEN[-1][1].get('av'), SEEN[-1][1].get('range')), ('/admin/engaged', '2.2', 'month')); self.assertIn('實際使用', out)
+        SEEN.clear(); out, err = run(['v2.1', '本週']); self.assertIsNone(err); self.assertEqual((SEEN[-1][1].get('av'), SEEN[-1][1].get('range')), ('2.1', 'week'))
+
     def test_who_filter_passed(self):
         SEEN.clear(); out, err = run(['功能', '本週', '--其他']); self.assertIsNone(err); self.assertEqual(SEEN[-1][1].get('who'), 'other')
         SEEN.clear(); out, err = run(['本週', '--本人']); self.assertIsNone(err); self.assertEqual(SEEN[-1][1].get('who'), 'me')

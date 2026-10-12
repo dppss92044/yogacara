@@ -41,7 +41,7 @@
 ## 進行中：W011（統計：本人旗標＋App 版本＋「概況」；Claude Code，2026-10-12，**未發布、未 migration、未 deploy**）
 - 基底：App 2.2（main `f88bb94`）。q 原話：「如果我想增加一個版本更新之後的統計呢？我現在想把主要的統計，改成實際停留查看的人數、使用時間。可以的話區分我本人跟其他人。之前太多指令都不實用，」；本人區分方式 q 在決策卡選「裝置標記」。工作分支 `work/W011-analytics-me-version`；推送到 `claude/project-thread-3ws881`。決定 D160–D162。
 - 內容：客戶端送 `me`（關於頁連點版本號 7 下，或 control 事件）與 `av`；Worker 新增欄位、migration `analytics/worker/migrations/0004-me-version.sql`、`/admin/engaged`、其餘端點 `who=me|other`；CLI 新增 `概況`、`--本人`／`--其他`／`--門檻`，`使用者`／`實例` 顯示本人與版本；registry 的 `jfold` 預設值由 fold 改為 open（W005 已改預設展開，registry 過期，否則 Mac 會把預設狀態誤記為非預設）。
-- 已測：`node --test analytics/worker/test/`（35 項 Worker／schema／migration）；`python3 -m unittest discover analytics/cli`（20 項）；`node tools/stats-test.cjs`（Chromium 電腦／iPad／iPhone 模擬，含新增 T16 me／av）結果見下方「客戶端測試結果」。
+- 已測：`node --test analytics/worker/test/`（35 項 Worker／schema／migration）；`python3 -m unittest discover analytics/cli`（20 項）；`node tools/stats-test.cjs`（Chromium 電腦／iPad／iPhone 模擬，含新增 T16 me／av）已 rebase 到最新 main 後 17/17 通過（含 T01 jfold 預設改依版面）。Worker 35 項、CLI 21 項亦通過。另新增 `瑜伽統計 2.2`（版本號當指令，看該版本的實際使用人數／時間）與 `/admin/engaged?av=`。
 - **未測／未做**：Registry 完整性動態檢查（約 30 分鐘）未對 2.2 基底重跑，僅修了 jfold 預設；Safari／iPhone／iPad／PWA 實機未測；7 下連點只以模擬 control 事件測，未實機連點；線上 D1 未 migration、Worker 未 deploy、App 未升版（`sw.js`／`appVer` 未動）。
 - 上線順序（需 q 逐階段同意）：①備份並執行 migration 0004（遠端 D1）→ ②`wrangler deploy` Worker → ③照常發布含新客戶端的 App 版本（`tools/build_release.py`）。順序不可顛倒：舊 Worker 會把含 `me`／`av` 的新 payload 當 400 丟棄。
 - 影響檢查（AGENTS §5）：只改統計客戶端與 `#appVer` 的捕獲階段點擊監聽（不加 DOM／UI）；三種版面皆載入同一份客戶端；韓版／藏版不涉及。

@@ -326,6 +326,7 @@ test('概況 /admin/engaged：本人與其他分開；停留門檻；依日、�
     const v = (av, me) => e.versions.find(x => x.av === av && x.me === me);
     assert.equal(v('2.2', true).instances, 1); assert.equal(v('2.2', false).engaged, 2); assert.equal(v('2.1', false).engaged, 0);
     const d = await admin(env, '/admin/engaged?range=today&min=30&dev=desktop'); assert.equal(d.other.instances, 1); assert.equal(d.me.instances, 0);
+    const f22 = await admin(env, '/admin/engaged?range=today&av=2.2'); assert.equal(f22.av, '2.2'); assert.equal(f22.me.instances, 1); assert.equal(f22.other.instances, 2); assert.equal(f22.other.engaged, 2);
     const dd = await admin(env, '/admin/engaged?range=today&by=day'); assert.equal(dd.days.length, 2);
     const ov = await admin(env, '/admin/overview?range=today&who=other'); assert.equal(ov.instances, 3); assert.equal(ov.who, 'other');
     const ovm = await admin(env, '/admin/overview?range=today&who=me'); assert.equal(ovm.instances, 1);

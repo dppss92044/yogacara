@@ -241,14 +241,15 @@ async function instances(url, env) {
 async function engaged(url, env) {
   const r = rangeOf(url); if (!r) return bad();
   const dev = devOf(url), min = num(url.searchParams.get('min'), 30, 1, 3600), by = url.searchParams.get('by') || '';
-  const jd = dev ? ` AND i.device = '${dev}'` : '';
+  const av = /^\d{1,2}\.\d{1,3}$/.test(url.searchParams.get('av') || '') ? url.searchParams.get('av') : '';
+  const jd = (dev ? ` AND i.device = '${dev}'` : '') + (av ? ` AND d.av = '${av}'` : '');
   const tot = (await env.DB.prepare(
     'SELECT t.me AS me, COUNT(*) AS inst, SUM(t.sec >= ?1) AS eng, SUM(t.sec) AS sec, SUM(CASE WHEN t.sec >= ?1 THEN t.sec ELSE 0 END) AS esec, SUM(t.rsec) AS rsec, SUM(t.opens) AS opens, SUM(t.fresh) AS fresh FROM (' +
     'SELECT d.h AS h, i.me AS me, SUM(d.active_sec) AS sec, SUM(d.read_sec) AS rsec, SUM(d.opens) AS opens, (i.first_day BETWEEN ?2 AND ?3) AS fresh FROM instance_days d JOIN instances i ON i.h = d.h ' +
     'WHERE d.day BETWEEN ?2 AND ?3' + jd + ' GROUP BY d.h) t GROUP BY t.me').bind(min, r.start, r.end).all()).results || [];
   const pack = x => ({ instances: x.inst, engaged: x.eng || 0, active_seconds: x.sec || 0, engaged_seconds: x.esec || 0, read_seconds: x.rsec || 0, opens: x.opens || 0, new: x.fresh || 0 });
   const get = m => { const x = tot.find(y => y.me === m); return x ? pack(x) : pack({ inst: 0 }); };
-  const out = { range: r.range, period: periodOut(r), dev, min_seconds: min, me: get(1), other: get(0) };
+  const out = { range: r.range, period: periodOut(r), dev, min_seconds: min, av: av || null, me: get(1), other: get(0) };
   if (by === 'day') {
     out.days = ((await env.DB.prepare(
       'SELECT d.day AS day, i.me AS me, COUNT(*) AS inst, SUM(d.active_sec >= ?1) AS eng, SUM(d.active_sec) AS sec FROM instance_days d JOIN instances i ON i.h = d.h WHERE d.day BETWEEN ?2 AND ?3' + jd + ' GROUP BY d.day, i.me ORDER BY d.day').bind(min, r.start, r.end).all()).results || [])
