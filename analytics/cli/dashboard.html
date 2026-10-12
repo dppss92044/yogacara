@@ -40,6 +40,7 @@ svg text{fill:var(--mute);font-size:11px}
  <div class="card"><h2>各 App 版本</h2><div id="ver"></div></div>
  <div class="card"><h2>最常讀的卷（有效閱讀時間）</h2><div id="juan"></div></div>
 </div>
+<div class="card" style="margin-top:12px"><h2>每台裝置（短代號只用來區分裝置，不代表任何人）</h2><div id="inst"></div></div>
 <div class="card" style="margin-top:12px"><h2>功能使用排行</h2><div id="feat"></div></div>
 <p class="mute">「實際使用」＝期間內有效使用達門檻的裝置（畫面開著且有操作）。一台裝置算一個「人」，不代表真實人數。「本人」是你在自己的裝置上標記過的；沒標記的都算其他人。資料只讀自你自己的統計伺服器，本頁只在這台 Mac 開啟。<span id="upd"></span></p>
 </div>
@@ -72,11 +73,12 @@ function table(el0,head,rows){el0.textContent='';if(!rows.length){el0.appendChil
 function ver(e){table($('ver'),['版本','身分','實際使用','開過','有效使用'],(e.versions||[]).map(function(x){return[x.av?'v'+x.av:'未知',x.me?'本人':'其他人',x.engaged,x.instances,dur(x.active_seconds)]}))}
 function live(p){$('liveN').textContent=p.active_5m+' 人（5 分鐘內）';table($('live'),['裝置','城市','模式','幾秒前'],(p.online||[]).slice(0,12).map(function(x){return[DEVN[x.device]||'未知',x.city||'—',x.mode==='pwa'?'PWA':'網頁',x.ago]}))}
 function juan(r){var mx=1;(r.juans||[]).forEach(function(x){mx=Math.max(mx,x.sec)});table($('juan'),['卷','人數','有效閱讀',''],(r.juans||[]).slice(0,10).map(function(x){var b=el('span','bar');b.style.width=Math.round(90*x.sec/mx)+'px';return['卷'+x.juan,x.u,dur(x.sec),b]}))}
+function inst(r){var MD={web:'網頁',pwa:'PWA'};table($('inst'),['代號','身分','城市','裝置','版本','開啟','有效使用','閱讀','首次～最後'],(r.instances||[]).map(function(x){return[x.code,x.me?'本人':'',x.city||'—',DEVN[x.device]||'未知',x.av?'v'+x.av:'?',x.opens,dur(x.active_seconds),dur(x.read_seconds||0),(x.first_day||'?').slice(5)+'～'+(x.last_day||'?').slice(5)]}));if(r.total>(r.instances||[]).length)$('inst').appendChild(el('div','sub','只列前 '+r.instances.length+' 台，共 '+r.total+' 台'))}
 function feat(f){var rows=(f.features||[]).filter(function(x){return x.n>0}).slice(0,15).map(function(x){return[x.name,x.n,x.u]});table($('feat'),['功能','次數','使用裝置'],rows)}
 var busy=false;
 function load(){if(busy)return;busy=true;$('err').style.display='none';var b=base();
- Promise.all([api('engaged',Object.assign({min:S.min,by:'day'},b)),api('engaged',Object.assign({min:S.min,by:'version'},b)),api('presence',{}),api('reading',Object.assign({by:'juan'},b)),api('features',b)])
- .then(function(a){kpi(a[0]);days(a[0]);ver(a[1]);live(a[2]);juan(a[3]);feat(a[4]);$('upd').textContent=' 更新於 '+new Date().toLocaleTimeString()})
+ Promise.all([api('engaged',Object.assign({min:S.min,by:'day'},b)),api('engaged',Object.assign({min:S.min,by:'version'},b)),api('presence',{}),api('reading',Object.assign({by:'juan'},b)),api('features',b),api('instances',Object.assign({limit:50,sort:'time'},b))])
+ .then(function(a){kpi(a[0]);days(a[0]);ver(a[1]);live(a[2]);juan(a[3]);feat(a[4]);inst(a[5]);$('upd').textContent=' 更新於 '+new Date().toLocaleTimeString()})
  .catch(function(e){$('err').textContent='讀取失敗：'+e.message;$('err').style.display='block'}).then(function(){busy=false})}
 $('rng').onclick=function(e){var v=e.target.dataset&&e.target.dataset.v;if(!v)return;S.rng=v;[].forEach.call($('rng').children,function(b){b.classList.toggle('on',b.dataset.v===v)});load()};
 $('dev').onchange=function(){S.dev=this.value;load()};

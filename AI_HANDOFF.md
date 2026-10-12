@@ -12,6 +12,9 @@
 - #upNav 點擊改為 `panelPage(APPEAR[n]||2, n, N[n][6], true)`（只在 #pzoom 反黃並置中母枝，不呼叫 focusNode）；說明卡在半頁科判開啟時放進 #kmap（`.ha.ha-in`，透明底）。
 - 測試：僅電腦版 Chromium（深節點 己二→丁五 反黃、說明卡在半頁內）；iPad／手機／韓版／藏版未測。
 
+## W021（後台加「每台裝置」表；Claude Code，2026-10-12，預覽中，未合併）
+- q：「我看不出是不是同一台裝置 大概在哪」。`dashboard.html` 新增每台裝置表（短代號、本人、城市、裝置、版本、開啟、有效使用、閱讀、首次～最後），用既有 `/admin/instances`，不改 Worker。截圖 `/mnt/project-files/W020/dashboard-devices.png`；CLI 22 項通過；未測真實資料。
+
 ## W020（已靜默合併 main，Claude Code，2026-10-12）
 - q：「在科判半頁圖，不管哪版本，最上面的瑜伽師地論，一樣要有說明中的快捷鍵的功能介面的適用。另外，同時加上不管分什麼輸入法，按到相應的快捷按鍵都要可以操作，直接默默合併發布。」
 - 根節點是虛擬節點 VR：原本選它按 F 會 toggleFocus(VR) 讓整張圖變空白；＋／− 走 branchStep 但 subEnd(VR) 只含自己，無作用。改為 branchStep 對 VR 涵蓋 0..VR；toggleFocus 對 VR 只做還原（不聚焦）。科判圖 ⌘／Ctrl ＋／− 與正文 ⌘／Ctrl ＋／−／0 加認 `e.code`（Equal／Minus／Numpad*／Digit0）；F 與 ＋／− 本來就有 `e.code` 判斷。
