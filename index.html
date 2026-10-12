@@ -7838,6 +7838,38 @@ setTimeout(go,900);})();</script>
 .ha-st[data-k=d7] .t1:not(b),.ha-st[data-k=p5] .t1:not(b){animation-name:haD7t!important}
 @keyframes haD7t{0%{background:color-mix(in srgb,var(--fg) 22%,transparent)}26%{background:#efd27a}74%{background:color-mix(in srgb,var(--fg) 22%,transparent)}}
 @keyframes haP5f{0%,12%{opacity:0;left:calc(50% + 43px);top:calc(100% - 37px)}13%,15%{opacity:1;left:calc(50% + 43px);top:calc(100% - 37px)}17%,24%{opacity:0;left:50%;top:110px}25%,27%{opacity:1;left:50%;top:110px}29%,42%{opacity:0;left:calc(50% + 43px);top:calc(100% - 37px)}43%,45%{opacity:1}47%,72%{opacity:0}73%,75%{opacity:1}77%,100%{opacity:0;left:calc(50% + 43px);top:calc(100% - 37px)}}
+/* ===== lock scene (d8 / p6) ===== */
+.ha-lk{position:absolute;top:3px;width:16px;height:16px;color:var(--muted);z-index:3}
+.ha-lk span{position:absolute;inset:0}.ha-lk svg{width:16px;height:16px;display:block}
+.ha-lk .c{opacity:0;color:var(--cinnabar)}
+.ha-st[data-k=d8] .ha-lk .o,.ha-st[data-k=p6] .ha-lk .o{animation:haLo 8s step-end infinite!important}
+.ha-st[data-k=d8] .ha-lk .c,.ha-st[data-k=p6] .ha-lk .c{animation:haLc 8s step-end infinite!important}
+.ha-st[data-k=d8] .ha-cur{animation:haD8c 8s ease-in-out infinite!important}
+.ha-st[data-k=d8] .ha-cur::after{animation:haD8k 8s ease-out infinite!important}
+.ha-st[data-k=d8] .t1,.ha-st[data-k=p6] .t1{animation:haD8y 8s step-end infinite!important}
+.ha-st[data-k=d8] .ha-txt .ha-body,.ha-st[data-k=d8] .ha-lst{animation:haD8s 8s ease-in-out infinite!important}
+.ha-st[data-k=p6] .ha-fin{animation:haP6f 8s ease infinite!important}
+@keyframes haLo{0%{opacity:1}16%{opacity:0}96%{opacity:1}}
+@keyframes haLc{0%{opacity:0}16%{opacity:1}96%{opacity:0}}
+@keyframes haD8c{0%{left:40%;top:85%}13%,18%{left:calc(64% - 14px);top:8px}34%,100%{left:calc(64% + 16px);top:62px}}
+@keyframes haD8k{0%,15%{opacity:0;transform:scale(.4)}16%{opacity:.8;transform:scale(1)}21%,35%{opacity:0;transform:scale(1.7)}36%{opacity:.8;transform:scale(1)}41%,100%{opacity:0;transform:scale(1.7)}}
+@keyframes haD8y{0%{background:color-mix(in srgb,var(--fg) 16%,transparent)}36%{background:#efd27a}94%{background:color-mix(in srgb,var(--fg) 16%,transparent)}}
+@keyframes haD8s{0%,36%{transform:none}44%,92%{transform:translateY(-22px)}100%{transform:none}}
+@keyframes haP6f{0%,13%{opacity:0;left:calc(50% + 43px);top:19px}15%,17%{opacity:1;left:calc(50% + 43px);top:19px}19%,33%{opacity:0;left:calc(50% - 20px);top:44px}35%,37%{opacity:1;left:calc(50% - 20px);top:44px}39%,100%{opacity:0;left:calc(50% - 20px);top:44px}}
+/* ===== interface scene (d9 / p7): dark + reading backgrounds ===== */
+.ha-sw{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:12px;background:var(--pop,var(--bg));border:1px solid var(--rule);z-index:8;box-shadow:0 2px 8px #0002}
+.ha-sw i{display:block;width:16px;height:16px;border-radius:50%;border:1px solid color-mix(in srgb,var(--fg) 30%,transparent)}
+.ha-sw i:nth-child(1){background:#f6efd9}.ha-sw i:nth-child(2){background:#dcebd2}.ha-sw i:nth-child(3){background:#e8e8e6}.ha-sw i:nth-child(4){background:#fff}
+.ha-sw b{display:block;width:16px;height:16px;color:var(--fg)}.ha-sw b svg{width:16px;height:16px;display:block}
+.ha-st[data-k=d9],.ha-st[data-k=p7] .ha-ph,.ha-st[data-k=p7] .ha-pg,.ha-st[data-k=p7] .ha-tabs{animation:haBg 10s step-end infinite!important}
+.ha-st[data-k=d9] .ha-cat{background:transparent}
+.ha-st[data-k=d9] .ha-cur{animation:haD9c 10s ease-in-out infinite!important}
+.ha-st[data-k=d9] .ha-cur::after{animation:haD9k 10s ease-out infinite!important}
+.ha-st[data-k=p7] .ha-fin{animation:haP7f 10s ease infinite!important}
+@keyframes haBg{0%{background:#fff}12%{background:#f6efd9}32%{background:#dcebd2}52%{background:#e8e8e6}72%{background:#2a2826}92%{background:#fff}}
+@keyframes haD9c{0%{left:50%;top:40%}9%,30%{left:calc(50% - 52px);top:calc(100% - 24px)}32%,50%{left:calc(50% - 28px);top:calc(100% - 24px)}52%,70%{left:calc(50% - 4px);top:calc(100% - 24px)}72%,100%{left:calc(50% + 44px);top:calc(100% - 24px)}}
+@keyframes haD9k{0%,11%{opacity:0;transform:scale(.4)}12%{opacity:.8;transform:scale(1)}16%,31%{opacity:0;transform:scale(1.6)}32%{opacity:.8;transform:scale(1)}36%,51%{opacity:0;transform:scale(1.6)}52%{opacity:.8;transform:scale(1)}56%,71%{opacity:0;transform:scale(1.6)}72%{opacity:.8;transform:scale(1)}76%,100%{opacity:0;transform:scale(1.6)}}
+@keyframes haP7f{0%,10%{opacity:0;left:calc(50% - 52px + 8px);top:calc(100% - 18px)}11%,13%{opacity:1;left:calc(50% - 44px)}15%,30%{opacity:0;left:calc(50% - 44px)}31%,33%{opacity:1;left:calc(50% - 20px)}35%,50%{opacity:0;left:calc(50% - 20px)}51%,53%{opacity:1;left:calc(50% + 4px)}55%,70%{opacity:0;left:calc(50% + 4px)}71%,73%{opacity:1;left:calc(50% + 52px)}75%,100%{opacity:0;left:calc(50% + 52px);top:calc(100% - 18px)}}
 /* half-map help button */
 :root:root:root #kmap .km-eopt button.km-help-a{display:none}
 :root:root:root #kmap.km-emb .km-eopt button.km-help-a{display:flex;padding:0 14px;background:rgba(118,118,128,.14);color:var(--fg,#222)}
@@ -7877,6 +7909,8 @@ function phone(inner){
     (inner||'')+'<div class="ha-tabs"><span class="tc">卷次</span><span class="tt">正文</span><span class="tm">科判</span></div></div>';
 }
 var cur='<span class="ha-cur">'+CUR+'</span>',fin='<span class="ha-fin"></span>';
+function lk(pos){var o=document.querySelector('#trackLock .lk-o'),c=document.querySelector('#trackLock .lk-c');return '<span class="ha-lk" style="'+pos+'"><span class="o">'+(o?o.outerHTML:'')+'</span><span class="c">'+(c?c.outerHTML:'')+'</span></span>';}
+var SW='<span class="ha-sw"><i></i><i></i><i></i><i></i><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg></b></span>';
 var touch=function(){return !matchMedia('(hover:hover)').matches;};
 function sets(kind){
   if(kind==='map')return {title:'科判圖說明',sc:[
@@ -7891,19 +7925,23 @@ function sets(kind){
     {k:'p1',h:'三個分頁',st:phone()+fin,li:['下面三個分頁：卷次、正文、科判。','點一下就換頁。']},
     {k:'p2',h:'查辭典',st:phone('<span class="ha-sel" style="left:calc(50% - 40px);top:66px"></span><div class="ha-pop" style="left:calc(50% - 50px);right:auto;width:100px;top:90px"><b></b></div>')+fin,li:['設定裡先把「辭典」亮燈。','在正文連點兩下詞語，辭典就跳出來。','點外面就關掉。']},
     {k:'p3',h:'科判',st:phone()+fin,li:['在「科判」頁點一下標題：跳到正文那一段。','點兩下標題：回到上一層。']},
+    {k:'p6',h:'鎖',st:phone(lk('right:6px'))+fin,li:['右上的鎖：打開＝自動追蹤，鎖上＝手動追蹤。','點空白處，取消標黃。']},
     {k:'p5',h:'科判圖',st:phone('<div class="ha-half">'+tree()+'</div><div class="ha-full">'+tree()+'</div><span class="ha-mb">'+ic('#mapBtn svg')+'</span>')+fin,
       li:['點右下圓鈕：開半頁 → 整頁 → 返回。']},
+    {k:'p7',h:'介面',st:phone()+SW+fin,li:['設定 → 介面：「深色」一點畫面就反黑。','閱讀底色可選：淡黃、護眼綠、灰、白。']},
     {k:'p4',h:'設定',st:phone('<div class="ha-menu"><div>字體</div><div>版本</div><div>匯出</div><div>說明</div></div>')+fin,li:['點左上齒輪：字體、版本、匯出都在這裡。','想再看這段動畫，點「說明」。']}]};
   var tc=touch();
   return {title:'說明',sc:[
     {k:'d1',h:'三欄閱讀',st:screen(),li:['左邊卷次，中間正文，右邊科判。','三欄會一起跟著走。']},
     {k:'d2',h:'換卷',st:screen(cur),li:['點左上的卷號，換到那一卷。','往下讀，會自動接到下一卷。']},
-    {k:'d3',h:'點標題',st:screen(cur),li:['點一下標題：三欄一起跳到這一段。','點兩下標題：回到上一層。','右上的鎖：打開＝自動追蹤，鎖上＝手動追蹤。']},
+    {k:'d3',h:'點標題',st:screen(cur),li:['點一下標題：三欄一起跳到這一段。','點兩下標題：回到上一層。']},
+    {k:'d8',h:'鎖',st:screen(lk('left:calc(64% - 20px)')+(tc?fin:cur)),li:['打開＝自動追蹤：讀到哪，三欄自動標黃。','鎖上＝手動追蹤：點哪欄標題，三欄才一起標黃、跳過去。','點空白處，取消標黃。']},
     {k:'d7',h:'科判圖',st:screen('<div class="ha-half">'+tree()+'</div><div class="ha-full">'+tree()+'</div><span class="ha-mb">'+ic('#mapBtn svg')+'</span>'+(tc?fin:cur)),
       li:['點右下圓鈕：開半頁 → 整頁 → 返回。','半頁右上「說明」：看 ＋／−、縮放、F 的用法。']},
     {k:'d4',h:'查辭典',st:screen('<span class="ha-sel" style="left:31%;top:62px"></span><div class="ha-pop"><b></b>'+lines(2)+'</div>'+(tc?fin:cur)),
       li:tc?['設定裡先把「辭典」亮燈。','連點兩下正文詞語，辭典就跳出來。','點外面就關掉。']:['設定裡先把「辭典」亮燈。','用滑鼠反白一個詞，辭典就跳出來。','點外面或按 Esc 關掉。']},
     {k:'d5',h:'搜尋',st:screen('<span class="ha-q"><em>瑜伽</em></span>'+cur+'<div class="ha-keys"><kbd class="kE">Enter</kbd></div>'),li:['點右上放大鏡。','輸入要找的字，按 Enter。']},
+    {k:'d9',h:'介面',st:screen(SW+(tc?fin:cur)),li:['設定 → 介面：「深色」一點畫面就反黑。','閱讀底色可選：淡黃、護眼綠、灰、白。']},
     {k:'d6',h:'設定',st:screen('<div class="ha-menu"><div class="r1">字體</div><div>版本</div><div>匯出</div><div>說明</div></div>'+cur),li:['點左上齒輪：字體、版本、匯出都在這裡。','想再看這段動畫，點「說明」。']}]};
 }
 window.__helpAnim=function(kind){if(document.getElementById('helpAnim'))return;
