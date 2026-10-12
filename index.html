@@ -3399,10 +3399,10 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     window.addEventListener("resize", place);
     setTimeout(place, 60);
   }
-  $("tourBtn").querySelector("span").textContent="說明";
-  var detailedTour=$("tourBtn").cloneNode(true);detailedTour.id="detailedTourBtn";detailedTour.querySelector("span").textContent="導覽";
+  $("tourBtn").querySelector("span").textContent="概略導覽";
+  var detailedTour=$("tourBtn").cloneNode(true);detailedTour.id="detailedTourBtn";detailedTour.querySelector("span").textContent="說明";$("tourBtn").after(detailedTour);
   $("tourBtn").onclick = function () { closeMenu(true); if(window.__helpAnim)window.__helpAnim("app"); };
-  detailedTour.onclick=function(){closeMenu(true);runTour(false,true);};
+  detailedTour.onclick=function(){closeMenu(true);if(window.__helpAnim)window.__helpAnim("app");};
   var menuT = null, menuPinned=false, lockedSub=null;
   function openMenu() { clearTimeout(menuT); closeSearch();var wasOpen=$("menu").classList.contains("open");$("menu").classList.add("open");positionSubmenus();var surface=$("menu").querySelector(".mpop");if(!wasOpen||surface.style.pointerEvents==="none")Motion.open(surface); }
   function closeMenu(now) {
@@ -3936,7 +3936,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     (function(){var ver=$('about').querySelector('.ver'),hb=$('versionHistoryBtn');if(!ver||!hb)return;ver.setAttribute('role','button');ver.tabIndex=0;ver.setAttribute('aria-label','版本內容');var ch=document.createElement('i');ch.className='chev';ch.textContent='›';ver.appendChild(ch);ver.addEventListener('click',function(){hb.click();});ver.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();hb.click();}});})();
     var source=$('about').querySelector('.about-overview .grp');if(source){var sourceDetails=document.createElement('details');sourceDetails.className='about-source';sourceDetails.innerHTML='<summary>內容來源</summary>';source.before(sourceDetails);sourceDetails.appendChild(source);}
     panel.classList.add('settings-panel');panel.dataset.settingsPage='root';
-    var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.ver-menu-row','.about']]];
+    var groups=[['閱讀',['.edition-settings','.label-settings','.content-settings','#tourBtn','#detailedTourBtn']],['顯示',['.learning-settings-list','.ft']],['其他',['.dl','.ver-menu-row','.about']]];
     groups.forEach(function(g,index){var h=document.createElement('h5');h.className='settings-section';h.id='settingsSection'+index;h.textContent=g[0];panel.appendChild(h);g[1].forEach(function(sel,k){var row=panel.querySelector(sel);if(!row)return;row.dataset.settingsGroup=index;row.setAttribute('aria-describedby',h.id);if(k===0)row.classList.add('group-first');if(k===g[1].length-1)row.classList.add('group-last');panel.appendChild(row);});});
     $('settingsBack').onclick=function(){showSettingsPage(settingsPage==='version'?versionBack:settingsPage==='report'?'about':'root');};
     panel.addEventListener('click',function(e){if(e.target.closest('#reportBtn')){e.preventDefault();e.stopImmediatePropagation();var mv=(document.querySelector('meta[name=app-version]')||{}).content||'';location.href='mailto:dppss92044@gmail.com?subject='+encodeURIComponent('瑜伽師地論app用戶問題回報')+'&body='+encodeURIComponent('\n\n——\n版本 v'+mv+'\n'+navigator.userAgent);return;}if(e.target.closest('.learning-settings summary')&&settingsPage==='root'){e.preventDefault();e.stopImmediatePropagation();pinLayoutFly();return;}var target=e.target.closest('#labelBtn,#reportBtn,#editionBtn,#contentBtn,#ftBtn,#dlBtn,#aboutBtn,.learning-settings summary,#versionHistoryBtn');if(!target)return;e.preventDefault();e.stopImmediatePropagation();var page=target.id==='labelBtn'?'label':target.id==='reportBtn'?'report':target.id==='editionBtn'?'edition':target.id==='contentBtn'?'content':target.id==='ftBtn'?'ft':target.id==='dlBtn'?'dl':target.id==='aboutBtn'?'about':target.id==='versionHistoryBtn'?'history':'layout';showSettingsPage(page);openMenu();},true);
