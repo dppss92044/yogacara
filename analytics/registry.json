@@ -4069,7 +4069,7 @@
    "devices": "全部",
    "source": "#jFold aria-expanded",
    "via": "s",
-   "default": "fold",
+   "default": "open",
    "values": [
     "open",
     "fold"

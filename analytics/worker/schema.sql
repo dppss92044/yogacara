@@ -16,7 +16,9 @@ CREATE TABLE IF NOT EXISTS instances (
   tier        TEXT,                       -- 'b'|'f'（最新）
   read_sec    INTEGER NOT NULL DEFAULT 0,
   search_total INTEGER NOT NULL DEFAULT 0,
-  dict_total  INTEGER NOT NULL DEFAULT 0
+  dict_total  INTEGER NOT NULL DEFAULT 0,
+  me          INTEGER NOT NULL DEFAULT 0,  -- 1＝裝置自我標記為「本人」（D155）
+  av          TEXT                         -- App 版本（最新；D156）
 );
 CREATE INDEX IF NOT EXISTS instances_last_day ON instances(last_day);
 
@@ -27,6 +29,7 @@ CREATE TABLE IF NOT EXISTS instance_days (
   opens      INTEGER NOT NULL DEFAULT 0,
   active_sec INTEGER NOT NULL DEFAULT 0,
   read_sec   INTEGER NOT NULL DEFAULT 0,
+  av         TEXT,                        -- 當天最後回報的 App 版本（D156）
   PRIMARY KEY (h, day)
 );
 CREATE INDEX IF NOT EXISTS instance_days_day ON instance_days(day);

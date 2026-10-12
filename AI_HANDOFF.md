@@ -38,6 +38,13 @@
 ## W011（2.2 後緊急修正，已靜默合併 main，Claude Code，2026-10-12）
 - q：「緊急更新bug，直接合併不用通知。半頁的科判圖在正文改科判顏色的時候，他不會跟著改」。原因：科判圖是 canvas，`pal()` 只讀 `--cinnabar`，且改色時不重畫。修正：`pal()` 有自訂色時用 `--custom-kepan-color`，並監看根元素 style／data-custom-kepan-color 變化重畫。
 - 測試：Chromium 1470×900 藏版，半頁與展開圖改色後 canvas 紅字像素全變為新色、按恢復預設變回。未測手機／平板版面、韓版、Safari 與實機。未改 appVer 與 sw.js 的 VERSION（仍 2.2）；sw.js 只重算 index.html 雜湊（同 cfb6666 的靜默合併做法），讓已安裝的 App 能取得修正。
+## 進行中：W011（統計：本人旗標＋App 版本＋「概況」；Claude Code，2026-10-12，**未發布、未 migration、未 deploy**）
+- 基底：App 2.2（main `f88bb94`）。q 原話：「如果我想增加一個版本更新之後的統計呢？我現在想把主要的統計，改成實際停留查看的人數、使用時間。可以的話區分我本人跟其他人。之前太多指令都不實用，」；本人區分方式 q 在決策卡選「裝置標記」。工作分支 `work/W011-analytics-me-version`；推送到 `claude/project-thread-3ws881`。決定 D160–D162。
+- 內容：客戶端送 `me`（關於頁連點版本號 7 下，或 control 事件）與 `av`；Worker 新增欄位、migration `analytics/worker/migrations/0004-me-version.sql`、`/admin/engaged`、其餘端點 `who=me|other`；CLI 新增 `概況`、`--本人`／`--其他`／`--門檻`，`使用者`／`實例` 顯示本人與版本；registry 的 `jfold` 預設值由 fold 改為 open（W005 已改預設展開，registry 過期，否則 Mac 會把預設狀態誤記為非預設）。
+- 已測：`node --test analytics/worker/test/`（35 項 Worker／schema／migration）；`python3 -m unittest discover analytics/cli`（20 項）；`node tools/stats-test.cjs`（Chromium 電腦／iPad／iPhone 模擬，含新增 T16 me／av）結果見下方「客戶端測試結果」。
+- **未測／未做**：Registry 完整性動態檢查（約 30 分鐘）未對 2.2 基底重跑，僅修了 jfold 預設；Safari／iPhone／iPad／PWA 實機未測；7 下連點只以模擬 control 事件測，未實機連點；線上 D1 未 migration、Worker 未 deploy、App 未升版（`sw.js`／`appVer` 未動）。
+- 上線順序（需 q 逐階段同意）：①備份並執行 migration 0004（遠端 D1）→ ②`wrangler deploy` Worker → ③照常發布含新客戶端的 App 版本（`tools/build_release.py`）。順序不可顛倒：舊 Worker 會把含 `me`／`av` 的新 payload 當 400 丟棄。
+- 影響檢查（AGENTS §5）：只改統計客戶端與 `#appVer` 的捕獲階段點擊監聽（不加 DOM／UI）；三種版面皆載入同一份客戶端；韓版／藏版不涉及。
 
 ## 最新：2.2 已發布（W010 封存，Claude Code，2026-10-12）
 - q 說「合併發布」。W010 以 2.2 發布到 main（H162、D150–D154）。「鎖」與「科判圖」更新：首頁鎖改為打開＝自動追蹤、鎖上＝手動追蹤；鎖上時點任一欄標題，該欄不動，另兩欄跳到對應位置並反黃（約畫面40%處）。半頁科判圖點標籤三欄同步反黃、點空白處全部取消，平移約0.4秒；半頁鎖與主鎖連動，只在展開圖右上出現；路徑列可滾輪／拖曳左右滑動。展開圖：右上改為鎖、標題、緊密開關；介面面板只留邏輯圖；刪除並排、齒輪設定、全部；列印移到左上、說明縮小置於上方中央；忙碌時顯示載入動畫。科判圖按鈕三段（半頁→全頁→返回）。更新說明改為動畫，可從設定、版本、詳情重播，鈴鐺視窗有提醒。設定「開啟更新自動通知」：開啟者自動播放一次動畫並保留鈴鐺紅點；關閉者只有鈴鐺與設定紅點。版本顯示：電腦版「v2.1」（僅顯示），手機／平板「beta 2.2」；內部版本、appVer、sw.js VERSION 為 2.2。

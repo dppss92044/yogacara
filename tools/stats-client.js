@@ -42,6 +42,9 @@
         return short > 0 && short < 600 ? 'phone' : 'tablet';
       } catch (e) { return 'desktop'; }
     }
+    function appVersion() {
+      try { var m = document.querySelector('meta[name="app-version"]'), v = m && m.getAttribute('content'); return v && /^\d{1,2}\.\d{1,3}$/.test(v) ? v : null; } catch (e) { return null; }
+    }
     function appMode() {                           // web｜pwa（只分是否以主畫面 App 開啟）
       try { return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true ? 'pwa' : 'web'; } catch (e) { return 'web'; }
     }
@@ -51,17 +54,17 @@
 
     // ---- 模式（D057）：{m:'off'|'basic'|'full', p:presence}；未定稿的預設暫為 full、presence 開（僅供開發與 P5，發布前須由 q 定稿）----
     function readMode() {
-      var m = 'full', p = true, raw = fetchKey(MODE_KEY);
-      if (raw) { try { var j = JSON.parse(raw); if (j && typeof j === 'object') { if (/^(off|basic|full)$/.test(j.m)) m = j.m; if (typeof j.p === 'boolean') p = j.p; } else if (/^(off|basic|full)$/.test(raw)) m = raw; } catch (e) { if (/^(off|basic|full)$/.test(raw)) m = raw; } }
+      var m = 'full', p = true, me, raw = fetchKey(MODE_KEY);
+      if (raw) { try { var j = JSON.parse(raw); if (j && typeof j === 'object') { if (/^(off|basic|full)$/.test(j.m)) m = j.m; if (typeof j.p === 'boolean') p = j.p; if (j.me === 0 || j.me === 1) me = j.me; } else if (/^(off|basic|full)$/.test(raw)) m = raw; } catch (e) { if (/^(off|basic|full)$/.test(raw)) m = raw; } }
       if (fetchKey(OFF) === '1') m = 'off';
-      return { m: m, p: p && m !== 'off' };
+      return { m: m, p: p && m !== 'off', me: me };
     }
     var mode = readMode();
 
     // ---- 待送資料（單一 localStorage 鍵，含全部差量）----
     var st = null;
     function blank(o) {
-      return { id: o.id, t: o.t, o: o.o | 0, s: o.s | 0, a: o.a | 0, e: o.e | 0, f: o.f || {}, ss: o.ss || {}, r: o.r || {}, nd: o.nd || {}, qt: o.qt || [], rp: o.rp || [], kt: o.kt || [], km: o.km || [], kj: o.kj || {}, x: o.x || [], hv: o.hv || [] };
+      return { id: o.id, t: o.t, o: o.o | 0, s: o.s | 0, a: o.a | 0, e: o.e | 0, f: o.f || {}, ss: o.ss || {}, r: o.r || {}, nd: o.nd || {}, qt: o.qt || [], rp: o.rp || [], kt: o.kt || [], km: o.km || [], kj: o.kj || {}, x: o.x || [], hv: o.hv || [], md: o.md ? 1 : 0 };
     }
     function load() {
       var raw = fetchKey(KEY), j = null;
@@ -161,6 +164,8 @@
     function take() {
       var o = Math.min(st.o, MAX_O), s = Math.min(st.s, MAX_S), tk = { o: o, s: s, f: {}, ss: {}, r: {}, nd: {}, qt: [], rp: [], kt: [], km: [], kj: {}, x: [], hv: [] };
       var p = { v: 4, id: st.id, o: o, s: s, d: deviceClass(), m: appMode(), t: tier() };
+      if (mode.me === 0 || mode.me === 1) p.me = mode.me;                   // 本人旗標（D155）：只有裝置自己標記過才送
+      var av = appVersion(); if (av) p.av = av;                              // App 版本（D156），讀自 meta[name=app-version]
       if (tier() === 'f') {
         var room = function () { return JSON.stringify(p).length < MAX_BODY; };
         var n = 0, k;
@@ -177,7 +182,8 @@
         var x = st.x.slice(0, 5); if (x.length) { p.x = x; tk.x = x; if (!room()) { delete p.x; tk.x = []; } }
         var hv = st.hv.slice(0, 5); if (hv.length) { p.hv = hv; tk.hv = hv; }
       }
-      var content = p.f || p.ss || p.r || p.nd || p.q || p.k || p.x || p.hv;
+      var content = p.f || p.ss || p.r || p.nd || p.q || p.k || p.x || p.hv || (st.md && p.me !== undefined);
+      tk.md = st.md ? 1 : 0;
       if (o + s <= 0 && !content) return null;
       return { p: p, tk: tk };
     }
@@ -189,7 +195,7 @@
       for (var ns in tk.nd) for (k in tk.nd[ns]) { st.nd[ns][k] -= tk.nd[ns][k]; if (st.nd[ns][k] <= 0) delete st.nd[ns][k]; if (!Object.keys(st.nd[ns]).length) delete st.nd[ns]; }
       st.qt.splice(0, tk.qt.length); st.rp.splice(0, tk.rp.length); st.kt.splice(0, tk.kt.length); st.km.splice(0, tk.km.length);
       for (k in tk.kj) { st.kj[k] -= tk.kj[k]; if (st.kj[k] <= 0) delete st.kj[k]; }
-      st.x.splice(0, tk.x.length); st.hv.splice(0, tk.hv.length);
+      st.x.splice(0, tk.x.length); st.hv.splice(0, tk.hv.length); if (tk.md) st.md = 0;
     }
     function restore(tk) {
       st.o = Math.min(st.o + tk.o, KEEP_O); st.s = Math.min(st.s + tk.s, KEEP_S); var k;
@@ -199,7 +205,7 @@
       for (var ns in tk.nd) for (k in tk.nd[ns]) { var m = st.nd[ns] || (st.nd[ns] = {}); m[k] = Math.min((m[k] || 0) + tk.nd[ns][k], 200000); }
       st.qt = tk.qt.concat(st.qt).slice(0, 40); st.rp = tk.rp.concat(st.rp).slice(0, 20); st.kt = tk.kt.concat(st.kt).slice(0, 40); st.km = tk.km.concat(st.km).slice(0, 40);
       for (k in tk.kj) st.kj[k] = Math.min((st.kj[k] || 0) + tk.kj[k], 100000);
-      st.x = tk.x.concat(st.x).slice(0, 20); st.hv = tk.hv.concat(st.hv).slice(0, 20);
+      st.x = tk.x.concat(st.x).slice(0, 20); st.hv = tk.hv.concat(st.hv).slice(0, 20); if (tk.md) st.md = 1;
     }
     function post(path, body, cb, opts) {
       var ctl = typeof AbortController === 'function' ? new AbortController() : null;
@@ -547,20 +553,30 @@
       try {
         d = d || {}; var m = /^(off|basic|full)$/.test(d.mode) ? d.mode : null, cur = readMode();
         var p = typeof d.presence === 'boolean' ? d.presence : (m ? m !== 'off' : cur.p);
-        if (!m && typeof d.presence !== 'boolean') return;
+        if (!m && typeof d.presence !== 'boolean' && typeof d.me !== 'boolean') return;
+        if (typeof d.me === 'boolean') { var cm = readMode(); store(MODE_KEY, JSON.stringify({ m: cm.m, p: cm.p, me: d.me ? 1 : 0 })); mode = readMode(); if (st) st.md = 1; if (!m && typeof d.presence !== 'boolean') { setTimeout(function () { flush(); }, 0); return; } }
         m = m || cur.m;
         if (m === 'off') {
           var id = st ? st.id : (function () { try { var j = JSON.parse(fetchKey(KEY)); return j && j.id; } catch (e) { return null; } })();
-          beatLeave(); stop(); store(KEY, null); store(MODE_KEY, JSON.stringify({ m: 'off', p: false }));
+          beatLeave(); stop(); store(KEY, null); store(MODE_KEY, JSON.stringify({ m: 'off', p: false, me: readMode().me }));
           if (id && !dnt()) { store(FORGET_KEY, JSON.stringify({ id: id })); retryForget(); if (!forgetTimer) forgetTimer = setInterval(retryForget, 60000); }     // 立即停止、丟棄未送資料、送 forget、刪除本機編號；離線留墓碑待補送
           return;
         }
-        store(MODE_KEY, JSON.stringify({ m: m, p: p })); store(OFF, null);
+        store(MODE_KEY, JSON.stringify({ m: m, p: p, me: readMode().me })); store(OFF, null);
         if (dnt()) return;
         beatLeave(); stop(); mode = readMode(); begin();
       } catch (e) {}
     }
     window.addEventListener('hk-analytics-control', function (e) { control(e && e.detail); });
+    // 本人旗標（D155）：在「關於」頁連點版本號 7 次（每次間隔 1.5 秒內）切換；App 內沒有任何畫面或提示，結果用 CLI 的「使用者」確認。
+    var tapN = 0, tapAt = 0;
+    document.addEventListener('click', function (e) {
+      try {
+        if (!e.isTrusted) return; var t = e.target && e.target.closest && e.target.closest('#appVer'); if (!t) return;
+        var now = Date.now(); tapN = now - tapAt < 1500 ? tapN + 1 : 1; tapAt = now;
+        if (tapN >= 7) { tapN = 0; control({ me: readMode().me !== 1 }); try { if (navigator.vibrate) navigator.vibrate(80); } catch (x) {} }
+      } catch (x) {}
+    }, { capture: true, passive: true });
 
     if (dnt()) { return; }                                              // DNT／GPC：不建立編號、不傳送、不寫計數
     if (mode.m === 'off') { store(KEY, null); retryForget(); return; }   // 關閉狀態下不留編號

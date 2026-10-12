@@ -28,7 +28,7 @@ RANGES = {'今天': 'today', '今日': 'today', 'today': 'today', '本週': 'wee
 RANGE_LABEL = {'today': '今日', 'week': '本週', 'month': '本月', 'custom': '指定期間'}
 TOPICS = {'回訪': 'returning', '地區': 'regions', '地区': 'regions', '使用者': 'users', '實例': 'instance', '实例': 'instance', '閱讀': 'reading', '阅读': 'reading',
           '科判': 'nodes', '版本': 'edition', '註釋': 'notes', '注釋': 'notes', '搜尋': 'search', '辭典': 'dict', '匯出': 'export', '導航': 'nav', '顯示': 'display',
-          '字體': 'font', '科標': 'label', '功能': 'features', '裝置': 'devices', '即時': 'presence', '趨勢': 'trend', '資料量': 'size', '登錄': 'registry'}
+          '字體': 'font', '科標': 'label', '功能': 'features', '裝置': 'devices', '即時': 'presence', '趨勢': 'trend', '資料量': 'size', '登錄': 'registry', '概況': 'engaged'}
 DEVICE = {'phone': '手機', 'tablet': '平板', 'desktop': '電腦'}
 DEV_IN = {'手機': 'phone', '平板': 'tablet', '電腦': 'desktop', 'phone': 'phone', 'tablet': 'tablet', 'desktop': 'desktop'}
 MODE = {'web': '網頁', 'pwa': 'PWA'}
@@ -186,7 +186,7 @@ def render_users(d):
     if not d['instances']:
         out.append('（尚無資料）')
     for x in d['instances']:
-        out.append('%s｜%s｜%s｜%s｜%d 次｜%d 分｜閱讀 %d 分｜搜尋 %d｜辭典 %d｜%s～%s' % (x['code'], x['city'], DEVICE.get(x['device'], '未知'), MODE.get(x.get('mode'), '—'), x['opens'], mins(x['active_seconds']),
+        out.append('%s%s｜%s｜%s｜%s｜%s｜%d 次｜%d 分｜閱讀 %d 分｜搜尋 %d｜辭典 %d｜%s～%s' % (x['code'], '（本人）' if x.get('me') else '', x['city'], DEVICE.get(x['device'], '未知'), MODE.get(x.get('mode'), '—'), ('v' + x['av']) if x.get('av') else 'v?', x['opens'], mins(x['active_seconds']),
                    mins(x.get('read_seconds', 0)), x.get('search_total', 0), x.get('dict_total', 0), x.get('first_day', '?'), x.get('last_day', '?')))
     if d['total'] > len(d['instances']):
         out.append('（僅列出前 %d 個；可用 --limit 調整、--sort 次數 改排序）' % len(d['instances']))
@@ -195,7 +195,7 @@ def render_users(d):
 
 
 def render_instance(d):
-    out = ['《瑜伽師地論》匿名 App 分析', '', '匿名實例 %s…' % d['code'], '城市：%s（最新一次）' % d['city'], '裝置：%s｜模式：%s' % (DEVICE.get(d['device'], '未知'), MODE.get(d.get('mode'), '—')),
+    out = ['《瑜伽師地論》匿名 App 分析', '', '匿名實例 %s…' % d['code'], '城市：%s（最新一次）' % d['city'], '裝置：%s｜模式：%s｜App 版本：%s｜%s' % (DEVICE.get(d['device'], '未知'), MODE.get(d.get('mode'), '—'), d.get('av') or '未知', '本人（你標記過）' if d.get('me') else '其他人'),
            '首次出現：%s　最後出現：%s' % (d['first_day'], d['last_day']),
            '累計：開啟 %d 次｜有效使用 %d 分鐘｜有效閱讀 %d 分鐘｜搜尋 %d 次｜辭典 %d 次' % (d['opens_total'], mins(d['active_seconds_total']), mins(d.get('read_seconds_total', 0)), d.get('search_total', 0), d.get('dict_total', 0))]
     for key, label in (('today', '今天'), ('week', '本週'), ('month', '本月')):
@@ -412,7 +412,7 @@ def render_registry(d):
 # ---- 主程式 ----
 def build_parser():
     ap = argparse.ArgumentParser(prog='瑜伽統計', description='查詢《瑜伽師地論》匿名 App 分析')
-    ap.add_argument('what', help='全部｜今天｜本週｜本月｜使用者｜實例｜閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標｜功能｜裝置｜即時｜回訪｜地區｜趨勢｜資料量｜登錄')
+    ap.add_argument('what', help='全部｜概況｜今天｜本週｜本月｜使用者｜實例｜閱讀｜科判｜版本｜註釋｜搜尋｜辭典｜匯出｜導航｜顯示｜字體｜科標｜功能｜裝置｜即時｜回訪｜地區｜趨勢｜資料量｜登錄')
     ap.add_argument('period', nargs='?', help='範圍：今天｜本週｜本月；實例請給短代號；趨勢請給 7 或 30')
     ap.add_argument('--limit', type=int, default=30)
     ap.add_argument('--sort', default=None)
@@ -422,8 +422,46 @@ def build_parser():
     ap.add_argument('--全部', dest='all', action='store_true'); ap.add_argument('--未使用', dest='unused', action='store_true'); ap.add_argument('--類型', dest='type', default=None)
     ap.add_argument('--timeout', type=int, default=None); ap.add_argument('--監看', dest='watch', action='store_true'); ap.add_argument('--最近', dest='recent', action='store_true')
     ap.add_argument('--by', default=None, help='（閱讀）juan｜edition｜state')
+    ap.add_argument('--本人', dest='who_me', action='store_true', help='只看你標記過的裝置'); ap.add_argument('--其他', dest='who_other', action='store_true', help='排除你標記過的裝置')
+    ap.add_argument('--門檻', dest='min_sec', type=int, default=None, help='（概況）算「實際使用」的有效秒數門檻，預設 30')
     ap.add_argument('--json', action='store_true')
     return ap
+
+
+def who_label(w):
+    return {'me': '只看本人', 'other': '只看其他人'}.get(w)
+
+
+def render_engaged(d, by=None):
+    mn = d['min_seconds']
+    out = ['《瑜伽師地論》匿名 App 分析', '', '概況｜' + head(d)]
+    if d.get('dev'):
+        out.append('裝置：%s' % DEVICE[d['dev']])
+    out += ['「實際使用」＝期間內有效使用達 %s 的裝置（有效使用＝畫面開著且有操作）' % dur(mn).replace(' ', ''), '']
+    rows = []
+    for label, x in (('其他人', d['other']), ('本人', d['me'])):
+        eng = x['engaged']
+        rows.append([label, str(x['instances']), str(eng), total_dur(x['engaged_seconds']), dur(x['engaged_seconds'] / eng) if eng else '—',
+                     total_dur(x['read_seconds']), str(x['new']), str(x['opens'])])
+    out += (table(rows, ['', '開過的裝置', '實際使用', '實際使用總時間', '平均每人', '閱讀總時間', '新裝置', '開啟次數'], right=(1, 2, 3, 4, 5, 6, 7)))
+    if not (d['me']['instances'] or d['other']['instances']):
+        out.append('（此期間尚無資料）')
+    if by == 'day' and d.get('days'):
+        out += ['', '每日（實際使用人數／開過的裝置）']
+        days = {}
+        for x in d['days']:
+            days.setdefault(x['day'], {})[('me' if x['me'] else 'other')] = x
+        for day in sorted(days):
+            o, m = days[day].get('other'), days[day].get('me')
+            out.append('%s｜其他人 %d/%d（%s）｜本人 %d/%d' % (day, o['engaged'] if o else 0, o['instances'] if o else 0, total_dur(o['active_seconds']) if o else '0 秒',
+                                                         m['engaged'] if m else 0, m['instances'] if m else 0))
+    if by == 'version' and d.get('versions'):
+        out += ['', '各 App 版本（實際使用人數／開過的裝置；舊資料沒有版本，顯示「未知」）']
+        for x in d['versions']:
+            out.append('%s｜%s｜%d/%d｜有效使用 %s｜閱讀 %s' % (('v' + x['av']) if x['av'] else '未知', '本人' if x['me'] else '其他人', x['engaged'], x['instances'],
+                                                       total_dur(x['active_seconds']), total_dur(x['read_seconds'])))
+    out += ['', '註：一台裝置（或瀏覽器）算一個「人」，不代表真實人數；「本人」是你在自己裝置上標記過的（關於頁連點版本號 7 下），', '    沒標記的一律算其他人；未更新到含標記的版本之前的資料都算其他人。']
+    return '\n'.join(out)
 
 
 def valid_date(s):
@@ -472,11 +510,15 @@ def main(argv=None, sleep=time.sleep):
         topic = TOPICS[a.what]
         if a.period and topic not in ('instance', 'trend') and a.period not in RANGES:
             sys.exit('範圍須為 今天、本週 或 本月')
-        default = 'today' if topic in ('users',) else 'month'
+        default = 'today' if topic in ('users',) else 'week' if topic == 'engaged' else 'month'
         rng = RANGES[a.period] if a.period in RANGES else default
     else:
-        sys.exit('不認得「%s」。可用：今天、本週、本月、使用者、實例、閱讀、科判、版本、註釋、搜尋、辭典、匯出、導航、顯示、字體、科標、功能、裝置、即時、回訪、地區、趨勢、資料量、登錄' % a.what)
-    P = {'range': None if a.from_ else rng, 'date': a.date, 'from': a.from_, 'to': a.to, 'dev': dev}
+        sys.exit('不認得「%s」。可用：概況、今天、本週、本月、使用者、實例、閱讀、科判、版本、註釋、搜尋、辭典、匯出、導航、顯示、字體、科標、功能、裝置、即時、回訪、地區、趨勢、資料量、登錄' % a.what)
+    if a.who_me and a.who_other:
+        sys.exit('--本人 與 --其他 只能選一個')
+    if a.min_sec is not None and not 1 <= a.min_sec <= 3600:
+        sys.exit('--門檻 須為 1–3600 秒')
+    P = {'range': None if a.from_ else rng, 'date': a.date, 'from': a.from_, 'to': a.to, 'dev': dev, 'who': 'me' if a.who_me else 'other' if a.who_other else None}
     P = {k: v for k, v in P.items() if v}
 
     if topic == 'instance':
@@ -484,6 +526,11 @@ def main(argv=None, sleep=time.sleep):
         if not (4 <= len(code) <= 8) or any(c not in '0123456789abcdefABCDEF' for c in code):
             sys.exit('請給 4 到 8 碼的短代號（十六進位），例如：瑜伽統計 實例 A7F3C2')
         d = call('/admin/instance', {'code': code, 'day': a.day}); return emit(a, d, render_instance(d))
+    if topic == 'engaged':
+        by = {'日': 'day', 'day': 'day', '版本': 'version', 'version': 'version'}.get(a.by or '')
+        if a.by and not by:
+            sys.exit('--by 須為 日 或 版本')
+        d = call('/admin/engaged', {**{k: v for k, v in P.items() if k != 'who'}, 'min': a.min_sec, 'by': by}); return emit(a, d, render_engaged(d, by))
     if topic == 'summary':
         d = call('/admin/overview', P); return emit(a, d, render_summary(d))
     if topic in ('returning', 'regions'):

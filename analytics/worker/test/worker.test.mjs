@@ -34,10 +34,10 @@ test('收件：成功 204；資料庫只有短識別雜湊、最新城市與裝�
   assert.equal(res.headers.get('Access-Control-Allow-Origin'), ORIGIN);
   const inst = db.prepare('SELECT * FROM instances').all();
   assert.equal(inst.length, 1);
-  assert.deepEqual(Object.keys(inst[0]).sort(), ['active_sec', 'city', 'device', 'dict_total', 'first_day', 'h', 'last_day', 'mode', 'opens_total', 'read_sec', 'search_total', 'tier']);
+  assert.deepEqual(Object.keys(inst[0]).sort(), ['active_sec', 'av', 'city', 'device', 'dict_total', 'first_day', 'h', 'last_day', 'me', 'mode', 'opens_total', 'read_sec', 'search_total', 'tier']);
   assert.match(inst[0].h, /^[0-9a-f]{16}$/); assert.equal(inst[0].city, '桃園'); assert.equal(inst[0].device, 'phone');
   const days = db.prepare('SELECT * FROM instance_days').all();
-  assert.equal(days.length, 1); assert.deepEqual(Object.keys(days[0]).sort(), ['active_sec', 'day', 'h', 'opens', 'read_sec'], '每日明細不得含城市或裝置');
+  assert.equal(days.length, 1); assert.deepEqual(Object.keys(days[0]).sort(), ['active_sec', 'av', 'day', 'h', 'opens', 'read_sec'], '每日明細不得含城市或裝置');
   const dump = JSON.stringify([inst, days, db.prepare('SELECT * FROM agg').all(), db.prepare('SELECT * FROM agg_vol').all()]);
   assert.ok(!dump.includes(ID(1).slice(0, 8)), '不得存原始 ID');
   assert.ok(db.prepare("SELECT 1 FROM agg WHERE city='桃園'").get());
@@ -172,7 +172,7 @@ test('管理端點：實例清單只回 6 碼短代號；排序、limit、期間
     assert.equal(j.total, 1); assert.equal(j.instances[0].opens, 11); assert.equal(j.instances[0].device, 'phone');
     j = await (await g('?range=week')).json();
     assert.equal(j.total, 3); assert.deepEqual(j.instances.map(x => x.opens), [18, 2, 1]);
-    for (const x of j.instances) { assert.match(x.code, /^[0-9A-F]{6}$/); assert.deepEqual(Object.keys(x).sort(), ['active_seconds', 'city', 'code', 'device', 'dict_total', 'first_day', 'last_day', 'mode', 'opens', 'read_seconds', 'search_total'].sort()); }
+    for (const x of j.instances) { assert.match(x.code, /^[0-9A-F]{6}$/); assert.deepEqual(Object.keys(x).sort(), ['active_seconds', 'av', 'city', 'code', 'device', 'dict_total', 'first_day', 'last_day', 'me', 'mode', 'opens', 'read_seconds', 'search_total'].sort()); }
     const hs = db.prepare('SELECT h FROM instances').all().map(r => r.h);
     assert.ok(!JSON.stringify(j).toLowerCase().includes(hs[0]), '回應不得含完整 hash');
     j = await (await g('?range=week&sort=opens&limit=2')).json(); assert.equal(j.instances.length, 2); assert.equal(j.total, 3);
@@ -217,7 +217,7 @@ test('靜態檢查：程式不讀取網路位址／轉發標頭／User-Agent，�
   assert.ok(!/\bip\b|user_?agent|lat|lon/i.test(sql), '資料表不得有 IP、UA、經緯度欄位');
 });
 
-test('遷移檔：舊資料庫套用 0002、0003 後與 schema.sql 欄位一致（所有資料表）', () => {
+test('遷移檔：舊資料庫套用 0002、0003、0004 後與 schema.sql 欄位一致（所有資料表）', () => {
   const old = new DatabaseSync(':memory:');
   old.exec("CREATE TABLE instances (h TEXT PRIMARY KEY, first_day TEXT NOT NULL, last_day TEXT NOT NULL, opens_total INTEGER NOT NULL DEFAULT 0, active_sec INTEGER NOT NULL DEFAULT 0)");
   old.exec(readFileSync(new URL('../migrations/0002-instance-level.sql', import.meta.url), 'utf8'));
@@ -225,6 +225,7 @@ test('遷移檔：舊資料庫套用 0002、0003 後與 schema.sql 欄位一致�
   const cols = (d, t) => d.prepare(`PRAGMA table_info(${t})`).all().map(c => c.name).sort();
   old.exec("CREATE TABLE agg (period_type TEXT NOT NULL, period_key TEXT NOT NULL, city TEXT NOT NULL, metric TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (period_type, period_key, city, metric)); CREATE TABLE agg_vol (day TEXT NOT NULL, city TEXT NOT NULL, opens INTEGER NOT NULL DEFAULT 0, active_sec INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, city))");
   old.exec(readFileSync(new URL('../migrations/0003-analytics-v2.sql', import.meta.url), 'utf8'));
+  old.exec(readFileSync(new URL('../migrations/0004-me-version.sql', import.meta.url), 'utf8'));
   const tables = d => d.prepare("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name").all().map(r => r.name);
   for (const t of tables(fresh)) assert.deepEqual(cols(old, t), cols(fresh, t), t);
 });

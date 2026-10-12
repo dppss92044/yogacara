@@ -42,7 +42,7 @@ const manual = new Set(['#chartTitleColor']);   // 原生色彩選擇器無法�
 let browser, base;
 async function open(layout, vp, touch, chain) {
   const c = await browser.newContext({ viewport: vp, screen: vp, hasTouch: touch, isMobile: touch });
-  await c.addInitScript(() => { try { localStorage.setItem('hk-tour', '9'); } catch (e) {} });
+  await c.addInitScript(() => { try { localStorage.setItem('hk-tour', '9'); localStorage.setItem('hk-seen-version', '2.2'); localStorage.setItem('km-tour-off', '1'); localStorage.setItem('hk-update-notice', 'off'); } catch (e) {} });
   const p = await c.newPage(); const reqs = [];
   p.on('pageerror', e => reqs.errors = (reqs.errors || []).concat(e.message));
   await p.route('**/sw.js', r => r.fulfill({ status: 404, body: '' }));
