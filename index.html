@@ -7925,10 +7925,11 @@ function put(){var bar=document.querySelector('#kmap .km-eopt');if(!bar||bar.que
 put();setInterval(put,800);
 })();</script>
 <style id="dark-row-css">
-#darkBtn .dk-tr{position:relative;margin-left:auto;flex:none;width:34px;height:20px;border-radius:999px;background:rgba(120,120,128,.24);transition:background .25s ease}
-#darkBtn .dk-tr::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.18),0 0 1px rgba(0,0,0,.2);transition:transform .25s cubic-bezier(.3,.7,.3,1)}
-#darkBtn[aria-checked=true] .dk-tr{background:var(--acc,#d9a62e)}
-#darkBtn[aria-checked=true] .dk-tr::after{transform:translateX(14px)}
+:root:root:root .settings-panel .layout-choices #darkBtn{order:99;flex:none;width:auto;height:42px;margin-left:9px;position:relative;overflow:visible;border-radius:10px;background:transparent}
+:root:root:root .settings-panel .layout-choices #darkBtn::before{content:"";position:absolute;left:-6px;top:9px;bottom:9px;width:1px;background:var(--rule)}
+:root:root:root .settings-panel .layout-choices #darkBtn>span{display:none}
+:root:root:root:root .settings-panel .layout-choices #darkBtn[aria-checked=true]{background:color-mix(in srgb,var(--acc) 30%,var(--bg))!important;color:var(--fg)!important}
+:root:root:root:root:root:root #kmap:not(.km-emb) .km-eopt button[data-eo=sync]{display:none!important}
 </style>
 <script id="dark-row-js">(function(){
 var KEY='hk-theme',mq=matchMedia('(prefers-color-scheme: dark)'),orig=new WeakMap();
@@ -7940,20 +7941,18 @@ function apply(){var m=mode(),root=document.documentElement;
   var b=document.getElementById('darkBtn');if(b)b.setAttribute('aria-checked',String(isDark()));}
 function isDark(){var m=mode();return m?m==='dark':mq.matches;}
 function toggle(){var want=!isDark();try{if(want===mq.matches)localStorage.removeItem(KEY);else localStorage.setItem(KEY,want?'dark':'light');}catch(e){}apply();}
-var ICON='<svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="10" cy="10" r="7.2"/><path d="M10 2.8a7.2 7.2 0 0 1 0 14.4z" fill="currentColor" stroke="none"/></svg>';
-function put(){var ft=document.getElementById('ftWrap');if(!ft||document.getElementById('darkWrap')||ft.dataset.settingsGroup==null)return;
-  var w=document.createElement('div');w.className='ft';w.id='darkWrap';
-  w.innerHTML='<button class="mi" id="darkBtn" type="button" role="switch" aria-checked="false" title="深色：開＝畫面反黑，關＝白底">'+ICON+'<span>深色</span><i class="dk-tr" aria-hidden="true"></i></button>';
-  ft.after(w);
-  w.dataset.settingsGroup=ft.dataset.settingsGroup;var d=ft.getAttribute('aria-describedby');if(d)w.setAttribute('aria-describedby',d);
-  if(ft.classList.contains('group-last')){ft.classList.remove('group-last');w.classList.add('group-last');}
-  w.querySelector('button').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggle();});
+var ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg>';
+function put(){var box=document.querySelector('.learning-settings .layout-choices');if(!box||document.getElementById('darkBtn'))return;
+  var b=document.createElement('button');b.type='button';b.className='mi sw dk-choice';b.id='darkBtn';b.setAttribute('role','menuitemcheckbox');b.setAttribute('aria-checked','false');b.title='深色：開＝畫面反黑，關＝白底';
+  b.innerHTML=ICON+'<span>深色</span>';b.setAttribute('aria-label','深色');
+  box.appendChild(b);
+  b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggle();});
   apply();}
 apply();put();
 document.addEventListener('DOMContentLoaded',function(){apply();put();});window.addEventListener('load',function(){apply();put();});
 new MutationObserver(function(ms){for(var i=0;i<ms.length;i++)for(var j=0;j<ms[i].addedNodes.length;j++){var n=ms[i].addedNodes[j];if(n.nodeName==='STYLE'||n.nodeName==='LINK'){apply();return;}}}).observe(document.documentElement,{childList:true,subtree:true});
 mq.addEventListener&&mq.addEventListener('change',apply);
-var tk=setInterval(function(){put();if(document.getElementById('darkWrap'))clearInterval(tk);},300);
+var tk=setInterval(function(){put();if(document.getElementById('darkBtn'))clearInterval(tk);},300);
 })();</script>
 
 </body></html>
