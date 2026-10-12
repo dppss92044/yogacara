@@ -7674,6 +7674,20 @@ setTimeout(go,900);})();</script>
 .ha-pg.g1{opacity:1}
 .ha-chip{position:absolute;left:30px;top:52px;padding:0 8px;height:18px;border-radius:9px;background:#333;color:#fff;font:10px/18px var(--ui);opacity:0}
 
+/* ===== map scene 0: click (分N) / − ===== */
+.ha-mi,.ha-fen{position:absolute;display:none;z-index:4;font:600 11px/1 var(--ui);color:var(--fg)}
+.ha-st[data-k=m0] .ha-mi{display:grid;place-items:center;left:calc(52% + 10px);top:44px;width:16px;height:16px;border-radius:50%;background:var(--pop,var(--bg));border:1px solid var(--rule);opacity:0;animation:haM0m 8s step-end infinite!important}
+.ha-st[data-k=m0] .ha-fen{display:block;left:52%;top:80px;transform:translateX(-50%);opacity:0;color:var(--muted);animation:haM0f 8s step-end infinite!important}
+.ha-st[data-k=m0] .ha-cur{animation:haM0c 8s ease-in-out infinite!important}
+.ha-st[data-k=m0] .ha-cur::after{animation:haM0k 8s ease-out infinite!important}
+.ha-st[data-k=m0] .nB{animation:haM0y 8s step-end infinite!important}
+.ha-st[data-k=m0] .g2{animation:haM0g 8s ease infinite!important}
+@keyframes haM0c{0%{left:20%;top:85%}12%,16%{left:52%;top:52px}28%,50%{left:calc(52% + 16px);top:50px}56%,100%{left:52%;top:84px}}
+@keyframes haM0k{0%,13%{opacity:0;transform:scale(.4)}14%{opacity:.8;transform:scale(1)}19%,31%{opacity:0;transform:scale(1.7)}32%{opacity:.8;transform:scale(1)}37%,57%{opacity:0;transform:scale(1.7)}58%{opacity:.8;transform:scale(1)}63%,100%{opacity:0;transform:scale(1.7)}}
+@keyframes haM0y{0%{background:var(--bg)}14%{background:#efd27a}96%{background:var(--bg)}}
+@keyframes haM0m{0%{opacity:0}15%{opacity:1}96%{opacity:0}}
+@keyframes haM0g{0%,32%{opacity:1}35%,58%{opacity:0}62%,100%{opacity:1}}
+@keyframes haM0f{0%{opacity:0}35%{opacity:1}59%{opacity:0}}
 /* ===== map scene 1: + / − ===== */
 .ha-st[data-k=m1] .ha-cur{animation:haM1c 7s ease-in-out infinite!important}
 .ha-st[data-k=m1] .ha-cur::after{animation:haClk1 7s ease-out infinite!important}
@@ -7914,12 +7928,14 @@ var SW='<span class="ha-sw"><i></i><i></i><i></i><i></i><b><svg viewBox="0 0 24 
 var touch=function(){return !matchMedia('(hover:hover)').matches;};
 function sets(kind){
   if(kind==='map')return {title:'科判圖說明',sc:[
-    {k:'m1',h:'＋／− 鍵：展開、收回',st:tree()+cur+'<div class="ha-keys"><kbd class="kP">＋</kbd><kbd class="kM">−</kbd></div>',
-      li:['先點一下標題，標題反黃。','按鍵盤 ＋：往下展開一層。','按鍵盤 −：收回一層。']},
-    {k:'m2',h:MOD+' ＋／−：放大、縮小',st:tree()+cur+'<div class="ha-keys"><kbd class="kC">'+MOD+'</kbd>＋<kbd class="kP">＋</kbd><kbd class="kM">−</kbd></div>',
-      li:['滑鼠停在科判圖上。','Mac 按住 ⌘，Windows 按住 Ctrl。','再按 ＋ 放大、按 − 縮小。']},
     {k:'m3',h:'F 鍵：只看一個分支',st:tree()+cur+'<div class="ha-keys"><kbd class="kF">F</kbd></div>',
-      li:['先點一下標題，標題反黃。','按 F：只顯示這一支。','再按一次 F：全部回來。']}]};
+      li:['先點一下標題，標題反黃。','按 F：只顯示這一支。','再按一次 F：全部回來。']},
+    {k:'m0',h:'點「−」或「（分幾）」：開合一支',st:tree()+'<span class="ha-mi">−</span><span class="ha-fen">（分三）</span>'+cur,
+      li:['點一下標題，標題反黃，旁邊出現「−」。','點「−」：收起這一支的下層。','點「（分幾）」：再展開一層。']},
+    {k:'m1',h:'＋／− 鍵：展開、收回',st:tree()+cur+'<div class="ha-keys"><kbd class="kP">＋</kbd><kbd class="kM">−</kbd></div>',
+      li:['按鍵盤 ＋：整張圖往下展開一層。','按鍵盤 −：收回一層。','先點標題再按，就只開合那一支。']},
+    {k:'m2',h:MOD+' ＋／−：放大、縮小',st:tree()+cur+'<div class="ha-keys"><kbd class="kC">'+MOD+'</kbd>＋<kbd class="kP">＋</kbd><kbd class="kM">−</kbd></div>',
+      li:['滑鼠停在科判圖上。','Mac 按住 ⌘，Windows 按住 Ctrl。','再按 ＋ 放大、按 − 縮小。']}]};
   var ph=document.documentElement.dataset.layout==='iphone';
   if(ph)return {title:'說明',sc:[
     {k:'p1',h:'三個分頁',st:phone()+fin,li:['下面三個分頁：卷次、正文、科判。','點一下就換頁。']},
@@ -7961,7 +7977,7 @@ window.__helpAnim=function(kind){if(document.getElementById('helpAnim'))return;
   el.addEventListener('keydown',function(e){e.stopPropagation();if(e.key==='Escape')close();else if(e.key==='ArrowRight')el.querySelector('[data-u=next]').click();else if(e.key==='ArrowLeft')el.querySelector('[data-u=prev]').click();});
   document.body.appendChild(el);show(0);el.querySelector('[data-u=next]').focus({preventScroll:true});};
 function put(){var bar=document.querySelector('#kmap .km-eopt');if(!bar||bar.querySelector('.km-help-a'))return;
-  var b=document.createElement('button');b.type='button';b.className='km-help-a';b.textContent='說明';b.setAttribute('aria-label','科判圖說明');b.setAttribute('data-tip','看動畫：＋／− 展開、'+MOD+' ＋／− 放大縮小、F 只看一支');
+  var b=document.createElement('button');b.type='button';b.className='km-help-a';b.textContent='說明';b.setAttribute('aria-label','科判圖說明');b.setAttribute('data-tip','看動畫：F 只看一支、點「−」「（分幾）」開合、＋／− 展開、'+MOD+' ＋／− 縮放');
   b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();window.__helpAnim('map');});
   bar.insertBefore(b,bar.firstChild);}
 put();setInterval(put,800);
