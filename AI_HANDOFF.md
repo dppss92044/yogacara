@@ -994,3 +994,4 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 - W010 beta 2.2 預覽（三）（同 46474a1 再加 .books-tools／.reader-actions 非 hover 時去框、底色、陰影，限 hover:hover 且寬 >700px；仍未跑 build_release、未合併 main）commit 7e04f62，已還原回 3780a5e 內容。
 - W010 beta 2.2 預覽（四）（2.2 quiet：不跳通知、不亮鈴鐺；#trackLock 加 .upd-dot 1 點鐘貼邊，隨 hk-ver-opened 消失；鎖說明改原生 title；齒輪／版本列紅點沿用；仍未跑 build_release、未合併 main）commit 8bfef76，已還原回 3780a5e 內容。建置腳本在 scratchpad patch22.py（以 main cfb6666 為底）。
 - W010 beta 2.2 預覽（五）（focusNode：__trackLocked 時不呼叫 centerReadingHeading／reveal，點標題只加 .on；說明文字同步；仍未跑 build_release、未合併 main）commit 08f6c7b，已還原回 3780a5e 內容。
+- W010 beta 2.2 預覽（六）（取消預覽五的鎖住不 reveal；鎖住時 focusNode from=text 不保留卷次位置，3×3 點擊同步；說明文字同步；仍未跑 build_release、未合併 main）commit 6efd77c，已還原回 3780a5e 內容。
