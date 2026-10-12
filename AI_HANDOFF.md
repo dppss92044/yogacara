@@ -992,3 +992,4 @@ q 明確確認新決定：增加「匿名實例層級統計」——可查每個
 - W010 beta 2.2 預覽（main cfb6666＋#trackLock＋點空白清除選取；appVer 顯示 beta 2.2、versionNotes['2.2'].quiet 不跳通知改亮鈴鐺；尚未跑 build_release、未改 sw.js、未合併 main，等 q 確認）commit 2164e95，已還原回 3780a5e 內容。
 - W010 beta 2.2 預覽（二）（同 2164e95 再加 #updBell .upd-dot 移到鈴身 1 點鐘方向貼邊、去白框；仍未跑 build_release、未合併 main）commit 46474a1，已還原回 3780a5e 內容。
 - W010 beta 2.2 預覽（三）（同 46474a1 再加 .books-tools／.reader-actions 非 hover 時去框、底色、陰影，限 hover:hover 且寬 >700px；仍未跑 build_release、未合併 main）commit 7e04f62，已還原回 3780a5e 內容。
+- W010 beta 2.2 預覽（四）（2.2 quiet：不跳通知、不亮鈴鐺；#trackLock 加 .upd-dot 1 點鐘貼邊，隨 hk-ver-opened 消失；鎖說明改原生 title；齒輪／版本列紅點沿用；仍未跑 build_release、未合併 main）commit 8bfef76，已還原回 3780a5e 內容。建置腳本在 scratchpad patch22.py（以 main cfb6666 為底）。
