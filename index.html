@@ -7633,7 +7633,7 @@ setTimeout(go,900);})();</script>
 .ha{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;background:#0006}
 .ha-card{box-sizing:border-box;width:min(440px,calc(100% - 28px));max-height:calc(100% - 28px);overflow:auto;padding:16px 18px;border-radius:20px;background:var(--pop,var(--bg));color:var(--fg);border:1px solid var(--rule);box-shadow:0 12px 40px #0004;font-family:var(--ui)}
 .ha-ts{font-size:13px;color:var(--muted)}
-.ha-h{margin:2px 0 10px;font-size:20px}
+.ha-h{margin:2px 0 10px;font-size:20px;text-align:center}
 .ha-st{position:relative;height:190px;border-radius:14px;overflow:hidden;background:var(--bg);border:1px solid var(--rule);color:var(--fg)}
 .ha-d{min-height:66px;margin:10px 0 6px;padding-left:20px;font-size:15px;line-height:1.55}.ha-d li{margin:0 0 2px}
 .ha-dots{display:flex;gap:8px;justify-content:center;margin-bottom:10px}
@@ -7995,7 +7995,7 @@ window.__helpAnim=function(kind){if(document.getElementById('helpAnim'))return;
   el.querySelector('[data-u=next]').onclick=function(){if(i<SC.length-1)show(i+1);else close();};
   el.addEventListener('click',function(e){if(e.target===el)close();});
   el.addEventListener('keydown',function(e){e.stopPropagation();if(e.key==='Escape')close();else if(e.key==='ArrowRight')el.querySelector('[data-u=next]').click();else if(e.key==='ArrowLeft')el.querySelector('[data-u=prev]').click();});
-  var km=document.getElementById('kmap');if(kind==='map'&&km&&!km.hidden){el.classList.add('ha-in');km.appendChild(el);km.querySelectorAll('.km-intro').forEach(function(x){x.hidden=true;});if(!km.__haObs){km.__haObs=new MutationObserver(function(){var h=document.getElementById('helpAnim');if(h&&h.classList.contains('ha-in')&&(km.hidden||!km.classList.contains('km-emb')))h.remove();});km.__haObs.observe(km,{attributes:true,attributeFilter:['class','hidden']});}}else document.body.appendChild(el);show(0);el.querySelector('[data-u=next]').focus({preventScroll:true});};
+  var km=document.getElementById('kmap');if(kind==='map'&&km&&!km.hidden){el.classList.add('ha-in');km.appendChild(el);km.querySelectorAll('.km-intro').forEach(function(x){x.hidden=true;});if(!km.__haObs){km.__haObs=new MutationObserver(function(){var h=document.getElementById('helpAnim');if(h&&h.classList.contains('ha-in')&&(km.hidden||!km.classList.contains('km-emb')))h.remove();});km.__haObs.observe(km,{attributes:true,attributeFilter:['class','hidden']});}}else document.body.appendChild(el);(function(){var ul=el.querySelector('.ha-d'),mx=0;SC.forEach(function(x){ul.replaceChildren();x.li.forEach(function(t){var li=document.createElement('li');li.textContent=t;ul.appendChild(li);});mx=Math.max(mx,ul.offsetHeight);});if(mx)ul.style.minHeight=mx+'px';})();show(0);el.querySelector('[data-u=next]').focus({preventScroll:true});};
 function put(){var bar=document.querySelector('#kmap .km-eopt');if(!bar||bar.querySelector('.km-help-a'))return;
   var b=document.createElement('button');b.type='button';b.className='km-help-a';b.textContent='說明';b.setAttribute('aria-label','科判圖說明');
   b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();window.__helpAnim('map');});
