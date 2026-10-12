@@ -24,7 +24,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:right;
 #err{display:none;background:#fdecea;color:#8a1f11;border-radius:8px;padding:10px 14px;margin-bottom:12px}
 .mute{color:var(--mute);font-size:12.5px;margin-top:14px}
 svg text{fill:var(--mute);font-size:11px}
-.live{color:var(--ok);font-weight:700}
+.mapwrap{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}#map{flex:0 0 330px;max-width:100%}#mapinfo{flex:1 1 220px;min-width:200px;font-size:14px}.chip{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 10px;margin:0 6px 6px 0;cursor:pointer;font-size:13px}.chip.on{background:var(--fg);color:var(--bg)}svg .city{cursor:pointer}svg .city circle{fill:var(--ot);fill-opacity:.55;stroke:var(--ot);stroke-width:1.5}svg .city.on circle{fill:var(--me);fill-opacity:.7;stroke:var(--me)}svg .city.zero circle{fill:none;stroke-opacity:.35;stroke-dasharray:2 2}svg .land{fill:var(--line);stroke:var(--mute);stroke-width:1;stroke-opacity:.5}svg .cl{font-size:10px}.live{color:var(--ok);font-weight:700}
 </style></head><body><div class="wrap">
 <header><h1>瑜伽統計後台</h1>
 <div class="ctl"><span class="seg" id="rng"><button data-v="today">今天</button><button data-v="week" class="on">本週</button><button data-v="month">本月</button></span>
@@ -40,7 +40,8 @@ svg text{fill:var(--mute);font-size:11px}
  <div class="card"><h2>各 App 版本</h2><div id="ver"></div></div>
  <div class="card"><h2>最常讀的卷（有效閱讀時間）</h2><div id="juan"></div></div>
 </div>
-<div class="card" style="margin-top:12px"><h2>每台裝置（短代號只用來區分裝置，不代表任何人）</h2><div id="inst"></div></div>
+<div class="card" style="margin-top:12px"><h2>大概位置（點縣市，下面的裝置表會只列該縣市）</h2><div class="mapwrap"><div id="map"></div><div id="mapinfo"></div></div></div>
+<div class="card" style="margin-top:12px"><h2 id="instT">每台裝置（短代號只用來區分裝置，不代表任何人）</h2><div id="inst"></div></div>
 <div class="card" style="margin-top:12px"><h2>功能使用排行</h2><div id="feat"></div></div>
 <p class="mute">「實際使用」＝期間內有效使用達門檻的裝置（畫面開著且有操作）。一台裝置算一個「人」，不代表真實人數。「本人」是你在自己的裝置上標記過的；沒標記的都算其他人。資料只讀自你自己的統計伺服器，本頁只在這台 Mac 開啟。<span id="upd"></span></p>
 </div>
@@ -73,11 +74,36 @@ function table(el0,head,rows){el0.textContent='';if(!rows.length){el0.appendChil
 function ver(e){table($('ver'),['版本','身分','實際使用','開過','有效使用'],(e.versions||[]).map(function(x){return[x.av?'v'+x.av:'未知',x.me?'本人':'其他人',x.engaged,x.instances,dur(x.active_seconds)]}))}
 function live(p){$('liveN').textContent=p.active_5m+' 人（5 分鐘內）';table($('live'),['裝置','城市','模式','幾秒前'],(p.online||[]).slice(0,12).map(function(x){return[DEVN[x.device]||'未知',x.city||'—',x.mode==='pwa'?'PWA':'網頁',x.ago]}))}
 function juan(r){var mx=1;(r.juans||[]).forEach(function(x){mx=Math.max(mx,x.sec)});table($('juan'),['卷','人數','有效閱讀',''],(r.juans||[]).slice(0,10).map(function(x){var b=el('span','bar');b.style.width=Math.round(90*x.sec/mx)+'px';return['卷'+x.juan,x.u,dur(x.sec),b]}))}
-function inst(r){var MD={web:'網頁',pwa:'PWA'};table($('inst'),['代號','身分','城市','裝置','版本','開啟','有效使用','閱讀','首次～最後'],(r.instances||[]).map(function(x){return[x.code,x.me?'本人':'',x.city||'—',DEVN[x.device]||'未知',x.av?'v'+x.av:'?',x.opens,dur(x.active_seconds),dur(x.read_seconds||0),(x.first_day||'?').slice(5)+'～'+(x.last_day||'?').slice(5)]}));if(r.total>(r.instances||[]).length)$('inst').appendChild(el('div','sub','只列前 '+r.instances.length+' 台，共 '+r.total+' 台'))}
+var INST=null,SELC='';
+var CITY={'台北':[121.55,25.06],'新北':[121.42,24.98],'基隆':[121.74,25.13],'桃園':[121.25,24.96],'新竹':[121.0,24.8],'苗栗':[120.85,24.56],'台中':[120.75,24.2],'彰化':[120.5,24.05],'南投':[120.95,23.85],'雲林':[120.4,23.7],'嘉義':[120.4,23.45],'台南':[120.25,23.05],'高雄':[120.4,22.7],'屏東':[120.65,22.45],'台東':[121.1,22.85],'花蓮':[121.5,23.9],'宜蘭':[121.7,24.65],'澎湖':[119.58,23.57],'金門':[118.32,24.45],'連江':[119.95,26.15]};
+var LAND=[[121.55,25.30],[121.90,25.10],[121.95,24.85],[121.85,24.60],[121.62,24.10],[121.60,23.80],[121.50,23.50],[121.40,23.10],[121.20,22.70],[120.90,22.30],[120.85,21.92],[120.70,22.00],[120.65,22.35],[120.55,22.65],[120.30,22.55],[120.12,22.95],[120.10,23.30],[120.15,23.60],[120.20,23.90],[120.40,24.15],[120.55,24.45],[120.75,24.75],[121.00,25.00],[121.30,25.20]];
+function px(lo,la){return[(lo-118.0)*66+34,(26.5-la)*72]}
+var LB={'基隆':[8,-5,'start'],'台北':[8,11,'start'],'新北':[-8,-5,'end'],'桃園':[-8,11,'end'],'金門':[0,-9,'middle'],'澎湖':[0,-9,'middle'],'連江':[0,-9,'middle']};
+function drawMap(list){var cnt={},other={};list.forEach(function(x){var c=x.city||'未知';if(CITY[c])cnt[c]=(cnt[c]||0)+1;else other[c]=(other[c]||0)+1});
+ var ns='http://www.w3.org/2000/svg',M=$('map');M.textContent='';var s=document.createElementNS(ns,'svg');s.setAttribute('viewBox','0 0 330 340');s.setAttribute('width','100%');
+ function mk(t,a){var e=document.createElementNS(ns,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+ s.appendChild(mk('polygon',{'class':'land',points:LAND.map(function(q){return px(q[0],q[1]).join(',')}).join(' ')}));
+ [[119.58,23.57,3],[118.32,24.45,5],[119.95,26.15,3]].forEach(function(q){var p=px(q[0],q[1]);s.appendChild(mk('ellipse',{'class':'land',cx:p[0],cy:p[1],rx:q[2],ry:q[2]-1}))});
+ Object.keys(CITY).forEach(function(c){var n=cnt[c]||0,p=px(CITY[c][0],CITY[c][1]),g=mk('g',{'class':'city'+(n?'':' zero')+(SELC===c?' on':'')});
+  g.appendChild(mk('circle',{cx:p[0],cy:p[1],r:n?Math.min(5+n*2.5,18):4}));
+  var lb=LB[c]||(CITY[c][0]>121.2?[10,3,'start']:[-10,3,'end']),t=mk('text',{x:p[0]+lb[0],y:p[1]+lb[1],'text-anchor':lb[2],'class':'cl'});t.textContent=c+(n?' '+n:'');g.appendChild(t);
+  g.onclick=function(){pick(c)};s.appendChild(g)});
+ M.appendChild(s);
+ var I=$('mapinfo');I.textContent='';var tot=list.length;I.appendChild(el('div','sub','共 '+tot+' 台裝置；圓圈越大台數越多，虛線圈＝目前沒有。'));
+ var box=el('div');box.style.marginTop='10px';var names=Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a]}).concat(Object.keys(other).sort(function(a,b){return other[b]-other[a]}));
+ names.forEach(function(c){var ch=el('span','chip'+(SELC===c?' on':''),c+' '+(cnt[c]||other[c]));ch.onclick=function(){pick(c)};box.appendChild(ch)});
+ if(!names.length)box.appendChild(el('div','sub','（此期間尚無資料）'));I.appendChild(box);
+ I.appendChild(el('div','sub','海外只記國碼（例如 US）；「台灣其他」＝看不出是哪個縣市；「未知」＝抓不到位置。位置只是網路連線的粗略判斷，不是 GPS。'))}
+function pick(c){SELC=SELC===c?'':c;if(INST){drawMap(INST.instances||[]);drawInst()}}
+function drawInst(){var r=INST,MD={web:'網頁',pwa:'PWA'},all=r.instances||[],rows=all.filter(function(x){return!SELC||(x.city||'未知')===SELC});
+ $('instT').textContent='每台裝置'+(SELC?'（只看 '+SELC+'，'+rows.length+' 台；再點一次縣市取消）':'（短代號只用來區分裝置，不代表任何人）');
+ table($('inst'),['代號','身分','城市','裝置','版本','開啟','有效使用','閱讀','首次～最後'],rows.slice(0,50).map(function(x){return[x.code,x.me?'本人':'',x.city||'—',DEVN[x.device]||'未知',x.av?'v'+x.av:'?',x.opens,dur(x.active_seconds),dur(x.read_seconds||0),(x.first_day||'?').slice(5)+'～'+(x.last_day||'?').slice(5)]}));
+ if(r.total>all.length)$('inst').appendChild(el('div','sub','只列前 '+all.length+' 台，共 '+r.total+' 台'))}
+function inst(r){INST=r;drawMap(r.instances||[]);drawInst()}
 function feat(f){var rows=(f.features||[]).filter(function(x){return x.n>0}).slice(0,15).map(function(x){return[x.name,x.n,x.u]});table($('feat'),['功能','次數','使用裝置'],rows)}
 var busy=false;
 function load(){if(busy)return;busy=true;$('err').style.display='none';var b=base();
- Promise.all([api('engaged',Object.assign({min:S.min,by:'day'},b)),api('engaged',Object.assign({min:S.min,by:'version'},b)),api('presence',{}),api('reading',Object.assign({by:'juan'},b)),api('features',b),api('instances',Object.assign({limit:50,sort:'time'},b))])
+ Promise.all([api('engaged',Object.assign({min:S.min,by:'day'},b)),api('engaged',Object.assign({min:S.min,by:'version'},b)),api('presence',{}),api('reading',Object.assign({by:'juan'},b)),api('features',b),api('instances',Object.assign({limit:200,sort:'time'},b))])
  .then(function(a){kpi(a[0]);days(a[0]);ver(a[1]);live(a[2]);juan(a[3]);feat(a[4]);inst(a[5]);$('upd').textContent=' 更新於 '+new Date().toLocaleTimeString()})
  .catch(function(e){$('err').textContent='讀取失敗：'+e.message;$('err').style.display='block'}).then(function(){busy=false})}
 $('rng').onclick=function(e){var v=e.target.dataset&&e.target.dataset.v;if(!v)return;S.rng=v;[].forEach.call($('rng').children,function(b){b.classList.toggle('on',b.dataset.v===v)});load()};
