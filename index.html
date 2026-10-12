@@ -7980,7 +7980,7 @@ window.__helpAnim=function(kind){if(document.getElementById('helpAnim'))return;
   el.addEventListener('keydown',function(e){e.stopPropagation();if(e.key==='Escape')close();else if(e.key==='ArrowRight')el.querySelector('[data-u=next]').click();else if(e.key==='ArrowLeft')el.querySelector('[data-u=prev]').click();});
   var km=document.getElementById('kmap');if(kind==='map'&&km&&!km.hidden){el.classList.add('ha-in');km.appendChild(el);}else document.body.appendChild(el);show(0);el.querySelector('[data-u=next]').focus({preventScroll:true});};
 function put(){var bar=document.querySelector('#kmap .km-eopt');if(!bar||bar.querySelector('.km-help-a'))return;
-  var b=document.createElement('button');b.type='button';b.className='km-help-a';b.textContent='說明';b.setAttribute('aria-label','科判圖說明');b.setAttribute('data-tip','看動畫：F 只看一支、點「−」「（分幾）」開合、＋／− 展開、'+MOD+' ＋／− 縮放');
+  var b=document.createElement('button');b.type='button';b.className='km-help-a';b.textContent='說明';b.setAttribute('aria-label','科判圖說明');
   b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();window.__helpAnim('map');});
   bar.insertBefore(b,bar.firstChild);}
 put();setInterval(put,800);
