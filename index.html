@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset=utf8><meta name="app-version" content="2.2"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><script id="rev-22b">(function(){try{var R='2.2b',V='2.2',L=localStorage;if(L.getItem('hk-anim-rev')===R)return;L.setItem('hk-anim-rev',R);if(L.getItem('hk-ver-opened')===V||L.getItem('hk-anim-auto')===V){L.removeItem('hk-ver-opened');L.setItem('hk-anim-auto',V);}}catch(e){}})();</script><meta charset=utf8><meta name="app-version" content="2.2"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -3835,6 +3835,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var versionNotes={"2.2":{date:"2026年10月12日",quiet:1,items:[
     ["new","「鎖」：打開＝自動追蹤，三欄跟著你讀到的地方標黃；鎖上＝手動追蹤，點標題三欄才一起標黃。點空白處取消。",1],
     ["new","「科判圖」：點右下圖示，在右邊並排預覽；再點放大整頁，再點返回。",1],
+    ["new","「介面」：新增深色開關，以及淡黃、護眼綠、灰、白四種閱讀底色。",1],
+    ["new","「說明」：設定裡的「導覽」改名「說明」並改成動畫；半頁科判圖右上也有「說明」。",1],
     ["improve","科判圖放大整頁時，左下卷次先收起。"]
   ]},"2.1":{date:"2026年10月10日",warn:"目前版本以電腦版為主，手機版、平板版，仍有些許bug，陸續修正中。",items:[
     ["new","手機版右上角新增鈴鐺：有新版本時顯示紅點，點開查看更新內容。",1],
@@ -7533,7 +7535,9 @@ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.c
 </style>
 <script id="upd-anim-js">(function(){
 var SC=[['「鎖」',['打開＝自動追蹤：讀到哪，三欄自動標黃。','鎖上＝手動追蹤：點哪欄標題，三欄才一起標黃、跳過去。','點空白處，取消標黃。']],
-        ['「科判圖」',['點右下圖示：科判圖在右邊並排預覽。','再點放大整頁，再點回原畫面。']]];
+        ['「科判圖」',['點右下圖示：科判圖在右邊並排預覽。','再點放大整頁，再點回原畫面。']],
+        ['「介面」',['新增「深色」：一點畫面就反黑。','閱讀底色可選：淡黃、護眼綠、灰、白。']],
+        ['「說明」',['設定裡的「說明」改成動畫，帶你看主要功能。','半頁科判圖右上也有「說明」。']]];
 var CUR='<svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z" fill="#fff" stroke="#222" stroke-width="1.3" stroke-linejoin="round"/></svg>';
 var TREE='<svg viewBox="0 0 120 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><path d="M60 22v8M24 30h72M24 30v6M60 30v6M96 30v6M24 56v6M96 56v6"/></g><g fill="#f4e2a4" stroke="currentColor" stroke-width="1"><rect x="53" y="2" width="14" height="20" rx="3"/><rect x="17" y="36" width="14" height="20" rx="3"/><rect x="53" y="36" width="14" height="20" rx="3"/><rect x="89" y="36" width="14" height="20" rx="3"/><rect x="17" y="62" width="14" height="16" rx="3" fill="none"/><rect x="89" y="62" width="14" height="16" rx="3" fill="none"/></g></svg>';
 function ic(sel,cls){var s=document.querySelector(sel);if(!s)return '';var c=s.cloneNode(true);c.removeAttribute('class');if(cls)c.setAttribute('class',cls);return c.outerHTML;}
@@ -7547,7 +7551,7 @@ window.__updAnim=function(){if(document.getElementById('updAnim'))return;
     '<div class="ua-col ua-txt"><div class="ua-bar"><span class="ua-lock">'+ic('#trackLock .lk-o','o')+ic('#trackLock .lk-c','c')+'</span></div><div class="ua-body"><i class="ua-ln" style="width:70%"></i><i class="ua-ln"></i><i class="ua-tt t"></i><i class="ua-ln"></i><i class="ua-ln"></i><i class="ua-ln" style="width:80%"></i><i class="ua-ln"></i><i class="ua-ln" style="width:50%"></i></div></div>'+
     '<div class="ua-col ua-map"><div class="ua-tree">'+tr+'</div></div>'+
     '<div class="ua-half">'+TREE+'</div><div class="ua-full">'+TREE+'<i class="fold"></i></div>'+
-    '<span class="ua-mb">'+ic('#mapBtn svg')+'</span><span class="ua-cur">'+CUR+'</span></div>'+
+    '<span class="ua-mb">'+ic('#mapBtn svg')+'</span><span class="ua-sw"><i></i><i></i><i></i><i></i><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg></b></span><span class="ua-gear">'+ic('#menuBtn svg')+'</span><span class="ua-mn"><i>介面</i><i>字體</i><i class="h">說明</i><i>版本</i></span><span class="ua-hc"><span>▶</span></span><span class="ua-cur">'+CUR+'</span></div>'+
     '<ul class="ua-d"></ul><p class="ua-re">之後可在 設定、版本、詳情 重播這段動畫。</p><div class="ua-dots"></div><div class="ua-b"><button type="button" data-u="prev">上一步</button><button type="button" class="go" data-u="next">下一步</button></div></div>';
   var st=el.querySelector('.ua-st'),dots=el.querySelector('.ua-dots'),i=0;
   SC.forEach(function(x,n){var d=document.createElement('button');d.type='button';d.setAttribute('aria-label',x[0]);d.onclick=function(){show(n);};dots.appendChild(d);});
@@ -7930,15 +7934,26 @@ put();setInterval(put,800);
 :root:root:root .settings-panel .layout-choices #darkBtn>span{display:none}
 :root:root:root:root .settings-panel .layout-choices #darkBtn[aria-checked=true]{background:color-mix(in srgb,var(--acc) 30%,var(--bg))!important;color:var(--fg)!important}
 :root:root:root:root:root:root #kmap:not(.km-emb) .km-eopt button[data-eo=sync]{display:none!important}
+:root[data-rbg=yellow]{--bg:#f6efd9;--sheet:#f6efd9;--rail:#efe6cc}
+:root[data-rbg=green]{--bg:#dcebd2;--sheet:#dcebd2;--rail:#d2e3c7}
+:root[data-rbg=gray]{--bg:#e8e8e6;--sheet:#e8e8e6;--rail:#dededb}
+:root:root:root .settings-panel .rbg-choices{display:flex;justify-content:center;gap:6px;margin-top:6px;padding-top:6px;border-top:1px solid var(--rule)}
+:root:root:root .settings-panel .rbg-choices button{flex:none;width:auto;height:42px;padding:3px 10px;border:0;border-radius:10px;background:transparent;display:grid;place-items:center;cursor:pointer}
+:root:root:root .settings-panel .rbg-choices button i{display:block;width:22px;height:22px;border-radius:50%;border:1px solid color-mix(in srgb,var(--fg) 30%,transparent)}
+:root:root:root:root .settings-panel .rbg-choices button[aria-checked=true]{background:color-mix(in srgb,var(--acc) 30%,var(--bg))!important}
+:root[data-theme=dark] .settings-panel .rbg-choices button,:root:not([data-theme=light]) .settings-panel .rbg-choices.dk button{opacity:.45}
 </style>
 <script id="dark-row-js">(function(){
-var KEY='hk-theme',mq=matchMedia('(prefers-color-scheme: dark)'),orig=new WeakMap();
+var KEY='hk-theme',RK='hk-reading-bg',RBG=[['yellow','淡黃','#f6efd9'],['green','護眼綠','#dcebd2'],['gray','灰','#e8e8e6'],['white','白','#ffffff']],mq=matchMedia('(prefers-color-scheme: dark)'),orig=new WeakMap();
 function mode(){try{var m=localStorage.getItem(KEY);return m==='dark'||m==='light'?m:'';}catch(e){return '';}}
 function scan(list,m){for(var i=0;i<list.length;i++){var r=list[i];if(r.media&&r.cssRules){var t=orig.has(r)?orig.get(r):r.media.mediaText;if(/prefers-color-scheme:\s*dark/.test(t)){if(!orig.has(r))orig.set(r,t);var want=m==='dark'?'all':m==='light'?'not all':t;if(r.media.mediaText!==want)r.media.mediaText=want;}}}}
+function rbg(){try{var v=localStorage.getItem(RK);return /^(yellow|green|gray)$/.test(v)?v:'white';}catch(e){return 'white';}}
 function apply(){var m=mode(),root=document.documentElement;
   if(m)root.dataset.theme=m;else delete root.dataset.theme;
   for(var i=0;i<document.styleSheets.length;i++){try{scan(document.styleSheets[i].cssRules,m);}catch(e){}}
-  var b=document.getElementById('darkBtn');if(b)b.setAttribute('aria-checked',String(isDark()));}
+  var b=document.getElementById('darkBtn');if(b)b.setAttribute('aria-checked',String(isDark()));
+  var c=rbg(),dk=isDark();if(!dk&&c!=='white')root.dataset.rbg=c;else delete root.dataset.rbg;
+  document.querySelectorAll('.rbg-choices button').forEach(function(x){x.setAttribute('aria-checked',String(!dk&&x.dataset.rbg===c));});var rc=document.querySelector('.rbg-choices');if(rc)rc.classList.toggle('dk',dk);}
 function isDark(){var m=mode();return m?m==='dark':mq.matches;}
 function toggle(){var want=!isDark();try{if(want===mq.matches)localStorage.removeItem(KEY);else localStorage.setItem(KEY,want?'dark':'light');}catch(e){}apply();}
 var ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg>';
@@ -7946,6 +7961,10 @@ function put(){var box=document.querySelector('.learning-settings .layout-choice
   var b=document.createElement('button');b.type='button';b.className='mi sw dk-choice';b.id='darkBtn';b.setAttribute('role','menuitemcheckbox');b.setAttribute('aria-checked','false');b.title='深色：開＝畫面反黑，關＝白底';
   b.innerHTML=ICON+'<span>深色</span>';b.setAttribute('aria-label','深色');
   box.appendChild(b);
+  var row=document.createElement('div');row.className='rbg-choices';row.setAttribute('role','radiogroup');row.setAttribute('aria-label','閱讀底色');
+  RBG.forEach(function(x){var t=document.createElement('button');t.type='button';t.dataset.rbg=x[0];t.setAttribute('role','radio');t.setAttribute('aria-label',x[1]);t.title='閱讀底色：'+x[1];t.innerHTML='<i style="background:'+x[2]+'"></i>';
+    t.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();try{if(x[0]==='white')localStorage.removeItem(RK);else localStorage.setItem(RK,x[0]);if(isDark()){if(mq.matches)localStorage.setItem(KEY,'light');else localStorage.removeItem(KEY);}}catch(er){}apply();});row.appendChild(t);});
+  box.after(row);
   b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();toggle();});
   apply();}
 apply();put();
@@ -7954,6 +7973,38 @@ new MutationObserver(function(ms){for(var i=0;i<ms.length;i++)for(var j=0;j<ms[i
 mq.addEventListener&&mq.addEventListener('change',apply);
 var tk=setInterval(function(){put();if(document.getElementById('darkBtn'))clearInterval(tk);},300);
 })();</script>
+<style id="upd-anim-23">
+.ua-sw,.ua-gear,.ua-mn,.ua-hc{display:none}
+.ua-st[data-s="2"] .ua-mb,.ua-st[data-s="2"] .ua-half,.ua-st[data-s="2"] .ua-full,.ua-st[data-s="2"] .ua-lock,
+.ua-st[data-s="3"] .ua-mb,.ua-st[data-s="3"] .ua-half,.ua-st[data-s="3"] .ua-full,.ua-st[data-s="3"] .ua-lock{display:none}
+/* scene 2: 介面 — dark switch + reading backgrounds */
+.ua-st[data-s="2"]{animation:uaBg 10s step-end infinite!important}
+.ua-st[data-s="2"] .ua-cat{background:transparent}
+.ua-st[data-s="2"] .ua-sw{display:flex;align-items:center;position:absolute;left:50%;bottom:10px;transform:translateX(-50%);gap:8px;padding:5px 8px;border-radius:12px;background:var(--pop,var(--bg));border:1px solid var(--rule);z-index:4;box-shadow:0 2px 8px #0002}
+.ua-sw i{display:block;width:16px;height:16px;border-radius:50%;border:1px solid color-mix(in srgb,var(--fg) 30%,transparent)}
+.ua-sw i:nth-child(1){background:#f6efd9}.ua-sw i:nth-child(2){background:#dcebd2}.ua-sw i:nth-child(3){background:#e8e8e6}.ua-sw i:nth-child(4){background:#fff}
+.ua-sw b{display:block;width:16px;height:16px;color:var(--fg)}.ua-sw b svg{width:16px;height:16px;display:block}
+.ua-st[data-s="2"] .ua-cur{animation:uaC2 10s ease-in-out infinite!important}
+.ua-st[data-s="2"] .ua-cur::after{animation:uaK2 10s ease-out infinite!important}
+@keyframes uaBg{0%{background:#fff}12%{background:#f6efd9}32%{background:#dcebd2}52%{background:#e8e8e6}72%{background:#2a2826}92%{background:#fff}}
+@keyframes uaC2{0%{left:50%;top:40%}9%,30%{left:calc(50% - 52px);top:calc(100% - 24px)}32%,50%{left:calc(50% - 28px);top:calc(100% - 24px)}52%,70%{left:calc(50% - 4px);top:calc(100% - 24px)}72%,100%{left:calc(50% + 44px);top:calc(100% - 24px)}}
+@keyframes uaK2{0%,11%{opacity:0;transform:scale(.4)}12%{opacity:.8;transform:scale(1)}16%,31%{opacity:0;transform:scale(1.6)}32%{opacity:.8;transform:scale(1)}36%,51%{opacity:0;transform:scale(1.6)}52%{opacity:.8;transform:scale(1)}56%,71%{opacity:0;transform:scale(1.6)}72%{opacity:.8;transform:scale(1)}76%,100%{opacity:0;transform:scale(1.6)}}
+/* scene 3: 說明 */
+.ua-st[data-s="3"] .ua-gear{display:block;position:absolute;left:calc(22% + 6px);top:3px;width:16px;height:16px;color:var(--muted);z-index:3}
+.ua-gear svg{width:16px;height:16px;display:block}
+.ua-st[data-s="3"] .ua-mn{display:block;position:absolute;left:calc(22% + 4px);top:24px;width:96px;padding:5px;border-radius:10px;background:var(--pop,var(--bg));border:1px solid var(--rule);box-shadow:0 6px 18px #0003;z-index:4;font:11px/18px var(--ui);color:var(--fg);opacity:0;animation:uaMn 8s ease infinite!important}
+.ua-mn i{display:block;font-style:normal;padding:0 6px;border-radius:5px}
+.ua-st[data-s="3"] .ua-mn .h{animation:uaMh 8s step-end infinite!important}
+.ua-st[data-s="3"] .ua-hc{display:grid;place-items:center;position:absolute;left:28%;right:28%;top:30px;bottom:30px;border-radius:12px;background:var(--pop,var(--bg));border:1px solid var(--rule);box-shadow:0 8px 24px #0003;z-index:5;opacity:0;font:600 13px var(--ui);color:var(--fg);animation:uaHc 8s ease infinite!important}
+.ua-hc span{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#d9a62b;color:#fff;font-size:14px}
+.ua-st[data-s="3"] .ua-cur{animation:uaC3 8s ease-in-out infinite!important}
+.ua-st[data-s="3"] .ua-cur::after{animation:uaK3 8s ease-out infinite!important}
+@keyframes uaMn{0%,15%{opacity:0;transform:translateY(-6px)}19%,42%{opacity:1;transform:none}46%,100%{opacity:0}}
+@keyframes uaMh{0%{background:none}36%{background:#efd27a}46%{background:none}}
+@keyframes uaHc{0%,42%{opacity:0;transform:scale(.9)}47%,94%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes uaC3{0%{left:50%;top:80%}13%,18%{left:calc(22% + 10px);top:8px}32%,100%{left:calc(22% + 40px);top:52px}}
+@keyframes uaK3{0%,15%{opacity:0;transform:scale(.4)}16%{opacity:.8;transform:scale(1)}21%,35%{opacity:0;transform:scale(1.6)}36%{opacity:.8;transform:scale(1)}41%,100%{opacity:0;transform:scale(1.6)}}
+</style>
 
 </body></html>
 <style>
