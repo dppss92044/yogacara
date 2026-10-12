@@ -7888,7 +7888,7 @@ function sets(kind){
     {k:'p2',h:'查辭典',st:phone('<span class="ha-sel" style="left:calc(50% - 40px);top:66px"></span><div class="ha-pop" style="left:calc(50% - 50px);right:auto;width:100px;top:90px"><b></b></div>')+fin,li:['設定裡先把「辭典」亮燈。','在正文連點兩下詞語，辭典就跳出來。','點外面就關掉。']},
     {k:'p3',h:'科判',st:phone()+fin,li:['在「科判」頁點一下標題：跳到正文那一段。','點兩下標題：回到上一層。']},
     {k:'p5',h:'科判圖',st:phone('<div class="ha-half">'+tree()+'</div><div class="ha-full">'+tree()+'</div><span class="ha-mb">'+ic('#mapBtn svg')+'</span>')+fin,
-      li:['點右下圓鈕：科判圖打開半頁；再點展開整頁，再點回原畫面。','點圖上的標籤：正文一起跳過去並反黃；點空白處取消。']},
+      li:['點右下圓鈕：開半頁 → 整頁 → 返回。']},
     {k:'p4',h:'設定',st:phone('<div class="ha-menu"><div>字體</div><div>版本</div><div>匯出</div><div>說明</div></div>')+fin,li:['點左上齒輪：字體、版本、匯出都在這裡。','想再看這段動畫，點「說明」。']}]};
   var tc=touch();
   return {title:'說明',sc:[
@@ -7896,7 +7896,7 @@ function sets(kind){
     {k:'d2',h:'換卷',st:screen(cur),li:['點左上的卷號，換到那一卷。','往下讀，會自動接到下一卷。']},
     {k:'d3',h:'點標題',st:screen(cur),li:['點一下標題：三欄一起跳到這一段。','點兩下標題：回到上一層。','右上的鎖：打開＝自動追蹤，鎖上＝手動追蹤。']},
     {k:'d7',h:'科判圖',st:screen('<div class="ha-half">'+tree()+'</div><div class="ha-full">'+tree()+'</div><span class="ha-mb">'+ic('#mapBtn svg')+'</span>'+(tc?fin:cur)),
-      li:['點右下圓鈕：科判圖在右邊半頁打開；再點展開整頁，再點回原畫面。','點圖上的標籤：三欄一起反黃跳過去；點空白處取消。','半頁右上「說明」：看 ＋／−、縮放、F 的用法。']},
+      li:['點右下圓鈕：開半頁 → 整頁 → 返回。','半頁右上「說明」：看 ＋／−、縮放、F 的用法。']},
     {k:'d4',h:'查辭典',st:screen('<span class="ha-sel" style="left:31%;top:62px"></span><div class="ha-pop"><b></b>'+lines(2)+'</div>'+(tc?fin:cur)),
       li:tc?['設定裡先把「辭典」亮燈。','連點兩下正文詞語，辭典就跳出來。','點外面就關掉。']:['設定裡先把「辭典」亮燈。','用滑鼠反白一個詞，辭典就跳出來。','點外面或按 Esc 關掉。']},
     {k:'d5',h:'搜尋',st:screen('<span class="ha-q"><em>瑜伽</em></span>'+cur+'<div class="ha-keys"><kbd class="kE">Enter</kbd></div>'),li:['點右上放大鏡。','輸入要找的字，按 Enter。']},
