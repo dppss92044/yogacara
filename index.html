@@ -423,7 +423,19 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 #kmap .km-node-control{position:fixed;z-index:7;width:22px;height:22px;padding:0;min-width:22px;border:1px solid var(--muted);border-radius:50%;background:var(--bg);color:var(--fg);font:16px/20px sans-serif}
 #kmap .km-chip [data-c=print]{width:36px;padding:0;display:flex;align-items:center;justify-content:center}#kmap .km-chip [data-c=print] svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6}
 </style>
-</head><body>
+<style id="seam-shade">
+:root{--seamC:rgba(0,0,0,.05)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--seamC:rgba(0,0,0,.35)}}
+:root[data-theme=dark]{--seamC:rgba(0,0,0,.35)}
+:root:root:root:root[data-layout=mac] #rail,:root:root:root:root[data-layout=mac] #panel,:root:root:root:root[data-layout=ipad][data-ipad-pinned=true] #panel{border-left-color:transparent!important;border-right-color:transparent!important;border-radius:0!important}
+:root[data-layout=mac] #rail::after,:root[data-layout=mac] #panel::after,:root[data-layout=mac] #panel::before,:root[data-layout=ipad][data-ipad-pinned=true] #panel::after{content:"";position:absolute;top:0;bottom:0;width:40px;z-index:40;pointer-events:none}
+:root[data-layout=mac] #rail::after{right:0;background:linear-gradient(to left,var(--seamC),transparent)}
+:root[data-layout=mac] #panel::after,:root[data-layout=ipad][data-ipad-pinned=true] #panel::after{left:0;background:linear-gradient(to right,var(--seamC),transparent)}
+:root[data-layout=mac] .wrap.panes-swapped #panel::before{right:0;background:linear-gradient(to left,var(--seamC),transparent)}
+:root[data-layout=mac] .wrap:not(.panes-swapped) #panel::before{display:none}
+:root:root:root:root[data-layout=mac] #kmap.km-emb,:root:root:root:root[data-layout=ipad] #kmap.km-emb{border-left-color:transparent!important;border-right-color:transparent!important;box-shadow:inset 40px 0 40px -40px var(--seamC)}
+:root:root:root:root[data-layout=mac] body:has(.wrap.panes-swapped) #kmap.km-emb{box-shadow:inset 40px 0 40px -40px var(--seamC),inset -40px 0 40px -40px var(--seamC)}
+</style></head><body>
 <title>瑜伽師地論科判綱要</title>
 <style>
 /* Layout: three-pane reading room — left rail (卷目次 + that 卷's 干支科判, rubber-band into adjacent 卷), center (論文全文 or continuous vertical 科判 sheets), optional right 大綱預覽. */
