@@ -1,4 +1,4 @@
-// 驗證腳本：針對 kuangmi/ three.js 全息版。用法：NODE_PATH=$(npm root -g) node tools/verify.cjs <網址> <截圖資料夾>
+// 驗證腳本：針對 kuangmi/ three.js 寫實道場版。用法：NODE_PATH=$(npm root -g) node tools/verify.cjs <網址> <截圖資料夾>
 const { chromium } = require('playwright');
 (async () => {
   const url = process.argv[2], shots = process.argv[3];
@@ -19,23 +19,24 @@ const { chromium } = require('playwright');
       ok('環上108顆', st.beads === 108);
       ok('隔珠位置27/54/81/108（另104顆普通數珠）', JSON.stringify(st.spacers) === '[27,54,81,108]');
       ok('每區普通珠26', await p.evaluate(() => [0, 1, 2, 3].map(z => KM.BEADS.filter(b => b && !b.spacer && b.z === z).length).join()) === '26,26,26,26');
-      ok('所有珠心在同一圓（串繩貫穿）', st.axisErr < 1e-6 && st.strings === 1);
+      ok('所有珠心在同一圓（串繩貫穿）', st.axisErr < 1e-6 && st.cordRadius === 24);
       ok('相鄰珠不重疊', st.minGap > 0, st.minGap.toFixed(3));
-      ok('佛頭珠在第108顆正上方、飾穗在佛頭珠尾端', st.guruAbove && st.tasselAbove);
+      const hs = await p.evaluate(() => [KM3D.screenOf('head').y, KM3D.screenOf(108).y, KM3D.screenOf('tassel').y]);
+      ok('佛頭珠接在第108顆外側、畫面上位於其上方；飾穗在尾端', st.guruOutside108 && st.tasselBeyondGuru && hs[0] < hs[1] && hs[2] < hs[0], hs.map(v => v.toFixed(0)).join());
       ok('17章入口', dom.chapters === 17);
       const q = '以數珠為喻：西藏密宗乃是以種種虛構之觀想法、持外道咒、天瑜伽、遷識⋯等外道法為數珠，以風瑜伽為隔珠，以佛教教相及僧寶表相為佛頭珠；以自己所定義之般若中觀名相及果位修證名相，作為佛頭珠所懸之飾穗，最後以淫樂之樂空雙運欲界外道雙身法為串繩，貫串密宗之一切成佛理論與行門。如是串成之數珠，即是西藏密教之真實宗義。－－平實導師－－';
       ok('首頁引文逐字一致', dom.quote === q);
       await p.screenshot({ path: shots + '/desktop-overview.png' });
       await clickBead(p, 5);
       const c5 = await p.evaluate(() => KM3D.screenOf(5));
-      const cx = (1366 - 420) / 2, cy = 850 / 2 - 55;
+      const cx = (1366 - 412) / 2, cy = 850 / 2 - 50;
       ok('點第5珠：轉到畫面中央', Math.abs(c5.x - cx) < 6 && Math.abs(c5.y - cy) < 6, [c5.x.toFixed(0), c5.y.toFixed(0), cx, cy].join());
       ok('點珠：面板顯示名相', (await txt(p)).includes('實相菩提心'));
       ok('章名引線標籤3個', await p.evaluate(() => document.querySelectorAll('#fan .fl').length) === 3);
       ok('引文在特寫時淡出', await p.evaluate(() => document.getElementById('main-quote').classList.contains('hide')));
       await p.screenshot({ path: shots + '/desktop-bead.png' });
       await p.click('#fan .fl'); await p.waitForTimeout(W8); ok('點章名引線文字→章', (await txt(p)).includes('如來藏見'));
-      await p.click('#lines'); ok('引線可關閉', await p.evaluate(() => getComputedStyle(document.getElementById('leaders')).display === 'none')); await p.click('#lines');
+      await p.click('#lines'); ok('引線可關閉', await p.evaluate(() => [...document.querySelectorAll('#leaders path')].filter(x => !x.classList.contains('zarc')).every(x => getComputedStyle(x).display === 'none'))); await p.click('#lines');
       await home(p); await clickBead(p, 1);
       const seq = []; for (let i = 0; i < 10; i++) { await p.click('#next'); seq.push(await p.evaluate(() => +location.hash.split('-')[1])); }
       ok('下一個只在已配置珠位', seq.every(n => dom.assigned.includes(n)), seq.join(','));
@@ -59,10 +60,10 @@ const { chromium } = require('playwright');
       await p.selectOption('#chsel', 'chapter:c12'); ok('章節快速選取', (await txt(p)).includes('神通'));
       // 動態
       await home(p); await p.click('#motion');
-      const a = await p.evaluate(() => KM3D.stats().rotY); await p.waitForTimeout(2500); const a2 = await p.evaluate(() => KM3D.stats().rotY);
-      ok('動態開啟：念珠持續旋轉', Math.abs(a2 - a) > 0.02, (a2 - a).toFixed(3));
+      const a = await p.evaluate(() => KM3D.stats().floatY); await p.waitForTimeout(2500); const a2 = await p.evaluate(() => KM3D.stats().floatY);
+      ok('動態開啟：念珠微微飄動', Math.abs(a2 - a) > 0.005, (a2 - a).toFixed(3));
       await p.click('#motion'); await p.waitForTimeout(1500);
-      const c1 = await p.evaluate(() => KM3D.stats().rotY); await p.waitForTimeout(1000); const c2 = await p.evaluate(() => KM3D.stats().rotY);
+      const c1 = await p.evaluate(() => KM3D.stats().floatY); await p.waitForTimeout(1000); const c2 = await p.evaluate(() => KM3D.stats().floatY);
       ok('暫停動態後靜止', Math.abs(c2 - c1) < 1e-4);
     } else {
       await p.waitForTimeout(300);

@@ -1,68 +1,103 @@
-/* 全息星海 3D 層（three.js）：星系、念珠、飛近特寫、引線與文字入口。
+/* 念珠 3D 層（three.js）：寫實念珠、微微飄動、點選轉動拉近、引線與文字入口。
  * 內容與珠位模型由 app.js（KM）提供；本檔只負責畫面。 */
 (function () {
   "use strict";
   var API = (window.KM3D = {});
   var T = window.THREE, G = window.gsap;
-  var KM, D, host, stage, renderer, scene, camera, controls, malaGroup, galaxyGroup, baseGroup;
-  var R = 26, TAU = Math.PI * 2, FOV = 45, ZC = [0x6fe3f0, 0xffd27a, 0xc9a8ff, 0xff8f9d];
+  var KM, D, host, stage, renderer, scene, camera, floatGroup, malaGroup;
+  var R = 24, TAU = Math.PI * 2, FOV = 32, REST = Math.PI;
+  var RB = 0.6, RS = 0.66, RG = 0.95;               // 普通珠、隔珠、佛頭珠半徑
   var W = 1, H = 1, narrow = false, offX = 0, offY = 0;
-  var beads = [], guru, tassel, stringMesh, ringLocal = [];
-  var paused = false, reduce = false, lines = true, selected = null, focused = false;
-  var hover = null, down = null, userDrag = false, spinV = 0, bobAmp = 1, tt = 0, rotTween = null, built = false;
-  var labelDefs = [], labelEls = [], fanEls = [], leaderPaths = {};
-  var leaders, labelsBox, calloutEl, fanBox, mainLeader, crosshair, quoteEl;
+  var beads = [], guru, stupa, tassel, tasselHit, cord, ringLocal = [];
+  var paused = false, reduce = false, selected = null, focused = false;
+  var hover = null, down = null, tt = 0, rotTween = null, built = false, camTarget = new T.Vector3();
+  var labelDefs = [], leaders, labelsBox, calloutEl, fanBox, quoteEl, marks;
   var tmp = new T.Vector3(), tmp2 = new T.Vector3();
   var cands = [];
+  var SVGNS = "http://www.w3.org/2000/svg";
 
-  /* ---------- 工具 ---------- */
-  function glowTexture() {
-    var c = document.createElement("canvas"); c.width = c.height = 64;
-    var g = c.getContext("2d"), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(.25, "rgba(255,255,255,.45)"); gr.addColorStop(1, "rgba(255,255,255,0)");
-    g.fillStyle = gr; g.fillRect(0, 0, 64, 64);
-    return new T.CanvasTexture(c);
+  /* ---------- 材質貼圖（以程式繪製，不用外部圖片） ---------- */
+  function canvas(w, h) { var c = document.createElement("canvas"); c.width = w; c.height = h; return c; }
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function bodhiMaps() { // 星月菩提子：象牙底色、深色星點、一端月形凹痕、兩端孔眼
+    var w = 1024, h = 512, c = canvas(w, h), g = c.getContext("2d"), b = canvas(w, h), gb = b.getContext("2d"), i;
+    g.fillStyle = "#e6d5b2"; g.fillRect(0, 0, w, h); gb.fillStyle = "#808080"; gb.fillRect(0, 0, w, h);
+    for (i = 0; i < 6000; i++) { g.fillStyle = Math.random() < .5 ? "rgba(255,250,235,.10)" : "rgba(120,90,50,.06)"; g.fillRect(Math.random() * w, Math.random() * h, 2, 2); }
+    for (i = 0; i < 420; i++) { // 星點
+      var v = rnd(0.13, 0.9), y = v * h, lat = Math.sin(v * Math.PI), x = Math.random() * w, r = rnd(1.4, 3.6);
+      g.fillStyle = "rgba(96,64,34," + rnd(.55, .9) + ")"; g.beginPath(); g.ellipse(x, y, r / Math.max(lat, .25), r, 0, 0, TAU); g.fill();
+      gb.fillStyle = "#3a3a3a"; gb.beginPath(); gb.ellipse(x, y, r / Math.max(lat, .25), r, 0, 0, TAU); gb.fill();
+    }
+    // 月：上端一圈較深的凹痕
+    var gr = g.createLinearGradient(0, 0, 0, h * 0.16); gr.addColorStop(0, "rgba(60,40,22,1)"); gr.addColorStop(.28, "rgba(60,40,22,1)"); gr.addColorStop(.32, "rgba(150,115,70,.9)"); gr.addColorStop(.75, "rgba(175,140,95,.55)"); gr.addColorStop(1, "rgba(175,140,95,0)");
+    g.fillStyle = gr; g.fillRect(0, 0, w, h * 0.16);
+    gb.fillStyle = "#202020"; gb.fillRect(0, 0, w, h * 0.06); gb.fillStyle = "#555"; gb.fillRect(0, h * 0.06, w, h * 0.07);
+    // 下端孔眼
+    var gr2 = g.createLinearGradient(0, h, 0, h * 0.93); gr2.addColorStop(0, "rgba(55,38,20,1)"); gr2.addColorStop(.5, "rgba(55,38,20,1)"); gr2.addColorStop(1, "rgba(150,115,70,0)");
+    g.fillStyle = gr2; g.fillRect(0, h * 0.93, w, h * 0.07); gb.fillStyle = "#202020"; gb.fillRect(0, h * 0.96, w, h * 0.04);
+    var mt = new T.CanvasTexture(c); mt.encoding = T.sRGBEncoding; mt.anisotropy = 4;
+    return { map: mt, bump: new T.CanvasTexture(b) };
   }
+  function agateMap() { // 暗紅瑪瑙：深紅底、柔和層紋、兩端孔眼
+    var w = 512, h = 256, c = canvas(w, h), g = c.getContext("2d"), i, k;
+    g.fillStyle = "#4e0d0d"; g.fillRect(0, 0, w, h);
+    for (i = 0; i < 26; i++) {
+      var y0 = rnd(0.12, 0.88) * h, amp = rnd(4, 14), fr = rnd(1, 3), ph = rnd(0, TAU);
+      g.strokeStyle = Math.random() < .5 ? "rgba(120,30,24," + rnd(.12, .28) + ")" : "rgba(26,3,3," + rnd(.2, .4) + ")";
+      g.lineWidth = rnd(2, 9); g.beginPath();
+      for (k = 0; k <= w; k += 8) { var yy = y0 + Math.sin(k / w * TAU * fr + ph) * amp; if (k === 0) g.moveTo(k, yy); else g.lineTo(k, yy); }
+      g.stroke();
+    }
+    g.fillStyle = "#170303"; g.fillRect(0, 0, w, h * 0.05); g.fillRect(0, h * 0.95, w, h * 0.05);
+    var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; return t;
+  }
+  function silkMap() { // 飾穗絲線：細密直紋
+    var w = 256, h = 64, c = canvas(w, h), g = c.getContext("2d");
+    g.fillStyle = "#7a1414"; g.fillRect(0, 0, w, h);
+    for (var x = 0; x < w; x += 2) { g.fillStyle = "rgba(" + (Math.random() < .5 ? "190,60,50" : "50,6,6") + "," + rnd(.15, .5) + ")"; g.fillRect(x, 0, 1, h); }
+    var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(3, 1); return t;
+  }
+
   function wrapNear(target, cur) { var d = (((target - cur) % TAU) + 3 * Math.PI) % TAU - Math.PI; return cur + d; }
   function toScreen(v) { tmp2.copy(v).project(camera); return { x: (tmp2.x * .5 + .5) * W, y: (-tmp2.y * .5 + .5) * H, z: tmp2.z }; }
-  function pxPerUnit(worldPos) { var d = camera.position.distanceTo(worldPos); return (H / 2) / (Math.tan(FOV * Math.PI / 360) * d); }
+  function pxPerUnit(p) { return (H / 2) / (Math.tan(FOV * Math.PI / 360) * camera.position.distanceTo(p)); }
   function aEff() { return Math.max(0.5, (W - (narrow ? 0 : 2 * offX)) / H); }
 
   /* ---------- 建構 ---------- */
   API.init = function (km) {
+    G.ticker.lagSmoothing(0); // 低效能裝置上動畫仍依實際時間完成
     KM = km; D = km.D;
     host = document.getElementById("canvas-container"); stage = document.getElementById("stage");
     leaders = document.getElementById("leaders"); labelsBox = document.getElementById("labels");
-    calloutEl = document.getElementById("callout"); fanBox = document.getElementById("fan");
-    crosshair = document.getElementById("crosshair"); quoteEl = document.getElementById("main-quote");
+    calloutEl = document.getElementById("callout"); fanBox = document.getElementById("fan"); quoteEl = document.getElementById("main-quote");
     reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-    try {
-      renderer = new T.WebGLRenderer({ antialias: true, alpha: true });
-    } catch (e) { return false; }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    try { renderer = new T.WebGLRenderer({ antialias: true, alpha: true }); } catch (e) { return false; }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputEncoding = T.sRGBEncoding; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92;
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = T.VSMShadowMap;
+    renderer.setClearColor(0x000000, 0);
     host.appendChild(renderer.domElement);
 
-    scene = new T.Scene(); scene.fog = new T.FogExp2(0x000510, 0.006);
-    camera = new T.PerspectiveCamera(FOV, 1, 0.1, 1000);
-    controls = new T.OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true; controls.dampingFactor = 0.06; controls.enablePan = false;
-    controls.minDistance = 8; controls.maxDistance = 140; controls.minPolarAngle = 0.3; controls.maxPolarAngle = 1.3;
-    controls.rotateSpeed = 0.6;
+    scene = new T.Scene();
+    if (T.RoomEnvironment) { var pm = new T.PMREMGenerator(renderer); scene.environment = pm.fromScene(new T.RoomEnvironment(), 0.04).texture; }
+    camera = new T.PerspectiveCamera(FOV, 1, 0.5, 600);
+    scene.add(new T.HemisphereLight(0xfff8ee, 0xd8c8ad, 0.55));
+    var key = new T.DirectionalLight(0xfff1dc, 1.15); key.position.set(6, 44, 10); key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024); key.shadow.radius = 14; var sc = key.shadow.camera; sc.left = sc.bottom = -34; sc.right = sc.top = 34; sc.near = 5; sc.far = 100; key.shadow.bias = -0.0005;
+    scene.add(key);
+    var fill = new T.DirectionalLight(0xe8eeff, 0.35); fill.position.set(-20, 12, -10); scene.add(fill);
+    var ground = new T.Mesh(new T.PlaneGeometry(300, 300), new T.ShadowMaterial({ opacity: 0.08 }));
+    ground.rotation.x = -Math.PI / 2; ground.position.y = -9; ground.receiveShadow = true; scene.add(ground);
 
-    scene.add(new T.AmbientLight(0xffffff, 0.45));
-    var cl = new T.PointLight(0x00f3ff, 2, 120); cl.position.set(0, 4, 0); scene.add(cl);
-    var dl = new T.DirectionalLight(0xffffff, 0.8); dl.position.set(20, 50, 20); scene.add(dl);
-
-    buildGalaxy(); buildBase(); buildMala(); buildLabels();
+    buildMala(); buildOverlay();
     resize();
-    camera.position.copy(overviewPos()); controls.target.set(0, 0, 0); controls.update();
-    malaGroup.rotation.y = Math.PI; // 初始：第 108 顆（及佛頭珠）在後方，從前方看佛頭珠位於其上方
-    applyTargets(true);
+    camera.position.copy(overviewPos()); camTarget.copy(overviewTarget()); camera.lookAt(camTarget);
+    malaGroup.rotation.y = REST; // 第 108 顆在後方，佛頭珠在其外側，畫面上位於其上方
 
     var el = renderer.domElement;
     el.addEventListener("pointermove", onMove); el.addEventListener("pointerdown", onDown);
     el.addEventListener("pointerup", onUp); el.addEventListener("pointerleave", function () { setHover(null); });
-    el.addEventListener("pointercancel", function () { down = null; userDrag = false; });
+    el.addEventListener("pointercancel", function () { down = null; });
     window.addEventListener("resize", resize);
     if (window.ResizeObserver) new ResizeObserver(resize).observe(host);
     built = true;
@@ -70,253 +105,198 @@
     return true;
   };
 
-  function buildGalaxy() {
-    galaxyGroup = new T.Group(); galaxyGroup.position.y = -9; scene.add(galaxyGroup);
-    var N = 7000, pos = new Float32Array(N * 3), col = new Float32Array(N * 3), i, c = new T.Color();
-    for (i = 0; i < N; i++) {
-      var arm = i % 3, r = Math.pow(Math.random(), 0.7) * 150 + 6, ang = arm * TAU / 3 + r * 0.045 + (Math.random() - .5) * (0.9 - r / 220);
-      var spread = (Math.random() - .5) * (3 + r * 0.05);
-      pos[i * 3] = Math.cos(ang) * r + (Math.random() - .5) * 6; pos[i * 3 + 1] = spread * (1 - r / 190); pos[i * 3 + 2] = Math.sin(ang) * r + (Math.random() - .5) * 6;
-      var m = Math.random(); if (r < 30) c.setRGB(1, 0.8 + m * 0.2, 0.6 + m * 0.2); else if (m < 0.25) c.setRGB(0.85, 0.7, 1); else c.setRGB(0.5 + m * 0.4, 0.8 + m * 0.2, 1);
-      col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
-    }
-    var g = new T.BufferGeometry(); g.setAttribute("position", new T.BufferAttribute(pos, 3)); g.setAttribute("color", new T.BufferAttribute(col, 3));
-    galaxyGroup.add(new T.Points(g, new T.PointsMaterial({ map: glowTexture(), size: 1.1, vertexColors: true, transparent: true, opacity: 0.85, blending: T.AdditiveBlending, depthWrite: false })));
-    var core = new T.Sprite(new T.SpriteMaterial({ map: glowTexture(), color: 0x6a5cff, transparent: true, opacity: 0.45, blending: T.AdditiveBlending, depthWrite: false }));
-    core.scale.set(110, 110, 1); galaxyGroup.add(core);
-    var core2 = new T.Sprite(new T.SpriteMaterial({ map: glowTexture(), color: 0xffc58a, transparent: true, opacity: 0.4, blending: T.AdditiveBlending, depthWrite: false }));
-    core2.scale.set(34, 34, 1); galaxyGroup.add(core2);
-    // 遠景散星
-    var M = 1500, p2 = new Float32Array(M * 3);
-    for (i = 0; i < M; i++) { var u = Math.random() * TAU, v = Math.acos(2 * Math.random() - 1), rr = 260 + Math.random() * 200; p2[i * 3] = rr * Math.sin(v) * Math.cos(u); p2[i * 3 + 1] = rr * Math.cos(v); p2[i * 3 + 2] = rr * Math.sin(v) * Math.sin(u); }
-    var g2 = new T.BufferGeometry(); g2.setAttribute("position", new T.BufferAttribute(p2, 3));
-    scene.add(new T.Points(g2, new T.PointsMaterial({ map: glowTexture(), size: 2.6, color: 0xcfe8ff, transparent: true, opacity: 0.7, sizeAttenuation: true, blending: T.AdditiveBlending, depthWrite: false, fog: false })));
-  }
-
-  function buildBase() { // 全息投影底座：同心環＋放射線
-    baseGroup = new T.Group(); baseGroup.position.y = -11; scene.add(baseGroup);
-    [[R + 3, R + 3.25, .3], [R + 7, R + 7.15, .18], [R + 12, R + 12.1, .1], [R - 4, R - 3.9, .16]].forEach(function (a) {
-      var m = new T.Mesh(new T.RingGeometry(a[0], a[1], 128), new T.MeshBasicMaterial({ color: 0x00f3ff, transparent: true, opacity: a[2], side: T.DoubleSide, blending: T.AdditiveBlending, depthWrite: false }));
-      m.rotation.x = -Math.PI / 2; baseGroup.add(m);
-    });
-    var pts = []; for (var i = 0; i < 36; i++) { var a = i / 36 * TAU; pts.push(new T.Vector3(Math.cos(a) * (R - 4), 0, Math.sin(a) * (R - 4)), new T.Vector3(Math.cos(a) * (R + 12), 0, Math.sin(a) * (R + 12))); }
-    baseGroup.add(new T.LineSegments(new T.BufferGeometry().setFromPoints(pts), new T.LineBasicMaterial({ color: 0x00f3ff, transparent: true, opacity: 0.07, blending: T.AdditiveBlending, depthWrite: false })));
-  }
-
   function buildMala() {
-    malaGroup = new T.Group(); scene.add(malaGroup);
-    var gtex = glowTexture();
-    var geoR = new T.IcosahedronGeometry(0.55, 2), geoRW = new T.IcosahedronGeometry(0.55, 1);
-    var geoM = new T.IcosahedronGeometry(0.72, 2), geoMW = new T.IcosahedronGeometry(0.72, 1);
+    floatGroup = new T.Group(); scene.add(floatGroup);
+    malaGroup = new T.Group(); floatGroup.add(malaGroup);
+    var bm = bodhiMaps(), ag = agateMap(), Y = new T.Vector3(0, 1, 0);
+    var geoB = new T.SphereGeometry(RB, 32, 20), geoS = new T.SphereGeometry(RS, 32, 20);
+    var agate = new T.MeshPhysicalMaterial({ map: ag, roughness: 0.16, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.06, envMapIntensity: 0.9 });
     for (var n = 1; n <= 108; n++) {
-      var b = KM.BEADS[n], th = TAU * n / 108, grp = new T.Group();
-      var tint = b.spacer ? 0xff2a2a : b.term ? ZC[b.z] : 0x2a6cff;
-      var core = new T.Mesh(b.spacer ? geoM : geoR, new T.MeshPhysicalMaterial({ color: b.spacer ? 0x8a0a0a : 0x0a3acc, emissive: tint, emissiveIntensity: 0.5, transparent: true, opacity: 0.85, roughness: 0.1, metalness: 0.8, clearcoat: 1 }));
-      var wire = new T.Mesh(b.spacer ? geoMW : geoRW, new T.MeshBasicMaterial({ color: b.spacer ? 0xff5555 : tint, wireframe: true, transparent: true, opacity: 0.35, blending: T.AdditiveBlending, depthWrite: false }));
-      wire.scale.setScalar(1.08);
-      var glow = new T.Sprite(new T.SpriteMaterial({ map: gtex, color: tint, transparent: true, opacity: 0.35, blending: T.AdditiveBlending, depthWrite: false }));
-      glow.scale.setScalar(b.spacer ? 5 : 3.6);
-      grp.add(core, wire, glow);
-      grp.position.set(Math.sin(th) * R, 0, Math.cos(th) * R);
-      malaGroup.add(grp);
-      var o = { n: n, grp: grp, core: core, wire: wire, glow: glow, spacer: b.spacer, z: b.z, assigned: !!b.term, r: (b.spacer ? 0.72 : 0.55) * 1.08,
-        cur: { op: 0.85, em: 0.5, wo: 0.35, go: 0.35 }, tgt: { op: 0.85, em: 0.5, wo: 0.35, go: 0.35 }, sc: 1 };
+      var b = KM.BEADS[n], th = TAU * n / 108, mat;
+      if (b.spacer) mat = agate;
+      else {
+        mat = new T.MeshStandardMaterial({ map: bm.map, bumpMap: bm.bump, bumpScale: 0.025, roughness: 0.5, metalness: 0, envMapIntensity: 0.55 });
+        // 已配置：略帶蜜色（盤玩後的色澤）；待配置：較淺淡、低調
+        if (b.term) mat.color.setHSL(0.09, 0.5, rnd(0.74, 0.8)).convertSRGBToLinear(); else mat.color.setHSL(0.1, 0.18, 0.96).convertSRGBToLinear();
+      }
+      var m = new T.Mesh(b.spacer ? geoS : geoB, mat); m.castShadow = true;
+      m.position.set(Math.sin(th) * R, 0, Math.cos(th) * R);
+      var tan = new T.Vector3(Math.cos(th), 0, -Math.sin(th));        // 孔眼沿串繩方向
+      m.quaternion.setFromUnitVectors(Y, tan);
+      m.rotateY(rnd(0, TAU));
+      malaGroup.add(m);
+      var o = { n: n, mesh: m, spacer: b.spacer, z: b.z, assigned: !!b.term, r: b.spacer ? RS : RB };
       beads[n] = o;
-      if (b.term || b.spacer) cands.push({ act: b.spacer ? "spacer:" + b.z : "bead:" + n, obj: grp, rad: b.spacer ? 1.05 : 0.85, bead: o });
+      if (b.term || b.spacer) cands.push({ act: b.spacer ? "spacer:" + b.z : "bead:" + n, obj: m, rad: (b.spacer ? RS : RB) * 1.15, bead: o });
     }
-    // 串繩（連續圓環，貫穿所有珠心）
-    stringMesh = new T.Mesh(new T.TorusGeometry(R, 0.06, 8, 256), new T.MeshBasicMaterial({ color: 0xb9f6ff, transparent: true, opacity: 0.75, blending: T.AdditiveBlending, depthWrite: false }));
-    stringMesh.rotation.x = Math.PI / 2; malaGroup.add(stringMesh);
-    var sg = new T.Mesh(new T.TorusGeometry(R, 0.22, 8, 192), new T.MeshBasicMaterial({ color: 0x00f3ff, transparent: true, opacity: 0.12, blending: T.AdditiveBlending, depthWrite: false }));
-    sg.rotation.x = Math.PI / 2; malaGroup.add(sg);
-    for (var i = 0; i < 128; i++) { var a = i / 128 * TAU; ringLocal.push(new T.Vector3(Math.sin(a) * R, 0, Math.cos(a) * R)); }
+    // 串繩：深紅絲繩，連續貫穿所有珠心
+    var cordMat = new T.MeshStandardMaterial({ color: new T.Color(0x6e2218).convertSRGBToLinear(), roughness: 0.75, metalness: 0 });
+    cord = new T.Mesh(new T.TorusGeometry(R, 0.075, 10, 480), cordMat); cord.rotation.x = Math.PI / 2; cord.castShadow = true; malaGroup.add(cord);
+    for (var i = 0; i < 160; i++) { var a = i / 160 * TAU; ringLocal.push(new T.Vector3(Math.sin(a) * R, 0, Math.cos(a) * R)); }
 
-    // 佛頭珠：在第 108 顆（local 角度 0，座標 (0,0,R)）正上方；飾穗由佛頭珠向外垂下
-    var gold = new T.MeshPhysicalMaterial({ color: 0xffaa00, emissive: 0x885500, emissiveIntensity: 0.6, roughness: 0.1, metalness: 0.9, clearcoat: 1 });
-    guru = new T.Group(); guru.position.set(0, 3.5, R);
-    guru.add(new T.Mesh(new T.IcosahedronGeometry(1.35, 2), gold));
-    var gw = new T.Mesh(new T.IcosahedronGeometry(1.35, 1), new T.MeshBasicMaterial({ color: 0xffe08a, wireframe: true, transparent: true, opacity: 0.45, blending: T.AdditiveBlending, depthWrite: false })); gw.scale.setScalar(1.1); guru.add(gw);
-    var band = new T.Mesh(new T.TorusGeometry(1.36, 0.09, 8, 48), gold); band.rotation.x = Math.PI / 2; guru.add(band);
-    var cap = new T.Mesh(new T.ConeGeometry(0.55, 0.9, 16), gold); cap.position.y = 1.7; guru.add(cap);
-    var gg = new T.Sprite(new T.SpriteMaterial({ map: gtex, color: 0xffc040, transparent: true, opacity: 0.5, blending: T.AdditiveBlending, depthWrite: false })); gg.scale.setScalar(7); guru.add(gg);
-    malaGroup.add(guru);
-    var stem = new T.Mesh(new T.CylinderGeometry(0.07, 0.07, 1.4, 8), new T.MeshBasicMaterial({ color: 0xb9f6ff, transparent: true, opacity: 0.8, blending: T.AdditiveBlending })); stem.position.set(0, 1.45, R); malaGroup.add(stem);
-    cands.push({ act: "part:head", obj: guru, rad: 1.7 });
-    // 飾穗：繫於佛頭珠頂端，向上（遠離念珠）展開，任何視角都不遮住第 108 顆
-    tassel = new T.Group(); tassel.position.set(0, 3.5 + 2.15, R);
-    tassel.add(new T.Mesh(new T.SphereGeometry(0.3, 12, 12), gold));
-    var red = new T.MeshPhysicalMaterial({ color: 0xaa1111, emissive: 0xff2a2a, emissiveIntensity: 0.7, transparent: true, opacity: 0.9, roughness: 0.2, metalness: 0.5 });
-    var body = new T.Mesh(new T.ConeGeometry(0.55, 1.8, 16), red); body.rotation.z = Math.PI; body.position.y = 1.1; tassel.add(body);
-    var tp = []; for (var k = 0; k < 16; k++) { var ta = k / 16 * TAU; tp.push(new T.Vector3(Math.cos(ta) * 0.5, 2.0, Math.sin(ta) * 0.5), new T.Vector3(Math.cos(ta) * 1.1, 4.6, Math.sin(ta) * 1.1)); }
-    tassel.add(new T.LineSegments(new T.BufferGeometry().setFromPoints(tp), new T.LineBasicMaterial({ color: 0xff5a5a, transparent: true, opacity: 0.9, blending: T.AdditiveBlending })));
-    var tb = new T.Object3D(); tb.position.set(0, 2.3, 0); tassel.add(tb);
-    malaGroup.add(tassel);
-    cands.push({ act: "part:tassel", obj: tb, rad: 2.4 });
+    // 佛頭珠：在第 108 顆（local 角度 0 → (0,0,R)）外側，以短繩相連；靜止時第 108 顆在後方，佛頭珠在其上方
+    var gz = R + RB + RG + 0.18;
+    var gc = new T.Mesh(new T.CylinderGeometry(0.075, 0.075, gz - R, 10), cordMat); gc.rotation.x = Math.PI / 2; gc.position.set(0, 0, R + (gz - R) / 2); malaGroup.add(gc);
+    guru = new T.Mesh(new T.SphereGeometry(RG, 56, 40), agate); guru.position.set(0, 0, gz); guru.castShadow = true;
+    guru.quaternion.setFromUnitVectors(Y, new T.Vector3(0, 0, 1)); malaGroup.add(guru);
+    cands.push({ act: "part:head", obj: guru, rad: RG * 1.2 });
+    // 佛塔（佛頭珠上的小塔形件）
+    var brass = new T.MeshStandardMaterial({ color: new T.Color(0xb48a3c).convertSRGBToLinear(), roughness: 0.32, metalness: 0.85, envMapIntensity: 1 });
+    var prof = [[0, 0], [0.42, 0], [0.46, 0.08], [0.3, 0.22], [0.36, 0.34], [0.22, 0.5], [0.16, 0.72], [0.1, 0.86], [0, 0.92]].map(function (p) { return new T.Vector2(p[0], p[1]); });
+    stupa = new T.Mesh(new T.LatheGeometry(prof, 32), brass); stupa.castShadow = true;
+    stupa.rotation.x = Math.PI / 2; stupa.position.set(0, 0, gz + RG - 0.06); malaGroup.add(stupa);
+    // 飾穗：接在佛塔外端，向外伸出並略為下垂、隨風輕擺
+    tassel = new T.Group(); tassel.position.set(0, 0, gz + RG + 0.82); malaGroup.add(tassel);
+    var silk = new T.MeshStandardMaterial({ map: silkMap(), color: 0xffffff, roughness: 0.45, metalness: 0.05 });
+    var knot = new T.Mesh(new T.SphereGeometry(0.24, 20, 16), silk); tassel.add(knot);
+    var collar = new T.Mesh(new T.CylinderGeometry(0.27, 0.27, 0.42, 24), brass); collar.rotation.x = Math.PI / 2; collar.position.z = 0.34; tassel.add(collar);
+    // 穗身：內芯＋一束細絲線（InstancedMesh），末端自然散開
+    var bp = []; for (var j = 0; j <= 16; j++) { var u = j / 16; bp.push(new T.Vector2(0.15 + u * 0.16, u * 2.3)); }
+    var core = new T.Mesh(new T.LatheGeometry(bp, 32), silk); core.rotation.x = Math.PI / 2; core.position.z = 0.55; tassel.add(core);
+    var NS = 110, strandMat = new T.MeshStandardMaterial({ color: new T.Color(0x6e1210).convertSRGBToLinear(), roughness: 0.42, metalness: 0.05 });
+    var strands = new T.InstancedMesh(new T.CylinderGeometry(0.022, 0.022, 1, 5), strandMat, NS), mtx = new T.Matrix4(), q = new T.Quaternion(), Yv = new T.Vector3(0, 1, 0);
+    for (var si = 0; si < NS; si++) {
+      var sa = si / NS * TAU + rnd(-0.05, 0.05), r0 = 0.17 * Math.sqrt(Math.random()), r1 = 0.2 + Math.pow(Math.random(), 0.6) * 0.3, len = rnd(2.55, 2.85);
+      var p0 = new T.Vector3(Math.cos(sa) * r0, Math.sin(sa) * r0, 0.55), p1 = new T.Vector3(Math.cos(sa) * r1, Math.sin(sa) * r1, 0.55 + len);
+      var dir = p1.clone().sub(p0), L = dir.length(); q.setFromUnitVectors(Yv, dir.normalize());
+      mtx.compose(p0.clone().add(p1).multiplyScalar(0.5), q, new T.Vector3(1, L, 1)); strands.setMatrixAt(si, mtx);
+    }
+    strands.castShadow = true; tassel.add(strands);
+    tassel.rotation.x = 0.32;
+    tasselHit = new T.Object3D(); tasselHit.position.set(0, 0, 2.2); tassel.add(tasselHit);
+    cands.push({ act: "part:tassel", obj: tasselHit, rad: 1.6 });
   }
 
-  /* ---------- 文字入口（螢幕座標的 HTML 標籤＋引線） ---------- */
-  function buildLabels() {
-    function add(id, act, text, anchor, mode, off) { labelDefs.push({ id: id, act: act, text: text, anchor: anchor, mode: mode, off: off }); }
-    var ringPt = function (n) { return function (out) { var th = TAU * n / 108; return out.set(Math.sin(th) * R, 0, Math.cos(th) * R); }; };
-    var obj = function (o, dy) { return function (out) { o.getWorldPosition(out); out.y += dy || 0; return out; }; };
-    var world = function (fn) { return function (out) { fn(out); return malaGroup.localToWorld(out); }; };
-    add("head", "part:head", "佛頭珠", function (out) { return guru.getWorldPosition(out); }, "out", 44);
-    add("tassel", "part:tassel", "佛頭珠飾穗", function (out) { tassel.getWorldPosition(out); out.y += 2.6; return out; }, "out", 44);
+  /* ---------- 疊層：文字入口、引線、標記 ---------- */
+  function buildOverlay() {
+    function add(id, act, text, anchor, dir, off) { labelDefs.push({ id: id, act: act, text: text, anchor: anchor, dir: dir, off: off }); }
+    var ringW = function (n, rr) { return function (out) { var th = TAU * n / 108; out.set(Math.sin(th) * (rr || R), 0, Math.cos(th) * (rr || R)); return malaGroup.localToWorld(out); }; };
+    add("head", "part:head", "佛頭珠", function (o) { return guru.getWorldPosition(o); }, [-1, -0.2], 40);
+    add("tassel", "part:tassel", "佛頭珠飾穗", function (o) { return tasselHit.getWorldPosition(o); }, [1, -0.3], 40);
     D.zones.forEach(function (zn, zi) {
-      add("sp" + zi, "spacer:" + zi, "隔珠" + "一二三四".charAt(zi) + "・" + zn.name, world(ringPt(zn.spacerNo)), "out", 40);
-      add("zn" + zi, "zone:" + zi, zn.name + " " + zn.first + "–" + zn.last, world(ringPt(zi * 27 + 13.5)), "out", 52);
+      add("sp" + zi, "spacer:" + zi, "隔珠" + "一二三四".charAt(zi) + "・" + zn.name, ringW(zn.spacerNo), zi === 3 ? [1, 0.5] : null, 34);
+      add("zn" + zi, "zone:" + zi, zn.name + "　" + zn.first + "–" + zn.last, ringW(zi * 27 + 13.5), null, 48);
     });
-    add("bead", "part:bead", "普通數珠 104 顆", world(ringPt(40)), "in", 80);
-    add("string", "part:string", "串繩", world(ringPt(67.5)), "in", 80);
+    add("bead", "part:bead", "普通數珠 104 顆", ringW(40), "in", 70);
+    add("string", "part:string", "串繩", ringW(67.5), "in", 70);
     labelDefs.forEach(function (d) {
-      var b = document.createElement("button"); b.type = "button"; b.className = "lab"; b.textContent = d.text; b.setAttribute("data-act", d.act); b.setAttribute("aria-label", d.text);
+      var b = document.createElement("button"); b.type = "button"; b.className = "lab"; b.textContent = d.text; b.setAttribute("data-act", d.act);
       b.addEventListener("click", function () { KM.go(d.act); });
       labelsBox.appendChild(b); d.el = b;
-      var p = document.createElementNS("http://www.w3.org/2000/svg", "path"); leaders.appendChild(p); d.path = p;
+      var p = document.createElementNS(SVGNS, "path"); leaders.appendChild(p); d.path = p;
     });
-    mainLeader = document.createElementNS("http://www.w3.org/2000/svg", "path"); mainLeader.setAttribute("class", "main"); mainLeader.style.opacity = 0; leaders.appendChild(mainLeader);
+    marks = document.createElementNS(SVGNS, "g"); marks.setAttribute("class", "marks"); leaders.appendChild(marks);
   }
 
   /* ---------- 版面 ---------- */
-  function overviewPos() {
-    var f = Math.max(1, 1.5 / aEff());
-    return new T.Vector3(0, 30 * f, 60 * f);
-  }
+  function overviewPos() { var f = Math.max(1, 1.42 / aEff()); return new T.Vector3(0, 46 * f, 72 * f); }
+  function overviewTarget() { return new T.Vector3(0, -1, -2.5); }
   function resize() {
     if (!renderer) return;
     W = host.clientWidth || 800; H = host.clientHeight || 600; narrow = W < 760;
     var panel = document.getElementById("panel");
-    var pw = (!narrow && panel) ? panel.offsetWidth + 32 : 0;
-    offX = pw / 2; offY = narrow ? 0 : 55;
+    offX = (!narrow && panel) ? (panel.offsetWidth + 32) / 2 : 0; offY = narrow ? 0 : 50;
     renderer.setSize(W, H);
-    camera.aspect = W / H;
-    camera.setViewOffset(W, H, offX, offY, W, H);
-    camera.updateProjectionMatrix();
+    camera.aspect = W / H; camera.setViewOffset(W, H, offX, offY, W, H); camera.updateProjectionMatrix();
     labelsBox.style.display = narrow ? "none" : "";
-    if (built && !focused) { camera.position.copy(overviewPos()); }
+    if (built && !selected) { G.killTweensOf(camera.position); G.killTweensOf(camTarget); camera.position.copy(overviewPos()); camTarget.copy(overviewTarget()); }
   }
 
-  /* ---------- 狀態目標（高亮、淡化） ---------- */
-  function applyTargets(instant) {
-    var s = selected, zone = null, chSet = null, selN = 0;
-    if (s) {
-      if (s.k === "bead") { zone = KM.BEADS[s.n].z; selN = s.n; }
-      else if (s.k === "spacer") { zone = s.z; selN = D.zones[s.z].spacerNo; }
-      else if (s.k === "zone") zone = s.z;
-      else if (s.k === "chapter") { chSet = {}; KM.zonesOfChapter(s.id).forEach(function (zn) { zn.terms.forEach(function (_, i) { chSet[zn.first + i] = 1; }); }); }
-    }
-    for (var n = 1; n <= 108; n++) {
-      var b = beads[n], t = b.tgt;
-      if (b.spacer) { t.op = 0.95; t.em = 0.9; t.wo = 0.55; t.go = 0.6; }
-      else if (b.assigned) { t.op = 0.88; t.em = 0.75; t.wo = 0.4; t.go = 0.4; }
-      else { t.op = 0.3; t.em = 0.14; t.wo = 0.12; t.go = 0.05; }
-      var dim = false;
-      if (zone != null) dim = b.z !== zone; else if (chSet) dim = !chSet[n];
-      if (dim) { t.op *= 0.25; t.em *= 0.3; t.wo *= 0.3; t.go *= 0.2; }
-      if (chSet && chSet[n]) { t.em = 1.6; t.go = 0.95; t.wo = 0.7; }
-      if (n === selN) { t.em = 1.6; t.go = 1; t.wo = 0.8; }
-      if (instant) { b.cur.op = t.op; b.cur.em = t.em; b.cur.wo = t.wo; b.cur.go = t.go; }
-    }
-  }
-  function lerpBeads(dt) {
-    var k = 1 - Math.exp(-dt * 6);
-    for (var n = 1; n <= 108; n++) {
-      var b = beads[n], c = b.cur, t = b.tgt;
-      c.op += (t.op - c.op) * k; c.em += (t.em - c.em) * k; c.wo += (t.wo - c.wo) * k; c.go += (t.go - c.go) * k;
-      b.core.material.opacity = c.op; b.core.material.emissiveIntensity = c.em; b.wire.material.opacity = c.wo; b.glow.material.opacity = c.go;
-      b.grp.position.y = (paused || reduce) ? 0 : Math.sin(tt * 1.6 + n * 0.35) * 0.16 * bobAmp;
-    }
-  }
-
-  /* ---------- 選取 → 轉動與飛近 ---------- */
+  /* ---------- 選取 → 緩轉與拉近 ---------- */
   var FOCUS_KINDS = { bead: 1, spacer: 1, zone: 1 };
   API.setSelection = function (sel) {
     if (!built) return;
-    var prev = selected; selected = sel;
+    selected = sel;
     focused = !!sel && (FOCUS_KINDS[sel.k] || (sel.k === "part" && (sel.id === "head" || sel.id === "tassel")));
-    applyTargets();
-    scaleFor(prev, 1); if (sel && (sel.k === "bead" || sel.k === "spacer")) scaleFor(sel, 1.3);
-    var dur = reduce ? 0.01 : 1.9, camTo, tgtTo, rotTo = null;
-    var f = Math.max(1, 1.45 / aEff());
+    var dur = reduce ? 0.01 : 1.6, camTo, tgtTo, rotTo = REST;
+    var f = Math.max(1, 1.5 / aEff());
     if (sel && sel.k === "bead") rotTo = -TAU * sel.n / 108;
     else if (sel && sel.k === "spacer") rotTo = -TAU * D.zones[sel.z].spacerNo / 108;
     else if (sel && sel.k === "zone") rotTo = -TAU * (D.zones[sel.z].first + 13) / 108;
     else if (sel && sel.k === "part" && (sel.id === "head" || sel.id === "tassel")) rotTo = 0;
-    if (sel && (sel.k === "bead" || sel.k === "spacer")) { camTo = new T.Vector3(0, 6.5, R + 13); tgtTo = new T.Vector3(0, 0, R); }
-    else if (sel && sel.k === "zone") { camTo = new T.Vector3(0, 16 * f, R + 28 * f); tgtTo = new T.Vector3(0, 0, R - 5); }
-    else if (sel && sel.k === "part" && (sel.id === "head" || sel.id === "tassel")) { camTo = new T.Vector3(0, 11, R + 20); tgtTo = new T.Vector3(0, 5.5, R); }
-    else { camTo = overviewPos(); tgtTo = new T.Vector3(0, 0, 0); }
-    G.killTweensOf(camera.position); G.killTweensOf(controls.target); if (rotTween) rotTween.kill();
-    controls.enabled = false;
-    if (rotTo != null) rotTween = G.to(malaGroup.rotation, { y: wrapNear(rotTo, malaGroup.rotation.y), duration: dur, ease: "power3.inOut" });
-    G.to(controls.target, { x: tgtTo.x, y: tgtTo.y, z: tgtTo.z, duration: dur, ease: "power3.inOut" });
-    G.to(camera.position, { x: camTo.x, y: camTo.y, z: camTo.z, duration: dur, ease: "power3.inOut", onComplete: function () { controls.enabled = true; } });
+    if (sel && (sel.k === "bead" || sel.k === "spacer")) { camTo = new T.Vector3(0, 6.5, R + 10.5); tgtTo = new T.Vector3(0, 0, R); }
+    else if (sel && sel.k === "zone") { camTo = new T.Vector3(0, 20 * f, R + 26 * f); tgtTo = new T.Vector3(0, 0, R - 6); }
+    else if (sel && sel.k === "part" && (sel.id === "head" || sel.id === "tassel")) { camTo = new T.Vector3(0, 10, R + 20); tgtTo = new T.Vector3(0, -0.6, R + 3.2); }
+    else { camTo = overviewPos(); tgtTo = overviewTarget(); }
+    G.killTweensOf(camera.position); G.killTweensOf(camTarget); if (rotTween) rotTween.kill();
+    rotTween = G.to(malaGroup.rotation, { y: wrapNear(rotTo, malaGroup.rotation.y), duration: dur, ease: "power2.inOut" });
+    G.to(camTarget, { x: tgtTo.x, y: tgtTo.y, z: tgtTo.z, duration: dur, ease: "power2.inOut" });
+    G.to(camera.position, { x: camTo.x, y: camTo.y, z: camTo.z, duration: dur, ease: "power2.inOut" });
     quoteEl.classList.toggle("hide", !!focused && !narrow);
     labelsBox.classList.toggle("hide", !!focused);
     buildFocusUI();
   };
-  function scaleFor(s, v) {
-    if (!s || (s.k !== "bead" && s.k !== "spacer")) return;
-    var n = s.k === "bead" ? s.n : D.zones[s.z].spacerNo;
-    G.to(beads[n].grp.scale, { x: v, y: v, z: v, duration: v > 1 ? 1 : 0.5, ease: v > 1 ? "elastic.out(1,0.4)" : "power2.out" });
-  }
 
-  /* ---------- 聚焦時的文字：名稱、章名引線 ---------- */
-  var fanItems = [], selInfo = null, fanPaths = [];
+  /* ---------- 聚焦文字：名稱、章名引線 ---------- */
+  var fanItems = [], selInfo = null, focusPaths = [];
   function buildFocusUI() {
-    fanBox.innerHTML = ""; fanPaths.forEach(function (p) { p.remove(); }); fanPaths = []; fanItems = []; selInfo = null;
-    calloutEl.classList.remove("on"); mainLeader.style.opacity = 0;
+    fanBox.innerHTML = ""; focusPaths.forEach(function (p) { p.remove(); }); focusPaths = []; fanItems = []; selInfo = null;
+    calloutEl.classList.remove("on");
     var s = selected; if (!s || (s.k !== "bead" && s.k !== "spacer")) return;
     var n, zn, name, sub;
-    if (s.k === "bead") { var b = KM.BEADS[s.n]; n = s.n; zn = D.zones[b.z]; name = KM.termById[b.term].name; sub = zn.name + "區 第 " + b.pos + "／26 珠 ・ 環上 " + n + "／108"; }
-    else { zn = D.zones[s.z]; n = zn.spacerNo; name = "隔珠" + "一二三四".charAt(s.z) + "：" + zn.spacerTitle; sub = "環上 " + n + "／108 ・ 代表其前 26 顆數珠"; }
+    if (s.k === "bead") { var b = KM.BEADS[s.n]; n = s.n; zn = D.zones[b.z]; name = KM.termById[b.term].name; sub = zn.name + "區　第 " + b.pos + "／26 珠　環上 " + n + "／108"; }
+    else { zn = D.zones[s.z]; n = zn.spacerNo; name = "隔珠" + "一二三四".charAt(s.z) + "：" + zn.spacerTitle; sub = "環上 " + n + "／108　代表其前 26 顆數珠"; }
     calloutEl.innerHTML = "<b>" + KM.esc(name) + "</b><small>" + KM.esc(sub) + "</small>";
     selInfo = { n: n };
-    var cp = document.createElementNS("http://www.w3.org/2000/svg", "path"); leaders.appendChild(cp); selInfo.cpath = cp; fanPaths.push(cp);
+    var cp = document.createElementNS(SVGNS, "path"); leaders.appendChild(cp); selInfo.cpath = cp; focusPaths.push(cp);
     if (narrow) return;
     zn.chapters.forEach(function (c) {
-      var ch = KM.chById[c.id], t = "第" + ch.no + "章 " + ch.title + (c.partial ? "（部分內容）" : "");
-      var b2 = document.createElement("button"); b2.type = "button"; b2.className = "fl"; b2.textContent = t; b2.setAttribute("aria-label", t);
+      var ch = KM.chById[c.id], t = "第" + ch.no + "章　" + ch.title + (c.partial ? "（部分內容）" : "");
+      var b2 = document.createElement("button"); b2.type = "button"; b2.className = "fl"; b2.textContent = t;
       b2.addEventListener("click", function () { KM.go("chapter:" + ch.id); });
       fanBox.appendChild(b2);
-      var p = document.createElementNS("http://www.w3.org/2000/svg", "path"); leaders.appendChild(p); fanPaths.push(p);
+      var p = document.createElementNS(SVGNS, "path"); leaders.appendChild(p); focusPaths.push(p);
       fanItems.push({ el: b2, path: p });
     });
   }
 
+  function circle(x, y, r, cls) { var c = document.createElementNS(SVGNS, "circle"); c.setAttribute("cx", x.toFixed(1)); c.setAttribute("cy", y.toFixed(1)); c.setAttribute("r", r.toFixed(1)); c.setAttribute("class", cls); marks.appendChild(c); }
   function updateOverlays() {
-    var o = toScreen(tmp.set(0, 0, 0)), ctr = { x: o.x, y: o.y };
+    var ctr = toScreen(malaGroup.getWorldPosition(tmp));
     if (!narrow && !focused) {
       labelDefs.forEach(function (d) {
-        d.anchor(tmp); var a = toScreen(tmp), dx = a.x - ctr.x, dy = a.y - ctr.y, m = Math.hypot(dx, dy) || 1; dx /= m; dy /= m;
-        if (d.mode === "in") { dx = -dx; dy = -dy; }
-        if (d.id === "head" || d.id === "tassel") { dx = d.id === "head" ? -1 : 1; dy = d.id === "head" ? 0.1 : -0.15; }
-        if (d.id === "sp3") { dx = 0.8; dy = 0.6; } // 第四隔珠：標籤放右下，避開正上方的佛頭珠
+        d.anchor(tmp); var a = toScreen(tmp), dx, dy;
+        if (Array.isArray(d.dir)) { dx = d.dir[0]; dy = d.dir[1]; }
+        else { dx = a.x - ctr.x; dy = a.y - ctr.y; if (d.dir === "in") { dx = -dx; dy = -dy; } }
+        var m = Math.hypot(dx, dy) || 1; dx /= m; dy /= m;
         var lx = a.x + dx * d.off, ly = a.y + dy * d.off, tx = dx > 0.35 ? "0" : dx < -0.35 ? "-100%" : "-50%";
         d.el.style.transform = "translate(" + lx.toFixed(1) + "px," + ly.toFixed(1) + "px) translate(" + tx + ",-50%)";
-        var ex = dx > 0.35 ? lx : dx < -0.35 ? lx : lx, ey = ly + (dy > 0.5 ? -9 : dy < -0.5 ? 9 : 0);
-        d.path.setAttribute("d", "M" + a.x.toFixed(1) + " " + a.y.toFixed(1) + " L" + (dx > 0.35 ? lx - 2 : dx < -0.35 ? lx + 2 : lx).toFixed(1) + " " + ey.toFixed(1));
+        var r0 = (d.id === "head" ? RG : d.id === "tassel" ? 0.4 : RS) * pxPerUnit(tmp) + 3;
+        d.path.setAttribute("d", "M" + (a.x + dx * r0).toFixed(1) + " " + (a.y + dy * r0).toFixed(1) + " L" + (lx - dx * 4).toFixed(1) + " " + (ly - dy * 4).toFixed(1));
         d.path.style.display = "";
       });
     } else labelDefs.forEach(function (d) { d.path.style.display = "none"; });
 
+    // 標記：選取圈、區段弧、章節對應點
+    marks.innerHTML = "";
+    var s = selected, zone = null, chSet = null;
+    if (s && s.k === "zone") zone = s.z;
+    if (s && s.k === "chapter") { chSet = []; KM.zonesOfChapter(s.id).forEach(function (zn) { zn.terms.forEach(function (_, i) { chSet.push(zn.first + i); }); }); }
+    if (zone != null) {
+      var zn = D.zones[zone], pts = [];
+      for (var n = zn.first; n <= zn.spacerNo; n++) { var th = TAU * n / 108; tmp.set(Math.sin(th) * (R + 1.5), 0, Math.cos(th) * (R + 1.5)); malaGroup.localToWorld(tmp); var q = toScreen(tmp); pts.push(q.x.toFixed(1) + " " + q.y.toFixed(1)); }
+      var arc = document.createElementNS(SVGNS, "path"); arc.setAttribute("d", "M" + pts.join(" L")); arc.setAttribute("class", "zarc"); marks.appendChild(arc);
+    }
+    if (chSet) chSet.forEach(function (n) { var th = TAU * n / 108; tmp.set(Math.sin(th) * (R + 1.3), 0, Math.cos(th) * (R + 1.3)); malaGroup.localToWorld(tmp); var q = toScreen(tmp); circle(q.x, q.y, 3.2, "chdot"); });
+    if (hover && hover.bead && !(selInfo && selInfo.n === hover.bead.n)) { hover.obj.getWorldPosition(tmp); var h = toScreen(tmp); circle(h.x, h.y, hover.rad * pxPerUnit(tmp) + 4, "hov"); }
+
     if (selInfo) {
-      beads[selInfo.n].grp.getWorldPosition(tmp); var s = toScreen(tmp), cx = s.x, cy = s.y;
+      beads[selInfo.n].mesh.getWorldPosition(tmp); var sp = toScreen(tmp), cx = sp.x, cy = sp.y, rr = beads[selInfo.n].r * pxPerUnit(tmp);
+      circle(cx, cy, rr + 6, "selc");
       calloutEl.classList.add("on");
-      calloutEl.style.transform = narrow ? "translate(" + cx.toFixed(1) + "px," + (cy - 46).toFixed(1) + "px) translate(-50%,-100%)" : "translate(" + (cx - 40).toFixed(1) + "px," + (cy - 86).toFixed(1) + "px) translate(-100%,-100%)";
-      calloutEl.style.textAlign = narrow ? "center" : "left";
-      if (!narrow) selInfo.cpath.setAttribute("d", "M" + (cx - 14) + " " + (cy - 18) + " L" + (cx - 38) + " " + (cy - 82));
-      fanItems.forEach(function (it, i) {
-        var x = cx - 120, y = cy + 78 + i * 31;
-        it.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(0,-50%)";
-        it.path.setAttribute("d", "M" + (x - 4) + " " + y + " C" + (x - 70) + " " + y + " " + (cx - 30 + i * 8) + " " + (cy + 50) + " " + cx + " " + (cy + 16));
-      });
-      if (!narrow) {
-        var pr = document.getElementById("panel").getBoundingClientRect(), sr = stage.getBoundingClientRect();
-        var px = pr.left - sr.left, py = pr.top - sr.top + 64;
-        mainLeader.setAttribute("d", "M" + (cx + 16) + " " + cy + " C" + (cx + 90) + " " + cy + " " + (px - 90) + " " + py + " " + px + " " + py);
-        mainLeader.style.opacity = 1;
+      if (narrow) {
+        calloutEl.style.transform = "translate(" + cx.toFixed(1) + "px," + (cy - rr - 18).toFixed(1) + "px) translate(-50%,-100%)"; calloutEl.style.textAlign = "center";
+        selInfo.cpath.setAttribute("d", "");
+      } else {
+        calloutEl.style.transform = "translate(" + (cx - rr - 40).toFixed(1) + "px," + (cy - rr - 46).toFixed(1) + "px) translate(-100%,-100%)"; calloutEl.style.textAlign = "right";
+        selInfo.cpath.setAttribute("d", "M" + (cx - (rr + 6) * 0.7) + " " + (cy - (rr + 6) * 0.7) + " L" + (cx - rr - 36) + " " + (cy - rr - 44));
       }
+      fanItems.forEach(function (it, i) {
+        var x = cx - rr - 60, y = cy + rr + 40 + i * 32;
+        it.el.style.maxWidth = Math.max(150, x - 12).toFixed(0) + "px";
+        it.el.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px) translate(-100%,-50%)";
+        it.path.setAttribute("d", "M" + (x + 6) + " " + y + " L" + (x + 30) + " " + y + " L" + (cx - (rr + 6) * 0.7) + " " + (cy + (rr + 6) * 0.7));
+      });
     }
   }
 
@@ -326,72 +306,63 @@
     for (i = 0; i < cands.length; i++) {
       var c = cands[i]; c.obj.getWorldPosition(tmp); var s = toScreen(tmp);
       if (s.z > 1) continue;
-      var rp = Math.max(narrow ? 13 : 10, c.rad * pxPerUnit(tmp) * (c.bead ? c.obj.scale.x : 1)), d = Math.hypot(s.x - cx, s.y - cy);
+      var rp = Math.max(narrow ? 12 : 9, c.rad * pxPerUnit(tmp)), d = Math.hypot(s.x - cx, s.y - cy);
       if (d <= rp) { var sc = d / rp + s.z * 0.01; if (sc < bs) { bs = sc; best = c; } }
     }
     if (best) return best;
     var md = 1e9;
-    malaGroup.updateMatrixWorld();
-    for (i = 0; i < ringLocal.length; i++) { tmp.copy(ringLocal[i]).applyMatrix4(malaGroup.matrixWorld); var q = toScreen(tmp); if (q.z > 1) continue; md = Math.min(md, Math.hypot(q.x - cx, q.y - cy)); }
-    if (md < (narrow ? 12 : 9)) return { act: "part:string" };
+    for (i = 0; i < ringLocal.length; i++) { tmp.copy(ringLocal[i]); malaGroup.localToWorld(tmp); var q = toScreen(tmp); if (q.z > 1) continue; md = Math.min(md, Math.hypot(q.x - cx, q.y - cy)); }
+    if (md < (narrow ? 10 : 7)) return { act: "part:string" };
     return null;
   }
   function localXY(e) { var r = renderer.domElement.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
-  function setHover(c) {
-    if (hover && hover.obj && hover.obj !== (c && c.obj) && hover.bead && !(selected && selected.k !== "zone" && isSelBead(hover))) G.to(hover.obj.scale, { x: 1, y: 1, z: 1, duration: 0.3 });
-    hover = c;
-    if (c && c.bead && !isSelBead(c)) G.to(c.obj.scale, { x: 1.25, y: 1.25, z: 1.25, duration: 0.3, ease: "back.out(1.7)" });
-    renderer.domElement.style.cursor = c ? "pointer" : "grab";
-    crosshair.classList.toggle("active", !!c);
-  }
-  function isSelBead(c) { var s = selected; return !!(s && c.bead && ((s.k === "bead" && s.n === c.bead.n) || (s.k === "spacer" && D.zones[s.z].spacerNo === c.bead.n))); }
+  function setHover(c) { hover = c; renderer.domElement.style.cursor = c ? "pointer" : "default"; }
   function onMove(e) { if (down || e.pointerType !== "mouse") return; var p = localXY(e); setHover(pick(p.x, p.y)); }
-  function onDown(e) { down = { x: e.clientX, y: e.clientY, t: performance.now() }; userDrag = true; }
+  function onDown(e) { down = { x: e.clientX, y: e.clientY, t: performance.now() }; }
   function onUp(e) {
-    userDrag = false; if (!down) return;
+    if (!down) return;
     var moved = Math.hypot(e.clientX - down.x, e.clientY - down.y), dt = performance.now() - down.t; down = null;
-    if (moved > 6 || dt > 700) return;
+    if (moved > 8 || dt > 800) return;
     var p = localXY(e), c = pick(p.x, p.y); if (c) KM.go(c.act);
   }
 
-  /* ---------- 主迴圈 ---------- */
+  /* ---------- 主迴圈：微微飄動 ---------- */
   var clock = new T.Clock(), first = true;
   function loop() {
     requestAnimationFrame(loop);
     var dt = Math.min(0.05, clock.getDelta());
-    if (!paused && !reduce) { tt += dt; galaxyGroup.rotation.y += dt * 0.02; baseGroup.rotation.y -= dt * 0.05; }
-    var idle = !focused && !paused && !reduce && !hover && !userDrag;
-    spinV += ((idle ? 0.07 : 0) - spinV) * Math.min(1, dt * 2.5); if (paused || reduce) spinV = 0;
-    if (!(rotTween && rotTween.isActive())) malaGroup.rotation.y -= spinV * dt;
-    bobAmp += ((focused ? 0 : 1) - bobAmp) * Math.min(1, dt * 3);
-    lerpBeads(dt);
-    controls.update();
+    var still = paused || reduce;
+    if (!still) tt += dt;
+    var amp = focused ? 0.35 : 1;
+    floatGroup.position.y = still ? 0 : Math.sin(tt * 0.55) * 0.32 * amp;
+    floatGroup.rotation.x = still ? 0 : Math.sin(tt * 0.37) * 0.012 * amp;
+    floatGroup.rotation.z = still ? 0 : Math.sin(tt * 0.29 + 1.3) * 0.014 * amp;
+    tassel.rotation.x = 0.32 + (still ? 0 : Math.sin(tt * 0.9) * 0.05);
+    tassel.rotation.y = still ? 0 : Math.sin(tt * 0.63 + 0.5) * 0.08;
+    camera.lookAt(camTarget);
     updateOverlays();
     renderer.render(scene, camera);
-    if (first) { first = false; window.__kmReady = true; var l = document.getElementById("loading"); if (l) { l.style.opacity = 0; setTimeout(function () { l.style.display = "none"; }, 900); } }
+    if (first) { first = false; window.__kmReady = true; var l = document.getElementById("loading"); if (l) { l.style.opacity = 0; setTimeout(function () { l.style.display = "none"; }, 700); } }
   }
 
   /* ---------- 對外 ---------- */
   API.setPaused = function (v) { paused = !!v; };
-  API.setLines = function (v) { lines = !!v; stage.classList.toggle("nolines", !lines); };
-  API.hint = function () {};
-  API.screenOf = function (n) { // 供測試：第 n 顆珠在頁面上的座標
-    var o = n === "head" ? guru : n === "tassel" ? tassel : beads[n].grp; o.getWorldPosition(tmp); var s = toScreen(tmp), r = renderer.domElement.getBoundingClientRect();
+  API.setLines = function (v) { stage.classList.toggle("nolines", !v); };
+  API.screenOf = function (n) { // 供測試：物件在頁面上的座標
+    var o = n === "head" ? guru : n === "tassel" ? tasselHit : beads[n].mesh; o.getWorldPosition(tmp); var s = toScreen(tmp), r = renderer.domElement.getBoundingClientRect();
     return { x: r.left + s.x, y: r.top + s.y, z: s.z };
   };
   API.stats = function () {
-    malaGroup.updateMatrixWorld(true); var out = { beads: 0, spacers: [], axisErr: 0, minGap: 1e9, guruAbove: false, tasselOutside: false, strings: 0 };
-    var P = [];
+    var out = { beads: 0, spacers: [], axisErr: 0, minGap: 1e9 }, P = [];
     for (var n = 1; n <= 108; n++) {
-      var b = beads[n]; P[n] = b.grp.position.clone(); P[n].y = 0;
-      out.beads++; if (b.spacer) out.spacers.push(n);
-      out.axisErr = Math.max(out.axisErr, Math.abs(Math.hypot(P[n].x, P[n].z) - R));
+      var b = beads[n]; P[n] = b.mesh.position; out.beads++; if (b.spacer) out.spacers.push(n);
+      out.axisErr = Math.max(out.axisErr, Math.abs(Math.hypot(P[n].x, P[n].z) - R) + Math.abs(P[n].y));
     }
     for (var m = 1; m <= 108; m++) { var m2 = m % 108 + 1; out.minGap = Math.min(out.minGap, P[m].distanceTo(P[m2]) - beads[m].r - beads[m2].r); }
-    out.guruAbove = guru.position.y > 1 && Math.hypot(guru.position.x - P[108].x, guru.position.z - P[108].z) < 0.01;
-    out.tasselAbove = tassel.position.y > guru.position.y;
-    out.strings = malaGroup.children.filter(function (c) { return c === stringMesh; }).length;
-    out.rotY = malaGroup.rotation.y; out.cam = camera.position.toArray();
+    out.guruOutside108 = Math.abs(guru.position.x - P[108].x) < 1e-6 && guru.position.z > P[108].z + RB + RG - 1e-6;
+    out.tasselBeyondGuru = tassel.position.z > guru.position.z + RG;
+    out.cordRadius = cord.geometry.parameters.radius;
+    out.floatY = floatGroup.position.y; out.rotY = malaGroup.rotation.y;
     return out;
   };
 })();
