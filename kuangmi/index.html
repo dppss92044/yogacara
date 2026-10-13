@@ -4,51 +4,54 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>以數珠為喻 — 狂密與真密導覽</title>
-<meta name="description" content="以一條懸浮展開的數珠，導覽《狂密與真密》一至四輯的章節結構，以及「見、修、行、果」四類內容。">
+<meta name="description" content="以一條懸浮於星海中的全息數珠，導覽《狂密與真密》一至四輯的章節結構，以及「見、修、行、果」四類內容。">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="top">
-  <h1>以數珠為喻<span>《狂密與真密》導覽</span></h1>
-  <p class="lede">以一條數珠呈現全書章節，並以「見、修、行、果」為本站導覽分類。點選珠子、隔珠、佛頭珠、飾穗、串繩或文字，皆可展開說明。</p>
-</header>
+<section class="hero" aria-label="念珠互動區">
+  <header class="top">
+    <h1>以數珠為喻<span>《狂密與真密》導覽</span></h1>
+  </header>
+
+  <div class="stage" id="stage">
+    <canvas id="galaxy" aria-hidden="true"></canvas>
+    <svg id="mala" role="group" aria-label="念珠：環上 108 顆，另有佛頭珠一顆"></svg>
+    <div class="scan" aria-hidden="true"></div>
+  </div>
+
+  <div class="dock">
+    <div class="controls" role="toolbar" aria-label="念珠操作">
+      <button id="motion" type="button" aria-pressed="false">暫停動態</button>
+      <button id="lines" type="button" aria-pressed="true">引線：開</button>
+      <label class="chsel">章節
+        <select id="chsel"></select>
+      </label>
+    </div>
+    <div class="partbar" id="partbar" aria-label="部件說明入口"></div>
+    <p class="legend">
+      <span><i class="sw bodhi"></i>普通數珠（星月菩提子）</span>
+      <span><i class="sw spacer"></i>隔珠（暗紅瑪瑙）</span>
+      <span><i class="sw head"></i>佛頭珠</span>
+      <span><i class="sw dim"></i>待配置珠位</span>
+    </p>
+  </div>
+
+  <aside class="panel" id="panel">
+    <div class="navbar">
+      <button id="prev" type="button" aria-label="上一個已配置珠位">‹ 上一個</button>
+      <button id="home" type="button">回到完整念珠</button>
+      <button id="next" type="button" aria-label="下一個已配置珠位">下一個 ›</button>
+    </div>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-content" aria-selected="true" aria-controls="pane-content">內容</button>
+      <button role="tab" id="tab-toc" aria-selected="false" aria-controls="pane-toc">原書目次</button>
+    </div>
+    <div id="pane-content" class="pane" role="tabpanel" aria-live="polite"></div>
+    <div id="pane-toc" class="pane" role="tabpanel" hidden></div>
+  </aside>
+</section>
 
 <main>
-  <section class="hero" aria-label="念珠互動區">
-    <div class="stage-col">
-      <div class="stage" id="stage">
-        <svg id="mala" viewBox="0 0 1100 760" role="group" aria-label="念珠：環上 108 顆，另有佛頭珠一顆"></svg>
-      </div>
-      <div class="controls" role="toolbar" aria-label="念珠操作">
-        <button id="motion" type="button" aria-pressed="false">暫停動態</button>
-        <label class="chsel">章節快速選取
-          <select id="chsel"></select>
-        </label>
-      </div>
-      <div class="partbar" id="partbar" aria-label="部件說明入口"></div>
-      <p class="legend">
-        <span><i class="sw bodhi"></i>普通數珠（星月菩提子）</span>
-        <span><i class="sw spacer"></i>隔珠（暗紅瑪瑙）</span>
-        <span><i class="sw head"></i>佛頭珠</span>
-        <span><i class="sw dim"></i>待配置珠位</span>
-      </p>
-    </div>
-
-    <aside class="panel" id="panel">
-      <div class="navbar">
-        <button id="prev" type="button" aria-label="上一個已配置珠位">‹ 上一個</button>
-        <button id="home" type="button">回到完整念珠</button>
-        <button id="next" type="button" aria-label="下一個已配置珠位">下一個 ›</button>
-      </div>
-      <div class="tabs" role="tablist">
-        <button role="tab" id="tab-content" aria-selected="true" aria-controls="pane-content">內容</button>
-        <button role="tab" id="tab-toc" aria-selected="false" aria-controls="pane-toc">原書目次</button>
-      </div>
-      <div id="pane-content" class="pane" role="tabpanel" aria-live="polite"></div>
-      <div id="pane-toc" class="pane" role="tabpanel" hidden></div>
-    </aside>
-  </section>
-
   <section class="quote-sec" aria-labelledby="qh">
     <h2 id="qh">以數珠為喻</h2>
     <blockquote id="quote"></blockquote>
@@ -58,9 +61,11 @@
   <section class="about" aria-labelledby="ah">
     <h2 id="ah">使用說明與資料說明</h2>
     <ul>
-      <li><b>念珠分類入口</b>：點「見、修、行、果」隔珠或標籤，查看該區名相；點數珠，展開所屬章。</li>
-      <li><b>原書目次入口</b>：切到右側「原書目次」（手機在念珠下方），按章瀏覽；選取後念珠會高亮對應珠位。</li>
-      <li><b>左右切換</b>只在已配置內容的珠位間移動，自動跳過待配置珠位；部件與隔珠有各自入口，不與其混淆。</li>
+      <li><b>點任一珠、隔珠、文字或目次</b>：念珠會轉動，讓被點的珠子停在畫面中央並放大特寫，右側（手機在下方）展開說明。</li>
+      <li><b>念珠分類入口</b>：點「見、修、行、果」隔珠或標籤，查看該區名相；點數珠，展開所屬章，章名以引線連到該珠。</li>
+      <li><b>原書目次入口</b>：切到「原書目次」按章瀏覽，選取後念珠高亮對應珠位。</li>
+      <li><b>上一個／下一個</b>（或鍵盤 ←／→）只在已配置內容的珠位間移動，自動跳過待配置珠位。「回到完整念珠」或 Esc 返回總覽。</li>
+      <li><b>動態</b>：星系與念珠的緩慢擺動可按「暫停動態」關閉，並遵循系統的減少動態效果設定；「引線」可開關。</li>
       <li><b>三種內容標記</b>：<span class="tag book">書籍目次</span> <span class="tag quote">平實導師引文</span> <span class="tag nav">本站導覽分類</span>。</li>
       <li><b>尚待補充</b>：各章的節、目與頁碼、正文、解說與出處；名相與單一章節的細部對應。目前未提供者一律標示「待補」或「待確認」，不以推測代替。</li>
     </ul>
