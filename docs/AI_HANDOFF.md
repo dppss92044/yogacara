@@ -7,6 +7,11 @@
 
 ---
 
+## W025（玻璃擬態預覽；Claude Code，2026-10-14，預覽中，未合併）
+- q：「做成這樣的風格，給我預覽，只改變風格不改變介面」（玻璃擬態，附 backdrop-filter blur＋SVG feTurbulence／feDisplacementMap 液態玻璃參考）。基底 main 之後，分支 `claude/project-thread-yijh6q`。
+- 只新增 `<style id="glass-w025">`（head 末）與 body 開頭隱藏 SVG：背景柔和漸層色塊、三欄半透明、設定選單／說明卡／卷次格／底部分頁列／頂部列毛玻璃＋多層內外陰影；液態扭曲只在支援 `backdrop-filter:url()` 的 Chromium 套用，其餘退回一般模糊。不動版面、文字、功能、appVer、sw.js。
+- 測試：僅 Chromium 電腦 1400×900、手機 390×844，淺色／深色截圖（`/mnt/project-files/W025-glass/`）；iPad、Safari／iPhone 實機、韓版、藏版（預設即藏版已看）、全屏科判圖未測。
+
 ## W018（已合併 main，Claude Code，2026-10-12）
 - q：「去上一層。按下去，就是往上一頁的母枝源頭跳，不要在路徑跳反黃。半頁科判的說明，按下去的說明匡，只會在半頁科判的介面上出現。不要在正中間。然後不要讓其他沒出現的地方變灰色。」「去上一層，按下去之後跳轉上一層的畫面但沒有反黃標記。」看預覽後回「合併」。
 - #upNav 點擊改為 `panelPage(APPEAR[n]||2, n, N[n][6], true)`（只在 #pzoom 反黃並置中母枝，不呼叫 focusNode）；說明卡在半頁科判開啟時放進 #kmap（`.ha.ha-in`，透明底）。

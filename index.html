@@ -435,7 +435,23 @@ body.dragging .main .kh{max-width:100%;overflow-x:auto;overflow-y:hidden}
 :root[data-layout=mac] .wrap:not(.panes-swapped) #panel::before{display:none}
 :root:root:root:root[data-layout=mac] #kmap.km-emb,:root:root:root:root[data-layout=ipad] #kmap.km-emb{border-left-color:transparent!important;border-right-color:transparent!important;box-shadow:inset 40px 0 40px -40px var(--seamC)}
 :root:root:root:root[data-layout=mac] body:has(.wrap.panes-swapped) #kmap.km-emb{box-shadow:inset 40px 0 40px -40px var(--seamC),inset -40px 0 40px -40px var(--seamC)}
-</style></head><body>
+</style><style id="glass-w025">/* W025 玻璃擬態預覽：只改外觀（背景、透明、模糊、邊框、陰影），不動版面與功能 */
+:root{--gl-a:rgba(255,255,255,.58);--gl-b:rgba(255,255,255,.3);--gl-line:rgba(255,255,255,.65);--gl-sh:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(255,255,255,.3),inset 6px 6px 16px rgba(255,255,255,.25),0 10px 28px rgba(70,80,120,.22);--gl-bg:linear-gradient(135deg,#f9e6d8 0%,#e8e4f8 45%,#d6ecf3 100%);--gl-b1:rgba(255,150,130,.75);--gl-b2:rgba(140,140,255,.65);--gl-b3:rgba(90,205,225,.65)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--gl-a:rgba(38,38,48,.55);--gl-b:rgba(255,255,255,.07);--gl-line:rgba(255,255,255,.14);--gl-sh:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(255,255,255,.12),inset 6px 6px 16px rgba(255,255,255,.08),0 10px 28px rgba(0,0,0,.5);--gl-bg:linear-gradient(135deg,#241a2e 0%,#1a1d33 50%,#142730 100%);--gl-b1:rgba(200,80,110,.5);--gl-b2:rgba(90,90,230,.5);--gl-b3:rgba(40,170,190,.45)}}
+:root[data-theme=dark]{--gl-a:rgba(38,38,48,.55);--gl-b:rgba(255,255,255,.07);--gl-line:rgba(255,255,255,.14);--gl-sh:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(255,255,255,.12),inset 6px 6px 16px rgba(255,255,255,.08),0 10px 28px rgba(0,0,0,.5);--gl-bg:linear-gradient(135deg,#241a2e 0%,#1a1d33 50%,#142730 100%);--gl-b1:rgba(200,80,110,.5);--gl-b2:rgba(90,90,230,.5);--gl-b3:rgba(40,170,190,.45)}
+:root:root body{background:radial-gradient(40vmax 40vmax at 12% 18%,var(--gl-b1),transparent 70%),radial-gradient(45vmax 45vmax at 88% 12%,var(--gl-b2),transparent 70%),radial-gradient(50vmax 50vmax at 55% 95%,var(--gl-b3),transparent 70%),var(--gl-bg)!important;background-attachment:fixed!important;min-height:100vh}
+/* 三欄底色改半透明，讓背景透出 */
+:root:root:root .rail,:root:root:root .panel,:root:root:root .pview{background:var(--gl-b)!important}
+:root:root:root .main{background:var(--gl-a)!important}
+/* 浮在內容上的面板：毛玻璃 */
+:root:root:root .zbar,:root:root:root .device-tabs,:root:root:root .mpop,:root:root:root .term-preview,:root:root:root .ha-card,:root:root:root .rail-top .juans,:root:root:root .jfold,:root:root:root .pbar{-webkit-backdrop-filter:blur(20px) saturate(170%)!important;backdrop-filter:blur(20px) saturate(170%)!important}
+:root:root:root .mpop,:root:root:root .term-preview,:root:root:root .ha-card,:root:root:root .rail-top .juans,:root:root:root .device-tabs{background:var(--gl-a)!important;border:1px solid var(--gl-line)!important;box-shadow:var(--gl-sh)!important}
+:root:root:root .zbar{background:color-mix(in srgb,var(--bg) 88%,transparent)!important;border-bottom:1px solid var(--gl-line)!important}
+:root:root:root .mpop .edition-settings,:root:root:root .mpop .content-settings,:root:root:root .mpop .learning-settings-list,:root:root:root .mpop .ft,:root:root:root .mpop .dl,:root:root:root .mpop .ver-menu-row,:root:root:root .mpop .about,:root:root:root .mpop button.mi,:root:root:root .mpop .settings-head,:root:root:root .ha-st,:root:root:root .ha-ph,:root:root:root .ha-pg{background:var(--gl-b)!important}
+@supports (backdrop-filter:url(#x)){:root:root:root .mpop,:root:root:root .term-preview,:root:root:root .ha-card,:root:root:root .rail-top .juans,:root:root:root .device-tabs{-webkit-backdrop-filter:blur(8px) url(#liquid_glass_filter) saturate(150%)!important;backdrop-filter:blur(8px) url(#liquid_glass_filter) saturate(150%)!important}}
+/* 科判頁紙張：半透明白卡 */
+:root:root:root .ksheet{background:var(--gl-a)!important;border:1px solid var(--gl-line)!important;box-shadow:var(--gl-sh)!important}
+</style></head><body><svg width="0" height="0" style="position:absolute;left:-9999px;top:-9999px" aria-hidden="true"><defs><filter id="liquid_glass_filter"><feTurbulence type="fractalNoise" baseFrequency="0.003" numOctaves="2" seed="7" result="noise"/><feGaussianBlur in="noise" stdDeviation="1.2" result="map"/><feDisplacementMap in="SourceGraphic" in2="map" scale="60" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>
 <title>瑜伽師地論科判綱要</title>
 <style>
 /* Layout: three-pane reading room — left rail (卷目次 + that 卷's 干支科判, rubber-band into adjacent 卷), center (論文全文 or continuous vertical 科判 sheets), optional right 大綱預覽. */
