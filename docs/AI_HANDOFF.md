@@ -9,7 +9,7 @@
 
 ## W025（玻璃擬態預覽；Claude Code，2026-10-14，預覽中，未合併）
 - q：「做成這樣的風格，給我預覽，只改變風格不改變介面」（玻璃擬態，附 backdrop-filter blur＋SVG feTurbulence／feDisplacementMap 液態玻璃參考）。基底 main 之後，分支 `claude/project-thread-yijh6q`。
-- 只新增 `<style id="glass-w025">`（head 末）與 body 開頭隱藏 SVG：不加彩色，底色與三欄不動；只對設定選單、說明卡、卷次格、底部分頁列、頂部列加 Liquid Glass 式毛玻璃（模糊、高光邊、多層內外陰影）；液態扭曲只在支援 `backdrop-filter:url()` 的 Chromium 套用，其餘退回一般模糊。不動版面、文字、功能、appVer、sw.js。
+- 只新增 `<style id="glass-w025">`（head 末）與 body 開頭隱藏 SVG：不加彩色，底色與三欄不動；所有灰色底（左右欄、選單、卷次格）改為半透明，並對浮動面板（設定選單、說明卡、卷次格、底部分頁列）加 Liquid Glass 式毛玻璃（模糊、高光邊、多層內外陰影）。不動版面、文字、功能、appVer、sw.js。
 - 測試：僅 Chromium 電腦 1400×900、手機 390×844，淺色／深色截圖（`/mnt/project-files/W025-glass/`）；iPad、Safari／iPhone 實機、韓版、藏版（預設即藏版已看）、全屏科判圖未測。
 
 ## W018（已合併 main，Claude Code，2026-10-12）
