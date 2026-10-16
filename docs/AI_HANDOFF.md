@@ -5,6 +5,17 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W032（Codex，2026-10-17；v2.3.3返回保留脈絡圖與觸控欄寬修正，完成封存）
+- 基底v2.3.2 `aff8371ca1d1ba4ab1d2e9855b8c033230f35d8c`，分支work-w032-map-dock-gutters。
+- 使用者澄清：全屏F特定脈絡返回時仍是同一張圖，只縮到右欄，中間正文、三欄同步；再按圖示才回A4循環。另修平板電腦介面兩條欄寬分隔線拖曳。D185取代D183返回直接A4的解讀。
+- 核心：hideMap在教學還原後記錄mapDockPending（選取、縮放、鏡頭），finishMapReturn清理原歷史後同步首頁，再dockCurrentMap沿用同一model／col／focusI／範圍與樣式並setEmb(true)。保留F及收展，不呼叫open/load；顯示選取附近，保留縮放。多欄返回強制正文中／科判右並開啟卷次與科判，單欄回正文但科判分頁保存原圖。
+- returnedToReader區分「返回後右欄」與「初次半頁」；返回後的km-exp／mapBtn改returnToChartPage，隱藏原圖露出A4，單欄則切科判分頁；下一次mapBtn重新open(true)開始新循環。返回後嵌入追蹤不再以wholeBtn.click還原視圖，首次embLast設為S.cur避免立即自動重置。全屏go節點同樣使用保留圖的返回流程。
+- 分隔線：全域gut設touch-action:none防止mac介面在平板上被瀏覽器接管；any-pointer:coarse的mac介面命中區32px且不改可見分隔線寬度。單一activeGutterPointer／isPrimary與pointerId過濾，pointer capture失敗安全退出；左欄由起始寬度＋相對位移而非絕對座標，避免手指起點偏移造成跳動。pointercancel／lostcapture／blur共用收尾移除事件、RAF與捕獲，左右兩條共用。
+- 版本App／meta／SW 2.3.3，quiet摘要重要旗標0，通知動畫版本2.3.0不變。metadata工具重算39項SW資產，沒有自動編譯。
+- 驗證：16段inline JS及sw.js由Node vm.Script僅解析語法、git diff --check通過；僅來源檢視藏／韓版共用、mac／ipad／iphone、多欄／單欄、F與收展保留、左右置換後返回及多指清理。未執行UI／E2E、功能、瀏覽器、實機或離線測試，不能視為觸控操作已驗證。
+- 合併發布延續使用者本輪靜默修正授權，不開PR、不強推，正式commit見git log「更新至 v2.3.3」與main／同名標籤。Pages公網部署完成狀態未確認（此前環境CONNECT403）。
+
+
 ## W031（Codex，2026-10-17；v2.3.2平板預設電腦介面，完成封存）
 - 正式基底v2.3.1 `db88f254546fe45152abb71d1aac395649bcd549`，分支work-w031-tablet-default-desktop。
 - 使用者原始需求：「把平板預設的開啟，改成電腦介面，默默合併直接發佈。」D184；已明確授權合併發布。

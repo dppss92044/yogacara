@@ -49,7 +49,7 @@
 
 ### 3.2 唯一版本線與 Semantic Versioning（2026-10-16，使用者要求）
 
-- 目前正式版為 **v2.3.2**（2026-10-17）；自本版起全面採SemVer三段版號vX.Y.Z。歷史2.2等版號原樣保留，不重寫。
+- 目前正式版為 **v2.3.3**（2026-10-17）；自本版起全面採SemVer三段版號vX.Y.Z。歷史2.2等版號原樣保留，不重寫。
 - MAJOR：不相容變更；MINOR：相容新功能；PATCH：相容修正。對外顯示／Git標籤用vX.Y.Z，meta／SW／資料鍵用X.Y.Z。
 - 所有AI共用唯一版本線，不得各自建立同號不同內容版本。
 - 使用者明確要求本版採SemVer，可在獨立預覽分支同步候選版號；候選不是正式發布。仍須等「合併發布」口令才合併main／發布，不開PR、不強推。
@@ -69,7 +69,7 @@
 3. **使用者明確確認可以正式交付。**
 
 三者齊備後，才由當下負責的 AI 做**一次**發布動作：
-- 將 `W00x` 發布為下一個SemVer正式版本（本次v2.3.2）；
+- 將 `W00x` 發布為下一個SemVer正式版本（本次v2.3.3）；
 - 同步升級 `index.html` 的版本、最後更新日、`versionSummaries`、`sw.js` 快取版本（使用 `tools/build_release.py` 與 `tools/sw-template.js` 的既有機制）；
 - 更新 `docs/CHANGELOG.md`（Unreleased → 新版本）、`docs/PROJECT_STATE.md`、`docs/AI_HANDOFF.md`；
 - 追加 `MASTER_HISTORY.md` 事件（H156 起）；
