@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><script id="mobile-22-device">(function(){var ua=navigator.userAgent||'';window.__mobile22Device=/iPhone|iPad|iPod|Android|Tablet/i.test(ua)||/Macintosh/i.test(ua)&&navigator.maxTouchPoints>1;window.__releaseVersion='2.3.0';window.__releaseNotificationPending=false;try{window.__releaseNotificationPending=localStorage.getItem('hk-update-notice')==='on'&&localStorage.getItem('hk-update-animation-seen')!==window.__releaseVersion;}catch(e){}})();</script><script id="fresh-dev">(function(){try{var L=localStorage,n=0;for(var i=0;i<L.length;i++){if(/^hk/.test(L.key(i))){n=1;break;}}if(!n){window.__hkFresh=1;}}catch(e){}})();</script><meta charset=utf8><meta name="app-version" content="2.3.3"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+<!doctype html><html lang="zh-Hant"><head><script id="mobile-22-device">(function(){var ua=navigator.userAgent||'';window.__mobile22Device=/iPhone|iPad|iPod|Android|Tablet/i.test(ua)||/Macintosh/i.test(ua)&&navigator.maxTouchPoints>1;window.__releaseVersion='2.3.0';window.__releaseNotificationPending=false;try{window.__releaseNotificationPending=localStorage.getItem('hk-update-notice')==='on'&&localStorage.getItem('hk-update-animation-seen')!==window.__releaseVersion;}catch(e){}})();</script><script id="fresh-dev">(function(){try{var L=localStorage,n=0;for(var i=0;i<L.length;i++){if(/^hk/.test(L.key(i))){n=1;break;}}if(!n){window.__hkFresh=1;}}catch(e){}})();</script><meta charset=utf8><meta name="app-version" content="2.3.4"><title>瑜伽師地論科判綱要</title><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="瑜伽師地論"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* v1.62: selection changes background only; annotations match 分N. */
 .kscale .nd.tt[data-id], .kscale .nd.tt[data-id]:hover, .kscale .nd.tt.on,
 .kscale .head span.on { color:var(--fg); }
@@ -1265,7 +1265,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         <div class="grp">
         <p class="src"><span class="src-b"><b class="src-t">韓清淨版</b>內文、分卷、科判、披尋記與常柏法師釋，皆依大菩提網站（mahabodhi.org）《瑜伽師地論科句披尋記》各卷頁面原樣呈現，順序與分卷悉照網站，未另行比對或修改；網站上的缺字以 □ 表示。本頁僅重新排版。<span class="src-u">網址：<a class="srcl" href="https://mahabodhi.org/yoga/cb/" target="_blank" rel="noopener">https://mahabodhi.org/yoga/cb/</a></span></span></p>
         </div>
-        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v2.3.3</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-17">2026-10-17</time></span></div></div>
+        <div class="grp"><div class="ver"><span>版本 <b id="appVer">v2.3.4</b></span><span>最後更新 <time id="appUpd" datetime="2026-10-17">2026-10-17</time></span></div></div>
 <button class="mi version-history-button" id="versionHistoryBtn"><span>版本內容</span><i class="chev">›</i></button><button class="mi version-history-button" id="reportBtn"><span>問題回報</span><i class="chev">›</i></button></div><div id="reportPage"><textarea id="reportText" rows="9" aria-label="問題回報內容"></textarea><button class="go rp-send" id="reportSend" type="button">送出</button><p class="rp-msg" id="reportMsg" role="status"></p></div><div id="versionHistory"><div class="vc" id="versionDoc"></div></div><div id="versionDetail"><b></b><p></p></div>
         <p class="offl" id="offl" hidden></p>
       </div>
@@ -1312,7 +1312,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   function ipadFloat(){return deviceLayout==="ipad"&&!ReaderUI.single&&!ipadRailDock;}
   function railModeUI(){document.documentElement.dataset.ipadRail=ipadFloat()?"float":"dock";var b=document.getElementById("railPin");if(b){b.setAttribute("aria-pressed",String(ipadRailDock));b.title=ipadRailDock?"取消固定卷次":"固定卷次";b.setAttribute("aria-label",b.title);}}
   document.documentElement.dataset.ipadPinned=String(ipadPinned);
-  var layoutPref = "auto", deviceLayout;
+  var layoutPref = "auto", deviceLayout,physicalTablet=false,tabletRailRequested=false;
+  function tabletDesktopMode(){return physicalTablet&&deviceLayout==='mac';}
   var ReaderUI={ready:false,screen:'read',single:false,portrait:false,width:innerWidth,height:innerHeight,bookmark:null};
   var mapNavigationGuard = null;
   try { layoutPref = localStorage.getItem("hk-device-layout-v146") || "auto"; } catch(e) {}
@@ -1337,6 +1338,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     var shortSide=Math.min(innerWidth,innerHeight),longSide=Math.max(innerWidth,innerHeight);
     var locked=isPhone||!isTablet&&shortSide<=600&&longSide<=1000&&longSide/shortSide>=1.25;
     // Tablets default to the full desktop interface; explicit preferences still win.
+    physicalTablet=isTablet;
     var available=isTablet?'mac':locked?'iphone':innerWidth<1180?'ipad':'mac';
     if(!['auto','ipad','mac','iphone'].includes(layoutPref))layoutPref='auto';
     deviceLayout=layoutPref==='auto'?available:layoutPref;
@@ -1353,7 +1355,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var VM = false; // 直式排版 removed; shared code paths stay horizontal
   try { localStorage.removeItem("hk-vmode"); } catch (e) {}
   var article = $("article"), rail = $("rail"), panel = $("panel"), wrap = $("wrap"), main = $("main");
-  var equalPanes=true;try{equalPanes=localStorage.getItem('hk-pane-split-v140')!=='custom';}catch(e){}wrap.classList.toggle('equal-panes',equalPanes);
+  var equalPanes=true;try{equalPanes=localStorage.getItem('hk-pane-split-v140')!=='custom';}catch(e){}if(tabletDesktopMode())equalPanes=true;wrap.classList.toggle('equal-panes',equalPanes);
   // vertical text: half-width digits/brackets set upright (2 digits side-by-side, longer runs stacked)
   function vt(s) {
     if (!VM) return esc(s);
@@ -3091,8 +3093,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     // 匯出面板：單選項目再點一下即取消
     $("dlPop").addEventListener("click", function (e) { var r = e.target; if (!(r instanceof HTMLInputElement) || r.type !== "radio") return; if (r.dataset.on === "1") { r.checked = false; r.dataset.on = "0"; } else { $("dlPop").querySelectorAll('input[name="' + r.name + '"]').forEach(function (x) { x.dataset.on = "0"; }); r.dataset.on = "1"; } });
     $("searchForm").addEventListener("submit", function (e) { e.preventDefault(); search($("q").value); closeSearch();if(ReaderUI.ready)selectReaderPane("read",false);try { history.pushState(null, "", "#search"); } catch (er) {} });
-    $("railOpen").onclick = function () { setRail(true); };
-    $("railClose").onclick = function () { setRail(false); };
+    $("railOpen").onclick = function () { setRail(true,true); };
+    $("railClose").onclick = function () { setRail(false,true); };
     window.addEventListener("popstate", function (e) { if(!mapNavigationGuard||!mapNavigationGuard(e))route(); });
     window.addEventListener("hashchange", function (e) { if(!mapNavigationGuard||!mapNavigationGuard(e))route(); });
     route();
@@ -3129,14 +3131,22 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var max=side==='L'?Math.max(180,rect.width-(deviceLayout==='ipad'&&!ipadPinned?0:panelWidth)-(deviceLayout==='ipad'?220:300)):Math.max(180,rect.width-(deviceLayout==='ipad'?railWidth:railOn?Math.max(need,railWidth):0)-(deviceLayout==='ipad'?220:300));
       var min=deviceLayout==='ipad'?180:Math.min(side==='L'?need:260,max),property=deviceLayout==='ipad'?(side==='L'?'--ipad-rw':'--ipad-pw'):(side==='L'?'--rw':'--pw');
       Motion.cancel(g);g.classList.add('motion-dragging');
-      var dragFitFrame=0;function scheduleDragFit(){if(!dragFitFrame)dragFitFrame=requestAnimationFrame(function(){dragFitFrame=0;placeGutters();fitP();fitV();});}
-      var updateDrag=Motion.rafThrottle(function(x){var reserve=deviceLayout==='ipad'?railWidth:railOn?Math.max(need,railWidth):0,desired=startW+(side==='L'||panelLeft?1:-1)*(x-startX),legal=Math.max(min,Math.min(max,desired)),over=desired-legal;document.documentElement.style.setProperty(property,legal+'px');scheduleDragFit();g.style.transform=over?'translate3d('+(side==='L'||panelLeft?1:-1)*Motion.rubberBand(over,24)+'px,0,0)':'';});
+      var lastDragWidth=-1;
+      var updateDrag=Motion.rafThrottle(function(x){
+        var desired=startW+(side==='L'||panelLeft?1:-1)*(x-startX);
+        var legal=Math.round(Math.max(min,Math.min(max,desired))*2)/2;
+        if(legal===lastDragWidth)return;lastDragWidth=legal;
+        document.documentElement.style.setProperty(property,legal+'px');
+        placeGutters();
+      });
       function mv(ev){if(ev.pointerId===e.pointerId)updateDrag(ev.clientX);}
       var ended=false;
       function up(ev) {
-        if(ended||ev&&ev.pointerId!=null&&ev.pointerId!==e.pointerId)return;ended=true;activeGutterPointer=null;updateDrag.flush();updateDrag.cancel();cancelAnimationFrame(dragFitFrame);g.classList.remove("motion-dragging");g.style.removeProperty("transform");g.style.removeProperty("will-change");placeGutters();fitP();fitV();updateHeadingBounds();
+        if(ended||ev&&ev.pointerId!=null&&ev.pointerId!==e.pointerId)return;
+        if(ev&&ev.type==='pointerup')updateDrag(ev.clientX);
+        ended=true;updateDrag.flush();updateDrag.cancel();activeGutterPointer=null;g.classList.remove("motion-dragging");g.style.removeProperty("transform");g.style.removeProperty("will-change");placeGutters();fitP();fitV();updateHeadingBounds();
         if(deviceLayout==='ipad')try{localStorage.setItem('hk-ipad-widths-v145',JSON.stringify({pw:document.documentElement.style.getPropertyValue('--ipad-pw'),rw:document.documentElement.style.getPropertyValue('--ipad-rw')}));}catch(e){}
-        if(g.hasPointerCapture(e.pointerId))g.releasePointerCapture(e.pointerId); g.classList.remove("drag"); document.body.classList.remove("dragging", "row");
+        if(g.hasPointerCapture(e.pointerId))g.releasePointerCapture(e.pointerId); g.classList.remove("drag"); document.body.classList.remove("dragging", "row");window.dispatchEvent(new Event('reader-pane-resized'));
         if (side === "L" && N && S.railJuan) { var keepCur = S.cur; renderRail(S.railJuan); if (keepCur != null && N[keepCur] && N[keepCur][6] === S.railJuan) railFocus(keepCur); }
         if (VM) { try { var cs = getComputedStyle(document.documentElement); localStorage.setItem("hk-vsizes", JSON.stringify({ th: parseFloat(cs.getPropertyValue("--th")) || null, kw: parseFloat(cs.getPropertyValue("--kw")) || null })); } catch (er) {} }
         g.removeEventListener("pointermove", mv); g.removeEventListener("pointerup", up);g.removeEventListener("pointercancel",up);g.removeEventListener("lostpointercapture",up);window.removeEventListener("blur",up);
@@ -3304,11 +3314,15 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   // ---------- side panes: hide / show ----------
   var railOn = VM || deviceLayout !== "iphone";
   try { if (localStorage.getItem("hk3-rail") === "0") railOn = false; } catch (e) {}
-  if (narrowNow()) railOn = false; else if (VM) railOn = true;
+  if (narrowNow()||tabletDesktopMode()) railOn = false; else if (VM) railOn = true;
   function tabletPortrait(){return deviceLayout==="ipad" && ReaderUI.portrait;}
   function narrowNow() { return !VM && ReaderUI.single; }
 
-  function setRail(on) {
+  function setRail(on,explicit) {
+    if(tabletDesktopMode()){
+      if(explicit||!on)tabletRailRequested=!!on;
+      if(on&&!tabletRailRequested)on=false;
+    }
     if(ReaderUI.ready&&ipadFloat()){railOn=on;rail.classList.toggle("open",on);wrap.classList.remove("no-rail");updFloat();setTimeout(function(){placeGutters();fitP();fitV();},0);return;}
     if(ReaderUI.ready&&ReaderUI.single){selectReaderPane(on?'catalog':ReaderUI.screen==='catalog'?'read':ReaderUI.screen);return;}
     railOn = on;
@@ -3824,11 +3838,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       }else{
         var rw=Math.min(Math.max(240,parseFloat(getComputedStyle(root).getPropertyValue('--rw'))||310),Math.max(240,w-600));
         root.style.setProperty('--rw',rw+'px');
-        root.style.setProperty('--pw',Math.max(260,Math.min(w-rw-300,parseFloat(root.style.getPropertyValue('--pw'))||390))+'px');
+        root.style.setProperty('--pw',Math.max(260,Math.min(w-(railOn?rw:0)-300,parseFloat(root.style.getPropertyValue('--pw'))||390))+'px');
       }
     }
-    var lastMode=null,raf=0;
+    var lastMode=null,raf=0,adaptAfterDrag=false;
     function adapt(){
+      if(activeGutterPointer!==null){adaptAfterDrag=true;return;}
+      adaptAfterDrag=false;
       var visible=main.getClientRects().length&&(!ReaderUI.single||['read','search'].includes(ReaderUI.screen));
       if(visible)captureReading();
       var old=deviceLayout;resolveDeviceLayout();updateViewportState();
@@ -3837,7 +3853,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       if(modeChanged){
         dismissMenu();closeSearch();
         if(ReaderUI.single){ReaderUI.screen='read';selectReaderPane('read',false);}
-        else{railOn=!ipadFloat();rail.classList.remove('open');wrap.classList.remove('no-rail');S.panel=true;applyPanel();ReaderUI.screen='read';}
+        else{tabletRailRequested=false;railOn=!ipadFloat()&&!tabletDesktopMode();rail.classList.remove('open');wrap.classList.toggle('no-rail',!railOn);if(tabletDesktopMode()){equalPanes=true;wrap.classList.add('equal-panes');}S.panel=true;applyPanel();ReaderUI.screen='read';}
         lastMode=mode;
       }
       railModeUI();boundWidths();pinUI();syncReaderUI();updFloat();placeGutters();fitP();fitV();positionSubmenus();placeSearch();
@@ -3845,6 +3861,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       adapt.lastWidth=ReaderUI.width;window.dispatchEvent(new Event("reader-layout"));
     }
     function queueAdapt(){cancelAnimationFrame(raf);raf=requestAnimationFrame(adapt);}
+    window.addEventListener('reader-pane-resized',function(){if(adaptAfterDrag)queueAdapt();});
     document.querySelectorAll('[data-layout-choice]').forEach(function(b){b.onclick=function(){chooseLayout(b.dataset.layoutChoice);};});
     window.addEventListener('resize',queueAdapt);window.addEventListener('orientationchange',function(){setTimeout(queueAdapt,80);});
     $('panelPin').onclick=function(){if(deviceLayout==='ipad')return;ipadPinned=!ipadPinned;try{localStorage.setItem('hk-ipad-pinned',ipadPinned?'1':'0');}catch(e){}pinUI();setPanel(true);syncReaderUI();fitP();};
@@ -4354,7 +4371,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
             if(ReaderUI.single)selectReaderPane('read',false);
             else if(dock){
               wrap.classList.remove('panes-swapped');$('swapPanes').setAttribute('aria-pressed','false');
-              setRail(true);setPanel(true);
+              if(!tabletDesktopMode())setRail(true);setPanel(true);
             }
             // Explicit navigation synchronizes all three panes even while tracking is locked.
             if(target)focusNode(target.i,'go',null,target.j);
@@ -4679,7 +4696,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function mkC(M,i){return M.ly===8?M.ct[i]+M.step/2:M.y[i];}
       function rr(c,X,Y,Wd,Hd,r){c.moveTo(X+r,Y);c.arcTo(X+Wd,Y,X+Wd,Y+Hd,r);c.arcTo(X+Wd,Y+Hd,X,Y+Hd,r);c.arcTo(X,Y+Hd,X,Y,r);c.arcTo(X,Y,X+Wd,Y,r);c.closePath();}
       function resize(){
-        if(!box||box.hidden)return;embPos();catalogSync();var r=mapEl.getBoundingClientRect(),nw=Math.max(1,Math.round(r.width)),nh=Math.max(1,Math.round(r.height));
+        if(!box||box.hidden||activeGutterPointer!==null)return;embPos();catalogSync();var r=mapEl.getBoundingClientRect(),nw=Math.max(1,Math.round(r.width)),nh=Math.max(1,Math.round(r.height));
         var ndpr=Math.min(window.devicePixelRatio||1,3);if(nw===W&&nh===H&&ndpr===dpr)return;
         var cxw=(W/2-tx)/sc,cyw=(H/2-ty)/sc,had=W>0;W=nw;H=nh;dpr=ndpr;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
         if(had){tx=W/2-cxw*sc;ty=H/2-cyw*sc;if(branchTitle&&!branchTitle.hidden&&focusI>=0)branchFit();}req();
@@ -5595,6 +5612,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         });
         document.addEventListener('keydown',function(e){if(!box||box.hidden||!(e.ctrlKey||e.metaKey)||e.altKey||tourI>=0)return;if(emb&&!pInBox)return;var t=e.target&&e.target.tagName;if(t==='INPUT'||t==='SELECT'||t==='TEXTAREA'||readEl.contains(e.target))return;if(e.key==='+'||e.key==='='||e.code==='Equal'||e.code==='NumpadAdd'){e.preventDefault();e.stopImmediatePropagation();zoomAt(1.3,W/2,H/2);}else if(e.key==='-'||e.key==='_'||e.code==='Minus'||e.code==='NumpadSubtract'){e.preventDefault();e.stopImmediatePropagation();zoomAt(1/1.3,W/2,H/2);}},true);
         window.addEventListener('resize',function(){resize();if(tourI===15){tourPoint(tourP);}else if(tourI>=0){cancelAnimationFrame(tourFrame);tourFrame=requestAnimationFrame(tourPosition);}});
+        window.addEventListener('reader-pane-resized',function(){if(emb&&!box.hidden){embPos();resize();}});
         window.addEventListener('orientationchange',function(){setTimeout(function(){resize();tourPosition();},250);});
       }
       var mapHistory=false,mapHistoryToken='',mapHistoryRestoration='auto',mapReturn=null,mapOrigin=null,skipMapHash=false;
@@ -5654,7 +5672,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         var pn=$('panel'),b1=$('mapBtn'),b2=$('mapBtn');if(!pn||!box)return;var pr=pn.getBoundingClientRect(),r1=b1?b1.getBoundingClientRect():null,r2=b2?b2.getBoundingClientRect():null,st=box.style;
         if(emb){st.setProperty('--ex',pr.left+'px');st.setProperty('--ey',pr.top+'px');st.setProperty('--ew',pr.width+'px');st.setProperty('--eh',pr.height+'px');}
         var a=emb?r1:r2,e=r2;if(a&&a.width){st.setProperty('--b2x',a.left+'px');st.setProperty('--b2y',a.top+'px');}if(e&&e.width){st.setProperty('--exx',e.left+'px');st.setProperty('--exy',e.top+'px');}
-        var w=Math.round(pr.width),h=Math.round(pr.height);if(emb&&(box._ew!==w||box._eh!==h)){box._ew=w;box._eh=h;W=0;resize();}}
+        var w=Math.round(pr.width),h=Math.round(pr.height);if(emb&&activeGutterPointer===null&&(box._ew!==w||box._eh!==h)){box._ew=w;box._eh=h;W=0;resize();}}
       function needJump(c){if(!model||!model.inc[c])return false;var cc=wxy(model,c),sx=cc[0]*sc+tx,sy=cc[1]*sc+ty,mg=30;if(sx<mg||sx>W-mg||sy<mg||sy>H-mg)return true;
         var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9,i,z,hit=false;for(i=0;i<model.n;i++){if(!model.inc[i])continue;z=i;while(z>=0&&z!==c)z=NN[z][4];if(z!==c)continue;var p=wxy(model,i);if(p[0]<x0)x0=p[0];if(p[0]>x1)x1=p[0];if(p[1]<y0)y0=p[1];if(p[1]>y1)y1=p[1];hit=true;}
         if(!hit)return false;var X0=x0*sc+tx,X1=x1*sc+tx,Y0=y0*sc+ty,Y1=y1*sc+ty,fx=X1-X0<1?1:(Math.min(X1,W)-Math.max(X0,0))/(X1-X0),fy=Y1-Y0<1?1:(Math.min(Y1,H)-Math.max(Y0,0))/(Y1-Y0);return Math.min(fx,fy)<.6;}

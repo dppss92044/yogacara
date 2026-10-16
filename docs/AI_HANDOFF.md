@@ -5,6 +5,16 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W033（Codex，2026-10-17；v2.3.4平板預設雙欄與分隔線穩定修正，完成封存）
+- 基底v2.3.3 `8f0c8684e92fbafe889b97c7eacf67ac408e46aa`，分支work-w033-tablet-two-panes。
+- 使用者要求平板電腦介面預設正文／科判1:1，左卷次只點選才出現，返回不得自動跳出；手動拖曳更順更穩。默默修正、不新增更新說明。D186。
+- 實作：resolveDeviceLayout保存physicalTablet，tabletDesktopMode僅匹配實體平板＋mac。啟動／進入此模式預設railOn=false、equalPanes=true；setRail(on,explicit)以tabletRailRequested阻擋自動開啟，只有railOpen明確點選才允許true，關閉清除狀態。返回dock不再對此模式setRail(true)，其他裝置照舊；隱藏卷次仍同步位置。boundWidths以railOn判斷保留寬度，避免把隱藏卷次算入正文／科判分配。
+- 拖曳：移除第二個RAF適配佇列與rubberBand分隔線位移，單RAF只設定0.5px量化寬度與placeGutters，重複寬度跳過；fitP／fitV／heading在收尾做。pointerup補最後座標。嵌入圖embPos／resize在activeGutterPointer期間只更新CSS範圍、暫緩backing store重設；reader-pane-resized於收尾完成重算。adapt若遇拖曳先記adaptAfterDrag，放手後僅對被延後的視口事件補適配。
+- App／meta／SW版本2.3.4，通知動畫版本2.3.0不變；依使用者不新增versionNotes、versionSummaries或更新說明UI，內部文件只做交接紀錄。39項SW metadata重算，非自動編譯。
+- 實際驗證：Node vm.Script靜態解析16段inline JS＋sw.js及git diff --check通過；僅來源檢視iPad桌面UA／Android平板、mac介面預設／手動、卷次開關／返回、多欄／單欄與拖曳取消／失焦邏輯。未跑UI／E2E、功能、效能量測、實機或離線測試，不宣稱實機順暢度已驗證。
+- 延續使用者靜默合併發布授權，正式提交見git log「更新至 v2.3.4」及main／標籤；不開PR、不強推。Pages公網部署完成狀態未確認，前次環境CONNECT403。
+
+
 ## W032（Codex，2026-10-17；v2.3.3返回保留脈絡圖與觸控欄寬修正，完成封存）
 - 最後程式提交：`eb53eab6ecab61c35ee25fd4323743fabae327de`；發布封存提交見git log「更新至 v2.3.3」。
 - 基底v2.3.2 `aff8371ca1d1ba4ab1d2e9855b8c033230f35d8c`，分支work-w032-map-dock-gutters。
