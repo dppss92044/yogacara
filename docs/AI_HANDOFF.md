@@ -5,7 +5,7 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
-## W025（Codex，2026-10-16；完成，待預覽驗收）
+## W025（Codex，2026-10-16；靜默發布 2.2，封存）
 - 基底：正式 2.2，HEAD `923a3ca48847be440c3739fb973d34de1523e043`。分支 `work-w025-device-layout`。
 - 使用者需求：「把平板版的、手機版的，正式開放可以用完整的電腦版功能。只要他選上介面。給我兩種網址我預覽」。
 - 先記錄 D166，再解除手機強制鎖定與選項停用，保留手動介面選擇。交付平板／手機兩個預覽入口，未合併 main。
@@ -14,12 +14,15 @@
 - 初輪曾找出手機重開電腦介面後初始比例不對、點搜尋遭欄位遮擋：已改為明確設定按實際螢幕寬度計算的起始倍率；針對 iPhone 13 獨立重開與點搜尋通過，最後10組矩陣亦全數重跑通過。
 - 19段 inline JavaScript 語法與 git diff --check 通過。執行紀錄 `/tmp/device-layout.log`，截圖 `/tmp/device-choices-{iphone,ipad}.png`、`/tmp/device-desktop-phone.png`、`/tmp/device-layout-*.png`（暫存，不假設下一個任務仍存在）。
 - 未測：Safari／iPhone／iPad 實機、Android、真實列印／下載、PWA 更新與離線、Analytics 舊完整套件。本次只驗證上述操作，不宣稱所有既有功能已完整回歸。
-- 正式版本仍 2.2；未修改 appVer／sw.js／內容資料／圖示，未推送 main、未開 PR、未部署正式站。預覽使用獨立分支。
+- 預覽階段：正式版本仍 2.2；未修改 appVer／sw.js／內容資料／圖示，未推送 main、未開 PR。預覽使用獨立分支。
 - 預覽站 raw.githack.com 在此環境被 egress proxy 擋下（CONNECT 403），無法在此驗證公網載入；本機 Chromium 操作已驗證。
 - 程式 commit：`e4feeb67fc7226d9578c32681f52789cffa7dbdd`（本節後續文件 commit 不改程式；最新交接 HEAD 見 git log）。
 - 平板預覽：`https://raw.githack.com/dppss92044/yogacara/e4feeb67fc7226d9578c32681f52789cffa7dbdd/index.html?layout=ipad`
 - 手機預覽：`https://raw.githack.com/dppss92044/yogacara/e4feeb67fc7226d9578c32681f52789cffa7dbdd/index.html?layout=iphone`
-- 下一步：使用者試用預覽；如要求合併／正式發布，再處理 SW 雜湊與正式發布流程。
+- 後續使用者指示：「直接默默合併發布」。依 D167 沿用既有靜默 2.2 流程，已重算 SW 雜湊；版本／更新通知不變。發布以快轉合併 main 並推送 GitHub Pages 正式來源；發布 commit 由 `git log -1 main` 確認。
+- 發布驗證：`tools/build_release.py 2.2` 後38個資產雜湊逐檔比對全部通過，git diff --check通過；Chromium iPhone 13 安裝真正 SW、快取39項（含雜湊索引）、切離線重載後仍有正文8678字，保持 mac 選擇與三欄。發布時 App 功能未再修改，未重跑已成功的280項完整矩陣。
+- 本雲端對正式 GitHub Pages 網址 CONNECT 403，無法確認對外部署完成；可核對遠端 main，但不得據此宣稱 Pages 已完成部署。Safari／iOS 實機仍待使用者試用。
+
 
 
 ---
