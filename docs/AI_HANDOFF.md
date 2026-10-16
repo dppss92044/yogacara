@@ -13,7 +13,7 @@
 - 半屏科判說明樹與全屏操作簡介SVG同步改兩層直書上下組織圖，無字框與底框，原卡片／配色／其他操作維持。僅改動畫示意，不修改正式科判排版與收展程式。
 - 版本仍2.3.0，D176的減號單擊立即全收合及分支單雙擊、D175通知分流皆未變。離線索引替換SVG路徑，仍39項，只重算metadata與SW索引，不自動編譯。
 - 本輪僅檢查16段inline JS、sw.js、工具Python AST與SVG XML靜態語法，git diff --check；未執行UI／E2E、功能測試／實機／離線測試。先前統計Worker的SemVer相容程式仍未部署，正式發版前須同步更新。
-- 新程式提交與預覽網址提交後補記。舊3c30d02預覽由D177取代。只推工作分支，不推main、不開PR、不發布；外站raw.githack先前被環境代理CONNECT403阻擋，可達性未獨立確認。
+- 本輪最後程式提交 `e33632eab0c4c88596c920573b1e687f063db54d`；本交接補記提交見git log。預覽基址 `https://raw.githack.com/dppss92044/yogacara/e33632eab0c4c88596c920573b1e687f063db54d/index.html`，可加 `?layout=mac`／`?layout=iphone`／`?layout=ipad`；點鈴鐺或重播更新動畫查看。舊3c30d02預覽由D177取代。只推工作分支，不推main、不開PR、不發布；外站raw.githack先前被環境代理CONNECT403阻擋，可達性未獨立確認。
 
 ## W028（Codex，2026-10-16；完成並靜默發布至2.2，封存）
 - 基底2.2 main `9df7c82eb82bfc389b1282928fe7abb051e464a4`，分支work-w028-minus-fade。
