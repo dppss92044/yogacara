@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="128" viewBox="0 0 256 128">
+<defs>
+ <linearGradient id="skin" x1="0" x2="1"><stop stop-color="#cf9278"/><stop offset=".55" stop-color="#f3c9ac"/><stop offset="1" stop-color="#cf9278"/></linearGradient>
+ <linearGradient id="shell" x1="0" x2="1"><stop stop-color="#aaa49c"/><stop offset=".55" stop-color="#f6f0e3"/><stop offset="1" stop-color="#aaa49c"/></linearGradient>
+ <g id="hand" stroke="#a57460" stroke-width="1.3" stroke-linejoin="round">
+  <path d="M18 112L14 91Q5 82 7 68Q8 62 14 62L22 64L23 18Q23 7 31 7Q39 7 39 18L40 58Q48 51 52 60Q60 56 61 67L61 86Q61 99 49 112Z" fill="url(#skin)"/>
+  <path d="M24 67Q18 58 13 65Q9 70 19 81L28 87" fill="url(#skin)"/>
+  <path d="M27 19V14Q31 10 35 14V23H27Z" fill="#f6e2d2" stroke="none"/>
+  <path d="M27 43H35M27 51H35M42 67V81M50 68V83" fill="none" opacity=".5"/>
+ </g>
+</defs>
+<use href="#hand"/>
+<g transform="translate(64)" stroke="#77716b" stroke-width="1.3">
+ <path d="M8 68Q8 42 32 42Q56 42 56 68V89Q56 116 32 116Q8 116 8 89Z" fill="url(#shell)"/>
+ <path d="M8 68Q8 42 32 42V76H8Z" fill="#eee6d6"/>
+ <path d="M32 43V78M9 77H55" fill="none"/>
+ <rect x="29" y="51" width="6" height="13" rx="3" fill="#77716b" stroke="none"/>
+</g>
+<g transform="translate(128)"><path d="M14 29L52 60L34 63L44 86L34 91L24 68L11 81Z" fill="url(#shell)" stroke="#77716b" stroke-width="2" stroke-linejoin="round"/></g>
+<g transform="translate(256 128) rotate(180)"><use href="#hand"/></g>
+</svg>

@@ -15,7 +15,7 @@ if '<meta name="app-version"' in s:
 else:
     s = s.replace('<meta charset=utf8>', '<meta charset=utf8>' + tag, 1)
 open(ip, 'w', encoding='utf-8').write(s)
-files = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'assets/tutorial/gesture-3d.png']
+files = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'assets/tutorial/gestures-lite.svg']
 files += sorted('data/' + f for f in os.listdir(os.path.join(root, 'data')) if not f.startswith('.'))
 def h(p):
     return base64.b64encode(hashlib.sha256(open(os.path.join(root, 'index.html' if p == './' else p), 'rb').read()).digest()).decode()
