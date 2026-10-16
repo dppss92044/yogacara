@@ -1,5 +1,8 @@
 # analytics/ — W001 匿名 App 分析（Analytics v2）
 
+> 2026-10-17 v2.3.0發布補記：本次Worker來源已相容三段SemVer（av／hv／管理端篩選），CLI與App來源同步。此環境沒有Cloudflare憑證，Worker本身未部署；App只有在/v明確回400且存在不相容版本資料時，省略可選版本資料重送一次，其他失敗沿用回存／退避。新Worker上線後直接保留完整版本資料。沒有執行D1 migration、UI／E2E或HTTP功能測試。以下早期「施工中」與測試指令為原始文件，不能視為本次執行結果。
+
+
 決定依據：`docs/DECISIONS.md` D049–D060（取代 D040–D048 中 App 內開關、告知文案與 v2 payload 的部分）。最終規格：`/mnt/project-files/W001/W001-analytics-v2-final-spec.md`。
 狀態：**施工中，未驗收，未發布**。**本目錄程式碼可公開；任何 secret（`PEPPER`、`ADMIN_TOKEN`）都不得進 repository**，只能用 `wrangler secret put` 設定。
 
