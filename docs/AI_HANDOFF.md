@@ -5,6 +5,13 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W039（Codex，2026-10-17；說明示意圖還原2.2）
+- 基底 `f471b8b4f65a52f0c7ceed721dd602be4ada3083`，分支work-w039-tutorial-diagram-22。使用者指定只改說明動畫科判示意圖回2.2，其餘不變，D192。
+- 從正式2.2 `e31d57a` 原樣擷取help-anim-js的tree()、screen()中右欄vt與全屏操作簡介的var tree SVG；移除ha-tree b、ha-vt s的無框覆寫與intro tr rect隱藏規則，沿用原本仍在的2.2基底樣式。保留目前4.8秒時間軸、手勢素材／文案與更新動畫seq-tree。
+- 正式功能與資料、231／見林見樹／F／鎖定反黃、App／meta／SW 2.3.4、既有綠點起訖與已讀鍵均不改；僅資產metadata需重算。
+
+- 檢查：16段可執行inline JS與sw.js靜態語法、git diff --check通過；tools/build_release.py 2.3.4僅重算39項資產metadata，未編譯。未執行桌面／iPad直橫／手機直橫／韓藏版UI、E2E、功能或實機測試；共用示意圖與樣式套用各介面，功能邏輯未動。依本輪直接更新授權快轉main並推送，不新增tag；Pages公網狀態未確認。
+
 ## W038（Codex，2026-10-17；鎖定標籤三欄反黃修正，完成封存）
 - 綠點固定UTC時窗：`2026-10-16T19:28:58+00:00` 至 `2026-10-16T19:33:58+00:00`，共300秒；完成回覆對齊起點。16段inline JS＋sw.js靜態語法與git diff --check通過。
 - 基底 `bc8877a77a63bbb86662a2775fd506ff8dd00c5f`，分支work-w038-locked-highlight，版號2.3.4維持。使用者要求修正鎖定手動三欄反黃，開鎖自動追蹤；遇衝突先問，完成綠點。D191，衝突選項已回答。
