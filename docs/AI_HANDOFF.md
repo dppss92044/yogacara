@@ -5,7 +5,8 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
-## W039（Codex，2026-10-17；說明示意圖還原2.2）
+## W039（Codex，2026-10-17；說明示意圖還原2.2，完成封存）
+- 最後程式提交：`f1afb1e67b6091500739b5a38a9cb516e2d2b370`；封存提交見git log。
 - 基底 `f471b8b4f65a52f0c7ceed721dd602be4ada3083`，分支work-w039-tutorial-diagram-22。使用者指定只改說明動畫科判示意圖回2.2，其餘不變，D192。
 - 從正式2.2 `e31d57a` 原樣擷取help-anim-js的tree()、screen()中右欄vt與全屏操作簡介的var tree SVG；移除ha-tree b、ha-vt s的無框覆寫與intro tr rect隱藏規則，沿用原本仍在的2.2基底樣式。保留目前4.8秒時間軸、手勢素材／文案與更新動畫seq-tree。
 - 正式功能與資料、231／見林見樹／F／鎖定反黃、App／meta／SW 2.3.4、既有綠點起訖與已讀鍵均不改；僅資產metadata需重算。
