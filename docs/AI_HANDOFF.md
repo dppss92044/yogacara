@@ -5,6 +5,17 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W034（Codex，2026-10-17；不升版標籤定位修正，完成封存）
+- 固定確認視窗UTC：`2026-10-16T18:40:47+00:00` 至 `2026-10-16T18:45:47+00:00`（300秒）；回覆完成訊息對齊起點。最終17段inline JS與sw.js靜態語法及git diff --check通過；正式維護提交見main／git log「W034: 標籤僅定位、分幾專用展開」。
+- 基底v2.3.4 `3e3f05cbf872d0aad600e7cbcb0ba0c2123ca9c7`，分支work-w034-label-navigation。
+- 使用者要求各介面半／全屏標籤只定位、不展開，只有「分幾」才展開；不修正版號、默默合併，完成回覆三字「已更新」與五分鐘後失效的同名正面提示。D187。
+- 實作：canvas pointerup對所有標籤一律pick，不再按kc>0呼叫toggleCol。pick清除未決展開、記錄選取與返回目標；未鎖時以focusNode(i,'go',null,j)同步首頁、保留當前圖不關閉／重建／展開；跨版先切來源並檢查tree／ed仍相同。鎖定只選圖內節點。移除標籤雙擊go的舊行為。
+- hitMark展開範圍依實際FONT_H measureText或直書分幾字距，去除舊估算長度＋3px與過大的垂直命中範圍；只命中分幾才送toggleCol，單／雙擊展開規則維持，減號與鍵盤快捷鍵保留。
+- 版本App／meta／SW 2.3.4，依使用者不升版、不新增versionNotes／Summaries／更新動畫，不移動既有v2.3.4標籤。以main與本次靜默維護commit為準，重算39項SW metadata。
+- 三字正面狀態以全裝置共用role=status顯示，固定UTC起訖（完成通知對齊起點，五分鐘後到期），每次進入不重新計時；setTimeout及pageshow／visibility／focus重查，逾時移除且不再建立。頁面背景時不顯示，返回前景依原期限決定是否顯示。
+- 僅Node vm.Script靜態解析inline JS與sw.js、git diff --check；未編譯、未執行UI／E2E、功能／實機測試。Sources檢視共用藏／韓、半／全屏、裝置與鎖定分支。Pages公網部署完成狀態未確認，回覆「已更新」僅確認修改合併推送完成。
+
+
 ## W033（Codex，2026-10-17；v2.3.4平板預設雙欄與分隔線穩定修正，完成封存）
 - 最後程式提交：`d682bda5c7288fd05898efe79755ffe33804d52a`；發布封存提交見git log「更新至 v2.3.4」。
 - 基底v2.3.3 `8f0c8684e92fbafe889b97c7eacf67ac408e46aa`，分支work-w033-tablet-two-panes。
