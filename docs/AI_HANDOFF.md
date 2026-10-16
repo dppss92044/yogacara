@@ -6,6 +6,7 @@
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
 ## W032（Codex，2026-10-17；v2.3.3返回保留脈絡圖與觸控欄寬修正，完成封存）
+- 最後程式提交：`eb53eab6ecab61c35ee25fd4323743fabae327de`；發布封存提交見git log「更新至 v2.3.3」。
 - 基底v2.3.2 `aff8371ca1d1ba4ab1d2e9855b8c033230f35d8c`，分支work-w032-map-dock-gutters。
 - 使用者澄清：全屏F特定脈絡返回時仍是同一張圖，只縮到右欄，中間正文、三欄同步；再按圖示才回A4循環。另修平板電腦介面兩條欄寬分隔線拖曳。D185取代D183返回直接A4的解讀。
 - 核心：hideMap在教學還原後記錄mapDockPending（選取、縮放、鏡頭），finishMapReturn清理原歷史後同步首頁，再dockCurrentMap沿用同一model／col／focusI／範圍與樣式並setEmb(true)。保留F及收展，不呼叫open/load；顯示選取附近，保留縮放。多欄返回強制正文中／科判右並開啟卷次與科判，單欄回正文但科判分頁保存原圖。
