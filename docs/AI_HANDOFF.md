@@ -5,6 +5,18 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W038（Codex，2026-10-17；鎖定標籤三欄反黃修正，完成封存）
+- 綠點固定UTC時窗：`2026-10-16T19:28:58+00:00` 至 `2026-10-16T19:33:58+00:00`，共300秒；完成回覆對齊起點。16段inline JS＋sw.js靜態語法與git diff --check通過。
+- 基底 `bc8877a77a63bbb86662a2775fd506ff8dd00c5f`，分支work-w038-locked-highlight，版號2.3.4維持。使用者要求修正鎖定手動三欄反黃，開鎖自動追蹤；遇衝突先問，完成綠點。D191，衝突選項已回答。
+- 使用者明確裁定：完成後五分鐘綠點；開鎖滑出F範圍退出F並三欄同步；鎖定點未展開節點維持收合、圖中反黃可見上層。此條優先於D187／D190相衝內容。
+- 修正pick的鎖定early-return，手動標籤不再因__trackLocked停止focusNode同步。pick設curI與selI，路徑列同樣呼叫pick，不另開展開入口。focusNode與承接科判carryFocus發送reader-node-selected，manualMapSelection只更新圖中可見節點或其可見祖先，保留col不展開、source=go不平移自己的圖，其餘來源明確點選可定位圖面；embLast記錄真實S.cur避免鎖定計時器覆蓋手動反黃。
+- 反黃：trackAttr不再用data-km-track=off隱藏其他欄的on／cur，draw curCur一律shownCur，不因embSync關閉而隱藏手動選取；pointerleave清除sel仍由curI保持反黃。spy RAF內再次檢查鎖定，避免鎖定後已排程spy仍跳位置；鎖定遞增animId停止既有平移，開鎖清embLast／embSkip以立即恢復。
+- releaseFocusOutside使正文跳出F分支時還原進度或退出舊focusI，再followJourney；跨卷自動跟讀不再把實際節點強制改成卷首，避免三欄反黃不同。手動選取遇F範圍外也先還原分支範圍，再依鎖定保留收合／可見上層的裁定定位，不自動開路徑。
+- 綠點使用獨立本次期限已讀鍵，保留點擊即消失／逾時不重建，固定完成時間起五分鐘，不沿用舊03:25期限。不改2.3.4或已有版本標籤，不新增更新說明UI。
+- 驗證僅Node vm.Script靜態解析16段inline JS＋sw.js及git diff --check；重算39項SW metadata，未編譯、未執行UI／E2E、功能／實機／離線測試。來源檢視藏／韓、各裝置共用、鎖定／開鎖、可見祖先／F退出、期限；不宣稱實機驗證通過。
+- 本次修正延續使用者直接更新授權，完成後快轉合併推送main，不開PR、不強推；最終提交見git log「W038: 鎖定手動三欄反黃與開鎖追蹤修正」。Pages公網完成狀態未確認。
+
+
 ## W037（Codex，2026-10-17；半頁旅程與全圖切換，完成封存）
 - 最後程式提交：`0f16ce9b9de6435aeb4d09847197adb797b18145`；封存提交見git log。
 - 基底 `4867f3cd4a349abd9d26071e1e146334309c779f`，分支work-w037-forest-journey。使用者授權推送：初卷圖式、開鎖自動展開、見林見樹、跳卷模式、F、半頁減號常駐與03:25到期可點消失紅點。D190，2.3.4不升版。
