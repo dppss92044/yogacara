@@ -6,6 +6,7 @@
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
 ## W033（Codex，2026-10-17；v2.3.4平板預設雙欄與分隔線穩定修正，完成封存）
+- 最後程式提交：`d682bda5c7288fd05898efe79755ffe33804d52a`；發布封存提交見git log「更新至 v2.3.4」。
 - 基底v2.3.3 `8f0c8684e92fbafe889b97c7eacf67ac408e46aa`，分支work-w033-tablet-two-panes。
 - 使用者要求平板電腦介面預設正文／科判1:1，左卷次只點選才出現，返回不得自動跳出；手動拖曳更順更穩。默默修正、不新增更新說明。D186。
 - 實作：resolveDeviceLayout保存physicalTablet，tabletDesktopMode僅匹配實體平板＋mac。啟動／進入此模式預設railOn=false、equalPanes=true；setRail(on,explicit)以tabletRailRequested阻擋自動開啟，只有railOpen明確點選才允許true，關閉清除狀態。返回dock不再對此模式setRail(true)，其他裝置照舊；隱藏卷次仍同步位置。boundWidths以railOn判斷保留寬度，避免把隱藏卷次算入正文／科判分配。
