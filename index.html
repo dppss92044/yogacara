@@ -3865,7 +3865,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   var VN_KIND={new:'新增功能',fix:'修正 Bug',improve:'操作改善'};
   /* 版本更新資料（單一來源）：[類型, 說明, 1=重要項目→出現在更新提醒]；全部項目→「關於 → 版本內容」。新版本請加在最前面。 */
   var versionNotes={"2.3.0":{date:"2026年10月16日",items:[
-    ["new","科判分支單擊展開一層、雙擊全部展開；減號單擊收合一層、雙擊全部收合。",1],
+    ["new","科判分支單擊展開一層、雙擊全部展開；減號單擊立即收合所有子層。",1],
     ["improve","手機／平板全屏按鍵內縮放大，收合減號常駐；移除全開懸浮按鈕。",1],
     ["new","更新動畫Before展示拖曳痛點，After依裝置以指尖或滑鼠示範單雙擊。",1],
     ["improve","通知開啟自動播放，關閉或未開啟只顯示鈴鐺紅點；版本全面採Semantic Versioning。",1]
@@ -3897,7 +3897,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
     ["improve","手機版導覽視窗改為顯示在畫面正中央。"],
     ["new","新增「版本」，更新後有小紅點，可查看更新內容。",1]
   ]}};
-  var versionSummaries={"2.3.0":"科判分支與減號統一單雙擊分層或全部收展；移除全開懸浮按鈕。更新動畫改為拖曳痛點與指尖／滑鼠單雙擊對照，通知依開啟設定分流。自本版採SemVer。","1.92":"","1.91":"關於：藏經來源合併為一段。功能面板標題下方縮短；版本顯示「藏經版」，選項為「大藏經版」。科判欄右下頁碼改為「x/96」白色膠囊，可直接輸入或用 0–9 數字鍵跳頁；左下「回上方」固定在角落、平時淡、滑過才明顯，兩者左右對稱。滑鼠停在功能按鈕兩秒會出現小說明框。選取標題的黃底改為微圓角。","1.90":"跟隨裝置深色模式：手機、平板、電腦在系統切到深色（夜間）時自動黑底白字。","1.89":"修正百卷浮窗離開範圍、點正文或選卷後仍停留。","1.88":"全部重置圖示移到字體設定右下；科標顏色的「預設」移到最右邊。","1.87":"關於：加入藏版來源（臺大佛學數位圖書館《大正藏》T30n1579 PDF）。\n字體設定：移除預設說明列；字體選單文字置中；科標顏色只留色塊與「預設」，點空白處不再開啟色盤；全部重置只留圖示，滑過才顯示文字。","1.86":"「全部重置」按鈕文字置中，按鈕移到字體設定底部正中。\n功能子頁面（內文、字體等）不再出現「導覽」列。","1.85":"字體設定：科標顏色色塊靠左，旁邊「預設」只還原顏色；下方圓鈕改為「全部重置」並上移。","1.84":"修正功能選單按鈕被工具膠囊樣式壓縮（版本、內文、導覽、匯出等列恢復正常）。","1.83":"收起卷次後，縮圖鈕併入左上膠囊，三個按鈕等寬。\n所有工具膠囊（大小、搜尋、縮圖、科標、⋯⇆、小｜大）統一全圓角。","1.82":"卷次欄各卷之間不再有分隔線。\n百卷清單預設收起：滑過「卷目次」浮出，按一下才固定展開。\n收起卷次欄後，左上縮圖鈕保留，工具列自動往右讓位。","1.81":"導覽只保留一個，名稱改為「導覽」。\n正文右上恢復「大小」標示，按下時才顯示目前比率。\n開啟加快：已下載的版本直接開啟，不再每次重新下載整個首頁；有新版時背景更新後自動切換一次。","1.80":"藏版匯出新增直書科判表 PDF，可選干支或章節。\n匯出格式 Markdown 改稱 md；單選項目再點一下即可取消。\n電腦版辭典（含外部頁面備援）隨正文放大縮小即時調整。","1.79":"電腦卷次與正文預設120%，正文顯示倍率；辭典內文隨正文倍率調整、增加字距並採新細明體優先；行動科判回卷首操作統一；分開概略／詳細導覽；手機辭典預覽置中並統一圓角。","1.78":"科判新增實際文字與支線邊界校正，超出閱讀紙面時僅調整該頁；字型載入後重新校正可見頁並保留閱讀位置與反白；共用於藏版、韓版及手機／平板／電腦。","1.77":"卷次大小與縮圖外框改用欄位灰底；電腦正文工具列靠近左右上角；科標文字垂直置中；顏色設定改為淡紅色科標，保留標題原色；滑過字體浮窗即可固定操作；卷次原生捲動不再自動向右偏移，手動位置保持至主動選科或換卷。","1.76":"電腦科判工具列改為浮動，移除上方多餘留白；科標與功能按鍵採同款圓角外框；取消電腦卷次圖釘；正文卷名置中；卷次標題可直接選卷；正文反白追蹤線調至2/6；新增電腦科判標題顏色與預設還原。","1.67":"v1.67\n最後更新：2026年10月4日","1.66":"v1.66（2026年10月4日更新）\n\n1. 正文捲動時，標題上滑到畫面約五分之二處即自動反白，卷次、科判兩欄同步。\n2. 科標（干支／章節）改到科判欄左上角，點一下切換；功能列表移除科標。\n3. 正文右上改回「藏版／韓版」。\n4. 藏版直書科判：各分支依自身高度往下排，不再為對齊而拉長支線。\n5. 藏版直書科判：有下層的科，標題超過五字換行（七字為四、三）；沒有下層的科原則不換行。\n6. 章節科標後空一字再接標題；換行的兩行間距縮小一半。\n7. 字體「恢復預設」一併還原拖曳過的欄寬與大小。\n8. 電腦版功能浮窗可直接滑過去點選，不再跳掉；功能鍵不再蓋住卷次縮圖鈕。\n9. 字體設定移除卷次／科判大小列（電腦正文的放大縮小保留）。\n10. 版本說明精簡。","1.65":"feat(sync): 捲動正文時三欄一律跟讀反白（點空白不再停止）\nrefactor(chart): 藏版直書科判重排：字後直接接支線、兄弟等距、支架直線置中、紙面空時放寬間距\nfix(chart): 超過 12 字平均分兩欄，續欄與首欄正文同高、欄距加寬\nfix(chart): 括號不斷欄；標題後括號小注與 (分N) 同字級、同色\nstyle(chart): 阿拉伯數字用 Times New Roman\nstyle(text): 正文欄科判標題灰色加深\nfeat(menu): 問題回報直接開郵件；版本紀錄改成單一文件（新的在上）\nremove(hk): 韓版移除章節科標，只留干支","1.64":"revert(chart): 直書科判恢復 v1.59 版面（原排法，長標題下方有空間才合回一欄），標號顏色保留\nfix(text): 正文欄科判標題改淡灰色（兩版）\nfix(rail): 上層科判在前一卷時，樹狀豎線照樣延伸到頂\nfix(rail): 副標題「本卷 N 科」與全部科判一起縮排\nfix(rail): 手動拖橫向捲軸後不再強制左右對焦\nfix(menu): 點「介面」直接釘住右側三個圖示，移除獨立頁面","1.63":"桌面正文捲動持續追蹤下一科判，其他兩欄同步定位，點空白停止；科判標題約六字換直欄；功能列表分為閱讀、顯示、其他並保留八個入口；大小工具收進字體設定，手機新增卷次浮窗、淡色置中卷名，科判縮放限制100%～200%。","1.62":"科判改為各分支依標題長度排列，縮短多餘支線；標題墨色統一，尾端括號與分科小字同格式；修正三欄同標題黃底連動、正文捲動標示與隱藏欄位同步；點擊正文與科判後將目標定位於畫面中上方。","1.27":"feat(layout): 手機／平板／電腦三種自適應介面\nfeat(prefs): 記住介面偏好","1.28":"feat(study): 學習模式、筆記保存\nfeat(export): 多格式匯出\nfix(ipad): 科判釘選","1.29":"feat(dict): 佛學名相辭典、原文查詞、外部詞條預覽","1.30":"feat(notes): 段落內直接編輯、筆記樣式、篩選\nfeat(dict): 反白查詞","1.31":"feat(view): 原文／筆記自由組合顯示\nfeat(print): 完整列印、小冊子","1.32":"feat(layout): 內文與科判左右置換並保存","1.33":"refactor(study): 右鍵／長按叫出註釋、心得、提問\nfeat(print): 擴充紙張","1.34":"chore: 無紀錄","1.35":"chore: 無紀錄","1.36":"fix(outline): 還原串文縮排、間距、連接線\nrefactor(menu): 重整功能列表","1.37":"refactor(menu): 分層選單\nremove(notes): 移除書寫與筆記，保留閱讀核心","1.38":"refactor(dict): 只保留反白查詞","1.39":"refactor(tour): 重整導覽與提示\nrefactor(search): 單一放大鏡","1.40":"feat(desktop): 內文與科判預設 1:1\nfix(font): 恢復預設","1.41":"remove(toolbar): 上方常駐功能列\nfeat(menu): 點外部或空白鍵關閉","1.42":"refactor(chart): 簡化頁碼\nfix(ipad): 欄位排列、保留閱讀位置","1.43":"feat(ipad): 可保存的拖曳欄寬\nfix(menu): 固定時不影響正文版面","1.44":"style(search): 提示文字、縮排、輸入位置","1.45":"feat(ipad): 橫向三欄、直向單欄","1.46":"fix(responsive): 手機／平板搜尋、選單、科判溢出、裝置偵測","1.47":"feat(sync): 目次、正文、科判位置連動\nfix(dict): 觸控反白、辭典邊界\nrefactor(mobile): 功能列表改小型浮窗","1.48":"feat(pwa): 自動更新","1.49":"refactor(state): 統一閱讀位置與欄位狀態\nfix(mobile): 欄寬、旋轉、搜尋、浮窗定位\nfeat(pwa): 更新後保存閱讀位置","1.50":"feat(outline): 目次橫書自動對焦\nfeat(phone): 雙擊連動、邊緣翻頁、A4 單頁科判、預設 125%","1.51":"fix(dict): 放開後才顯示\nrefactor(menu): 分組子頁\nfeat(phone): 自動鎖定介面\nfeat(about): 版本紀錄","1.52":"feat(motion): 統一動效、按鍵回饋、拖曳節流\nfeat(zoom): 50%～200%、25% 級距\nfeat(theme): 四種閱讀底色","1.53":"revert(theme): 白底配色\nfeat(zoom): 預設 100%、10% 級距\nfeat(reader): 正文跨卷連續閱讀\nfeat(chart): 連續捲動","1.54":"feat(edition): 韓清淨／藏經版本切換\nfix(dict): 觸控反白查詞\nfix(chart): 100% 不左右滑\nrefactor(ui): 字體、匯出面板、底部導覽\nperf(scroll): 行動版捲動","1.55":"fix(pwa): index.html network-first\nfix(pwa): 每版獨立快取、activate 清舊快取\nfeat(pwa): 安全時機自動重新載入一次並還原位置","1.56":"feat(edition): 預設藏經科判、正文版本字\nfeat(about): 問題回報\nfeat(menu): 電腦懸停子選單\nfeat(chart): 捏合縮放、頁首可點\nfix(chart): 直書括號\nperf(scroll): 行動捲動","1.57":"fix(nav): 點卷號停在前一卷","1.58":"feat(label): 藏版科標 干支／章節\nfeat(edition): 點版本字直接切換\nfix(chart): 長標題換欄、連接線置中、括號半形\nfix(chart): 點科判不跳頁；(分N) 跳下一層\nfix(chart): 縮放以中央為準\nfix(outline): 樹狀線接字中央\nfix(dict): 查詞鍵移到反白下方\nstyle(menu): 介面底色、匯出、問題回報精簡","1.59":"fix(outline): 藏版承接前卷的科判不再跳到別卷\nfix(nav): 點卷號時卷首貼齊頂端、不露前一卷\nfeat(edition): 切換版本停在同一段原文，三欄同步\nfix(menu): 介面浮窗出現在右側、目前選項以底色標示、縮小\nstyle(font): 字體列縮窄，「粗度」改「粗細」\nrename(menu): 科判標號 → 科標\nrefactor(about): 版本紀錄改程式摘要","1.61":"修正卷內早段定位被捲動偵測覆蓋與三欄選卷同步；行動版辭典移回底部；修正科判捏合與放開定位、兩版科標切換；手機正文單卷捲軸與卷末阻尼換卷；固定顯示目前卷名；修正離線重開後卷首定位覆蓋閱讀位置。","1.60":"refactor(chart): 直書科判每頁依樹狀結構重排（兩版、全部頁面）\nfix(chart): 連接線接在第一欄（標號欄）正中，不歪、不突出\nfix(chart): 奇數子科：中間那科與上層同一直線\nfix(chart): 兄弟等距；放不下時逐組等距，橫排小表等距\nfix(chart): 括號整組移到下一欄開頭，不斷在欄尾\nfix(chart): 高度不夠才分欄；續欄從標號下方起，不留單字孤欄\nfix(label): 章節科標不留空格，與干支同一排版"};
+  var versionSummaries={"2.3.0":"科判分支單擊展開一層、雙擊全展開；減號單擊立即收合所有子層。移除全開懸浮按鈕，說明動畫採立體卡通手勢與無框干支圖式，通知依開啟設定分流。自本版採SemVer。","1.92":"","1.91":"關於：藏經來源合併為一段。功能面板標題下方縮短；版本顯示「藏經版」，選項為「大藏經版」。科判欄右下頁碼改為「x/96」白色膠囊，可直接輸入或用 0–9 數字鍵跳頁；左下「回上方」固定在角落、平時淡、滑過才明顯，兩者左右對稱。滑鼠停在功能按鈕兩秒會出現小說明框。選取標題的黃底改為微圓角。","1.90":"跟隨裝置深色模式：手機、平板、電腦在系統切到深色（夜間）時自動黑底白字。","1.89":"修正百卷浮窗離開範圍、點正文或選卷後仍停留。","1.88":"全部重置圖示移到字體設定右下；科標顏色的「預設」移到最右邊。","1.87":"關於：加入藏版來源（臺大佛學數位圖書館《大正藏》T30n1579 PDF）。\n字體設定：移除預設說明列；字體選單文字置中；科標顏色只留色塊與「預設」，點空白處不再開啟色盤；全部重置只留圖示，滑過才顯示文字。","1.86":"「全部重置」按鈕文字置中，按鈕移到字體設定底部正中。\n功能子頁面（內文、字體等）不再出現「導覽」列。","1.85":"字體設定：科標顏色色塊靠左，旁邊「預設」只還原顏色；下方圓鈕改為「全部重置」並上移。","1.84":"修正功能選單按鈕被工具膠囊樣式壓縮（版本、內文、導覽、匯出等列恢復正常）。","1.83":"收起卷次後，縮圖鈕併入左上膠囊，三個按鈕等寬。\n所有工具膠囊（大小、搜尋、縮圖、科標、⋯⇆、小｜大）統一全圓角。","1.82":"卷次欄各卷之間不再有分隔線。\n百卷清單預設收起：滑過「卷目次」浮出，按一下才固定展開。\n收起卷次欄後，左上縮圖鈕保留，工具列自動往右讓位。","1.81":"導覽只保留一個，名稱改為「導覽」。\n正文右上恢復「大小」標示，按下時才顯示目前比率。\n開啟加快：已下載的版本直接開啟，不再每次重新下載整個首頁；有新版時背景更新後自動切換一次。","1.80":"藏版匯出新增直書科判表 PDF，可選干支或章節。\n匯出格式 Markdown 改稱 md；單選項目再點一下即可取消。\n電腦版辭典（含外部頁面備援）隨正文放大縮小即時調整。","1.79":"電腦卷次與正文預設120%，正文顯示倍率；辭典內文隨正文倍率調整、增加字距並採新細明體優先；行動科判回卷首操作統一；分開概略／詳細導覽；手機辭典預覽置中並統一圓角。","1.78":"科判新增實際文字與支線邊界校正，超出閱讀紙面時僅調整該頁；字型載入後重新校正可見頁並保留閱讀位置與反白；共用於藏版、韓版及手機／平板／電腦。","1.77":"卷次大小與縮圖外框改用欄位灰底；電腦正文工具列靠近左右上角；科標文字垂直置中；顏色設定改為淡紅色科標，保留標題原色；滑過字體浮窗即可固定操作；卷次原生捲動不再自動向右偏移，手動位置保持至主動選科或換卷。","1.76":"電腦科判工具列改為浮動，移除上方多餘留白；科標與功能按鍵採同款圓角外框；取消電腦卷次圖釘；正文卷名置中；卷次標題可直接選卷；正文反白追蹤線調至2/6；新增電腦科判標題顏色與預設還原。","1.67":"v1.67\n最後更新：2026年10月4日","1.66":"v1.66（2026年10月4日更新）\n\n1. 正文捲動時，標題上滑到畫面約五分之二處即自動反白，卷次、科判兩欄同步。\n2. 科標（干支／章節）改到科判欄左上角，點一下切換；功能列表移除科標。\n3. 正文右上改回「藏版／韓版」。\n4. 藏版直書科判：各分支依自身高度往下排，不再為對齊而拉長支線。\n5. 藏版直書科判：有下層的科，標題超過五字換行（七字為四、三）；沒有下層的科原則不換行。\n6. 章節科標後空一字再接標題；換行的兩行間距縮小一半。\n7. 字體「恢復預設」一併還原拖曳過的欄寬與大小。\n8. 電腦版功能浮窗可直接滑過去點選，不再跳掉；功能鍵不再蓋住卷次縮圖鈕。\n9. 字體設定移除卷次／科判大小列（電腦正文的放大縮小保留）。\n10. 版本說明精簡。","1.65":"feat(sync): 捲動正文時三欄一律跟讀反白（點空白不再停止）\nrefactor(chart): 藏版直書科判重排：字後直接接支線、兄弟等距、支架直線置中、紙面空時放寬間距\nfix(chart): 超過 12 字平均分兩欄，續欄與首欄正文同高、欄距加寬\nfix(chart): 括號不斷欄；標題後括號小注與 (分N) 同字級、同色\nstyle(chart): 阿拉伯數字用 Times New Roman\nstyle(text): 正文欄科判標題灰色加深\nfeat(menu): 問題回報直接開郵件；版本紀錄改成單一文件（新的在上）\nremove(hk): 韓版移除章節科標，只留干支","1.64":"revert(chart): 直書科判恢復 v1.59 版面（原排法，長標題下方有空間才合回一欄），標號顏色保留\nfix(text): 正文欄科判標題改淡灰色（兩版）\nfix(rail): 上層科判在前一卷時，樹狀豎線照樣延伸到頂\nfix(rail): 副標題「本卷 N 科」與全部科判一起縮排\nfix(rail): 手動拖橫向捲軸後不再強制左右對焦\nfix(menu): 點「介面」直接釘住右側三個圖示，移除獨立頁面","1.63":"桌面正文捲動持續追蹤下一科判，其他兩欄同步定位，點空白停止；科判標題約六字換直欄；功能列表分為閱讀、顯示、其他並保留八個入口；大小工具收進字體設定，手機新增卷次浮窗、淡色置中卷名，科判縮放限制100%～200%。","1.62":"科判改為各分支依標題長度排列，縮短多餘支線；標題墨色統一，尾端括號與分科小字同格式；修正三欄同標題黃底連動、正文捲動標示與隱藏欄位同步；點擊正文與科判後將目標定位於畫面中上方。","1.27":"feat(layout): 手機／平板／電腦三種自適應介面\nfeat(prefs): 記住介面偏好","1.28":"feat(study): 學習模式、筆記保存\nfeat(export): 多格式匯出\nfix(ipad): 科判釘選","1.29":"feat(dict): 佛學名相辭典、原文查詞、外部詞條預覽","1.30":"feat(notes): 段落內直接編輯、筆記樣式、篩選\nfeat(dict): 反白查詞","1.31":"feat(view): 原文／筆記自由組合顯示\nfeat(print): 完整列印、小冊子","1.32":"feat(layout): 內文與科判左右置換並保存","1.33":"refactor(study): 右鍵／長按叫出註釋、心得、提問\nfeat(print): 擴充紙張","1.34":"chore: 無紀錄","1.35":"chore: 無紀錄","1.36":"fix(outline): 還原串文縮排、間距、連接線\nrefactor(menu): 重整功能列表","1.37":"refactor(menu): 分層選單\nremove(notes): 移除書寫與筆記，保留閱讀核心","1.38":"refactor(dict): 只保留反白查詞","1.39":"refactor(tour): 重整導覽與提示\nrefactor(search): 單一放大鏡","1.40":"feat(desktop): 內文與科判預設 1:1\nfix(font): 恢復預設","1.41":"remove(toolbar): 上方常駐功能列\nfeat(menu): 點外部或空白鍵關閉","1.42":"refactor(chart): 簡化頁碼\nfix(ipad): 欄位排列、保留閱讀位置","1.43":"feat(ipad): 可保存的拖曳欄寬\nfix(menu): 固定時不影響正文版面","1.44":"style(search): 提示文字、縮排、輸入位置","1.45":"feat(ipad): 橫向三欄、直向單欄","1.46":"fix(responsive): 手機／平板搜尋、選單、科判溢出、裝置偵測","1.47":"feat(sync): 目次、正文、科判位置連動\nfix(dict): 觸控反白、辭典邊界\nrefactor(mobile): 功能列表改小型浮窗","1.48":"feat(pwa): 自動更新","1.49":"refactor(state): 統一閱讀位置與欄位狀態\nfix(mobile): 欄寬、旋轉、搜尋、浮窗定位\nfeat(pwa): 更新後保存閱讀位置","1.50":"feat(outline): 目次橫書自動對焦\nfeat(phone): 雙擊連動、邊緣翻頁、A4 單頁科判、預設 125%","1.51":"fix(dict): 放開後才顯示\nrefactor(menu): 分組子頁\nfeat(phone): 自動鎖定介面\nfeat(about): 版本紀錄","1.52":"feat(motion): 統一動效、按鍵回饋、拖曳節流\nfeat(zoom): 50%～200%、25% 級距\nfeat(theme): 四種閱讀底色","1.53":"revert(theme): 白底配色\nfeat(zoom): 預設 100%、10% 級距\nfeat(reader): 正文跨卷連續閱讀\nfeat(chart): 連續捲動","1.54":"feat(edition): 韓清淨／藏經版本切換\nfix(dict): 觸控反白查詞\nfix(chart): 100% 不左右滑\nrefactor(ui): 字體、匯出面板、底部導覽\nperf(scroll): 行動版捲動","1.55":"fix(pwa): index.html network-first\nfix(pwa): 每版獨立快取、activate 清舊快取\nfeat(pwa): 安全時機自動重新載入一次並還原位置","1.56":"feat(edition): 預設藏經科判、正文版本字\nfeat(about): 問題回報\nfeat(menu): 電腦懸停子選單\nfeat(chart): 捏合縮放、頁首可點\nfix(chart): 直書括號\nperf(scroll): 行動捲動","1.57":"fix(nav): 點卷號停在前一卷","1.58":"feat(label): 藏版科標 干支／章節\nfeat(edition): 點版本字直接切換\nfix(chart): 長標題換欄、連接線置中、括號半形\nfix(chart): 點科判不跳頁；(分N) 跳下一層\nfix(chart): 縮放以中央為準\nfix(outline): 樹狀線接字中央\nfix(dict): 查詞鍵移到反白下方\nstyle(menu): 介面底色、匯出、問題回報精簡","1.59":"fix(outline): 藏版承接前卷的科判不再跳到別卷\nfix(nav): 點卷號時卷首貼齊頂端、不露前一卷\nfeat(edition): 切換版本停在同一段原文，三欄同步\nfix(menu): 介面浮窗出現在右側、目前選項以底色標示、縮小\nstyle(font): 字體列縮窄，「粗度」改「粗細」\nrename(menu): 科判標號 → 科標\nrefactor(about): 版本紀錄改程式摘要","1.61":"修正卷內早段定位被捲動偵測覆蓋與三欄選卷同步；行動版辭典移回底部；修正科判捏合與放開定位、兩版科標切換；手機正文單卷捲軸與卷末阻尼換卷；固定顯示目前卷名；修正離線重開後卷首定位覆蓋閱讀位置。","1.60":"refactor(chart): 直書科判每頁依樹狀結構重排（兩版、全部頁面）\nfix(chart): 連接線接在第一欄（標號欄）正中，不歪、不突出\nfix(chart): 奇數子科：中間那科與上層同一直線\nfix(chart): 兄弟等距；放不下時逐組等距，橫排小表等距\nfix(chart): 括號整組移到下一欄開頭，不斷在欄尾\nfix(chart): 高度不夠才分欄；續欄從標號下方起，不留單字孤欄\nfix(label): 章節科標不留空格，與干支同一排版"};
   (function(){var a=document.getElementById('appVer'),cur=((a&&a.textContent)||'').replace(/^(v|beta\s*)/i,'').split('.').map(Number),prev=!/[?&]preview=off(&|$)/.test(location.search)&&cur[0]<2;
     window.__fu=prev||/[?&]preview=update(&|$)/.test(location.search);if(cur[0]<2){if(prev&&a)a.textContent='v2.1';else delete versionNotes['2.0'];}})();
   Object.keys(versionNotes).forEach(function(v){versionSummaries[v]=versionNotes[v].items.map(function(i){return VN_KIND[i[0]]+'：'+i[1];}).join('\n');});
@@ -4928,21 +4928,17 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         setStatus(model.n?'':'沒有科判');hintEl.textContent=hintEl.textContent.replace(/顯示 \d+ 科/,'顯示 '+model.own+' 科');
         if(recenter)homeView();updChip();req();
       }
-      var nodeTogglePending=null,NODE_TAP_MS=340;
-      function cancelNodeToggle(){if(nodeTogglePending)clearTimeout(nodeTogglePending.timer);nodeTogglePending=null;}
+      var nodeTogglePending=null,nodeCollapseGuard=null,NODE_TAP_MS=340;
+      function cancelNodeToggle(){if(nodeTogglePending)clearTimeout(nodeTogglePending.timer);nodeTogglePending=null;nodeCollapseGuard=null;}
       function branchNodes(i){var out=[],stack=[[i,0]];while(stack.length){var entry=stack.pop();out.push(entry);prKids(entry[0]).forEach(function(k){stack.push([k,entry[1]+1]);});}return out;}
       function stepNode(i,action,all){
         if(i<0||!model||!model.inc[i]||!model.kc[i])return;
         var nodes=branchNodes(i);
-        if(all){nodes.forEach(function(entry){var k=entry[0];col[k]=action==='collapse'&&model.kc[k]>0?1:0;});}
+        if(action==='collapse'||all){nodes.forEach(function(entry){var k=entry[0];col[k]=action==='collapse'&&model.kc[k]>0?1:0;});}
         else if(action==='expand'){
           var frontier=nodes.filter(function(entry){return model.inc[entry[0]]&&model.col[entry[0]]&&model.kc[entry[0]]>0;});
           if(!frontier.length){selI=i;catalogSync();updChip();req();return;}
           frontier.forEach(function(entry){var k=entry[0];col[k]=0;prKids(k).forEach(function(c){if(model.kc[c]>0)col[c]=1;});});
-        }else{
-          var visible=0;nodes.forEach(function(entry){if(model.inc[entry[0]]&&entry[1]>visible)visible=entry[1];});
-          var target=Math.max(0,visible-1);
-          nodes.forEach(function(entry){var k=entry[0];col[k]=entry[1]>=target&&model.kc[k]>0?1:0;});
         }
         selI=i;catalogSync();
         rebuild(i);
@@ -4950,6 +4946,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function toggleCol(i,action){
         if(i<0||!model||!model.inc[i]||!model.kc[i])return;
         action=action||(col[i]?'expand':'collapse');var now=performance.now(),p=nodeTogglePending;
+        // Minus is immediate and single-action only; debounce prevents a rapid repeat reopening (分N).
+        if(action==='collapse'){cancelNodeToggle();stepNode(i,'collapse',true);nodeCollapseGuard={i:i,time:now,tree:NN};return;}
+        if(nodeCollapseGuard&&nodeCollapseGuard.i===i&&nodeCollapseGuard.tree===NN&&now-nodeCollapseGuard.time<NODE_TAP_MS)return;
         if(p&&p.i===i&&p.action===action&&p.model===model&&now-p.time<=NODE_TAP_MS){cancelNodeToggle();stepNode(i,action,true);return;}
         if(p){cancelNodeToggle();if(p.model===model)stepNode(p.i,p.action,false);}
         if(!model.inc[i])return;
@@ -5393,9 +5392,9 @@ pg.blocks.forEach(function(b){
         box.querySelectorAll('.km-pop').forEach(function(pp){settingsEl.appendChild(pp);});
         controls.appendChild(controls.querySelector('[data-a=settings]'));surface.appendChild(settingsEl);surface.appendChild(controls);branchTitle=document.createElement('button');branchTitle.type='button';branchTitle.className='km-branch-title';branchTitle.hidden=true;branchTitle.addEventListener('click',function(){pick(+branchTitle.dataset.node);});surface.appendChild(branchTitle);nodeControl=document.createElement('button');nodeControl.type='button';nodeControl.className='km-node-control';nodeControl.hidden=true;nodeControl.addEventListener('click',function(){toggleCol(+nodeControl.dataset.node);});box.appendChild(nodeControl);box.querySelector('.km-tour-mask').addEventListener('click',dismissOverlays);(function(){var bb=document.createElement('button');bb.type='button';bb.className='km-backall';bb.hidden=true;bb.textContent='回全覽';bb.setAttribute('aria-label','回到一開始進來的分支');bb.addEventListener('click',function(e){e.stopPropagation();viewStack=[];restoreEntry();});surface.appendChild(bb);window.backAllShow=function(on){bb.hidden=!on;};})();
         (function(){var MK={"whole": "<div class=\"mk-bar\"><b class=\"mb\">⚙</b><b class=\"mb\">?</b><b class=\"mb mw\"><span class=\"a\">全部</span><span class=\"b\">返回</span><svg class=\"mc\" viewBox=\"0 0 24 24\"><path d=\"M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z\" fill=\"#fff\" stroke=\"#222\" stroke-width=\"1.3\" stroke-linejoin=\"round\"/></svg></b><b class=\"mb\">🖨</b></div>", "vol": "<div class=\"mv-bar\"><b class=\"ic\">▤</b><i>1</i><i>2</i><i>3</i><i>4</i><i class=\"p5\">5<span class=\"cw\"><svg class=\"mc\" viewBox=\"0 0 24 24\"><path d=\"M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z\" fill=\"#fff\" stroke=\"#222\" stroke-width=\"1.3\" stroke-linejoin=\"round\"/></svg></span></i><i>6</i><i>7</i></div><div class=\"mv-back\">回全覽</div>", "gear": "<div class=\"mg-g\"><b class=\"mb\">⚙</b><span class=\"cw\"><svg class=\"mc\" viewBox=\"0 0 24 24\"><path d=\"M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z\" fill=\"#fff\" stroke=\"#222\" stroke-width=\"1.3\" stroke-linejoin=\"round\"/></svg></span></div><div class=\"mg-p\"><div class=\"t\"><b>卷次</b><b class=\"on\">介面</b></div><u>邏輯圖</u><u>標號</u><u>樣式</u></div>", "ly": "<div class=\"ml\"><u>邏輯圖</u><u>心智圖</u><u>括弧圖</u><u>樹狀圖</u><u>表格圖</u><u>時間軸</u></div>", "split": "<div class=\"ms\"><div class=\"l\"><i></i><i></i><i></i></div><div class=\"r\"><em></em><em></em><em></em><em></em></div></div>", "line": "<div class=\"mq\"><b class=\"p\">甲</b><span class=\"ln\"></span><b class=\"c c1\">乙一</b><b class=\"c c2\">乙二</b><span class=\"qc\"><svg class=\"mc\" viewBox=\"0 0 24 24\"><path d=\"M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z\" fill=\"#fff\" stroke=\"#222\" stroke-width=\"1.3\" stroke-linejoin=\"round\"/></svg></span></div>", "lv": "<div class=\"mlv\"><b class=\"c0\">甲</b><span class=\"cl c1\"><b>乙一</b><b>乙二</b></span><span class=\"cl c2\"><b>丙一</b><b>丙二</b><b>丙三</b></span><div class=\"kk\"><b class=\"kp\">＋</b><b class=\"km\">−</b></div></div>", "col": "<div class=\"mx\"><b class=\"n\">甲</b><b class=\"m\">−<span class=\"cw\"><svg class=\"mc\" viewBox=\"0 0 24 24\"><path d=\"M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z\" fill=\"#fff\" stroke=\"#222\" stroke-width=\"1.3\" stroke-linejoin=\"round\"/></svg></span></b><b class=\"f\">(分2)</b><div class=\"k\"><b>乙一</b><b>乙二</b></div></div>"};
-          var scenes=[['拖曳移動',['按住滑鼠左鍵拖一拖，圖就跟著動。','手機、平板：用一指拖。']],['滾輪移動與縮放',['滾輪往上或往下，圖就上下動。','快捷鍵：Shift＋滾輪，圖就左右動。','快捷鍵：Ctrl／⌘＋「＋」「−」，放大縮小（或 Ctrl／⌘＋滾輪）。']],['縮放大小',['想放大縮小，用下面的快捷鍵就好。','快捷鍵：Ctrl／⌘＋「＋」「−」（或 Ctrl／⌘＋滾輪）。']],['手機雙指縮放',['兩指張開放大，捏起來縮小。']],['快捷鍵總整理',['快捷鍵：方向鍵，移動圖面。','快捷鍵：＋ 多開一層、− 少一層。','快捷鍵：F，只看選取的分支，再按回去。']],['按 F 開展分支',['先點一個科判標題。','快捷鍵：F，只看這一支、其他收起來；再按一次回到原來的畫面（或點旁邊的「按F開合」）。']],['列印單獨開展的主題',['先點想印的主題。','展開後按左上的列印圖示，就能印或存成 PDF。','快捷鍵：F，單獨展開這個主題（或點旁邊的「按F開合」）。']],['全部與返回',['按「全部」，看整本書的科判圖。','按鈕會變成「返回」，再按就回上一步。'],MK.whole],['左下選卷與回全覽',['左下角可以選第幾卷。','按卷軸圖示，把這一排收起來或展開。','按右上的「回全覽」，回到剛進來的畫面。'],MK.vol],['齒輪：所有設定',['按齒輪，打開設定。','卷次：選卷、選要看幾層。','介面：換圖形、標號。'],MK.gear],['換圖形',['可以換成邏輯圖、心智圖、括弧圖、樹狀圖等。','心智圖和時間軸，要先點科判，再按 F。'],MK.ly],['收起與展開',['節點旁的「−」：單擊收回一層，快速點兩下全部收合。','分支標題或（分幾）：單擊展開一層，快速點兩下全部展開。'],MK.col],['點支線回上一層',['點圖上的線（滑過會變淡灰）。','畫面會跳回上一層的標題，放在中間。'],MK.line],['收起與展開',['先點某個分支，就只開合那一支。','例：開啟前「甲、乙、丙」，開啟後「甲、乙、丙、丁」。','快捷鍵：＋ 多開一層、− 少一層，也可以用鍵盤開合。'],MK.lv]];
+          var scenes=[['拖曳移動',['按住滑鼠左鍵拖一拖，圖就跟著動。','手機、平板：用一指拖。']],['滾輪移動與縮放',['滾輪往上或往下，圖就上下動。','快捷鍵：Shift＋滾輪，圖就左右動。','快捷鍵：Ctrl／⌘＋「＋」「−」，放大縮小（或 Ctrl／⌘＋滾輪）。']],['縮放大小',['想放大縮小，用下面的快捷鍵就好。','快捷鍵：Ctrl／⌘＋「＋」「−」（或 Ctrl／⌘＋滾輪）。']],['手機雙指縮放',['兩指張開放大，捏起來縮小。']],['快捷鍵總整理',['快捷鍵：方向鍵，移動圖面。','快捷鍵：＋ 多開一層、− 少一層。','快捷鍵：F，只看選取的分支，再按回去。']],['按 F 開展分支',['先點一個科判標題。','快捷鍵：F，只看這一支、其他收起來；再按一次回到原來的畫面（或點旁邊的「按F開合」）。']],['列印單獨開展的主題',['先點想印的主題。','展開後按左上的列印圖示，就能印或存成 PDF。','快捷鍵：F，單獨展開這個主題（或點旁邊的「按F開合」）。']],['全部與返回',['按「全部」，看整本書的科判圖。','按鈕會變成「返回」，再按就回上一步。'],MK.whole],['左下選卷與回全覽',['左下角可以選第幾卷。','按卷軸圖示，把這一排收起來或展開。','按右上的「回全覽」，回到剛進來的畫面。'],MK.vol],['齒輪：所有設定',['按齒輪，打開設定。','卷次：選卷、選要看幾層。','介面：換圖形、標號。'],MK.gear],['換圖形',['可以換成邏輯圖、心智圖、括弧圖、樹狀圖等。','心智圖和時間軸，要先點科判，再按 F。'],MK.ly],['收起與展開',['節點旁的「−」：單擊立即收合所有子層。','分支標題或（分幾）：單擊展開一層，快速點兩下全部展開。'],MK.col],['點支線回上一層',['點圖上的線（滑過會變淡灰）。','畫面會跳回上一層的標題，放在中間。'],MK.line],['收起與展開',['先點某個分支，就只開合那一支。','例：開啟前「甲、乙、丙」，開啟後「甲、乙、丙、丁」。','快捷鍵：＋ 多開一層、− 少一層，也可以用鍵盤開合。'],MK.lv]];
           var el=document.createElement('div');el.className='km-intro';el.hidden=true;el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','操作簡介');
-          var tree='<svg class="tr" viewBox="0 0 220 126" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M110 34v8M71 42h78M71 42v6M149 42v6M71 78v14M149 78v14"/></g><g fill="#f4e2a4" stroke="currentColor" stroke-width="1.2"><rect x="99" y="4" width="22" height="30" rx="5"/><rect x="60" y="48" width="22" height="30" rx="5"/><rect x="138" y="48" width="22" height="30" rx="5"/><rect x="60" y="92" width="22" height="30" rx="5" fill="none"/><rect x="138" y="92" width="22" height="30" rx="5" fill="none"/></g></svg>';
+          var tree='<svg class="tr" viewBox="0 0 220 126" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.4"><path d="M110 34v8M71 42h78M71 42v6M149 42v6M71 78v14M149 78v14"/></g><g fill="currentColor" stroke="none" font-size="12" style="font-family:var(--ui);writing-mode:vertical-rl"><text x="110" y="5">甲一</text><text x="71" y="49">乙一</text><text x="149" y="49">乙二</text><text x="71" y="93">丙一</text><text x="149" y="93">丙二</text></g></svg>';
           el.innerHTML='<div class="ki-card"><div class="ki-ts">操作簡介</div><h3 class="ki-h"></h3><div class="ki-stage" data-sc="0"><div class="ki-t">'+tree+'</div><div class="ki-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z" fill="#fff" stroke="#222" stroke-width="1.3" stroke-linejoin="round"/></svg></div><div class="ki-wheel"><i></i></div><div class="ki-keys"><b class="kc">Ctrl</b><b class="ka l">←</b><b class="ka u">↑</b><b class="ka d">↓</b><b class="ka r">→</b><b class="kz p">＋</b><b class="kz m">−</b></div><div class="ki-pin"><i></i><i></i></div><b class="ki-f">F</b><div class="ki-pr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7zM17 11h1"/></svg></div></div><ul class="ki-d"></ul><div class="ki-dots"></div><div class="ki-b"><label class="km-tour-never"><input type="checkbox" class="ki-off">不再顯示</label><button type="button" data-i="skip">略過</button><button type="button" data-i="prev">上一步</button><button type="button" data-i="next">下一步</button></div></div>';
           box.appendChild(el);var orig=scenes.map(function(x,i){return i;});(function(){var m=scenes.splice(13,1)[0],o=orig.splice(13,1)[0];scenes.splice(12,0,m);orig.splice(12,0,o);})();if(!(window.matchMedia&&matchMedia('(pointer:coarse)').matches)){scenes.splice(3,1);orig.splice(3,1);}var kbHtml='',osv='win';try{osv=localStorage.getItem('km-os')||(/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent)?'mac':'win');}catch(e){}
           var osT=function(x){return osv==='mac'?x.replace(/Ctrl／⌘/g,'⌘'):x.replace(/Ctrl／⌘/g,'Ctrl');};
@@ -7617,7 +7616,7 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 window.__updAnim=function(){
   if(document.getElementById('updAnim'))return;
   var touch=!!window.__mobile22Device||navigator.maxTouchPoints>0,ver=window.__releaseVersion;
-  var scenes=[['分支：單擊一層，雙擊全展開',['點分支標題或「（分N）」一次，展開下一層。','快速點兩下，展開該分支的所有子層。']],['減號：單擊一層，雙擊全收合',['點減號一次，收回目前最外面的一層。','快速點兩下，收合該分支的所有子層，保留該節點。']]];
+  var scenes=[['分支：單擊一層，雙擊全展開',['點分支標題或「（分N）」一次，展開下一層。','快速點兩下，展開該分支的所有子層。']],['減號：點一下，全部收合',['點減號一次，立即收合所有子層。','只保留目前這個節點，不用點兩下。']]];
   var el=document.createElement('div');el.className='ua'+(touch?' mobile22':'');el.id='updAnim';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','v'+ver+' 更新簡介');
   el.innerHTML='<div class="ua-card"><div class="ua-ts">v'+ver+' 更新簡介</div><h3 class="ua-h"></h3><div class="ua-st ua-comparison"></div><ul class="ua-d"></ul><p class="ua-re">之後可從設定、版本、詳情重播動畫。</p><div class="ua-dots"></div><div class="ua-b"><button type="button" data-u="prev">上一步</button><button type="button" class="go" data-u="next">下一步</button></div></div>';
   var st=el.querySelector('.ua-st'),dots=el.querySelector('.ua-dots'),i=0,previousFocus=document.activeElement;
@@ -7627,13 +7626,13 @@ window.__updAnim=function(){
       var pane=document.createElement('section');pane.className='ua-compare-pane '+side;
       var label=document.createElement('strong');label.textContent=k?'After · 現在':'Before · 原先';pane.appendChild(label);
       var art=document.createElement('div');art.className='ua-compare-art';art.setAttribute('aria-hidden','true');
-      if(!k)art.innerHTML='<div class="release-old-window"><div class="release-old-tree"><b>科判</b><i>分支</i><i>分支</i><i class="release-old-target">目標節點</i></div><span class="release-drag-hand">↔</span></div><small class="release-target-hint">目標仍在畫面外 →</small>';
-      else art.innerHTML='<div class="release-demo-tree"><b>科判 <em>'+(n?'−':'（分N）')+'</em></b><div class="release-level one"><i>分支</i><i>分支</i></div><div class="release-level two"><i>子層</i><i>子層</i></div><div class="release-level three"><i>末層</i><i>末層</i></div></div><span class="release-tap-ring"></span><span class="release-hardware"><span class="release-mouse"><i class="release-left-button"></i><i class="release-wheel"></i></span><span class="release-finger"></span></span><small class="release-gesture single">'+(touch?'點一下':'左鍵單擊')+'</small><small class="release-gesture double">'+(touch?'快速點兩下':'左鍵快速雙擊')+'</small>';
-      pane.appendChild(art);var caption=document.createElement('p');caption.textContent=k?(n?'單擊收一層；雙擊全部收合':'單擊開一層；雙擊全部展開'):'反覆平移、拖曳，仍移不到目標節點';pane.appendChild(caption);st.appendChild(pane);
+      if(!k)art.innerHTML='<div class="release-old-window"><div class="release-old-tree"><b>甲一</b><i>乙一</i><i>乙二</i><i class="release-old-target">丙一</i></div><span class="release-drag-hand gesture-3d-finger"></span></div><small class="release-target-hint">目標仍在畫面外</small>';
+      else art.innerHTML='<div class="release-demo-tree"><b>甲一 <em>'+(n?'−':'（分N）')+'</em></b><div class="release-level one"><i>乙一</i><i>乙二</i></div><div class="release-level two"><i>丙一</i><i>丙二</i></div><div class="release-level three"><i>一</i><i>二</i></div></div><span class="release-tap-ring"></span><span class="release-hardware"><span class="release-mouse"><i class="release-left-button"></i><i class="release-wheel"></i></span><span class="release-finger"></span></span><small class="release-gesture single">'+(touch?'點一下':'左鍵單擊')+'</small><small class="release-gesture double">'+(n?'':touch?'快速點兩下':'左鍵快速雙擊')+'</small>';
+      pane.appendChild(art);var caption=document.createElement('p');caption.textContent=k?(n?'點一下，全部收合至這個節點':'單擊開一層；雙擊全部展開'):'反覆平移、拖曳，仍移不到目標節點';pane.appendChild(caption);st.appendChild(pane);
     });
   }
   function show(n){i=n;comparison(n);el.querySelector('.ua-h').textContent=scenes[n][0];var ul=el.querySelector('.ua-d');ul.replaceChildren();scenes[n][1].forEach(function(t){var li=document.createElement('li');li.textContent=t;ul.appendChild(li);});Array.from(dots.children).forEach(function(d,k){d.classList.toggle('on',k===n);});el.querySelector('[data-u=prev]').disabled=n===0;el.querySelector('[data-u=next]').textContent=n===scenes.length-1?'知道了':'下一步';}
-  function fitMobile(){if(!touch)return;var vv=window.visualViewport,scale=vv?vv.scale:1,w=vv?vv.width:innerWidth,h=vv?vv.height:innerHeight,card=el.querySelector('.ua-card');card.style.zoom=String(1/scale);card.style.width=Math.min(480,w*scale-28)+'px';card.style.maxHeight=Math.max(120,h*scale-28)+'px';}
+  function fitMobile(){if(!touch)return;var vv=window.visualViewport,scale=vv?vv.scale:1,w=vv?vv.width:innerWidth,h=vv?vv.height:innerHeight,card=el.querySelector('.ua-card');card.style.zoom=String(1/scale);card.style.width=Math.min(440,w*scale-28)+'px';card.style.maxHeight=Math.max(120,h*scale-28)+'px';}
   function close(){window.__releaseNotificationPending=false;if(window.__markReleaseRead)window.__markReleaseRead();window.removeEventListener('resize',fitMobile);if(window.visualViewport)visualViewport.removeEventListener('resize',fitMobile);el.remove();if(previousFocus&&previousFocus.isConnected)previousFocus.focus({preventScroll:true});}
   scenes.forEach(function(scene,n){var d=document.createElement('button');d.type='button';d.setAttribute('aria-label',scene[0]);d.onclick=function(){show(n);};dots.appendChild(d);});
   el.querySelector('[data-u=prev]').onclick=function(){if(i>0)show(i-1);};el.querySelector('[data-u=next]').onclick=function(){if(i<scenes.length-1)show(i+1);else close();};
@@ -7769,12 +7768,12 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 
 /* ===== map scene 0: click (分N) / − ===== */
 .ha-mi,.ha-fen{position:absolute;display:none;z-index:4;font:600 11px/1 var(--ui);color:var(--fg)}
-.ha-st[data-k=m0] .ha-mi{display:grid;place-items:center;left:calc(52% + 10px);top:44px;width:16px;height:16px;border-radius:50%;background:var(--pop,var(--bg));border:1px solid var(--rule);opacity:0;animation:haM0m 8s step-end infinite!important}
-.ha-st[data-k=m0] .ha-fen{display:block;left:52%;top:80px;transform:translateX(-50%);opacity:0;color:var(--muted);animation:haM0f 8s step-end infinite!important}
-.ha-st[data-k=m0] .ha-cur{animation:haM0c 8s ease-in-out infinite!important}
-.ha-st[data-k=m0] .ha-cur::after{animation:haM0k 8s ease-out infinite!important}
-.ha-st[data-k=m0] .nB{animation:haM0y 8s step-end infinite!important}
-.ha-st[data-k=m0] .g2{animation:haM0g 8s ease infinite!important}
+.ha-st[data-k=m0] .ha-mi{display:grid;place-items:center;left:calc(52% + 10px);top:44px;width:16px;height:16px;border-radius:50%;background:var(--pop,var(--bg));border:1px solid var(--rule);opacity:0;animation:haM0m 4.8s step-end infinite!important}
+.ha-st[data-k=m0] .ha-fen{display:block;left:52%;top:80px;transform:translateX(-50%);opacity:0;color:var(--muted);animation:haM0f 4.8s step-end infinite!important}
+.ha-st[data-k=m0] .ha-cur{animation:haM0c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=m0] .ha-cur::after{animation:haM0k 4.8s ease-out infinite!important}
+.ha-st[data-k=m0] .nB{animation:haM0y 4.8s step-end infinite!important}
+.ha-st[data-k=m0] .g2{animation:haM0g 4.8s ease infinite!important}
 @keyframes haM0c{0%{left:20%;top:85%}12%,16%{left:52%;top:52px}28%,50%{left:calc(52% + 16px);top:50px}56%,100%{left:52%;top:84px}}
 @keyframes haM0k{0%,13%{opacity:0;transform:scale(.4)}14%{opacity:.8;transform:scale(1)}19%,31%{opacity:0;transform:scale(1.7)}32%{opacity:.8;transform:scale(1)}37%,57%{opacity:0;transform:scale(1.7)}58%{opacity:.8;transform:scale(1)}63%,100%{opacity:0;transform:scale(1.7)}}
 @keyframes haM0y{0%{background:var(--bg)}14%{background:#efd27a}96%{background:var(--bg)}}
@@ -7782,12 +7781,12 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 @keyframes haM0g{0%,32%{opacity:1}35%,58%{opacity:0}62%,100%{opacity:1}}
 @keyframes haM0f{0%{opacity:0}35%{opacity:1}59%{opacity:0}}
 /* ===== map scene 1: + / − ===== */
-.ha-st[data-k=m1] .ha-cur{animation:haM1c 7s ease-in-out infinite!important}
-.ha-st[data-k=m1] .ha-cur::after{animation:haClk1 7s ease-out infinite!important}
-.ha-st[data-k=m1] .nB{animation:haM1y 7s step-end infinite!important}
-.ha-st[data-k=m1] .g2{animation:haM1g 7s ease infinite!important}
-.ha-st[data-k=m1] .kP{animation:haKp1 7s ease infinite!important}
-.ha-st[data-k=m1] .kM{animation:haKp2 7s ease infinite!important}
+.ha-st[data-k=m1] .ha-cur{animation:haM1c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=m1] .ha-cur::after{animation:haClk1 4.8s ease-out infinite!important}
+.ha-st[data-k=m1] .nB{animation:haM1y 4.8s step-end infinite!important}
+.ha-st[data-k=m1] .g2{animation:haM1g 4.8s ease infinite!important}
+.ha-st[data-k=m1] .kP{animation:haKp1 4.8s ease infinite!important}
+.ha-st[data-k=m1] .kM{animation:haKp2 4.8s ease infinite!important}
 @keyframes haM1c{0%{left:20%;top:85%}14%,100%{left:52%;top:52px}}
 @keyframes haClk1{0%,14%{opacity:0;transform:scale(.4)}16%{opacity:.8;transform:scale(1)}22%,100%{opacity:0;transform:scale(1.7)}}
 @keyframes haM1y{0%{background:var(--bg)}16%{background:#efd27a}97%{background:var(--bg)}}
@@ -7796,32 +7795,32 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 @keyframes haKp2{0%,60%,68%,100%{transform:none;background:var(--pop,var(--bg))}62%,66%{transform:translateY(2px);background:#efd27a}}
 /* ===== map scene 2: Cmd/Ctrl + / − ===== */
 .ha-st[data-k=m2] .ha-cur{left:62%;top:60px}
-.ha-st[data-k=m2] .ha-tree{animation:haM2z 7s ease-in-out infinite!important}
-.ha-st[data-k=m2] .kC{animation:haKp3 7s ease infinite!important}
-.ha-st[data-k=m2] .kP{animation:haKp1b 7s ease infinite!important}
-.ha-st[data-k=m2] .kM{animation:haKp2b 7s ease infinite!important}
+.ha-st[data-k=m2] .ha-tree{animation:haM2z 4.8s ease-in-out infinite!important}
+.ha-st[data-k=m2] .kC{animation:haKp3 4.8s ease infinite!important}
+.ha-st[data-k=m2] .kP{animation:haKp1b 4.8s ease infinite!important}
+.ha-st[data-k=m2] .kM{animation:haKp2b 4.8s ease infinite!important}
 @keyframes haM2z{0%,20%{transform:scale(1)}28%,52%{transform:scale(1.45)}60%,84%{transform:scale(.7)}92%,100%{transform:scale(1)}}
 @keyframes haKp3{0%,14%,30%,48%,64%,100%{transform:none;background:var(--pop,var(--bg))}16%,28%,50%,62%{transform:translateY(2px);background:#efd27a}}
 @keyframes haKp1b{0%,19%,27%,100%{transform:none;background:var(--pop,var(--bg))}21%,25%{transform:translateY(2px);background:#efd27a}}
 @keyframes haKp2b{0%,53%,61%,100%{transform:none;background:var(--pop,var(--bg))}55%,59%{transform:translateY(2px);background:#efd27a}}
 /* ===== map scene 3: F ===== */
-.ha-st[data-k=m3] .ha-cur{animation:haM1c 7s ease-in-out infinite!important}
-.ha-st[data-k=m3] .ha-cur::after{animation:haClk1 7s ease-out infinite!important}
-.ha-st[data-k=m3] .nB{animation:haM1y 7s step-end infinite!important}
-.ha-st[data-k=m3] .ot{animation:haM3o 7s ease infinite!important}
-.ha-st[data-k=m3] .br{animation:haM3b 7s ease-in-out infinite!important}
-.ha-st[data-k=m3] .kF{animation:haKp4 7s ease infinite!important}
+.ha-st[data-k=m3] .ha-cur{animation:haM1c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=m3] .ha-cur::after{animation:haClk1 4.8s ease-out infinite!important}
+.ha-st[data-k=m3] .nB{animation:haM1y 4.8s step-end infinite!important}
+.ha-st[data-k=m3] .ot{animation:haM3o 4.8s ease infinite!important}
+.ha-st[data-k=m3] .br{animation:haM3b 4.8s ease-in-out infinite!important}
+.ha-st[data-k=m3] .kF{animation:haKp4 4.8s ease infinite!important}
 @keyframes haM3o{0%,31%{opacity:1}36%,64%{opacity:0}70%,100%{opacity:1}}
 @keyframes haM3b{0%,32%{transform:none}38%,64%{transform:translateY(-34px)}70%,100%{transform:none}}
 @keyframes haKp4{0%,29%,37%,62%,70%,100%{transform:none;background:var(--pop,var(--bg))}31%,35%,64%,68%{transform:translateY(2px);background:#efd27a}}
 
 /* ===== app d1: three columns ===== */
-.ha-st[data-k=d1] .ha-cat{animation:haD1a 6s ease infinite!important}
-.ha-st[data-k=d1] .ha-txt{animation:haD1b 6s ease infinite!important}
-.ha-st[data-k=d1] .ha-map{animation:haD1c 6s ease infinite!important}
-.ha-st[data-k=d1] .la{animation:haD1la 6s ease infinite!important}
-.ha-st[data-k=d1] .lb{animation:haD1lb 6s ease infinite!important}
-.ha-st[data-k=d1] .lc{animation:haD1lc 6s ease infinite!important}
+.ha-st[data-k=d1] .ha-cat{animation:haD1a 4.8s ease infinite!important}
+.ha-st[data-k=d1] .ha-txt{animation:haD1b 4.8s ease infinite!important}
+.ha-st[data-k=d1] .ha-map{animation:haD1c 4.8s ease infinite!important}
+.ha-st[data-k=d1] .la{animation:haD1la 4.8s ease infinite!important}
+.ha-st[data-k=d1] .lb{animation:haD1lb 4.8s ease infinite!important}
+.ha-st[data-k=d1] .lc{animation:haD1lc 4.8s ease infinite!important}
 @keyframes haD1a{0%,5%,30%,100%{box-shadow:none}10%,25%{box-shadow:inset 0 0 0 2px #d9a62b}}
 @keyframes haD1b{0%,35%,60%,100%{box-shadow:none}40%,55%{box-shadow:inset 0 0 0 2px #d9a62b}}
 @keyframes haD1c{0%,65%,90%,100%{box-shadow:none}70%,85%{box-shadow:inset 0 0 0 2px #d9a62b}}
@@ -7829,64 +7828,64 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 @keyframes haD1lb{0%,35%,60%,100%{opacity:0}40%,55%{opacity:1}}
 @keyframes haD1lc{0%,65%,90%,100%{opacity:0}70%,85%{opacity:1}}
 /* ===== app d2: change volume ===== */
-.ha-st[data-k=d2] .ha-cur{animation:haD2c 6s ease-in-out infinite!important}
-.ha-st[data-k=d2] .ha-cur::after{animation:haClk2 6s ease-out infinite!important}
-.ha-st[data-k=d2] .v7{animation:haD2y 6s step-end infinite!important}
-.ha-st[data-k=d2] .ha-txt .ha-body{animation:haD2s 6s ease-in-out infinite!important}
-.ha-st[data-k=d2] .ha-txt .ha-tt{animation:haD2t 6s ease infinite!important}
+.ha-st[data-k=d2] .ha-cur{animation:haD2c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=d2] .ha-cur::after{animation:haClk2 4.8s ease-out infinite!important}
+.ha-st[data-k=d2] .v7{animation:haD2y 4.8s step-end infinite!important}
+.ha-st[data-k=d2] .ha-txt .ha-body{animation:haD2s 4.8s ease-in-out infinite!important}
+.ha-st[data-k=d2] .ha-txt .ha-tt{animation:haD2t 4.8s ease infinite!important}
 @keyframes haD2c{0%{left:50%;top:85%}20%,100%{left:14%;top:26px}}
 @keyframes haClk2{0%,20%{opacity:0;transform:scale(.4)}22%{opacity:.8;transform:scale(1)}28%,100%{opacity:0;transform:scale(1.7)}}
 @keyframes haD2y{0%{background:color-mix(in srgb,var(--fg) 14%,transparent)}22%{background:#efd27a}96%{background:color-mix(in srgb,var(--fg) 14%,transparent)}}
 @keyframes haD2s{0%,22%{opacity:1;transform:none}26%{opacity:0;transform:translateY(20px)}32%,95%{opacity:1;transform:none}}
 @keyframes haD2t{0%,30%{background:color-mix(in srgb,var(--fg) 22%,transparent)}34%,92%{background:#efd27a}96%,100%{background:color-mix(in srgb,var(--fg) 22%,transparent)}}
 /* ===== app d3: click title, double-click goes up ===== */
-.ha-st[data-k=d3] .ha-cur{animation:haD3c 7s ease-in-out infinite!important}
-.ha-st[data-k=d3] .ha-cur::after{animation:haClk3 7s ease-out infinite!important}
-.ha-st[data-k=d3] .t1{animation:haD3a 7s step-end infinite!important}
-.ha-st[data-k=d3] .t0{animation:haD3b 7s step-end infinite!important}
-.ha-st[data-k=d3] .ha-txt .ha-body,.ha-st[data-k=d3] .ha-lst{animation:haD3s 7s ease-in-out infinite!important}
+.ha-st[data-k=d3] .ha-cur{animation:haD3c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=d3] .ha-cur::after{animation:haClk3 4.8s ease-out infinite!important}
+.ha-st[data-k=d3] .t1{animation:haD3a 4.8s step-end infinite!important}
+.ha-st[data-k=d3] .t0{animation:haD3b 4.8s step-end infinite!important}
+.ha-st[data-k=d3] .ha-txt .ha-body,.ha-st[data-k=d3] .ha-lst{animation:haD3s 4.8s ease-in-out infinite!important}
 @keyframes haD3c{0%{left:40%;top:85%}16%,100%{left:calc(64% + 16px);top:62px}}
 @keyframes haClk3{0%,16%{opacity:0;transform:scale(.4)}18%{opacity:.8;transform:scale(1)}23%,57%{opacity:0;transform:scale(1.7)}59%{opacity:.8;transform:scale(1)}62%{opacity:0;transform:scale(1.4)}63%{opacity:.8;transform:scale(1)}67%,100%{opacity:0;transform:scale(1.7)}}
 @keyframes haD3a{0%{background:none}18%{background:#efd27a}63%{background:none}}
 @keyframes haD3b{0%{background:none}63%{background:#efd27a}97%{background:none}}
 @keyframes haD3s{0%,18%{transform:none}26%,60%{transform:translateY(-22px)}66%,96%{transform:translateY(-8px)}100%{transform:none}}
 /* ===== app d4: dictionary ===== */
-.ha-st[data-k=d4] .ha-cur{animation:haD4c 6s ease-in-out infinite!important}
-.ha-st[data-k=d4] .ha-fin{animation:haD4f 6s ease infinite!important}
-.ha-st[data-k=d4] .ha-sel{animation:haD4s 6s ease-in-out infinite!important}
-.ha-st[data-k=d4] .ha-pop{animation:haD4p 6s ease infinite!important}
+.ha-st[data-k=d4] .ha-cur{animation:haD4c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=d4] .ha-fin{animation:haD4f 4.8s ease infinite!important}
+.ha-st[data-k=d4] .ha-sel{animation:haD4s 4.8s ease-in-out infinite!important}
+.ha-st[data-k=d4] .ha-pop{animation:haD4p 4.8s ease infinite!important}
 @keyframes haD4c{0%{left:60%;top:85%}15%,18%{left:31%;top:62px}38%,100%{left:52%;top:62px}}
 @keyframes haD4f{0%,12%{opacity:0;left:38%;top:68px}14%,16%{opacity:1;transform:scale(.8)}18%,20%{opacity:.2;transform:scale(1)}22%,24%{opacity:1;transform:scale(.8)}30%,100%{opacity:0;left:38%;top:68px}}
 @keyframes haD4s{0%,18%{width:0}38%,92%{width:22%}96%,100%{width:0}}
 @keyframes haD4p{0%,40%{opacity:0;transform:translateY(8px)}46%,90%{opacity:1;transform:none}96%,100%{opacity:0}}
 /* ===== app d5: search ===== */
-.ha-st[data-k=d5] .ha-cur{animation:haD5c 7s ease-in-out infinite!important}
-.ha-st[data-k=d5] .ha-cur::after{animation:haClk2 7s ease-out infinite!important}
-.ha-st[data-k=d5] .ha-q{animation:haD5q 7s steps(1) infinite!important}
-.ha-st[data-k=d5] .ha-q em{font-style:normal;display:inline-block;overflow:hidden;vertical-align:top;animation:haD5t 7s steps(2) infinite!important}
-.ha-st[data-k=d5] .kE{animation:haKp5 7s ease infinite!important}
-.ha-st[data-k=d5] .hit{animation:haD5h 7s step-end infinite!important}
+.ha-st[data-k=d5] .ha-cur{animation:haD5c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=d5] .ha-cur::after{animation:haClk2 4.8s ease-out infinite!important}
+.ha-st[data-k=d5] .ha-q{animation:haD5q 4.8s steps(1) infinite!important}
+.ha-st[data-k=d5] .ha-q em{font-style:normal;display:inline-block;overflow:hidden;vertical-align:top;animation:haD5t 4.8s steps(2) infinite!important}
+.ha-st[data-k=d5] .kE{animation:haKp5 4.8s ease infinite!important}
+.ha-st[data-k=d5] .hit{animation:haD5h 4.8s step-end infinite!important}
 @keyframes haD5c{0%{left:30%;top:85%}20%,100%{left:calc(64% - 18px);top:6px}}
 @keyframes haD5q{0%,22%{opacity:0;width:0}23%,94%{opacity:1;width:34%}95%,100%{opacity:0;width:0}}
 @keyframes haD5t{0%,26%{width:0}40%,94%{width:2.2em}100%{width:0}}
 @keyframes haKp5{0%,48%,56%,100%{transform:none;background:var(--pop,var(--bg))}50%,54%{transform:translateY(2px);background:#efd27a}}
 @keyframes haD5h{0%{background:color-mix(in srgb,var(--fg) 12%,transparent)}54%{background:#efd27a}94%{background:color-mix(in srgb,var(--fg) 12%,transparent)}}
 /* ===== app d6: gear menu ===== */
-.ha-st[data-k=d6] .ha-cur{animation:haD6c 6s ease-in-out infinite!important}
-.ha-st[data-k=d6] .ha-cur::after{animation:haClk2 6s ease-out infinite!important}
-.ha-st[data-k=d6] .ha-menu{animation:haD6m 6s ease infinite!important}
-.ha-st[data-k=d6] .r1{animation:haD6r 6s step-end infinite!important}
+.ha-st[data-k=d6] .ha-cur{animation:haD6c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=d6] .ha-cur::after{animation:haClk2 4.8s ease-out infinite!important}
+.ha-st[data-k=d6] .ha-menu{animation:haD6m 4.8s ease infinite!important}
+.ha-st[data-k=d6] .r1{animation:haD6r 4.8s step-end infinite!important}
 @keyframes haD6c{0%{left:50%;top:85%}20%{left:calc(22% + 6px);top:6px}40%,100%{left:calc(22% + 50px);top:40px}}
 @keyframes haD6m{0%,21%{opacity:0;transform:translateY(-6px)}26%,92%{opacity:1;transform:none}97%,100%{opacity:0}}
 @keyframes haD6r{0%{background:none}40%{background:#efd27a}92%{background:none}}
 /* ===== phone p1: tabs ===== */
-.ha-st[data-k=p1] .ha-fin{animation:haP1f 6s ease infinite!important}
-.ha-st[data-k=p1] .pc{animation:haP1a 6s step-end infinite!important}
-.ha-st[data-k=p1] .pt{animation:haP1b 6s step-end infinite!important}
-.ha-st[data-k=p1] .pm{animation:haP1c 6s step-end infinite!important}
-.ha-st[data-k=p1] .tc{animation:haP1ta 6s step-end infinite!important}
-.ha-st[data-k=p1] .tt{animation:haP1tb 6s step-end infinite!important}
-.ha-st[data-k=p1] .tm{animation:haP1tc 6s step-end infinite!important}
+.ha-st[data-k=p1] .ha-fin{animation:haP1f 4.8s ease infinite!important}
+.ha-st[data-k=p1] .pc{animation:haP1a 4.8s step-end infinite!important}
+.ha-st[data-k=p1] .pt{animation:haP1b 4.8s step-end infinite!important}
+.ha-st[data-k=p1] .pm{animation:haP1c 4.8s step-end infinite!important}
+.ha-st[data-k=p1] .tc{animation:haP1ta 4.8s step-end infinite!important}
+.ha-st[data-k=p1] .tt{animation:haP1tb 4.8s step-end infinite!important}
+.ha-st[data-k=p1] .tm{animation:haP1tc 4.8s step-end infinite!important}
 @keyframes haP1f{0%,8%{opacity:0;left:calc(50% - 37px);top:calc(100% - 20px)}10%,12%{opacity:1;left:calc(50% - 37px)}16%,40%{opacity:0;left:calc(50% - 37px)}42%,44%{opacity:1;left:50%}48%,72%{opacity:0;left:50%}74%,76%{opacity:1;left:calc(50% + 37px)}80%,100%{opacity:0;left:calc(50% + 37px)}}
 @keyframes haP1a{0%{opacity:0}11%{opacity:1}43%{opacity:0}}
 @keyframes haP1b{0%{opacity:1}11%{opacity:0}43%{opacity:1}75%{opacity:0}}
@@ -7895,18 +7894,18 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 @keyframes haP1tb{0%{background:#efd27a}11%{background:none}43%{background:#efd27a}75%{background:none}}
 @keyframes haP1tc{0%{background:none}75%{background:#efd27a}100%{background:none}}
 /* ===== phone p2: double-tap dictionary ===== */
-.ha-st[data-k=p2] .ha-fin{animation:haP2f 6s ease infinite!important}
-.ha-st[data-k=p2] .ha-sel{animation:haP2s 6s step-end infinite!important}
-.ha-st[data-k=p2] .ha-pop{animation:haD4p 6s ease infinite!important}
+.ha-st[data-k=p2] .ha-fin{animation:haP2f 4.8s ease infinite!important}
+.ha-st[data-k=p2] .ha-sel{animation:haP2s 4.8s step-end infinite!important}
+.ha-st[data-k=p2] .ha-pop{animation:haD4p 4.8s ease infinite!important}
 @keyframes haP2f{0%,14%{opacity:0;left:50%;top:70px}16%,18%{opacity:1;transform:scale(.8)}20%,22%{opacity:.2;transform:scale(1)}24%,26%{opacity:1;transform:scale(.8)}32%,100%{opacity:0;left:50%;top:70px}}
 @keyframes haP2s{0%{width:0}26%{width:30px}94%{width:0}}
 /* ===== phone p3: chart tab title ===== */
-.ha-st[data-k=p3] .ha-fin{animation:haP3f 7s ease infinite!important}
-.ha-st[data-k=p3] .pm{animation:haP3a 7s step-end infinite!important}
-.ha-st[data-k=p3] .pt{animation:haP3b 7s step-end infinite!important}
-.ha-st[data-k=p3] .tm{animation:haP3ta 7s step-end infinite!important}
-.ha-st[data-k=p3] .tt{animation:haP3tb 7s step-end infinite!important}
-.ha-st[data-k=p3] .t1{animation:haP3y 7s step-end infinite!important}
+.ha-st[data-k=p3] .ha-fin{animation:haP3f 4.8s ease infinite!important}
+.ha-st[data-k=p3] .pm{animation:haP3a 4.8s step-end infinite!important}
+.ha-st[data-k=p3] .pt{animation:haP3b 4.8s step-end infinite!important}
+.ha-st[data-k=p3] .tm{animation:haP3ta 4.8s step-end infinite!important}
+.ha-st[data-k=p3] .tt{animation:haP3tb 4.8s step-end infinite!important}
+.ha-st[data-k=p3] .t1{animation:haP3y 4.8s step-end infinite!important}
 @keyframes haP3f{0%,12%{opacity:0;left:calc(50% - 10px);top:64px}14%,16%{opacity:1}20%,100%{opacity:0;left:calc(50% - 10px);top:64px}}
 @keyframes haP3a{0%{opacity:1}17%{opacity:0}94%{opacity:1}}
 @keyframes haP3b{0%{opacity:0}17%{opacity:1}94%{opacity:0}}
@@ -7914,8 +7913,8 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 @keyframes haP3tb{0%{background:none}17%{background:#efd27a}94%{background:none}}
 @keyframes haP3y{0%{background:none}17%{background:#efd27a}94%{background:none}}
 /* ===== phone p4: gear ===== */
-.ha-st[data-k=p4] .ha-fin{animation:haP4f 6s ease infinite!important}
-.ha-st[data-k=p4] .ha-menu{animation:haD6m 6s ease infinite!important}
+.ha-st[data-k=p4] .ha-fin{animation:haP4f 4.8s ease infinite!important}
+.ha-st[data-k=p4] .ha-menu{animation:haD6m 4.8s ease infinite!important}
 @keyframes haP4f{0%,16%{opacity:0;left:calc(50% - 44px);top:19px}18%,20%{opacity:1}24%,100%{opacity:0;left:calc(50% - 44px);top:19px}}
 .ha-st[data-k=p4] .ha-menu{left:calc(50% - 50px);top:30px;width:96px}
 
@@ -7931,12 +7930,12 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 .ha-ph .ha-full{inset:0}
 .ha-ph .ha-half .ha-tree,.ha-ph .ha-full .ha-tree{left:-60%;right:-60%;transform:scale(.45)}
 .ha-ph .ha-mb{right:6px;bottom:30px}
-.ha-st[data-k=d7] .ha-cur{animation:haD7c 8s ease-in-out infinite!important}
-.ha-st[data-k=d7] .ha-cur::after{animation:haD7k 8s ease-out infinite!important}
-.ha-st[data-k=d7] .ha-half,.ha-st[data-k=p5] .ha-half{animation:haD7h 8s step-end infinite!important}
-.ha-st[data-k=d7] .ha-full,.ha-st[data-k=p5] .ha-full{animation:haD7f 8s step-end infinite!important}
-.ha-st[data-k=d7] .ha-half .nB,.ha-st[data-k=d7] .t1,.ha-st[data-k=p5] .ha-half .nB,.ha-st[data-k=p5] .t1{animation:haD7y 8s step-end infinite!important}
-.ha-st[data-k=p5] .ha-fin{animation:haP5f 8s ease infinite!important}
+.ha-st[data-k=d7] .ha-cur{animation:haD7c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=d7] .ha-cur::after{animation:haD7k 4.8s ease-out infinite!important}
+.ha-st[data-k=d7] .ha-half,.ha-st[data-k=p5] .ha-half{animation:haD7h 4.8s step-end infinite!important}
+.ha-st[data-k=d7] .ha-full,.ha-st[data-k=p5] .ha-full{animation:haD7f 4.8s step-end infinite!important}
+.ha-st[data-k=d7] .ha-half .nB,.ha-st[data-k=d7] .t1,.ha-st[data-k=p5] .ha-half .nB,.ha-st[data-k=p5] .t1{animation:haD7y 4.8s step-end infinite!important}
+.ha-st[data-k=p5] .ha-fin{animation:haP5f 4.8s ease infinite!important}
 @keyframes haD7c{0%{left:40%;top:85%}10%,14%{left:calc(100% - 22px);top:calc(100% - 22px)}22%,27%{left:calc(82% + 2px);top:44px}38%,100%{left:calc(100% - 22px);top:calc(100% - 22px)}}
 @keyframes haD7k{0%,13%{opacity:0;transform:scale(.4)}14%{opacity:.8;transform:scale(1)}18%,25%{opacity:0;transform:scale(1.7)}26%{opacity:.8;transform:scale(1)}30%,43%{opacity:0;transform:scale(1.7)}44%{opacity:.8;transform:scale(1)}48%,73%{opacity:0;transform:scale(1.7)}74%{opacity:.8;transform:scale(1)}78%,100%{opacity:0;transform:scale(1.7)}}
 @keyframes haD7h{0%{opacity:0}14%{opacity:1}44%{opacity:0}}
@@ -7949,13 +7948,13 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 .ha-lk{position:absolute;top:3px;width:16px;height:16px;color:var(--muted);z-index:3}
 .ha-lk span{position:absolute;inset:0}.ha-lk svg{width:16px;height:16px;display:block}
 .ha-lk .c{opacity:0;color:var(--cinnabar)}
-.ha-st[data-k=d8] .ha-lk .o,.ha-st[data-k=p6] .ha-lk .o{animation:haLo 8s step-end infinite!important}
-.ha-st[data-k=d8] .ha-lk .c,.ha-st[data-k=p6] .ha-lk .c{animation:haLc 8s step-end infinite!important}
-.ha-st[data-k=d8] .ha-cur{animation:haD8c 8s ease-in-out infinite!important}
-.ha-st[data-k=d8] .ha-cur::after{animation:haD8k 8s ease-out infinite!important}
-.ha-st[data-k=d8] .t1,.ha-st[data-k=p6] .t1{animation:haD8y 8s step-end infinite!important}
-.ha-st[data-k=d8] .ha-txt .ha-body,.ha-st[data-k=d8] .ha-lst{animation:haD8s 8s ease-in-out infinite!important}
-.ha-st[data-k=p6] .ha-fin{animation:haP6f 8s ease infinite!important}
+.ha-st[data-k=d8] .ha-lk .o,.ha-st[data-k=p6] .ha-lk .o{animation:haLo 4.8s step-end infinite!important}
+.ha-st[data-k=d8] .ha-lk .c,.ha-st[data-k=p6] .ha-lk .c{animation:haLc 4.8s step-end infinite!important}
+.ha-st[data-k=d8] .ha-cur{animation:haD8c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=d8] .ha-cur::after{animation:haD8k 4.8s ease-out infinite!important}
+.ha-st[data-k=d8] .t1,.ha-st[data-k=p6] .t1{animation:haD8y 4.8s step-end infinite!important}
+.ha-st[data-k=d8] .ha-txt .ha-body,.ha-st[data-k=d8] .ha-lst{animation:haD8s 4.8s ease-in-out infinite!important}
+.ha-st[data-k=p6] .ha-fin{animation:haP6f 4.8s ease infinite!important}
 @keyframes haLo{0%{opacity:1}16%{opacity:0}96%{opacity:1}}
 @keyframes haLc{0%{opacity:0}16%{opacity:1}96%{opacity:0}}
 @keyframes haD8c{0%{left:40%;top:85%}13%,18%{left:calc(64% - 14px);top:8px}34%,100%{left:calc(64% + 16px);top:62px}}
@@ -7968,11 +7967,11 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 .ha-sw i{display:block;width:16px;height:16px;border-radius:50%;border:1px solid color-mix(in srgb,var(--fg) 30%,transparent)}
 .ha-sw i:nth-child(1){background:#f6efd9}.ha-sw i:nth-child(2){background:#dcebd2}.ha-sw i:nth-child(3){background:#e8e8e6}.ha-sw i:nth-child(4){background:#fff}
 .ha-sw b{display:block;width:16px;height:16px;color:var(--fg)}.ha-sw b svg{width:16px;height:16px;display:block}
-.ha-st[data-k=d9],.ha-st[data-k=p7] .ha-ph,.ha-st[data-k=p7] .ha-pg,.ha-st[data-k=p7] .ha-tabs{animation:haBg 10s step-end infinite!important}
+.ha-st[data-k=d9],.ha-st[data-k=p7] .ha-ph,.ha-st[data-k=p7] .ha-pg,.ha-st[data-k=p7] .ha-tabs{animation:haBg 4.8s step-end infinite!important}
 .ha-st[data-k=d9] .ha-cat{background:transparent}
-.ha-st[data-k=d9] .ha-cur{animation:haD9c 10s ease-in-out infinite!important}
-.ha-st[data-k=d9] .ha-cur::after{animation:haD9k 10s ease-out infinite!important}
-.ha-st[data-k=p7] .ha-fin{animation:haP7f 10s ease infinite!important}
+.ha-st[data-k=d9] .ha-cur{animation:haD9c 4.8s ease-in-out infinite!important}
+.ha-st[data-k=d9] .ha-cur::after{animation:haD9k 4.8s ease-out infinite!important}
+.ha-st[data-k=p7] .ha-fin{animation:haP7f 4.8s ease infinite!important}
 @keyframes haBg{0%{background:#fff}12%{background:#f6efd9}32%{background:#dcebd2}52%{background:#e8e8e6}72%{background:#2a2826}92%{background:#fff}}
 @keyframes haD9c{0%{left:50%;top:40%}9%,30%{left:calc(50% - 52px);top:calc(100% - 24px)}32%,50%{left:calc(50% - 28px);top:calc(100% - 24px)}52%,70%{left:calc(50% - 4px);top:calc(100% - 24px)}72%,100%{left:calc(50% + 44px);top:calc(100% - 24px)}}
 @keyframes haD9k{0%,11%{opacity:0;transform:scale(.4)}12%{opacity:.8;transform:scale(1)}16%,31%{opacity:0;transform:scale(1.6)}32%{opacity:.8;transform:scale(1)}36%,51%{opacity:0;transform:scale(1.6)}52%{opacity:.8;transform:scale(1)}56%,71%{opacity:0;transform:scale(1.6)}72%{opacity:.8;transform:scale(1)}76%,100%{opacity:0;transform:scale(1.6)}}
@@ -7984,13 +7983,13 @@ document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' '
 :root:root:root #kmap.km-emb .km-eopt button.km-help-a{display:flex;padding:0 14px;background:rgba(118,118,128,.14);color:var(--fg,#222)}
 </style>
 <script id="help-anim-js">(function(){
-var CUR='<svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z" fill="#fff" stroke="#222" stroke-width="1.3" stroke-linejoin="round"/></svg>';
+var CUR='<span class="gesture-3d-cursor"></span>';
 var MAC=/Mac|iPhone|iPad/.test(navigator.platform||'')||/Mac OS/.test(navigator.userAgent||'');
 var MOD=MAC?'⌘':'Ctrl';
 function ic(sel){var s=document.querySelector(sel);if(!s)return '';var c=s.cloneNode(true);c.removeAttribute('class');c.removeAttribute('id');return c.outerHTML;}
 function tree(){/* root R; children A,B,C; grandchildren of A (a1,a2) and of B (b1..b3) */
   var h='',X={R:50,A:22,B:52,C:80};
-  function n(x,y,c){h+='<b class="'+(c||'')+'" style="left:'+x+'%;top:'+y+'px"></b>';}
+  function n(x,y,c){var label=y===0?'甲一':y===42?(x===22?'乙一':x===52?'乙二':'乙三'):x===40||x===14?'丙一':x===52||x===30?'丙二':'丙三';h+='<b class="'+(c||'')+'" style="left:'+x+'%;top:'+y+'px">'+label+'</b>';}
   function hl(x1,x2,y,c){h+='<i class="'+(c||'')+'" style="left:'+x1+'%;width:'+(x2-x1)+'%;top:'+y+'px"></i>';}
   function vl(x,y,len,c){h+='<u class="'+(c||'')+'" style="left:'+x+'%;top:'+y+'px;height:'+len+'px"></u>';}
   n(X.R,0,'ot');vl(X.R,30,6,'ot');hl(X.A,X.C,36,'ot');vl(X.A,36,6,'ot');vl(X.C,36,6,'ot');vl(X.B,36,6,'br');
@@ -8004,7 +8003,7 @@ function lines(n,first){var s='';for(var k=0;k<n;k++)s+='<i class="ha-ln" style=
 function screen(extra){
   var g='';for(var k=0;k<12;k++)g+='<s'+(k===6?' class="v7"':'')+'></s>';
   var l='';for(var k=0;k<8;k++)l+='<s'+(k===3?' class="t1"':'')+'></s>';
-  var vt='<span><s class="t0"></s><s></s></span><span><s class="t1"></s><s></s></span><span><s></s><s></s></span>';
+  var vt='<span><s class="t0">甲一</s><s>甲二</s></span><span><s class="t1">乙一</s><s>乙二</s></span><span><s>丙一</s><s>丙二</s></span>';
   return '<div class="ha-col ha-cat"><div class="ha-grid">'+g+'</div><div class="ha-lst">'+l+'</div><span class="ha-lbl la">卷次</span></div>'+
     '<div class="ha-col ha-txt"><div class="ha-bar"><span class="ha-ic" style="left:4px">'+ic('#menuBtn svg')+'</span><span class="ha-ic" style="right:4px">'+ic('#searchButton svg')+'</span></div>'+
     '<div class="ha-body"><i class="ha-ln" style="width:70%"></i><i class="ha-tt t1"></i><i class="ha-ln hit"></i><i class="ha-ln"></i>'+lines(6)+'</div><span class="ha-lbl lb">正文</span></div>'+
@@ -8014,19 +8013,19 @@ function phone(inner){
   return '<div class="ha-ph"><div class="ha-bar"><span class="ha-ic" style="left:4px">'+ic('#menuBtn svg')+'</span></div>'+
     '<div class="ha-pg pc"><div class="ha-grid" style="top:6px">'+'<s></s>'.repeat(16)+'</div></div>'+
     '<div class="ha-pg pt g1"><div class="ha-body" style="top:6px"><i class="ha-tt t1"></i>'+lines(7)+'</div></div>'+
-    '<div class="ha-pg pm"><div class="ha-vt" style="top:8px"><span><s></s><s></s></span><span><s class="t1" style="height:22px"></s><s></s></span><span><s></s><s></s></span></div></div>'+
+    '<div class="ha-pg pm"><div class="ha-vt" style="top:8px"><span><s>甲一</s><s>甲二</s></span><span><s class="t1" style="height:22px">乙一</s><s>乙二</s></span><span><s>丙一</s><s>丙二</s></span></div></div>'+
     (inner||'')+'<div class="ha-tabs"><span class="tc">卷次</span><span class="tt">正文</span><span class="tm">科判</span></div></div>';
 }
-var cur='<span class="ha-cur">'+CUR+'</span>',fin='<span class="ha-fin"></span>';
+var fin='<span class="ha-fin gesture-3d-finger"></span>',cur=window.__mobile22Device||navigator.maxTouchPoints>0?'<span class="ha-cur gesture-3d-finger"></span>':'<span class="ha-cur">'+CUR+'</span>';
 function lk(pos){var o=document.querySelector('#trackLock .lk-o'),c=document.querySelector('#trackLock .lk-c');return '<span class="ha-lk" style="'+pos+'"><span class="o">'+(o?o.outerHTML:'')+'</span><span class="c">'+(c?c.outerHTML:'')+'</span></span>';}
 var SW='<span class="ha-sw"><i></i><i></i><i></i><i></i><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg></b></span>';
-var touch=function(){return !matchMedia('(hover:hover)').matches;};
+var touch=function(){return !!window.__mobile22Device||navigator.maxTouchPoints>0;};
 function sets(kind){
   if(kind==='map')return {title:'科判圖說明',sc:[
     {k:'m3',h:'F 鍵：只看一個分支',st:tree()+cur+'<div class="ha-keys"><kbd class="kF">F</kbd></div>',
       li:['先點一下標題，標題反黃。','按 F：只顯示這一支。','再按一次 F：全部回來。']},
     {k:'m0',h:'點「−」或「（分幾）」：開合一支',st:tree()+'<span class="ha-mi">−</span><span class="ha-fen">（分三）</span>'+cur,
-      li:['點一下標題，標題反黃，旁邊出現「−」。','點「−」：收起這一支的下層。','點「（分幾）」：再展開一層。']},
+      li:['點「−」一次：立即收合所有下層。','點「（分幾）」：展開一層，快速點兩下全部展開。']},
     {k:'m1',h:'＋／− 鍵：展開、收回',st:tree()+cur+'<div class="ha-keys"><kbd class="kP">＋</kbd><kbd class="kM">−</kbd></div>',
       li:['按鍵盤 ＋：整張圖往下展開一層。','按鍵盤 −：收回一層。','先點標題再按，就只開合那一支。']},
     {k:'m2',h:MOD+' ＋／−：放大、縮小',st:tree()+cur+'<div class="ha-keys"><kbd class="kC">'+MOD+'</kbd>＋<kbd class="kP">＋</kbd><kbd class="kM">−</kbd></div>',
@@ -8495,11 +8494,11 @@ var tk=setInterval(function(){put();if(document.getElementById('darkBtn'))clearI
 .ua-compare-pane>p{margin:0;font:13px/1.6 var(--ui);min-height:3.2em}
 .ua-compare-art{height:160px;position:relative;overflow:hidden;border-radius:10px;background:color-mix(in srgb,var(--fg) 4%,var(--bg))}
 .release-old-window{position:absolute;inset:12px 8px 30px;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--bg)}
-.ua .ua-comparison .release-old-tree{position:absolute;left:5px;top:14px;width:280%;height:68px;display:flex;align-items:center;gap:18px;animation:releaseFrustratedPan 5s ease-in-out infinite!important}
+.ua .ua-comparison .release-old-tree{position:absolute;left:5px;top:14px;width:280%;height:68px;display:flex;align-items:center;gap:18px;animation:releaseFrustratedPan 4.8s ease-in-out infinite!important}
 .release-old-tree b,.release-old-tree i{flex:none;padding:6px;border:1px solid var(--rule);border-radius:5px;font:12px var(--ui);font-style:normal}
 .release-old-tree:before{content:'';position:absolute;top:50%;left:0;right:0;border-top:1px solid var(--rule);z-index:-1}
 .release-old-tree .release-old-target{position:absolute;left:90%;top:0}
-.ua .ua-comparison .release-drag-hand{position:absolute;top:68px;left:40%;font-size:25px;animation:releaseDragAgain 5s ease-in-out infinite!important}
+.ua .ua-comparison .release-drag-hand{position:absolute;top:68px;left:40%;font-size:25px;animation:releaseDragAgain 4.8s ease-in-out infinite!important}
 .release-target-hint{position:absolute;bottom:10px;left:0;right:0;font:10px var(--ui);color:var(--muted)}
 .release-demo-tree{position:absolute;left:4px;right:4px;top:7px;display:flex;flex-direction:column;align-items:center;gap:6px;font:10px/1.1 var(--ui)}
 .release-demo-tree b,.release-level i{padding:3px 5px;border:1px solid var(--rule);border-radius:5px;background:var(--bg);font-style:normal;font-weight:400}
@@ -8508,19 +8507,19 @@ var tk=setInterval(function(){put();if(document.getElementById('darkBtn'))clearI
 .release-hardware{position:absolute;left:50%;bottom:15px;width:48px;height:57px;transform:translateX(-50%)}
 .release-mouse{display:block;position:absolute;inset:0;border:1px solid #70777d;border-radius:21px 21px 19px 19px;background:linear-gradient(90deg,#b9bec3,#f3f4f5 48%,#aeb4ba);box-shadow:inset 2px 2px 4px #fff9,0 3px 6px #0003}
 .release-mouse:before{content:'';position:absolute;left:50%;top:0;height:24px;border-left:1px solid #858d94}
-.ua .ua-comparison .release-left-button{position:absolute;top:1px;left:1px;width:21px;height:25px;border-radius:20px 0 0 0;background:#ffffff44;animation:releaseMousePress 8s linear infinite!important}
+.ua .ua-comparison .release-left-button{position:absolute;top:1px;left:1px;width:21px;height:25px;border-radius:20px 0 0 0;background:#ffffff44;animation:releaseMousePress 4.8s linear infinite!important}
 .release-wheel{position:absolute;top:9px;left:21px;width:5px;height:11px;border-radius:4px;background:#737c84}
-.ua .ua-comparison .release-finger{position:absolute;left:3px;top:-10px;width:16px;height:42px;border:1px solid #bd927d;border-radius:12px 12px 8px 8px;background:linear-gradient(90deg,#d7aa91,#f5d9c5 55%,#d8aa92);box-shadow:1px 2px 4px #0002;transform-origin:50% 90%;animation:releaseFingerTap 8s linear infinite!important}
+.ua .ua-comparison .release-finger{position:absolute;left:3px;top:-10px;width:16px;height:42px;border:1px solid #bd927d;border-radius:12px 12px 8px 8px;background:linear-gradient(90deg,#d7aa91,#f5d9c5 55%,#d8aa92);box-shadow:1px 2px 4px #0002;transform-origin:50% 90%;animation:releaseFingerTap 4.8s linear infinite!important}
 .release-finger:before{content:'';position:absolute;top:3px;left:3px;width:9px;height:11px;border-radius:7px 7px 4px 4px;background:#f8e6ddaa;border:1px solid #d2a995}
 .ua-comparison[data-input=touch] .release-mouse{display:none}
 .ua .ua-comparison[data-input=touch] .release-finger{left:14px;width:19px;height:47px;border-radius:13px 13px 9px 9px}
-.ua .ua-comparison .release-tap-ring{position:absolute;bottom:46px;left:calc(50% - 13px);width:26px;height:26px;border:2px solid var(--acc,#d9a62e);border-radius:50%;box-sizing:border-box;animation:releaseTapRing 8s linear infinite!important}
+.ua .ua-comparison .release-tap-ring{position:absolute;bottom:46px;left:calc(50% - 13px);width:26px;height:26px;border:2px solid var(--acc,#d9a62e);border-radius:50%;box-sizing:border-box;animation:releaseTapRing 4.8s linear infinite!important}
 .release-gesture{position:absolute;bottom:2px;left:0;right:0;font:10px var(--ui)}
-.ua .ua-comparison .release-gesture.single{animation:releaseSingleLabel 8s step-end infinite!important}.ua .ua-comparison .release-gesture.double{animation:releaseDoubleLabel 8s step-end infinite!important}
-.ua-comparison[data-kind=expand] .after .one{animation:releaseOpenOne 8s step-end infinite!important}
-.ua-comparison[data-kind=expand] .after .two,.ua-comparison[data-kind=expand] .after .three{animation:releaseOpenAll 8s step-end infinite!important}
-.ua-comparison[data-kind=collapse] .after .one,.ua-comparison[data-kind=collapse] .after .two{animation:releaseCloseAll 8s step-end infinite!important}
-.ua-comparison[data-kind=collapse] .after .three{animation:releaseCloseOne 8s step-end infinite!important}
+.ua .ua-comparison .release-gesture.single{animation:releaseSingleLabel 4.8s step-end infinite!important}.ua .ua-comparison .release-gesture.double{animation:releaseDoubleLabel 4.8s step-end infinite!important}
+.ua-comparison[data-kind=expand] .after .one{animation:releaseOpenOne 4.8s step-end infinite!important}
+.ua-comparison[data-kind=expand] .after .two,.ua-comparison[data-kind=expand] .after .three{animation:releaseOpenAll 4.8s step-end infinite!important}
+.ua-comparison[data-kind=collapse] .after .one,.ua-comparison[data-kind=collapse] .after .two{animation:releaseCloseAll 4.8s step-end infinite!important}
+.ua-comparison[data-kind=collapse] .after .three{animation:releaseCloseOne 4.8s step-end infinite!important}
 @keyframes releaseFrustratedPan{0%,100%{transform:translate(0,0)}20%{transform:translate(-25px,9px)}40%{transform:translate(-50px,-4px)}60%{transform:translate(-20px,12px)}80%{transform:translate(-60px,0)}}
 @keyframes releaseDragAgain{0%,40%,80%,100%{transform:translateX(0)}20%,60%{transform:translateX(-25px)}}
 @keyframes releaseFingerTap{0%,10%,22%,52%,57%,62%,100%{transform:translateY(-7px) rotate(-18deg)}13%,17%,55%,56%,59%,60%{transform:translateY(1px) rotate(-12deg)}}
@@ -8533,4 +8532,52 @@ var tk=setInterval(function(){put();if(document.getElementById('darkBtn'))clearI
 @keyframes releaseCloseOne{0%,20%,100%{opacity:1}21%,94%{opacity:0}}
 @keyframes releaseCloseAll{0%,60%,100%{opacity:1}61%,94%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.ua .ua-comparison .ua-compare-pane .ua-compare-art *{animation-duration:16s!important}}
+</style>
+
+<style id="tutorial-refinement">
+/* Generated sprite, 1536 x 1024, three 512 x 1024 columns. No image processing or UI tests. */
+.gesture-3d-finger,.gesture-3d-cursor{display:block;width:32px;height:64px;background-image:url('assets/tutorial/gesture-3d.png');background-size:300% 100%;background-repeat:no-repeat;background-position:0 50%}
+.gesture-3d-cursor{background-position:100% 50%;width:32px;height:64px}
+.ha .ha-cur{width:32px;height:64px;filter:none}
+.ha .ha-cur .gesture-3d-cursor{position:absolute;left:-6px;top:-8px}
+.ha .ha-fin{width:32px;height:64px;margin:-8px 0 0 -14px;border:0;border-radius:0;background-color:transparent;box-shadow:none}
+.ha .ha-tree b{box-sizing:border-box;width:28px;margin-left:-14px;height:30px;border:0!important;border-radius:0;background:transparent!important;box-shadow:none;font:13px/30px var(--ui);text-align:center}
+.ha .ha-vt s{width:auto;min-width:14px;border:0!important;border-radius:0;background:transparent!important;box-shadow:none;text-decoration:none;font:11px/1.25 var(--ui);writing-mode:vertical-rl}
+.ua .release-old-tree b,.ua .release-old-tree i,.ua .release-demo-tree b,.ua .release-level i{border:0;border-radius:0;background:transparent;padding:3px 5px;box-shadow:none;font-family:var(--ui)}
+.ua .ua-comparison .release-drag-hand{width:32px;height:64px;top:34px;font-size:0;background-image:url('assets/tutorial/gesture-3d.png');background-size:300% 100%;background-position:0 50%;animation:releaseFingerSwipe 4.8s ease-in-out infinite!important}
+.ua .ua-comparison .release-hardware{width:46px;height:92px;bottom:13px}
+.ua .ua-comparison .release-finger{left:7px;top:8px;width:32px;height:64px;border:0;border-radius:0;background:url('assets/tutorial/gesture-3d.png') 0 50%/300% 100% no-repeat;box-shadow:none}
+.ua .release-finger:before,.ua .release-mouse:before{display:none}
+.ua .ua-comparison .release-mouse{inset:0;border:0;border-radius:0;background:url('assets/tutorial/gesture-3d.png') 50% 50%/300% 100% no-repeat;box-shadow:none;animation:releaseMouseBodyTap 4.8s linear infinite!important}
+.ua-comparison[data-input=mouse] .release-finger,.ua .release-left-button,.ua .release-wheel{display:none}
+.ua .ua-comparison[data-input=touch] .release-finger{left:7px;top:8px;width:32px;height:64px}
+.ua-comparison[data-kind=collapse] .release-gesture.double{display:none}
+.ua .ua-comparison[data-kind=collapse] .release-gesture.single{animation:none!important;opacity:1}
+.ua .ua-comparison[data-kind=collapse] .release-finger{animation:releaseSingleTap 4.8s linear infinite!important}
+.ua .ua-comparison[data-kind=collapse] .release-mouse{animation:releaseMouseSingle 4.8s linear infinite!important}
+.ua .ua-comparison[data-kind=collapse] .release-tap-ring{animation:releaseSingleRing 4.8s linear infinite!important}
+.ua .ua-comparison[data-kind=collapse] .after .one,.ua .ua-comparison[data-kind=collapse] .after .two,.ua .ua-comparison[data-kind=collapse] .after .three{animation:releaseCloseAllOnce 4.8s step-end infinite!important}
+/* Unmentioned chrome matches the legacy 說明 card: type, spacing, colors and controls. */
+.ua .ua-card{box-sizing:border-box;width:min(440px,calc(100% - 28px));max-height:calc(100% - 28px);overflow:auto;padding:16px 18px;border-radius:20px;background:var(--pop,var(--bg));color:var(--fg);border:1px solid var(--rule);box-shadow:0 12px 40px #0004;font-family:var(--ui)}
+.ua .ua-ts{font-size:13px;color:var(--muted);font-weight:400}
+.ua .ua-h{margin:2px 0 10px;font-size:20px;text-align:center}
+.ua .ua-b button{height:40px;padding:0 16px;border-radius:20px;border:1px solid var(--rule);background:var(--bg);color:var(--fg);font:600 15px var(--ui)}
+.ua .ua-b button.go{background:#d9a62b;border-color:#d9a62b;color:#fff}
+.ua .ua-dots button.on{background:#d9a62b;border-color:#d9a62b}
+.ua.mobile22 .ua-ts{font-size:13px;font-weight:400}.ua.mobile22 .ua-h{font-size:20px}
+@keyframes releaseFingerSwipe{0%,100%{opacity:0;transform:translateX(24px) rotate(10deg)}15%,30%{opacity:1;transform:translateX(24px) rotate(10deg)}65%,85%{opacity:1;transform:translateX(-28px) rotate(-8deg)}}
+@keyframes releaseMouseBodyTap{0%,10%,22%,52%,57%,62%,100%{transform:translateY(0)}13%,17%,55%,56%,59%,60%{transform:translateY(3px) scale(.97)}}
+@keyframes releaseSingleTap{0%,10%,25%,100%{transform:translateY(-7px) rotate(-18deg)}13%,17%{transform:translateY(1px) rotate(-12deg)}}
+@keyframes releaseMouseSingle{0%,10%,25%,100%{transform:translateY(0)}13%,17%{transform:translateY(3px) scale(.97)}}
+@keyframes releaseSingleRing{0%,10%,25%,100%{opacity:0;transform:scale(.6)}13%{opacity:.9;transform:scale(.8)}21%{opacity:0;transform:scale(1.4)}}
+@keyframes releaseCloseAllOnce{0%,17%,100%{opacity:1}18%,96%{opacity:0}}
+</style>
+
+<style id="intro-3d-assets">
+#kmap .km-intro .ki-cur,#kmap .km-intro .ki-ui .mc{width:32px;height:64px;filter:none;background:url('assets/tutorial/gesture-3d.png') 100% 50%/300% 100% no-repeat}
+#kmap .km-intro .ki-cur svg,#kmap .km-intro .ki-ui .mc svg{display:none}
+#kmap .km-intro .ki-stage[data-sc="0"] .ki-cur{background-position:0 50%}
+#kmap.km-touch .km-intro .ki-cur,#kmap.km-touch .km-intro .ki-ui .mc{background-position:0 50%}
+#kmap .km-intro .ki-t .tr rect{display:none}
+#kmap .km-intro .ki-t .tr text{fill:currentColor;stroke:none;font-family:var(--ui)}
 </style>
