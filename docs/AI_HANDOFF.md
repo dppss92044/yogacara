@@ -15,7 +15,7 @@
 - window.isNotificationEnabled()讀App hk-update-notice==='on'；off／未設定不視為授權，未呼叫瀏覽器Web Push授權。新hk-update-animation-seen按2.3.0版本記已讀：enabled且未讀自動開，disabled且未讀只顯示鈴鐺紅點，點鈴鐺開Modal，關閉才記讀。保留設定切換／storage事件、手動重播與首次導覽互斥；取代舊mobile22強制自動通知及2.2樣式腳本。
 - SemVer影響：App av讀取、Worker av／hv驗證與管理端版本篩選、CLI版本查詢同步相容三段與歷史兩段。Worker未部署、未執行migration；正式發布前必須先部署相容Worker，避免舊服務拒收三段版本封包。沒有在本輪做任何外部發布。
 - 檢查：16段可執行inline JS、sw.js及Worker修改檔Node靜態語法通過；資產工具與CLI以ast.parse靜態語法通過，git diff --check通過。僅重算38項離線資產索引，未自動編譯、未跑UI／E2E／功能測試／實機。電腦、iPad、手機直橫及藏／韓共用路徑只作源碼影響檢視，不宣稱操作驗證通過；不沿用歷史測試數字。
-- 上輪程式預覽020e989及文件提交974d597已被本輪需求取代；最新程式提交與預覽網址完成提交後補記。只推同一獨立工作分支；raw.githack先前被此環境代理CONNECT403阻擋，公網可達性未確認。
+- 上輪程式預覽020e989及文件提交974d597已被本輪需求取代；最新程式提交 `f00aaee0538da0d833f5bed6dfff6a99e3d25f28`；交接補記提交見git log。預覽基址 `https://raw.githack.com/dppss92044/yogacara/f00aaee0538da0d833f5bed6dfff6a99e3d25f28/index.html`，可加 `?layout=mac`／`?layout=iphone`／`?layout=ipad`。只推同一獨立工作分支；raw.githack先前被此環境代理CONNECT403阻擋，公網可達性未確認。
 
 ## W028（Codex，2026-10-16；完成並靜默發布至2.2，封存）
 - 基底2.2 main `9df7c82eb82bfc389b1282928fe7abb051e464a4`，分支work-w028-minus-fade。
