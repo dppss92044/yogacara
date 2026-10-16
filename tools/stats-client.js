@@ -43,7 +43,7 @@
       } catch (e) { return 'desktop'; }
     }
     function appVersion() {
-      try { var m = document.querySelector('meta[name="app-version"]'), v = m && m.getAttribute('content'); return v && /^\d{1,2}\.\d{1,3}$/.test(v) ? v : null; } catch (e) { return null; }
+      try { var m = document.querySelector('meta[name="app-version"]'), v = m && m.getAttribute('content'); return v && /^(?:\d{1,2}\.\d{1,3}|(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))$/.test(v) ? v : null; } catch (e) { return null; }
     }
     function appMode() {                           // web｜pwa（只分是否以主畫面 App 開啟）
       try { return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true ? 'pwa' : 'web'; } catch (e) { return 'web'; }
@@ -211,7 +211,20 @@
       var ctl = typeof AbortController === 'function' ? new AbortController() : null;
       var to = ctl ? setTimeout(function () { try { ctl.abort(); } catch (e) {} }, TIMEOUT_MS) : 0;
       fetch(BASE + path, { method: 'POST', body: JSON.stringify(body), keepalive: true, mode: 'cors', credentials: 'omit', referrerPolicy: 'no-referrer', headers: { 'Content-Type': 'text/plain' }, signal: ctl ? ctl.signal : undefined })
-        .then(function (r) { clearTimeout(to); cb(!!(r && r.ok), r); }, function () { clearTimeout(to); cb(false, null); });
+        .then(function (r) {
+          clearTimeout(to);
+          // A legacy Worker rejects SemVer before writing. Retry once without optional version metadata.
+          if (path === '/v' && r && r.status === 400 && running && st && body.id === st.id && body.t === tier() && !dnt() && !(opts && opts.legacyVersionRetry)) {
+            var legacy = Object.assign({}, body), changed = false;
+            if (typeof legacy.av === 'string' && /^\d+\.\d+\.\d+$/.test(legacy.av)) { delete legacy.av; changed = true; }
+            if (Array.isArray(legacy.hv)) {
+              var versions = legacy.hv.filter(function (v) { return typeof v === 'string' && /^(?:\d{1,2}\.\d{1,3}|(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))$/.test(v); });
+              if (versions.length !== legacy.hv.length) { changed = true; if (versions.length) legacy.hv = versions; else delete legacy.hv; }
+            }
+            if (changed) { post(path, legacy, cb, { legacyVersionRetry: true }); return; }
+          }
+          cb(!!(r && r.ok), r);
+        }, function () { clearTimeout(to); cb(false, null); });
     }
     function flush(periodic) {
       try {
@@ -465,7 +478,7 @@
       if (t === '已送出') { rpPending = 0; ev('report.send.ok'); } else if (/目前無法直接送出/.test(t)) { rpPending = 0; ev('report.send.fail'); }
     }
     FN.historyDetail = function () {
-      var b = document.querySelector('#versionDetail b'), m = b && /^v(\d{1,2}\.\d{1,3})$/.exec(b.textContent.trim()); if (m && st) { ev('history.detail'); pushCap(st.hv, m[1], 20); }
+      var b = document.querySelector('#versionDetail b'), m = b && /^v((?:\d{1,2}\.\d{1,3}|(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)))$/.exec(b.textContent.trim()); if (m && st) { ev('history.detail'); pushCap(st.hv, m[1], 20); }
     };
     FN.offlineOpen = function () {}; FN.updateReload = function () {};
     FN.early = function () {};
