@@ -13,7 +13,8 @@
 - 邊角鍵依實體觸控裝置判斷，選電腦介面也適用；28px加safe-area-inset內縮，返回／列印／標號與寬鬆／選卷／回全覽各維持1.25倍。更新動畫使用兩個固定左右面板與CSS動畫，保留一次通知已讀鍵、桌面不自動彈出，以及重播入口。
 - 檢查：20段可執行inline JS與sw.js靜態語法通過；初次抽取誤將application/octet-stream壓縮資料當JS，已按script type排除後重新完整解析。git diff --check通過。只重算離線資產索引以供預覽，版號仍2.2；未執行自動編譯、UI／E2E或實機檢查。
 - 舊 tools/mobile-map-minus.cjs 的全屏拖曳／淡出斷言已被本次明確規格取代，本次未執行，也不沿用舊502項通過宣稱新功能通過。電腦／iPad／手機直橫、韓／藏共用邏輯僅做源碼影響檢視，均未操作驗證。
-- 程式提交與預覽網址：完成提交後補記；只推預覽分支、不推main、不開PR、不發布。正式main仍以基底commit為準。
+- 最後程式提交 `020e9897be228c529dddf6366500b357a96ca54b`，已推預覽分支；本交接補記提交見git log。預覽基址 `https://raw.githack.com/dppss92044/yogacara/020e9897be228c529dddf6366500b357a96ca54b/index.html`，加 `?layout=mac`／`?layout=iphone`／`?layout=ipad` 可直接選介面，之後設定仍可切換。
+- 遠端已核對：main仍 `e31d57a22cec1efbc878761632c9b7f025e69c86`，只推預覽分支、不開PR、不發布。raw.githack HEAD請求在本環境CONNECT階段被代理403阻擋，故未能獨立確認公網預覽可達；這不是UI／E2E驗證。
 
 ## W028（Codex，2026-10-16；完成並靜默發布至2.2，封存）
 - 基底2.2 main `9df7c82eb82bfc389b1282928fe7abb051e464a4`，分支work-w028-minus-fade。
