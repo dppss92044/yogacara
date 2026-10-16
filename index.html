@@ -4488,7 +4488,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function setStatus(t){msgEl.textContent=t||'';msgEl.hidden=!t;}
       function nodeRect(M,i){var a=M.x[i],c0=M.ct[i]+2,c1=M.cb[i]-2,w=M.w[i];return M.tm===0?[a,c0,w,c1-c0]:M.tm===1?[-c1,a,c1-c0,w]:[c0,a,c1-c0,w];}
       var mobileMinusFadeUntil=0;
-      function mobileMinusOpacity(){return !window.__mobile22Device||cv.classList.contains('km-drag')?1:Math.max(0,(mobileMinusFadeUntil-performance.now())/1500);}
+      function mobileMinusOpacity(){return !window.__mobile22Device||!emb||cv.classList.contains('km-drag')?1:Math.max(0,(mobileMinusFadeUntil-performance.now())/1500);}
       function mobileMinusHidden(){return !!window.__mobile22Device&&mobileMinusOpacity()<=0;}
       function updateNodeControl(){if(!nodeControl||!model)return;var q=shownCur();if(!helpMode||q<0||!model.kc[q]||sc<.32||!model.col[q]&&mobileMinusHidden()){nodeControl.hidden=true;return;}var ma=mkA(model,q),mc=mkC(model,q),r=cv.getBoundingClientRect(),x=(model.tm===0?ma:model.tm===1?-mc:mc)*sc+tx+r.left,y=(model.tm===0?mc:ma)*sc+ty+r.top;nodeControl.hidden=x<r.left+12||x>r.right-12||y<r.top+12||y>r.bottom-12;nodeControl.style.left=(x-11)+'px';nodeControl.style.top=(y-11)+'px';nodeControl.style.opacity=window.__mobile22Device&&!model.col[q]?String(mobileMinusOpacity()):'';nodeControl.style.transform=window.__mobile22Device&&!model.col[q]?'scale(.6666666667)':'';nodeControl.textContent=model.col[q]?'＋':'−';nodeControl.dataset.node=String(q);nodeControl.setAttribute('aria-label',model.col[q]?'展開當前分支':'收起當前分支');}
       function mapTop(){return Math.min(H-64,112+Math.max(0,H-176)*.18);}
@@ -4622,7 +4622,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
               cx.globalAlpha=mobileMarkerOpacity;cx.beginPath();cx.arc(mx,my,6*markerScale,0,6.2832);cx.fillStyle=P.bg;cx.fill();cx.lineWidth=1.1*markerScale/sc;cx.strokeStyle=P.fg;cx.globalAlpha=.7*mobileMarkerOpacity;cx.stroke();
               cx.beginPath();cx.moveTo(mx-3*markerScale,my);cx.lineTo(mx+3*markerScale,my);if(M.col[i]){cx.moveTo(mx,my-3);cx.lineTo(mx,my+3);}cx.stroke();cx.globalAlpha=1;}
           }}
-        cx.restore();placeChip();updateNodeControl();if(window.__mobile22Device&&!cv.classList.contains('km-drag')&&mobileMarkerOpacity>0)req();
+        cx.restore();placeChip();placeExpandAll();updateNodeControl();if(window.__mobile22Device&&emb&&!cv.classList.contains('km-drag')&&mobileMarkerOpacity>0)req();
       }
       function mkA(M,i){return M.sd[i]>0||M.ly>=6?M.x[i]+M.w[i]+M.mko:M.x[i]-M.mko;}
       function mkC(M,i){return M.ly===8?M.ct[i]+M.step/2:M.y[i];}
@@ -4682,6 +4682,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       }
       function zkv(){var z=1;try{z=parseFloat(document.getElementById('pview').style.getPropertyValue('--zp'))||1;}catch(e){}return Math.max(.5,Math.min(3,z));}
       function load(){
+        clearExpandAll();
         var seq=++buildSeq;setStatus('整理中…');hover=-1;hoverMk=-1;hoverEdge=null;hideTip();syncUI();
         setTimeout(function(){
           if(seq!==buildSeq||!box||box.hidden)return;
@@ -4920,8 +4921,39 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         setStatus(model.n?'':'沒有科判');hintEl.textContent=hintEl.textContent.replace(/顯示 \d+ 科/,'顯示 '+model.own+' 科');
         if(recenter)homeView();updChip();req();
       }
-      function toggleCol(i){if(i<0||!model||!(model.kc[i]>0))return;col[i]^=1;rebuild(i);}
-      function expandAll(i){if(i<0||!model)return;var d=new Uint8Array(NN.length);for(var k=0;k<NN.length;k++){var p=NN[k][4];if(k===i||p>=0&&d[p])d[k]=1;if(d[k])col[k]=0;}rebuild(i);}
+      var expandAllBtn=null,expandAllNode=-1;
+      function clearExpandAll(){expandAllNode=-1;if(expandAllBtn)expandAllBtn.hidden=true;}
+      function toggleCol(i){
+        if(i<0||!model||!(model.kc[i]>0))return;
+        var opening=!!col[i],more=false;clearExpandAll();
+        if(opening){col[i]=0;prKids(i).forEach(function(k){if(model.kc[k]>0){col[k]=1;more=true;}});}
+        else col[i]=1;
+        if(opening&&more)expandAllNode=i;
+        rebuild(i);
+      }
+      function expandAll(i){
+        if(i<0||!model||!NN[i])return;
+        var stack=[i];clearExpandAll();
+        while(stack.length){var k=stack.pop();col[k]=0;prKids(k).forEach(function(c){stack.push(c);});}
+        rebuild(i);
+      }
+      function placeExpandAll(){
+        if(!expandAllBtn)return;var i=expandAllNode;
+        if(i<0||!model||!model.inc[i]||model.col[i]){expandAllBtn.hidden=true;return;}
+        var c=wxy(model,i),x=c[0]*sc+tx,y=c[1]*sc+ty;
+        if(x<0||x>W||y<0||y>H){expandAllBtn.hidden=true;return;}
+        expandAllBtn.hidden=false;
+        var bw=expandAllBtn.offsetWidth,bh=expandAllBtn.offsetHeight,margin=20,r=cv.getBoundingClientRect();
+        var obstacles=Array.from(box.querySelectorAll('.km-controls,.km-catalog,.km-back2,.km-eopt,.km-guide-mid,.km-backall,.km-chip')).filter(function(el){return el.getClientRects().length;}).map(function(el){var a=el.getBoundingClientRect();return{left:a.left-r.left,top:a.top-r.top,right:a.right-r.left,bottom:a.bottom-r.top};});
+        var nr=nodeRect(model,i),right=(nr[0]+nr[2])*sc+tx,left=nr[0]*sc+tx,top=nr[1]*sc+ty,bottom=(nr[1]+nr[3])*sc+ty;
+        var candidates=[[right+16,y-bh/2],[left-bw-16,y-bh/2],[x-bw/2,bottom+16],[x-bw/2,top-bh-16]],chosen=null;
+        for(var k=0;k<candidates.length;k++){
+          var px=Math.max(margin,Math.min(candidates[k][0],W-bw-margin)),py=Math.max(margin,Math.min(candidates[k][1],H-bh-margin));
+          if(!obstacles.some(function(o){return px<o.right+6&&px+bw>o.left-6&&py<o.bottom+6&&py+bh>o.top-6;})){chosen=[px,py];break;}
+        }
+        if(!chosen){expandAllBtn.hidden=true;return;}
+        expandAllBtn.style.left=chosen[0]+'px';expandAllBtn.style.top=chosen[1]+'px';
+      }
       function branchStep(dx){
         var i=selI,s0=i>=VR?0:i,e=i>=VR?VR+1:subEnd(i),b=NN[i][3],cur=0,mx=0,k;
         for(k=s0;k<e;k++){var r=NN[k][3]-b;if(r>mx)mx=r;if(model.inc[k]&&r>cur)cur=r;}
@@ -5317,7 +5349,7 @@ pg.blocks.forEach(function(b){
 
       }
       function make(){
-        box=document.createElement('div');box.id='kmap';box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','科判圖');
+        box=document.createElement('div');box.id='kmap';box.classList.toggle('km-touch',!!window.__mobile22Device||navigator.maxTouchPoints>0);box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label','科判圖');
         var ov='',dv='',k;for(k=1;k<=100;k++)ov+='<option value="'+k+'">第 '+k+' 卷</option>';
         var IC={ly:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="5" height="6" rx="1"/><path d="M8 12h4M12 6v12M12 6h4M12 18h4"/><rect x="16" y="3.5" width="5" height="5" rx="1"/><rect x="16" y="15.5" width="5" height="5" rx="1"/></svg>',ti:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7V5h14v2M12 5v14M9 19h6"/></svg>',st:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>',br:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 12h4a3 3 0 0 0 3-3V6h3M11 12h3a3 3 0 0 1 3 3v3"/></svg>',rng:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/></svg>',dep:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 3.5 9 12 14l8.5-5z"/><path d="m3.5 13 8.5 5 8.5-5"/></svg>',ori:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h9M5 18h12"/></svg>',spl:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M12 5v14"/></svg>',out:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4M8 11h6"/></svg>',inn:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4M8 11h6M11 8v6"/></svg>',fit:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V5h4M20 9V5h-4M4 15v4h4M20 15v4h-4"/></svg>',cur:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>'};
         box.innerHTML='<button type="button" class="km-back2" aria-label="回到正文與科判欄" title="回到正文與科判欄"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M9 3.5v17M13 9h4M13 13h4"/></svg></button><button type="button" class="km-exp" aria-label="展開成全螢幕科判圖" title="展開成全螢幕"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></button><div class="km-eopt"><button type="button" data-eo="sync" aria-pressed="false" data-tip="自動追蹤：開啟時右邊跟著正文移動並標示位置；關閉時不追蹤、不標示（雙擊標題仍會跳轉）"><svg class="lk-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><svg class="lk-o" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.5-1.8"/></svg><i></i></button><button type="button" data-eo="lab" title="標題：顯示或隱藏科判標號（甲一、乙二…）" aria-label="標題" aria-pressed="true"><span>標題</span><i></i></button><button type="button" data-eo="compact" aria-pressed="false" title="寬鬆：關＝緊密排列（預設），開＝放寬間距" aria-label="寬鬆"><span>寬鬆</span><i></i></button></div><div class="km-mm"></div><div class="km-etb"><button type="button" data-e2="d-" title="少一層">層−</button><button type="button" data-e2="d+" title="多一層">層＋</button><button type="button" data-e2="orient" title="橫書／直書">橫／直</button><button type="button" data-e2="fit" title="全覽">全覽</button><button type="button" data-e2="print" title="列印選取的分支">列印</button></div><div class="km-bar"><button type="button" class="km-close" aria-label="關閉科判圖">‹ 返回</button><span class="km-title">科判圖</span>'+
@@ -5348,6 +5380,8 @@ pg.blocks.forEach(function(b){
             '<button type="button" class="km-fold" aria-label="收起功能列" aria-expanded="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><span>收起</span></button></div></div>'+
           '<div class="km-read"><div class="km-rh"><span></span><button type="button" data-a="kp" aria-pressed="true" title="顯示／隱藏正文中的科判標題">科判</button><button type="button" data-a="tx" aria-pressed="true" title="顯示／隱藏正文">正文</button><button type="button" data-a="prev" aria-label="上一卷">‹</button><button type="button" data-a="next" aria-label="下一卷">›</button><button type="button" data-a="open">在閱讀器開啟</button></div><div class="km-rb"></div></div></div>';
         var surface=box.querySelector('.km-map');
+        expandAllBtn=document.createElement('button');expandAllBtn.type='button';expandAllBtn.className='km-expand-all';expandAllBtn.hidden=true;expandAllBtn.textContent='全開';expandAllBtn.setAttribute('aria-label','完全展開這個分支');
+        expandAllBtn.addEventListener('click',function(e){e.stopPropagation();expandAll(expandAllNode);});surface.appendChild(expandAllBtn);
         var controls=document.createElement('div');controls.className='km-controls';controls.setAttribute('role','toolbar');controls.setAttribute('aria-label','科判圖操作');
         controls.innerHTML='<button type="button" data-a="settings" aria-label="科判圖設定" aria-expanded="false" aria-controls="km-settings"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m9 3-.7 2.4-2 .9L4 5.6l-2 3.5 1.7 1.8v2.2L2 14.9l2 3.5 2.3-.7 2 .9L9 21h6l.7-2.4 2-.9 2.3.7 2-3.5-1.7-1.8v-2.2L22 9.1l-2-3.5-2.3.7-2-.9L15 3z"/><circle cx="12" cy="12" r="3.2"/></svg></button><button type="button" data-a="guide" aria-label="科判圖說明" hidden>?</button><button type="button" data-a="reguide" aria-label="說明">說明</button><button type="button" data-a="whole" aria-pressed="false">全部</button><button type="button" data-a="print" aria-label="列印科判圖"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7zM17 11h1"/></svg></button><span class="km-whole-zoom" hidden><button type="button" data-map-zoom="out" aria-label="縮小科判圖">−</button><button type="button" data-map-zoom="in" aria-label="放大科判圖">＋</button></span>';
         settingsEl=document.createElement('div');settingsEl.id='km-settings';settingsEl.className='km-settings';settingsEl.hidden=true;settingsEl.setAttribute('role','region');settingsEl.setAttribute('aria-label','科判圖所有功能');
@@ -5454,7 +5488,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         });
         box.querySelectorAll('[data-p]').forEach(function(bt){bt.addEventListener('click',function(e){e.stopPropagation();var k=bt.dataset.p,pp=box.querySelector('[data-pop='+k+']'),open=pp.hidden;closePops();if(open){pp.hidden=false;bt.setAttribute('aria-expanded','true');}});});
         box.querySelectorAll('.km-pop').forEach(function(pp){pp.addEventListener('pointerdown',function(e){e.stopPropagation();});});
-        mapEl.addEventListener('pointerdown',function(e){if(e.target.closest&&e.target.closest('.km-pop,.km-dock,.km-controls,.km-settings,.km-catalog,.km-tour,.km-chip'))return;closePops();},true);
+        mapEl.addEventListener('pointerdown',function(e){if(e.target.closest&&e.target.closest('.km-pop,.km-dock,.km-controls,.km-settings,.km-catalog,.km-tour,.km-chip,.km-expand-all'))return;closePops();},true);
         sBtn.addEventListener('click',function(){setSplit(!split);});
         var chipPress=null;chipEl.addEventListener('pointerdown',function(e){e.stopPropagation();chipPress=e.target.closest('button[data-c]');});chipEl.addEventListener('pointercancel',function(){chipPress=null;});
         chipEl.addEventListener('click',function(e){var b=e.target.closest('button[data-c]');if(!b||e.detail&&chipPress!==b)return;chipPress=null;var c=b.dataset.c;
@@ -5468,7 +5502,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         rbEl.addEventListener('click',function(e){var h=e.target.closest('h5[data-id]');if(!h)return;var id=+h.dataset.id;if(model&&model.inc[id]){selI=id;req();}rbEl.querySelectorAll('h5.sel').forEach(function(x){x.classList.remove('sel');});h.classList.add('sel');});
         box.querySelector('.km-dock').addEventListener('click',function(e){var z=e.target.closest('[data-z]');if(!z)return;closePops();var k=z.dataset.z;
           if(k==='in'){zoomAt(1.3,W/2,H/2);}else if(k==='out'){zoomAt(1/1.3,W/2,H/2);}else if(k==='reset'){homeView();req();}else if(k==='fit')overview();else if(k==='cur')toCurrent();});
-        mapEl.addEventListener('wheel',function(e){if(e.target.closest&&e.target.closest('.km-settings,.km-controls,.km-catalog,.km-tour,.km-chip'))return;e.preventDefault();var r=cv.getBoundingClientRect(),u=e.deltaMode===1?16:e.deltaMode===2?400:1;
+        mapEl.addEventListener('wheel',function(e){if(e.target.closest&&e.target.closest('.km-settings,.km-controls,.km-catalog,.km-tour,.km-chip,.km-expand-all'))return;e.preventDefault();var r=cv.getBoundingClientRect(),u=e.deltaMode===1?16:e.deltaMode===2?400:1;
           if(e.metaKey||e.ctrlKey){zoomAt(Math.exp(-(e.deltaY||e.deltaX)*u*(e.ctrlKey&&!e.metaKey?0.012:0.0016)),e.clientX-r.left,e.clientY-r.top);return;}
           if(e.shiftKey){tx-=(e.deltaX||e.deltaY)*u;}else{ty-=e.deltaY*u;tx-=e.deltaX*u;}
           hideTip();req();},{passive:false});
@@ -5528,6 +5562,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         setTimeout(restore,0);
       }
       function hideMap(){
+        clearExpandAll();
         helpMode=false;cancelAnimationFrame(helpFrame);if(helpLayer)helpLayer.remove();helpLayer=null;tourEnd();if(branchTitle)branchTitle.hidden=true;box.hidden=true;emb=false;document.documentElement.setAttribute('data-km-track','on');box.classList.remove('km-emb','km-dk');clearInterval(embT);buildSeq++;ptrs={};tap=null;pinch=null;if(window.__mobile22Device&&cv){mobileMinusFadeUntil=0;cv.classList.remove('km-drag');}hideTip();
       }
       function close(noFocus,after){
@@ -5576,7 +5611,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         var x0=1e9,x1=-1e9,y0=1e9,y1=-1e9,i,z,hit=false;for(i=0;i<model.n;i++){if(!model.inc[i])continue;z=i;while(z>=0&&z!==c)z=NN[z][4];if(z!==c)continue;var p=wxy(model,i);if(p[0]<x0)x0=p[0];if(p[0]>x1)x1=p[0];if(p[1]<y0)y0=p[1];if(p[1]>y1)y1=p[1];hit=true;}
         if(!hit)return false;var X0=x0*sc+tx,X1=x1*sc+tx,Y0=y0*sc+ty,Y1=y1*sc+ty,fx=X1-X0<1?1:(Math.min(X1,W)-Math.max(X0,0))/(X1-X0),fy=Y1-Y0<1?1:(Math.min(Y1,H)-Math.max(Y0,0))/(Y1-Y0);return Math.min(fx,fy)<.6;}
       function setEmb(on){
-        emb=on;box.classList.toggle('km-emb',on);clearInterval(embT);box._ew=0;embPos();trackAttr();
+        emb=on;clearExpandAll();box.classList.toggle('km-emb',on);clearInterval(embT);box._ew=0;embPos();trackAttr();
         if(on&&window.ResizeObserver&&!box._ro){box._ro=new ResizeObserver(function(){if(emb)embPos();});box._ro.observe($('panel'));}
         if(!on&&catalogEl){catalogEl.classList.add('folded');var ctg0=catalogEl.querySelector('.km-cat-toggle');if(ctg0)ctg0.setAttribute('aria-expanded','false');}
         var back=box.querySelector('.km-back2');back.title='回主頁';
@@ -7589,29 +7624,40 @@ var SC=[['「鎖」',['打開＝自動追蹤：讀到哪，三欄自動標黃。
         ['「科判圖」',['點右下圖示：科判圖在右邊並排預覽。','再點放大整頁，再點回原畫面。']],
         ['「介面」',['新增「深色」：一點畫面就反黑。','閱讀底色可選：淡黃、護眼綠、灰、白。']],
         ['「說明」',['設定裡的「說明」改成動畫，帶你看主要功能。','半頁科判圖右上也有「說明」。']]];
-var CUR='<svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 2 4 7-3 1.5-4-7-5 4z" fill="#fff" stroke="#222" stroke-width="1.3" stroke-linejoin="round"/></svg>';
-var TREE='<svg viewBox="0 0 120 80" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.2"><path d="M60 22v8M24 30h72M24 30v6M60 30v6M96 30v6M24 56v6M96 56v6"/></g><g fill="#f4e2a4" stroke="currentColor" stroke-width="1"><rect x="53" y="2" width="14" height="20" rx="3"/><rect x="17" y="36" width="14" height="20" rx="3"/><rect x="53" y="36" width="14" height="20" rx="3"/><rect x="89" y="36" width="14" height="20" rx="3"/><rect x="17" y="62" width="14" height="16" rx="3" fill="none"/><rect x="89" y="62" width="14" height="16" rx="3" fill="none"/></g></svg>';
-function ic(sel,cls){var s=document.querySelector(sel);if(!s)return '';var c=s.cloneNode(true);c.removeAttribute('class');if(cls)c.setAttribute('class',cls);return c.outerHTML;}
 window.__updAnim=function(){if(document.getElementById('updAnim'))return;
   var mobile=window.__mobile22Device;
   var scenes=mobile?[
     ['平板、手機開啟完整電腦版功能',['平板、手機可以開啟完整電腦版功能。','設定 → 介面 → 點選電腦圖示。']],
     ['介面持續修復中',['平板、手機版介面 bug 陸續修復中，目前完整功能以電腦版為主。']]
-  ]:SC;
+  ].concat([
+    ['邊角按鍵更好按',['全屏科判的邊角按鍵向內移，並放大25%。','手機、平板即使選電腦介面，也會套用。']],
+    ['收合減號常駐',['全屏科判不用先拖曳，就能點減號收合分支。']],
+    ['逐層展開與全開',['點「（分N）」只展開下一層。','想一次看完整支脈，點節點旁的水滴「全開」。']]
+  ]):SC.concat([['逐層展開與全開',['點「（分N）」只展開下一層。','點節點旁的水滴「全開」，一次展開該分支。']]]);
   var v=((document.getElementById('appVer')||{}).textContent||'').trim();
-  var lst='';for(var k=0;k<14;k++)lst+='<i'+(k===8?' class="t"':'')+'></i>';
-  var tr='';[[0,1],[1,0],[0,0]].forEach(function(c,n){tr+='<span><b'+(n===1?' class="t"':'')+'></b><b></b><b></b></span>';});
   var el=document.createElement('div');el.className='ua'+(mobile?' mobile22':'');el.id='updAnim';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label',mobile?'v2.2 上線':'更新簡介');
-  el.innerHTML='<div class="ua-card"><div class="ua-ts">更新簡介　'+v+'</div><h3 class="ua-h"></h3><div class="ua-st" data-s="0">'+
-    '<div class="ua-col ua-cat"><div class="ua-lst">'+lst+'</div></div>'+
-    '<div class="ua-col ua-txt"><div class="ua-bar"><span class="ua-lock">'+ic('#trackLock .lk-o','o')+ic('#trackLock .lk-c','c')+'</span></div><div class="ua-body"><i class="ua-ln" style="width:70%"></i><i class="ua-ln"></i><i class="ua-tt t"></i><i class="ua-ln"></i><i class="ua-ln"></i><i class="ua-ln" style="width:80%"></i><i class="ua-ln"></i><i class="ua-ln" style="width:50%"></i></div></div>'+
-    '<div class="ua-col ua-map"><div class="ua-tree">'+tr+'</div></div>'+
-    '<div class="ua-half">'+TREE+'</div><div class="ua-full">'+TREE+'<i class="fold"></i></div>'+
-    '<span class="ua-mb">'+ic('#mapBtn svg')+'</span><span class="ua-sw"><i></i><i></i><i></i><i></i><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg></b></span><span class="ua-gear">'+ic('#menuBtn svg')+'</span><span class="ua-mn"><i>介面</i><i>字體</i><i class="h">說明</i><i>版本</i></span><span class="ua-hc"><span>▶</span></span><span class="ua-cur">'+CUR+'</span></div>'+
-    '<ul class="ua-d"></ul><p class="ua-re">之後可在 設定、版本、詳情 重播這段動畫。</p><div class="ua-dots"></div><div class="ua-b"><button type="button" data-u="prev">上一步</button><button type="button" class="go" data-u="next">下一步</button></div></div>';
+  el.innerHTML='<div class="ua-card"><div class="ua-ts">更新簡介　'+v+'</div><h3 class="ua-h"></h3><div class="ua-st ua-comparison"></div><ul class="ua-d"></ul><p class="ua-re">之後可在 設定、版本、詳情 重播這段動畫。</p><div class="ua-dots"></div><div class="ua-b"><button type="button" data-u="prev">上一步</button><button type="button" class="go" data-u="next">下一步</button></div></div>';
+  function comparison(n){
+    var kinds=mobile?['interface','repair','corners','minus','expand']:['lock','map','theme','help','expand'];
+    var captions=mobile?[
+      ['行動介面功能有限','切換電腦介面，開啟完整功能'],
+      ['行動介面尚有 bug','修復持續中，可先用電腦介面'],
+      ['按鍵貼邊，容易按不到','內縮安全距離，放大25%'],
+      ['要先拖曳才看得到減號','全屏減號常駐，直接收合'],
+      ['一點就恢復整支，多層湧出','先開下一層，也能點「全開」']
+    ]:[['手動找三欄對應位置','自動追蹤，三欄同步標黃'],['閱讀時需切換圖面','半屏預覽，再展開全屏'],['閱讀配色選擇受限','深色與四種閱讀底色'],['只看文字，難想像操作','動畫示範操作過程'],['一點就恢復整支，多層湧出','先開下一層，也能點「全開」']];
+    st.replaceChildren();st.dataset.kind=kinds[n];
+    ['before','after'].forEach(function(side,k){
+      var pane=document.createElement('section');pane.className='ua-compare-pane '+side;
+      var label=document.createElement('strong');label.textContent=k?'After · 現在':'Before · 原先';pane.appendChild(label);
+      var art=document.createElement('div');art.className='ua-compare-art';art.setAttribute('aria-hidden','true');
+      art.innerHTML='<div class="ua-mini-screen"><div class="ua-mini-cols"><i></i><i></i><i></i></div><span class="ua-mini-key">↩</span><span class="ua-mini-minus">−</span><span class="ua-mini-pointer">☝</span></div><div class="ua-mini-branch"><b>科判</b><div class="ua-mini-level one"><i>分支</i><i>分支</i></div><div class="ua-mini-level two"><i>下一層</i><i>下一層</i></div><div class="ua-mini-level three"><i>末層</i><i>末層</i></div><span class="ua-mini-all">全開</span></div>';
+      pane.appendChild(art);var caption=document.createElement('p');caption.textContent=captions[n][k];pane.appendChild(caption);st.appendChild(pane);
+    });
+  }
   var st=el.querySelector('.ua-st'),dots=el.querySelector('.ua-dots'),i=0;
   scenes.forEach(function(x,n){var d=document.createElement('button');d.type='button';d.setAttribute('aria-label',x[0]);d.onclick=function(){show(n);};dots.appendChild(d);});
-  function show(n){i=n;st.dataset.s=mobile?'mobile-'+n:String(n);st.querySelectorAll('*').forEach(function(e){e.style.animation='none';e.offsetWidth;e.style.animation='';});
+  function show(n){i=n;comparison(n);st.dataset.s=mobile?'mobile-'+n:String(n);st.querySelectorAll('*').forEach(function(e){e.style.animation='none';e.offsetWidth;e.style.animation='';});
     el.querySelector('.ua-h').textContent=scenes[n][0];var ul=el.querySelector('.ua-d');ul.replaceChildren();scenes[n][1].forEach(function(t){var li=document.createElement('li');li.textContent=t;ul.appendChild(li);});
     [].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===n);});
     el.querySelector('[data-u=prev]').disabled=n===0;el.querySelector('[data-u=next]').textContent=n===scenes.length-1?'知道了':'下一步';}
@@ -7622,8 +7668,6 @@ window.__updAnim=function(){if(document.getElementById('updAnim'))return;
   function fitMobile(){if(!mobile)return;var vv=window.visualViewport,scale=vv?vv.scale:1,w=vv?vv.width:innerWidth,h=vv?vv.height:innerHeight,card=el.querySelector('.ua-card');card.style.zoom=String(1/scale);card.style.width=Math.min(420,w*scale-28)+'px';card.style.maxHeight=Math.max(120,h*scale-28)+'px';}
   if(mobile){
     el.querySelector('.ua-ts').textContent='v2.2 上線';
-    st.setAttribute('aria-hidden','true');
-    st.innerHTML='<div class="m22-preview"><div class="m22-phone"><span>手機／平板</span><i></i><i></i><i></i></div><div class="m22-menu"><span>⚙ 設定</span><span>介面</span><b><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg> 電腦</b></div><div class="m22-desktop"><span>卷次</span><span>正文</span><span>科判</span></div><i class="m22-finger"></i></div>';
     el.querySelector('.ua-re').textContent='之後可點鈴鐺或「重播更新動畫」再看。';
     window.addEventListener('resize',fitMobile);fitMobile();
   }
@@ -8449,3 +8493,73 @@ var tk=setInterval(function(){put();if(document.getElementById('darkBtn'))clearI
 <style>.upd-notice .upd-warn{margin-bottom:12px}</style>
 <style>#updBell{display:none!important;position:relative}@media (max-width:700px){:root:root:root:root .books-tools #updBell{display:inline-block!important;min-width:36px;width:36px;height:40px;padding:0}:root:root:root:root .books-tools #updBell:has(.upd-dot[hidden]){display:none!important}#updBell .upd-dot{top:7px;right:8px;width:9px;height:9px}}</style>
 <style>#kmap .ki-stage.go[data-sc="1"][data-step="1"] .ki-t{animation:kiDrag 3.2s ease-in-out infinite}#kmap .ki-stage.go[data-sc="1"][data-step="2"] .ki-t{animation:kiZoom 3.2s ease-in-out infinite}</style>
+
+
+<style id="mindmap-touch-and-step">
+/* Physical touch detection remains independent of the selected desktop/tablet/mobile layout. */
+:root:root:root:root #kmap.km-touch:not(.km-emb){--km-inset-top:calc(28px + env(safe-area-inset-top,0px));--km-inset-right:calc(28px + env(safe-area-inset-right,0px));--km-inset-bottom:calc(28px + env(safe-area-inset-bottom,0px));--km-inset-left:calc(28px + env(safe-area-inset-left,0px))}
+:root:root:root:root #kmap.km-touch:not(.km-emb) .km-back2{left:auto!important;top:auto!important;right:var(--km-inset-right)!important;bottom:var(--km-inset-bottom)!important;width:60px;height:60px;border-radius:15px;font-size:13.75px;line-height:16.25px}
+:root:root:root:root #kmap.km-touch:not(.km-emb) .km-back2 svg{width:32.5px;height:32.5px}
+:root:root:root:root #kmap.km-touch:not(.km-emb) .km-controls{left:var(--km-inset-left)!important;right:auto!important;top:var(--km-inset-top)!important;transform:scale(1.25);transform-origin:top left}
+:root:root:root:root #kmap.km-touch:not(.km-emb) .km-eopt{top:var(--km-inset-top)!important;right:var(--km-inset-right)!important;zoom:1;transform:scale(.9375);transform-origin:top right}
+:root:root:root:root #kmap.km-touch:not(.km-emb) .km-catalog{left:var(--km-inset-left)!important;bottom:var(--km-inset-bottom)!important;max-width:calc((100% - 120px - var(--km-inset-left) - var(--km-inset-right))/1.25);transform:scale(1.25);transform-origin:bottom left}
+:root:root:root:root #kmap.km-touch:not(.km-emb) .km-backall{top:calc(var(--km-inset-top) + 64px);right:var(--km-inset-right);transform:scale(1.25);transform-origin:top right}
+:root:root:root:root #kmap.km-touch:not(.km-emb) .km-guide-mid{top:var(--km-inset-top);transform:translateX(-50%) scale(1.25)}
+#kmap button.km-expand-all{position:absolute;z-index:9;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:52px;height:52px;padding:12px;border:1px solid rgba(255,255,255,.7);border-radius:50%;background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.88),rgba(255,255,255,.1) 55%),linear-gradient(145deg,rgba(222,237,242,.68),rgba(159,189,206,.3));color:var(--fg);font:600 13px/1.2 var(--ui);letter-spacing:.08em;white-space:nowrap;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:inset 2px 3px 6px #ffffffb3,inset -2px -4px 8px #42607840,0 5px 14px #253f5530;cursor:pointer;touch-action:manipulation}
+#kmap button.km-expand-all{background-color:color-mix(in srgb,var(--bg) 65%,transparent)}
+#kmap button.km-expand-all[hidden]{display:none}
+@media(max-width:700px){:root:root:root:root #kmap.km-touch:not(.km-emb) .km-guide-mid{top:calc(var(--km-inset-top) + 72px)}}
+#kmap button.km-expand-all:hover{filter:brightness(1.08)}
+#kmap button.km-expand-all:active{transform:scale(.94)}
+</style>
+<style id="release-before-after">
+.ua .ua-st.ua-comparison{height:auto!important;min-height:238px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;background:var(--bg);animation:none!important}
+.ua-compare-pane{min-width:0;display:flex;flex-direction:column;gap:9px;padding:12px 9px;text-align:center;overflow:hidden}
+.ua-compare-pane+ .ua-compare-pane{border-left:1px solid var(--rule)}
+.ua-compare-pane>strong{font:600 12px/1.4 var(--ui);letter-spacing:.04em;color:var(--muted)}
+.ua-compare-pane.after>strong{color:var(--fg)}
+.ua-compare-pane>p{margin:0;font:13px/1.6 var(--ui);min-height:3.2em}
+.ua-compare-art{height:128px;position:relative;overflow:hidden;border-radius:10px;background:color-mix(in srgb,var(--fg) 4%,var(--bg))}
+.ua-mini-screen{position:absolute;inset:10px;border:1px solid var(--rule);border-radius:9px;overflow:hidden;background:var(--bg)}
+.ua-mini-cols{height:100%;display:flex;gap:3px;padding:12px 6px;box-sizing:border-box}
+.ua-mini-cols i{flex:1;border-radius:3px;background:repeating-linear-gradient(0deg,transparent 0 9px,color-mix(in srgb,var(--fg) 16%,transparent) 9px 12px)}
+.ua-mini-cols i:nth-child(2){flex:1.8}
+.ua-mini-key,.ua-mini-minus{position:absolute;display:grid;place-items:center;width:22px;height:22px;border-radius:7px;border:1px solid var(--rule);background:var(--bg);font:16px var(--ui)}
+.ua-mini-key{right:3px;bottom:3px}.ua-mini-minus{right:8px;top:8px}
+.ua-mini-pointer{position:absolute;left:30%;top:70%;font-size:20px;animation:uaComparePointer 4.8s ease-in-out infinite!important}
+.before .ua-mini-screen{animation:uaCompareSearch 4.8s ease-in-out infinite!important}
+.after .ua-mini-cols i{animation:uaCompareHighlight 4.8s ease-in-out infinite!important}
+.ua-mini-branch{display:none;position:absolute;inset:8px;flex-direction:column;align-items:center;gap:6px;font:11px/1.2 var(--ui)}
+.ua-mini-branch b,.ua-mini-level i{padding:4px 7px;border:1px solid var(--rule);border-radius:6px;font-style:normal;background:var(--bg)}
+.ua-mini-branch b{font-weight:600}.ua-mini-level{display:flex;gap:12px;position:relative}
+.ua-mini-level:before{content:'';position:absolute;left:50%;top:-6px;height:6px;border-left:1px solid var(--muted)}
+.ua-mini-all{position:absolute;right:2px;top:4px;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#fff9,#b7d3df66);border:1px solid #fff9;box-shadow:inset 1px 2px 4px #fff9,inset -1px -3px 5px #42607840,0 3px 7px #0002;backdrop-filter:blur(8px);font:600 10px var(--ui)}
+.ua-comparison[data-kind=expand] .ua-mini-screen{display:none}
+.ua-comparison[data-kind=expand] .ua-mini-branch{display:flex}
+.ua-comparison .before .ua-mini-all{display:none}
+.ua-comparison[data-kind=expand] .before .ua-mini-level{animation:uaCompareSudden 7s step-end infinite!important}
+.ua-comparison[data-kind=expand] .after .one{animation:uaCompareLevel1 7s step-end infinite!important}
+.ua-comparison[data-kind=expand] .after .two,.ua-comparison[data-kind=expand] .after .three{animation:uaCompareLevelAll 7s step-end infinite!important}
+.ua-comparison[data-kind=expand] .after .ua-mini-all{animation:uaCompareAll 7s ease-in-out infinite!important}
+.ua-comparison[data-kind=corners] .before .ua-mini-key{right:-8px;bottom:-8px;animation:uaCompareMiss 4.8s ease-in-out infinite!important}
+.ua-comparison[data-kind=corners] .after .ua-mini-key{right:13px;bottom:13px;transform:scale(1.25)}
+.ua-comparison[data-kind=minus] .before .ua-mini-minus{animation:uaCompareFade 4.8s linear infinite!important}
+.ua-comparison[data-kind=minus] .after .ua-mini-minus{opacity:1}
+.ua-comparison[data-kind=interface] .before .ua-mini-cols i:not(:nth-child(2)),.ua-comparison[data-kind=repair] .before .ua-mini-cols i:not(:nth-child(2)){display:none}
+.ua-comparison[data-kind=interface] .after .ua-mini-cols,.ua-comparison[data-kind=repair] .after .ua-mini-cols{animation:uaCompareReveal 4.8s ease-in-out infinite!important}
+.ua-comparison[data-kind=theme] .after .ua-mini-screen{animation:uaCompareTheme 6s ease-in-out infinite!important}
+.ua-comparison[data-kind=map] .after .ua-mini-cols{animation:uaCompareReveal 4.8s ease-in-out infinite!important}
+.ua-comparison[data-kind=help] .before .ua-mini-pointer{display:none}
+@keyframes uaComparePointer{0%,15%{transform:translate(0,0)}40%,58%{transform:translate(25px,-28px) scale(.9)}80%,100%{transform:translate(0,0)}}
+@keyframes uaCompareSearch{0%,100%{transform:translateX(0)}30%{transform:translateX(-4px)}65%{transform:translateX(4px)}}
+@keyframes uaCompareHighlight{0%,100%{background-color:transparent}40%,70%{background-color:#f4c43055}}
+@keyframes uaCompareSudden{0%,24%,100%{opacity:0}25%,85%{opacity:1}}
+@keyframes uaCompareLevel1{0%,19%,100%{opacity:0}20%,90%{opacity:1}}
+@keyframes uaCompareLevelAll{0%,64%,100%{opacity:0}65%,90%{opacity:1}}
+@keyframes uaCompareAll{0%,19%,100%{opacity:0;transform:scale(.8)}20%,52%,85%{opacity:1;transform:scale(1)}60%,67%{opacity:1;transform:scale(.88)}}
+@keyframes uaCompareMiss{0%,100%{opacity:1}40%,60%{opacity:.2}}
+@keyframes uaCompareFade{0%,20%,100%{opacity:0}30%,50%{opacity:1}80%{opacity:0}}
+@keyframes uaCompareReveal{0%,12%{opacity:.2;transform:scale(.85)}40%,85%{opacity:1;transform:scale(1)}100%{opacity:.2;transform:scale(.85)}}
+@keyframes uaCompareTheme{0%,100%{background:var(--bg);color:var(--fg)}50%{background:#252728;color:#eee}}
+@media(prefers-reduced-motion:reduce){.ua .ua-compare-art *{animation-duration:12s!important}}
+</style>
