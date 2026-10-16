@@ -7616,14 +7616,14 @@ html.vc-lock .menu .mpop{touch-action:pan-y}
 window.__updAnim=function(){
   if(document.getElementById('updAnim'))return;
   var touch=!!window.__mobile22Device||navigator.maxTouchPoints>0,ver=window.__releaseVersion;
-  var el=document.createElement('div');el.className='ua'+(touch?' mobile22':'');el.id='updAnim';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','v'+ver+' 更新簡介');
-  el.innerHTML='<div class="ua-card"><div class="ua-ts">v'+ver+' 更新簡介</div><h3 class="ua-h">科判圖展開後，點幾下就找到</h3><div class="ua-st ua-sequence" data-input="'+(touch?'touch':'mouse')+'"></div><ul class="ua-d"><li>分支單擊展開一層，快速點兩下全部展開。</li><li>減號點一次，立即收合所有下層。</li></ul><div class="ua-b"><button type="button" data-u="replay">重播</button><button type="button" class="go" data-u="done">知道了</button></div></div>';
+  var el=document.createElement('div');el.className='ua'+(touch?' mobile22':'');el.id='updAnim';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','v'+ver+' 更新');
+  el.innerHTML='<div class="ua-card"><div class="ua-ts">v'+ver+' 更新</div><ul class="ua-d"><li>分支：點一下開一層，點兩下全開。</li><li>減號：點一下，全部收合。</li></ul><div class="ua-st ua-sequence" data-input="'+(touch?'touch':'mouse')+'"></div><div class="ua-b"><button type="button" data-u="replay">重播</button><button type="button" class="go" data-u="done">知道了</button></div></div>';
   var st=el.querySelector('.ua-st'),previousFocus=document.activeElement;
   function diagram(before){
     return '<svg class="seq-tree'+(before?' seq-tree-old':'')+'" viewBox="0 0 320 180" aria-hidden="true"><g class="seq-branches" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M160 58V82M70 82H250M70 82V98M160 82V98M250 82V98"/></g><g class="seq-labels" fill="currentColor"><text x="160" y="13">甲一</text><text class="seq-child" x="70" y="103">乙一</text><text class="seq-child" x="160" y="103">乙二</text><text class="seq-child seq-target" x="250" y="103">乙三</text></g><text class="seq-fold" x="186" y="13">分三</text></svg>';
   }
   function play(){
-    st.innerHTML='<section class="seq-phase seq-before"><strong>Before · 原本</strong><p>分支超出畫面，要拖曳四秒多才找得到。</p><div class="seq-art">'+diagram(true)+'<span class="seq-drag-finger"></span></div></section><section class="seq-phase seq-after"><strong>After · 現在</strong><p>先點開分支，再點目標，就找到了。</p><div class="seq-art">'+diagram(false)+'<span class="seq-touch-finger"></span><span class="seq-mouse-operator"><span class="seq-mouse-body"></span><span class="seq-mouse-index"></span><span class="seq-left-press"></span></span><span class="seq-hit"></span></div></section>';
+    st.innerHTML='<section class="seq-phase seq-before"><strong>Before</strong><div class="seq-art">'+diagram(true)+'<span class="seq-drag-finger"></span></div></section><section class="seq-phase seq-after"><strong>After</strong><div class="seq-art">'+diagram(false)+'<span class="seq-touch-finger"></span><span class="seq-mouse-operator"><span class="seq-mouse-body"></span><span class="seq-mouse-index"></span><span class="seq-left-press"></span></span><span class="seq-hit"></span></div></section>';
   }
   function fitMobile(){if(!touch)return;var vv=window.visualViewport,scale=vv?vv.scale:1,w=vv?vv.width:innerWidth,h=vv?vv.height:innerHeight,card=el.querySelector('.ua-card');card.style.zoom=String(1/scale);card.style.width=Math.min(440,w*scale-28)+'px';card.style.maxHeight=Math.max(120,h*scale-28)+'px';}
   function close(){window.__releaseNotificationPending=false;if(window.__markReleaseRead)window.__markReleaseRead();window.removeEventListener('resize',fitMobile);if(window.visualViewport)visualViewport.removeEventListener('resize',fitMobile);el.remove();if(previousFocus&&previousFocus.isConnected)previousFocus.focus({preventScroll:true});}
@@ -8499,7 +8499,6 @@ var tk=setInterval(function(){put();if(document.getElementById('darkBtn'))clearI
 .ua .ua-st.ua-sequence{position:relative;height:278px;min-height:0;display:block;overflow:hidden;border:0;border-radius:0;background:transparent;color:var(--fg)}
 .seq-phase{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:0;gap:5px}
 .seq-phase>strong{font:600 13px/1.4 var(--ui);color:var(--muted)}
-.seq-phase>p{margin:0;text-align:center;font:14px/1.5 var(--ui)}
 .seq-art{position:relative;width:100%;flex:1;overflow:hidden;background:transparent;border:0}
 .seq-tree{position:absolute;inset:2px 0 auto;width:100%;height:180px;overflow:visible;color:var(--muted)}
 .seq-labels text,.seq-fold{font:16px/1.4 var(--ui);writing-mode:vertical-rl;text-orientation:upright;fill:var(--fg);stroke:none}
