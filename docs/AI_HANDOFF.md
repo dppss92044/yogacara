@@ -13,7 +13,7 @@
 - 半屏說明樹與全屏SVG樹、更新示意及直式縮圖均移除字框，維持支線座標，使用甲一／乙一／乙二／丙一及一／二等層級。只修改動畫示意，不改正式科判排版或內容資料。
 - 候選版號保持2.3.0，已讀／通知分流仍按D175；本輪不新增通知鍵。資產索引工具加新圖集至離線列表，共39項；只更新metadata與SW雜湊，不自動編譯。
 - 靜態檢查：16段inline JS、sw.js及資產工具Python語法；git diff --check。僅做靜態語法檢查，未執行UI／E2E、功能測試、實機或離線測試，不引用舊通過數字。本輪未修改統計程式；先前SemVer相容Worker仍未部署，正式發版前須先同步部署。
-- 本輪程式提交與預覽網址待提交後補記；f00aaee舊預覽已被D176取代。只推預覽分支，不推main、不開PR、不發布任何外部服務；公網raw.githack先前於環境代理CONNECT階段403，未獨立確認可達性。
+- 本輪最後程式提交 `3c30d02e39e027271868f4bf1a459b5e3f1435ff`；本交接補記提交見git log。預覽基址 `https://raw.githack.com/dppss92044/yogacara/3c30d02e39e027271868f4bf1a459b5e3f1435ff/index.html`，可加 `?layout=mac`／`?layout=iphone`／`?layout=ipad`。f00aaee舊預覽已被D176取代。只推預覽分支，不推main、不開PR、不發布任何外部服務；公網raw.githack先前於環境代理CONNECT階段403，未獨立確認可達性。
 
 ## W028（Codex，2026-10-16；完成並靜默發布至2.2，封存）
 - 基底2.2 main `9df7c82eb82bfc389b1282928fe7abb051e464a4`，分支work-w028-minus-fade。
