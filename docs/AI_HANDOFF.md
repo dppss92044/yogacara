@@ -5,6 +5,16 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W030（Codex，2026-10-17；v2.3.1靜默修正完成封存）
+- 正式基底v2.3.0 `0aa02d1ce33ff89a89333df0ec702b04dadef2d4`，分支work-w030-map-return。
+- 使用者原始需求：「緊急修正，不用通知，默默合併。全屏科判中，點選特定卷數時，正在看科判，這時候按下返回，會追蹤剛剛瀏覽的介面，在首頁的三個欄位。全部版本、介面、都修正。」D183。
+- 實作：mapReadingTarget獨立記錄全屏明確選卷／節點，包含ed、i、j；捲動畫面與教學不改目標。viewStack同步保存／還原目標；開新圖、切版本清理過期目標。
+- finishMapReturn在歷史返回完成後選用同步callback，省略舊首頁捲動還原，透過focusNode(i,'go',null,j)同步三欄，避開rail來源保留舊卷次位置的行為；跨版先switchEdition並檢查成功。手機單欄回正文，科判／卷次隱藏欄維持共用同步與延遲定位；原直書表返回正文後再同步。
+- 涵蓋返回按鈕、Esc與瀏覽器popstate；未選新位置保持舊返回。只改共用路徑，不按裝置或版別分支；藏／韓、mac／ipad／iphone與直橫向僅經來源檢視，未實機、UI／E2E或功能測試，不宣稱介面通過。
+- 通知：appVer／meta／SW更新2.3.1，versionNotes新增quiet且項目重要旗標0；__releaseVersion仍為既有動畫版本2.3.0，沒有新增通知、紅點或重置已讀。動畫、樣式與資料不變。
+- 靜態檢查：16段inline JS＋sw.js由Node vm.Script解析、資產工具Python AST與git diff --check通過。僅重算39項SW資產metadata，未自動編譯，未執行UI／E2E、HTTP功能／離線測試。
+- 發布：使用者已授權直接快轉main、建立v2.3.1標籤並推送；最終commit以git log「更新至 v2.3.1」及main／tag核對。公網Pages部署狀態未確認，前次環境CONNECT403；統計Worker部署限制沿用前次紀錄。
+
 ## W029（Codex，2026-10-17 Asia/Taipei；正式發布v2.3.0，完成封存）
 - **發布授權D181：** 使用者在b2f3fd5交接／361452e留白UI後明確要求「發布合併」。本次以最新確認預覽UI快轉合併並推送main，建立v2.3.0 Git標籤；不開PR、不強推。發布前正式基底為2.2 `e31d57a22cec1efbc878761632c9b7f025e69c86`，本次正式提交以main與v2.3.0標籤／git log「更新至 v2.3.0」核對。
 - **發布程式補正D182：** 新增統計版本相容回退，程式提交 `d43705d3f88733ff59dc2470925be1b28ac3db14`。只在/v回400、原body有三段av／hv且仍為同一實例／相同統計模式／未停用或DNT時，省略新版本資料重送一次；仍失敗沿用回存退避。同步tools/stats-client.js的SemVer辨識與新版歷史詳情格式，不覆寫現有CFG與其他客戶端內容。動畫DOM、CSS、手勢、逐字文案與14秒時間軸不變。
