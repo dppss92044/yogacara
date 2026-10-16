@@ -5,6 +5,17 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W040（Codex，2026-10-17；統一說明與詢問更新，進行中）
+- 正式基底v2.3.4 `d6a0430b5c7f1822fe7a75c27eeafb7e083b340c`，分支work-w040-update-guide。使用者要求總／半／全屏說明更新、分類列點動畫及iOS式立即更新／稍後再說，版本頁下載更新。版號衝突已回答採v2.3.5，D193。
+- 僅靜態語法檢查、不編譯／UI／E2E。先預覽，尚不合併發布。
+- 程式：全屏舊MK／ki renderer刪除、introOpen改共用__helpAnim；總說明修正過時單雙擊、231、平板兩欄與鎖定文案，半／全屏按裝置略過不適用頁，保留km-tour-off。九類更新動畫從同一sets／2.2 tree來源產生，補見林見樹／按鍵／更新選擇示意；不變更實際樹、標籤、追蹤功能或資料。
+- 更新資料單一來源assets/releases/latest.json，build_release.py只重算40項metadata及同步meta／App／通知版號與head JSON，非編譯。之後改此JSON文案／scene，再以新SemVer執行工具，新增versionNotes細節；勿同版更換離線殼。preview=update強制本次預覽，不寫通知已讀鍵。
+- SW與客戶端：檢查新版描述／下載worker，等待明確APPLY_UPDATE後才重載；稍後僅記prompt已看，不寫hk-update-accepted。SW在獨立yogacara-update-state cache保存已同意版號，waiting自動activate後仍提供舊版快取；保留舊分頁快取，未清localStorage／IndexedDB。讀到最新worker不等於已更新頁面；下載版本不符、離線／逾時都有提示；已在目標版本如實提示不假裝下載。
+- 首次遷移限制：正式2.3.4頁面有舊自動SKIP_WAITING／reload，已在執行的程式無法由新來源回溯阻止，這一輪可能先按舊策略更新；後續載入2.3.5後的版本才全面詢問。保留SKIP_WAITING相容舊客戶端。部分快取遺失顯示僅按立即更新才同意的恢復頁。
+- 實際驗證：Node vm.Script靜態解析16段可執行inline JS、sw.js及SW恢復頁JS；JSON與內嵌metadata解析、Python AST、git diff --check通過。未執行電腦／iPad直橫／手機直橫／藏韓版UI、E2E、功能、離線、實機或推播測試；同一renderer與更新路由共用各介面，不宣稱實機通過。
+- 僅推候選分支以供預覽，不合併main、不加版本tag；正式發布待口令。預覽來源URL與最後提交見後續封存行；GitHub Pages未更新。
+
+
 ## W039（Codex，2026-10-17；說明示意圖還原2.2，完成封存）
 - 最後程式提交：`f1afb1e67b6091500739b5a38a9cb516e2d2b370`；封存提交見git log。
 - 基底 `f471b8b4f65a52f0c7ceed721dd602be4ada3083`，分支work-w039-tutorial-diagram-22。使用者指定只改說明動畫科判示意圖回2.2，其餘不變，D192。

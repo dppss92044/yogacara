@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """改版工具：python3 tools/build_release.py 2.3.0
-1. 把 index.html 的 <meta name="app-version"> 設成該版本
+1. 同步 index.html meta、通知、App版號及內嵌更新資料（不編譯）
 2. 依 tools/sw-template.js 產生 sw.js：CACHE = yogacara-v<版本>，並重算所有離線檔案的 SHA-256
 每次改版都要執行，否則舊快取不會換新。"""
 import sys, os, re, json, hashlib, base64
@@ -14,8 +14,21 @@ if '<meta name="app-version"' in s:
     s = re.sub(r'<meta name="app-version" content="[^"]*">', tag, s, count=1)
 else:
     s = s.replace('<meta charset=utf8>', '<meta charset=utf8>' + tag, 1)
+release_path = os.path.join(root, 'assets/releases/latest.json')
+release = json.load(open(release_path, encoding='utf-8'))
+release['version'] = ver
+with open(release_path, 'w', encoding='utf-8') as out:
+    json.dump(release, out, ensure_ascii=False, indent=2)
+    out.write('\n')
+s = re.sub(r"window\.__releaseVersion='[^']*'", "window.__releaseVersion='" + ver + "'", s, count=1)
+s = re.sub(r'(id="appVer">)v[^<]+', lambda m: m[1] + 'v' + ver, s, count=1)
+embedded = '<script id="release-data" type="application/json">' + json.dumps(release, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c') + '</script>'
+if '<script id="release-data"' in s:
+    s = re.sub(r'<script id="release-data"[^>]*>[\s\S]*?</script>', lambda m: embedded, s, count=1)
+else:
+    s = s.replace('</head>', embedded + '</head>', 1)
 open(ip, 'w', encoding='utf-8').write(s)
-files = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'assets/tutorial/gestures-lite.svg']
+files = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'assets/tutorial/gestures-lite.svg', 'assets/releases/latest.json']
 files += sorted('data/' + f for f in os.listdir(os.path.join(root, 'data')) if not f.startswith('.'))
 def h(p):
     return base64.b64encode(hashlib.sha256(open(os.path.join(root, 'index.html' if p == './' else p), 'rb').read()).digest()).decode()
