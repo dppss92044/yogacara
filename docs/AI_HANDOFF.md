@@ -5,6 +5,14 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W031（Codex，2026-10-17；v2.3.2平板預設電腦介面，完成封存）
+- 正式基底v2.3.1 `db88f254546fe45152abb71d1aac395649bcd549`，分支work-w031-tablet-default-desktop。
+- 使用者原始需求：「把平板預設的開啟，改成電腦介面，默默合併直接發佈。」D184；已明確授權合併發布。
+- resolveDeviceLayout將isTablet自動預設由ipad改為mac，補辨識Android非Mobile UA；iPad／iPad桌面UA原判斷沿用。layoutPref與layout網址優先權不變，不覆寫手動偏好，仍可切平板介面。觸控裝置判定與桌面viewport／safe-area路徑沿用。
+- App／meta／SW為2.3.2；quiet版本摘要重要旗標0，__releaseVersion仍2.3.0，不重置通知已讀或新建紅點。39項SW資產metadata重算，非自動編譯。
+- 實際檢查：16段inline JS與sw.js由Node vm.Script靜態解析、git diff --check通過。僅來源檢視兩版共用裝置判斷、手動／網址優先權，未執行UI／E2E、功能測試或手機／平板／電腦／直橫向實機測試。
+- 發布提交見git log「更新至 v2.3.2」、main與v2.3.2標籤；直接快轉合併推送，不開PR、不強推。Pages公網部署完成狀態未確認；此前環境對公網CONNECT403。
+
 ## W030（Codex，2026-10-17；v2.3.1靜默修正完成封存）
 - 最後程式提交：`fbc5301`；發布封存提交見git log「更新至 v2.3.1」。
 - 正式基底v2.3.0 `0aa02d1ce33ff89a89333df0ec702b04dadef2d4`，分支work-w030-map-return。
