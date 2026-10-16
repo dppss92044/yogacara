@@ -9,7 +9,7 @@ function check(value,message){assert.ok(value,message);checks++;}
 async function run(browser,name,options,edition){
  const c=await browser.newContext({...options,serviceWorkers:'block'}),p=await c.newPage(),errors=[];
  p.setDefaultTimeout(15000);p.on('pageerror',e=>errors.push(e.message));
- await c.addInitScript(ed=>{localStorage.setItem('hk-tour','9');localStorage.setItem('hk-anim-auto','2.2');localStorage.setItem('hk-seen-version','2.2');localStorage.setItem('hk-update-notice','off');localStorage.setItem('km-tour-off','1');localStorage.setItem('hk-edition-v154',ed)},edition);
+ await c.addInitScript(ed=>{localStorage.setItem('hk-mobile22-launch','1');localStorage.setItem('hk-tour','9');localStorage.setItem('hk-anim-auto','2.2');localStorage.setItem('hk-seen-version','2.2');localStorage.setItem('hk-update-notice','off');localStorage.setItem('km-tour-off','1');localStorage.setItem('hk-edition-v154',ed)},edition);
  await p.route('https://yogacara-stats.**',r=>r.abort());
  const press=async selector=>{const l=p.locator(selector).first();if(options.hasTouch)await l.tap();else {await p.mouse.move(0,0);await l.focus();await p.keyboard.press('Enter');}};
  async function ready(){await p.waitForSelector('.txt');await p.waitForFunction(()=>document.querySelectorAll('.layout-choice').length===3);}

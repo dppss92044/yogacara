@@ -5,6 +5,16 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W026（Codex，2026-10-16；完成並發布至 2.2，封存）
+- 基底 2.2 main `bdd718bf5e261b8f4161afa2a00015389ebaef1b`，分支 work-w026-mobile-notice。
+- 需求：手機／平板開啟顯示 v2.2 上線動畫通知，說明完整電腦功能及行動介面持續修復；電腦不自動彈出。決定 D168。
+- 實作：依實際 iPhone／iPad／Android 裝置判定，與所選介面分開；手機選 mac 仍顯示、電腦選 iphone 不自動顯示。本次通知獨立 `hk-mobile22-launch` 已讀鍵，已讀舊2.2／通知關閉仍收到一次；不更動通知偏好。第一頁動畫示範設定→介面→電腦及三欄，第二頁顯示修復中提醒；手機選桌面介面時卡片依實際螢幕縮放。更新版本內容與日期，維持版本2.2。首次說明等通知關閉再開，不重疊；鈴鐺／版本的手動重播可再次開啟。
+- `tools/mobile-launch-notice.cjs` 14組151項通過：手機／平板直橫×藏／韓、手機用電腦介面、新使用者、真正電腦與電腦用手機介面、Android、iPad桌面UA（模擬maxTouchPoints=5）。檢查兩頁文案、動畫確實運行、卡片邊界、舊2.2已讀＋通知關閉仍收到一次、關閉後重開不重複、手動重播、電腦不自動顯示、首用說明互斥，無pageerror。早輪iPad桌面UA模擬未設定真實觸控數，最後已補上並整輪重跑通過。
+- `tools/device-layout.cjs` 加入已讀本次通知的測試前置條件（通知由上列獨立套件驗證），介面完整矩陣10組280項重跑通過。日誌 `/tmp/mobile-launch-final.log`、`/tmp/device-layout-notice.log`；通知截圖 `/tmp/mobile-launch-*.png`（暫存）。
+- 發布檢查：20段inline JS語法、git diff --check及38個SW資產雜湊全部通過。真正SW安裝、離線重開可閱讀、已讀通知不再彈出通過（Chromium iPhone13模擬）。本機原8000服務在後續階段失效，改8765服務後重新執行SW檢查成功。
+- 發布：使用者延續「更新通知」「繼續完成」指示；`tools/build_release.py 2.2` 重算SW，快轉合併並推送main。最後發布commit以 `git log -1 main` 與遠端main核對，不開PR；內容資料／圖示未改。
+- 未驗證：Safari／iOS／Android實機、真實列印下載。公網Pages部署完成狀態此環境先前CONNECT403，未獨立確認；只宣稱正式來源已推送。
+
 ## W025（Codex，2026-10-16；靜默發布 2.2，封存）
 - 基底：正式 2.2，HEAD `923a3ca48847be440c3739fb973d34de1523e043`。分支 `work-w025-device-layout`。
 - 使用者需求：「把平板版的、手機版的，正式開放可以用完整的電腦版功能。只要他選上介面。給我兩種網址我預覽」。
