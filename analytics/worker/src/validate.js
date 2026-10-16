@@ -40,7 +40,7 @@ export function parsePayload(text) {
   if (j.m !== undefined) { if (!MODES.includes(j.m)) return null; p.m = j.m; }
   if (j.t !== undefined) { if (j.t !== 'b' && j.t !== 'f') return null; p.t = j.t; }
   if (j.me !== undefined) { if (j.me !== 0 && j.me !== 1) return null; p.me = j.me; }                                   // 本人旗標（D155）
-  if (j.av !== undefined) { if (typeof j.av !== 'string' || !/^\d{1,2}\.\d{1,3}$/.test(j.av)) return null; p.av = j.av; }   // App 版本（D156）
+  if (j.av !== undefined) { if (typeof j.av !== 'string' || !/^(?:\d{1,2}\.\d{1,3}|(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))$/.test(j.av)) return null; p.av = j.av; }   // App 版本（D156）
   if (p.t === 'b' && ['f', 'ss', 'r', 'nd', 'q', 'k', 'x', 'hv'].some(k => j[k] !== undefined)) return null;   // 基本層只含 o、s、d、m
 
   if (j.f !== undefined) {
@@ -123,7 +123,7 @@ export function parsePayload(text) {
   }
   if (j.hv !== undefined) {
     if (!isArr(j.hv, MAX_HV)) return null;
-    for (const v of j.hv) { if (typeof v !== 'string' || !/^\d{1,2}\.\d{1,3}$/.test(v)) return null; p.hv.push(v); }
+    for (const v of j.hv) { if (typeof v !== 'string' || !/^(?:\d{1,2}\.\d{1,3}|(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))$/.test(v)) return null; p.hv.push(v); }
   }
   const content = Object.keys(p.f).length || p.ss.length || p.r.length || p.nd.length || p.terms.length || p.rp.length || p.dj.length || p.x.length || p.hv.length;
   if (p.o === 0 && p.s === 0 && !content) return null;

@@ -557,7 +557,7 @@ def main(argv=None, sleep=time.sleep):
         for name in ('趨勢', '資料量', '登錄', '即時'):
             print('\n' + '=' * 12, name, '=' * 12); main([name] + (['7'] if name == '趨勢' else []), sleep)
         return
-    ver = a.what if re.fullmatch(r'v?\d{1,2}\.\d{1,3}', a.what) else None
+    ver = a.what if re.fullmatch(r'v?(?:\d{1,2}\.\d{1,3}|(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))', a.what) else None
     if ver:
         ver = ver.lstrip('v')
         if a.period and a.period not in RANGES:

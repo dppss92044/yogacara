@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""改版工具：python3 tools/build_release.py 1.55
+"""改版工具：python3 tools/build_release.py 2.3.0
 1. 把 index.html 的 <meta name="app-version"> 設成該版本
 2. 依 tools/sw-template.js 產生 sw.js：CACHE = yogacara-v<版本>，並重算所有離線檔案的 SHA-256
 每次改版都要執行，否則舊快取不會換新。"""
 import sys, os, re, json, hashlib, base64
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ver = sys.argv[1]
-assert re.fullmatch(r'\d+(\.\d+)+', ver), '版本格式例如 1.55'
+assert re.fullmatch(r'(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)', ver), '版本須為 SemVer X.Y.Z，例如 2.3.0'
 ip = os.path.join(root, 'index.html')
 s = open(ip, encoding='utf-8').read()
 tag = '<meta name="app-version" content="%s">' % ver

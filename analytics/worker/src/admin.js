@@ -241,7 +241,7 @@ async function instances(url, env) {
 async function engaged(url, env) {
   const r = rangeOf(url); if (!r) return bad();
   const dev = devOf(url), min = num(url.searchParams.get('min'), 30, 1, 3600), by = url.searchParams.get('by') || '';
-  const av = /^\d{1,2}\.\d{1,3}$/.test(url.searchParams.get('av') || '') ? url.searchParams.get('av') : '';
+  const av = /^(?:\d{1,2}\.\d{1,3}|(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*))$/.test(url.searchParams.get('av') || '') ? url.searchParams.get('av') : '';
   const jd = (dev ? ` AND i.device = '${dev}'` : '') + (av ? ` AND d.av = '${av}'` : '');
   const tot = (await env.DB.prepare(
     'SELECT t.me AS me, COUNT(*) AS inst, SUM(t.sec >= ?1) AS eng, SUM(t.sec) AS sec, SUM(CASE WHEN t.sec >= ?1 THEN t.sec ELSE 0 END) AS esec, SUM(t.rsec) AS rsec, SUM(t.opens) AS opens, SUM(t.fresh) AS fresh FROM (' +
