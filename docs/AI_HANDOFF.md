@@ -6,6 +6,7 @@
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
 ## W041（Codex，2026-10-17；移除見林見樹與F居中，候選完成待審）
+- 最後程式提交：`006650b78797870cad711239ee46b53c8587d94e`。預覽：https://raw.githack.com/dppss92044/yogacara/006650b78797870cad711239ee46b53c8587d94e/index.html 。僅推候選分支，main／正式網站未更新。
 - 正式基底v2.3.4 `d6a0430b5c7f1822fe7a75c27eeafb7e083b340c`，分支work-w041-remove-forest-controls。使用者要求刪見林見樹、左上F字居中、保留231與bug修正，其他2.3.0後變更待審；D194。已回答App顯示／通知均2.3.0；meta／SW2.3.4保留避免快取降級。
 - 審閱清單docs/POST_230_REVIEW.md，列9項其他功能差異及可沿用bug修正，另指出舊說明文字落差。本次只做指定按鍵／顯示修改，不回退其他功能、不帶回棄版。
 - W040已明確放棄，不沿用其App、動畫、SW或更新詢問程式；本分支直接由main建立。只做靜態語法檢查，不合併發布或新增通知。
