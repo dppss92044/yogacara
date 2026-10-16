@@ -6,6 +6,7 @@
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
 ## W036（Codex，2026-10-17；固定231科判循環，完成封存）
+- 最後程式提交：`06ca11d7a0d61aac25d57e401788f70aacac44d3`；封存提交見git log。
 - 基底 `c33f17b21f48bd9ca786948c293916fe882c4ea2`，分支work-w036-map-cycle，版號2.3.4維持；明確授權靜默合併發布，D189。
 - 實作：移除returnedToReader、dockCurrentMap、returnToChartPage與返回後再嵌入半頁分支。頁尾rAF初始化open(true,false,true)，不搶焦點；圖示在可見半頁setEmb(false)進全屏、全屏close、A4時open(true)新半頁，形成唯一231循環。全屏返回同步節點後直接顯示底層A4，單欄切chart分頁；平板卷次開關保留D186。
 - 半頁不再pushState或改scrollRestoration，全屏setEmb(false)才記錄來源並push一筆；open(false,fromHistory)舊歷史入口避免重複push。按鈕／Esc／瀏覽器返回共用close／finishMapReturn，保留分幾逐節點單層與標籤僅定位。
