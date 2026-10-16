@@ -6,6 +6,7 @@
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
 ## W037（Codex，2026-10-17；半頁旅程與全圖切換，完成封存）
+- 最後程式提交：`0f16ce9b9de6435aeb4d09847197adb797b18145`；封存提交見git log。
 - 基底 `4867f3cd4a349abd9d26071e1e146334309c779f`，分支work-w037-forest-journey。使用者授權推送：初卷圖式、開鎖自動展開、見林見樹、跳卷模式、F、半頁減號常駐與03:25到期可點消失紅點。D190，2.3.4不升版。
 - journeyState依完整樹prKids建收合陣列：前卷已開、本卷首科祖先與首分支開啟，後續分支收合。初卷呈總根／五大部分／本地分的略辨及其下層。open(asEmb)以此初始化；S.cur後續隨正文變動時followJourney打開祖先路徑與當前節點一層，不重設其餘手動進度；embSync／__trackLocked雙重判斷，鎖定不自動展開。
 - progressSnapshot複製col及範圍、層級、F範圍、選取、縮放與鏡頭，並保存模式還原快照引用。見林建立full col=0，保持sc以標黃節點H*.3置中；見樹restoreProgress還原快照。F使用獨立快照與focusI，只顯示選取分支，再按還原；自動追蹤遇到分支外節點不改F圖。viewStack的snapView／restoreEntry亦保存journey模式，避免全屏F返回時模式與圖不符。
