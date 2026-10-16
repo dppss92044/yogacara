@@ -5,6 +5,17 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W037（Codex，2026-10-17；半頁旅程與全圖切換，完成封存）
+- 基底 `4867f3cd4a349abd9d26071e1e146334309c779f`，分支work-w037-forest-journey。使用者授權推送：初卷圖式、開鎖自動展開、見林見樹、跳卷模式、F、半頁減號常駐與03:25到期可點消失紅點。D190，2.3.4不升版。
+- journeyState依完整樹prKids建收合陣列：前卷已開、本卷首科祖先與首分支開啟，後續分支收合。初卷呈總根／五大部分／本地分的略辨及其下層。open(asEmb)以此初始化；S.cur後續隨正文變動時followJourney打開祖先路徑與當前節點一層，不重設其餘手動進度；embSync／__trackLocked雙重判斷，鎖定不自動展開。
+- progressSnapshot複製col及範圍、層級、F範圍、選取、縮放與鏡頭，並保存模式還原快照引用。見林建立full col=0，保持sc以標黃節點H*.3置中；見樹restoreProgress還原快照。F使用獨立快照與focusI，只顯示選取分支，再按還原；自動追蹤遇到分支外節點不改F圖。viewStack的snapView／restoreEntry亦保存journey模式，避免全屏F返回時模式與圖不符。
+- goJuan新增reader-volume-jump，半／全屏已有圖時jumpJourney；圖內選卷也共用。全圖模式跳卷保持全開並定位首科，同時準備新卷逐步快照；逐步模式依journeyState建立本卷起點。使用journeyJuan處理同一承接科判跨卷，避免因S.cur相同而跳過跳卷。ed切換重新建立旅程，初始圖與回復快照都依來源版本隔離。
+- 新見林按鍵沿用說明km-help-a樣式，放在同一bar；修正說明建立器的存在判斷排除km-forest-toggle，以免新鍵阻止原說明出現。F為左上34px／9px圓角方形，僅半頁顯示。手機／平板減號opacity固定1、hidden固定false；移除mobileMinusFadeUntil寫入與draw末尾連續req，拖曳仍保留正常平移游標。
+- 紅點截止改2026-10-17T03:25:00+08:00，獨立localStorage鍵hk-maintenance-bell-20261017-0325，點擊寫read並立即tick隱藏，失敗時有當頁記憶旗標。逾期檢查／focus／pageshow沿用，不開動畫、不新增版號或更新說明。與之前3:00無動作紅點使用不同期限／已讀語意。
+- 16段inline JS與sw.js由Node vm.Script僅解析語法，git diff --check通過；39項SW資產metadata重算，未自動編譯。僅來源檢視藏／韓、半／全屏、各裝置共用、鎖定／開鎖、模式快照與跳卷；未執行UI／E2E、功能／實機／效能或離線測試，不宣稱已驗證操作效果。
+- 使用者要求「改好推給我」，直接快轉合併推送main，不改2.3.4、不移動既有標籤、不開PR、不強推；正式提交見git log「W037: 半頁旅程追蹤與見林見樹及F切換」。Pages公網部署完成狀態未確認。
+
+
 ## W036（Codex，2026-10-17；固定231科判循環，完成封存）
 - 最後程式提交：`06ca11d7a0d61aac25d57e401788f70aacac44d3`；封存提交見git log。
 - 基底 `c33f17b21f48bd9ca786948c293916fe882c4ea2`，分支work-w036-map-cycle，版號2.3.4維持；明確授權靜默合併發布，D189。
