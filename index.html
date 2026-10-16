@@ -7617,13 +7617,13 @@ window.__updAnim=function(){
   if(document.getElementById('updAnim'))return;
   var touch=!!window.__mobile22Device||navigator.maxTouchPoints>0,ver=window.__releaseVersion;
   var el=document.createElement('div');el.className='ua'+(touch?' mobile22':'');el.id='updAnim';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','v'+ver+' 更新');
-  el.innerHTML='<div class="ua-card"><div class="ua-ts">v'+ver+' 更新</div><ul class="ua-d"><li>分支：點一下開一層，點兩下全開。</li><li>減號：點一下，全部收合。</li></ul><div class="ua-st ua-sequence" data-input="'+(touch?'touch':'mouse')+'"></div><div class="ua-b"><button type="button" data-u="replay">重播</button><button type="button" class="go" data-u="done">知道了</button></div></div>';
+  el.innerHTML='<div class="ua-card"><div class="ua-ts">v'+ver+' 更新</div><div class="ua-st ua-sequence" data-input="'+(touch?'touch':'mouse')+'"></div><div class="ua-b"><button type="button" data-u="replay">重播</button><button type="button" class="go" data-u="done">知道了</button></div></div>';
   var st=el.querySelector('.ua-st'),previousFocus=document.activeElement;
   function diagram(before){
-    return '<svg class="seq-tree'+(before?' seq-tree-old':'')+'" viewBox="0 0 320 180" aria-hidden="true"><g class="seq-branches" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M160 58V82M70 82H250M70 82V98M160 82V98M250 82V98"/></g><g class="seq-labels" fill="currentColor"><text x="160" y="13">甲一</text><text class="seq-child" x="70" y="103">乙一</text><text class="seq-child" x="160" y="103">乙二</text><text class="seq-child seq-target" x="250" y="103">乙三</text></g><text class="seq-fold" x="186" y="13">分三</text></svg>';
+    return '<svg class="seq-tree'+(before?' seq-tree-old':'')+'" viewBox="0 0 320 180" aria-hidden="true"><g class="seq-branches" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M160 58V82M70 82H250M70 82V98M160 82V98M250 82V98"/></g><g class="seq-labels" fill="currentColor"><text x="160" y="13">甲一</text><text class="seq-child" x="70" y="103">乙一</text><text class="seq-child" x="160" y="103">乙二</text><text class="seq-child seq-target" x="250" y="103">乙三</text></g><text class="seq-fold" x="186" y="13">分三</text><text class="seq-minus" x="186" y="13">−</text></svg>';
   }
   function play(){
-    st.innerHTML='<section class="seq-phase seq-before"><strong>Before</strong><div class="seq-art">'+diagram(true)+'<span class="seq-drag-finger"></span></div></section><section class="seq-phase seq-after"><strong>After</strong><div class="seq-art">'+diagram(false)+'<span class="seq-touch-finger"></span><span class="seq-mouse-operator"><span class="seq-mouse-body"></span><span class="seq-mouse-index"></span><span class="seq-left-press"></span></span><span class="seq-hit"></span></div></section>';
+    st.innerHTML='<section class="seq-phase seq-before"><p class="seq-copy">原本：科判超出頁面，滑很久才找到。</p><div class="seq-art">'+diagram(true)+'<span class="seq-drag-finger"></span></div></section><section class="seq-phase seq-after"><p class="seq-copy">現在：先收再開。點一下開一層。點兩下，開全部。</p><div class="seq-art">'+diagram(false)+'<span class="seq-touch-finger"></span><span class="seq-mouse-operator"><span class="seq-mouse-body"></span><span class="seq-mouse-index"></span><span class="seq-left-press"></span></span><span class="seq-hit"></span></div></section>';
   }
   function fitMobile(){if(!touch)return;var vv=window.visualViewport,scale=vv?vv.scale:1,w=vv?vv.width:innerWidth,h=vv?vv.height:innerHeight,card=el.querySelector('.ua-card');card.style.zoom=String(1/scale);card.style.width=Math.min(440,w*scale-28)+'px';card.style.maxHeight=Math.max(120,h*scale-28)+'px';}
   function close(){window.__releaseNotificationPending=false;if(window.__markReleaseRead)window.__markReleaseRead();window.removeEventListener('resize',fitMobile);if(window.visualViewport)visualViewport.removeEventListener('resize',fitMobile);el.remove();if(previousFocus&&previousFocus.isConnected)previousFocus.focus({preventScroll:true});}
@@ -8496,12 +8496,12 @@ var tk=setInterval(function(){put();if(document.getElementById('darkBtn'))clearI
 </style>
 
 <style id="release-sequence">
-.ua .ua-st.ua-sequence{position:relative;height:278px;min-height:0;display:block;overflow:hidden;border:0;border-radius:0;background:transparent;color:var(--fg)}
+.ua .ua-st.ua-sequence{--seq-duration:14s;position:relative;height:278px;min-height:0;display:block;overflow:hidden;border:0;border-radius:0;background:transparent;color:var(--fg)}
 .seq-phase{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:0;gap:5px}
-.seq-phase>strong{font:600 13px/1.4 var(--ui);color:var(--muted)}
+.seq-copy{box-sizing:border-box;align-self:stretch;margin:0;min-height:3.2em;font:15px/1.6 var(--ui);color:var(--fg);text-align:left}
 .seq-art{position:relative;width:100%;flex:1;overflow:hidden;background:transparent;border:0}
 .seq-tree{position:absolute;inset:2px 0 auto;width:100%;height:180px;overflow:visible;color:var(--muted)}
-.seq-labels text,.seq-fold{font:16px/1.4 var(--ui);writing-mode:vertical-rl;text-orientation:upright;fill:var(--fg);stroke:none}
+.seq-labels text,.seq-fold,.seq-minus{font:16px/1.4 var(--ui);writing-mode:vertical-rl;text-orientation:upright;fill:var(--fg);stroke:none}
 .seq-fold{font-size:11px;fill:var(--muted)}
 .seq-before .seq-tree{left:10%;width:180%;height:180px;transform-origin:0 0}
 .seq-drag-finger,.seq-touch-finger,.seq-mouse-body,.seq-mouse-index{position:absolute;background-image:url('assets/tutorial/gestures-lite.svg');background-size:400% 100%;background-repeat:no-repeat;pointer-events:none}
@@ -8512,30 +8512,31 @@ var tk=setInterval(function(){put();if(document.getElementById('darkBtn'))clearI
 /* Downward index tip (20.625,75.625) + origin (4.375,-3.125) lands inside left button (25,72.5). */
 .seq-mouse-index{left:4.375px;top:-3.125px;width:40px;height:80px;background-position:100% 50%;transform-origin:50% 75%}
 .seq-left-press{position:absolute;left:14px;top:58px;width:25px;height:27px;border-radius:10px;background:#d9a62b55;pointer-events:none}
-.seq-hit{position:absolute;left:calc(50% - 11px);top:18px;width:22px;height:22px;border:2px solid #d9a62b;border-radius:50%;box-sizing:border-box;pointer-events:none}
+.seq-hit{position:absolute;left:calc(50% + 15px);top:18px;width:22px;height:22px;border:2px solid #d9a62b;border-radius:50%;box-sizing:border-box;pointer-events:none}
 .ua-sequence[data-input=touch] .seq-mouse-operator,.ua-sequence[data-input=mouse] .seq-touch-finger{display:none}
-.ua .ua-sequence .seq-before{animation:seqBefore 8s step-end infinite!important}
-.ua .ua-sequence .seq-after{animation:seqAfter 8s step-end infinite!important}
-.ua .ua-sequence .seq-tree-old{animation:seqSearch 8s linear infinite!important}
-.ua .ua-sequence .seq-drag-finger{animation:seqDrag 8s ease-in-out infinite!important;opacity:1}
-.ua .ua-sequence .seq-after .seq-child,.ua .ua-sequence .seq-after .seq-branches{animation:seqReveal 8s step-end infinite!important}
-.ua .ua-sequence .seq-after .seq-fold{animation:seqFold 8s step-end infinite!important}
-.ua .ua-sequence .seq-target{animation:seqFound 8s step-end infinite!important}
-.ua .ua-sequence .seq-touch-finger{animation:seqTouch 8s linear infinite!important}
-.ua .ua-sequence .seq-mouse-index{animation:seqIndex 8s linear infinite!important}
-.ua .ua-sequence .seq-left-press{animation:seqPress 8s step-end infinite!important}
-.ua .ua-sequence .seq-hit{animation:seqHit 8s linear infinite!important}
-@keyframes seqBefore{0%,52.4%,100%{visibility:visible;opacity:1}52.5%,99.9%{visibility:hidden;opacity:0}}
-@keyframes seqAfter{0%,52.4%,100%{visibility:hidden;opacity:0}52.5%,99.9%{visibility:visible;opacity:1}}
-@keyframes seqSearch{0%{transform:translateX(0)}15%{transform:translateX(-3%)}30%{transform:translateX(-8%)}42%{transform:translateX(-11%)}49%{transform:translateX(-12%)}52.4%,100%{transform:translateX(-32%)}}
-@keyframes seqDrag{0%,17%,34%,51%,100%{transform:translateX(35px)}12%,29%,46%{transform:translateX(-35px)}}
-@keyframes seqReveal{0%,58.9%,100%{opacity:0}59%,99.9%{opacity:1}}
-@keyframes seqFold{0%,58.9%,100%{opacity:1}59%,99.9%{opacity:0}}
-@keyframes seqFound{0%,66.9%,100%{fill:var(--fg)}67%,99.9%{fill:var(--acc,#b88a24);font-weight:700}}
-@keyframes seqTouch{0%,52.5%{transform:translate(26px,16px)}55%,57%{transform:translate(26px,26px)}60%{transform:translate(90px,95px)}64%,66%{transform:translate(90px,101px)}70%,100%{transform:translate(90px,95px)}}
-@keyframes seqIndex{0%,52.5%,59%,62%,68%,100%{transform:translateY(-7px)}55%,57%,64%,66%{transform:translateY(0)}}
-@keyframes seqPress{0%,54.9%,58%,63%,67%,100%{opacity:0}55%,57.9%,64%,66.9%{opacity:1}}
-@keyframes seqHit{0%,54.9%,59%,63.9%,68%,100%{opacity:0;transform:scale(.7)}55%,64%{opacity:1;transform:scale(1)}57%,66%{opacity:0;transform:scale(1.5)}0%,58.9%{top:18px;left:calc(50% + 15px)}59%,100%{top:113px;left:calc(50% + 79px)}}
+.ua .ua-sequence .seq-before{animation:seqBefore var(--seq-duration) step-end infinite!important}
+.ua .ua-sequence .seq-after{animation:seqAfter var(--seq-duration) step-end infinite!important}
+.ua .ua-sequence .seq-tree-old{animation:seqSearch var(--seq-duration) linear infinite!important}
+.ua .ua-sequence .seq-drag-finger{animation:seqDrag var(--seq-duration) ease-in-out infinite!important;opacity:1}
+.ua .ua-sequence .seq-after .seq-child{animation:seqReveal var(--seq-duration) step-end infinite,seqFound var(--seq-duration) step-end infinite!important}
+.ua .ua-sequence .seq-after .seq-branches,.ua .ua-sequence .seq-after .seq-minus{animation:seqReveal var(--seq-duration) step-end infinite!important}
+.ua .ua-sequence .seq-after .seq-fold{animation:seqFold var(--seq-duration) step-end infinite!important}
+.ua .ua-sequence .seq-touch-finger{animation:seqTouch var(--seq-duration) linear infinite!important}
+.ua .ua-sequence .seq-mouse-index{animation:seqIndex var(--seq-duration) linear infinite!important}
+.ua .ua-sequence .seq-left-press{animation:seqPress var(--seq-duration) step-end infinite!important}
+.ua .ua-sequence .seq-hit{animation:seqHit var(--seq-duration) linear infinite!important}
+@keyframes seqBefore{0%,29.9%,100%{visibility:visible;opacity:1}30%,99.9%{visibility:hidden;opacity:0}}
+@keyframes seqAfter{0%,29.9%,100%{visibility:hidden;opacity:0}30%,99.9%{visibility:visible;opacity:1}}
+@keyframes seqSearch{0%{transform:translateX(0)}8.6%{transform:translateX(-3%)}17.1%{transform:translateX(-8%)}24%{transform:translateX(-11%)}28%{transform:translateX(-12%)}29.9%,100%{transform:translateX(-32%)}}
+@keyframes seqDrag{0%,9.7%,19.4%,29.1%,100%{transform:translateX(35px)}6.9%,16.6%,26.3%{transform:translateX(-35px)}}
+/* After: see the expanded branch, collapse once, pause, open one level, pause, double-click all. */
+@keyframes seqReveal{0%,34.9%,49%,99.9%{opacity:1}35%,48.9%,100%{opacity:0}}
+@keyframes seqFold{0%,34.9%,49%,99.9%{opacity:0}35%,48.9%,100%{opacity:1}}
+@keyframes seqFound{0%,76.9%,100%{fill:var(--fg);font-weight:400}77%,99.9%{fill:var(--acc,#b88a24);font-weight:700}}
+@keyframes seqTouch{0%,30%,32%,35%,44%,47%{transform:translate(26px,16px)}33%,34%,45%,46%{transform:translate(26px,26px)}70%,72%,74.5%,77%,100%{transform:translate(0,16px)}73%,74%,75%,76%{transform:translate(0,26px)}}
+@keyframes seqIndex{0%,30%,32%,35%,44%,47%,72%,74.5%,77%,100%{transform:translateY(-7px)}33%,34%,45%,46%,73%,74%,75%,76%{transform:translateY(0)}}
+@keyframes seqPress{0%,32.9%,35%,44.9%,47%,72.9%,74.5%,77%,100%{opacity:0}33%,34.9%,45%,46.9%,73%,74.4%,75%,76.9%{opacity:1}}
+@keyframes seqHit{0%,32.9%,35%,44.9%,47%,72.9%,74.5%,77%,100%{opacity:0;transform:scale(.7)}33%,45%,73%,75%{opacity:1;transform:scale(1)}34.9%,46.9%,74.4%,76.9%{opacity:0;transform:scale(1.5)}0%,70%{left:calc(50% + 15px)}70.1%,100%{left:calc(50% - 11px)}}
 </style>
 
-<style>.seq-before .seq-fold{display:none}.ha .ha-st[data-k^="m"]{border:0;border-radius:0;background:transparent}</style>
+<style>.seq-before .seq-fold,.seq-before .seq-minus{display:none}.ha .ha-st[data-k^="m"]{border:0;border-radius:0;background:transparent}</style>
