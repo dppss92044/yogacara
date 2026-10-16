@@ -5,6 +5,15 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W036（Codex，2026-10-17；固定231科判循環，完成封存）
+- 基底 `c33f17b21f48bd9ca786948c293916fe882c4ea2`，分支work-w036-map-cycle，版號2.3.4維持；明確授權靜默合併發布，D189。
+- 實作：移除returnedToReader、dockCurrentMap、returnToChartPage與返回後再嵌入半頁分支。頁尾rAF初始化open(true,false,true)，不搶焦點；圖示在可見半頁setEmb(false)進全屏、全屏close、A4時open(true)新半頁，形成唯一231循環。全屏返回同步節點後直接顯示底層A4，單欄切chart分頁；平板卷次開關保留D186。
+- 半頁不再pushState或改scrollRestoration，全屏setEmb(false)才記錄來源並push一筆；open(false,fromHistory)舊歷史入口避免重複push。按鈕／Esc／瀏覽器返回共用close／finishMapReturn，保留分幾逐節點單層與標籤僅定位。
+- 紅點已澄清：使用者回答「網站右上角」。沿用updBell，在meta=2.3.4時覆蓋為無動作維護狀態，click在document capture preventDefault／stopImmediatePropagation後直接return，阻擋舊動畫及vb轉發；setTimeout、tick、pageshow／visibility／focus依固定截止檢查。截止2026-10-17T03:00:00+08:00＝2026-10-16T19:00:00Z。屆時inline!important隱藏整個鈴鐺與dot，重新進入不重開；不改偏好與已讀資料，未來meta版本改變時正常原通知路由。
+- 版號App／meta／SW 2.3.4不變，不新增更新日誌UI或標籤，39項SW metadata重算。16段inline JS與sw.js由Node vm.Script靜態解析、git diff --check通過；僅來源檢視共用藏／韓、半／全屏、三態／單欄／多欄、期限與click攔截。未編譯、未執行UI／E2E、功能／實機／離線測試。
+- 已獲明確靜默合併發布授權；最終commit見git log「W036: 固定半頁全屏A4循環與三點到期鈴鐺」，遠端main作發布來源，既有v2.3.4標籤不移動。Pages公網部署完成狀態未確認。
+
+
 ## W035（Codex，2026-10-17；嚴格逐節點單層展開，完成封存）
 - 最後程式提交：`a1350a294a7def2f4e85e810472a50e4a399cb14`；封存提交見git log。
 - 基底維護commit `5fbeec4f56c9e47b1ae5d9ebe70c756bd9b73132`，App 2.3.4不變；分支work-w035-one-level-expand。
