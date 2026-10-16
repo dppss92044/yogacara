@@ -6,6 +6,7 @@
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
 ## W035（Codex，2026-10-17；嚴格逐節點單層展開，完成封存）
+- 最後程式提交：`a1350a294a7def2f4e85e810472a50e4a399cb14`；封存提交見git log。
 - 基底維護commit `5fbeec4f56c9e47b1ae5d9ebe70c756bd9b73132`，App 2.3.4不變；分支work-w035-one-level-expand。
 - 使用者再次明確授權靜默合併發布：分幾單擊只開該節點下一層，甲→乙後須點乙自己的分幾才能開丙；「已更新」指此對話前台而非網站。D188。
 - stepNode單擊expand不再搜尋全部已顯示collapsed frontier；若點的節點已開直接不動，若收合則只col[i]=0，其餘全部後代依prKids(k).length設收合。使用完整樹的prKids而非範圍內model.kc，避免某些深層舊展開狀態保留。快速雙擊分幾all=true保留明確全開；減號全收合、標題pick定位及鍵盤不變。
