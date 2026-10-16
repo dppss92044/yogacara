@@ -51,7 +51,7 @@
 | 正式版本 | **v2.3.4**（2026-10-17，App／meta／SW版本2.3.4；前版v2.3.3，靜默修正） |
 | App 程式基底 commit | 使用者確認的預覽程式 `361452efdec400320aabdb96db4101cba25fafbc`；發布補上統計相容回退 `d43705d3f88733ff59dc2470925be1b28ac3db14`；正式提交見main與v2.3.0標籤。 |
 | 下一正式版本候選 | v2.3.5，已依使用者選擇；尚未發布。 |
-| 目前工作編號 | 說明與詢問更新進行中，詳AI_HANDOFF.md。 |
+| 目前工作編號 | 說明與詢問更新候選已完成，詳AI_HANDOFF.md。 |
 | 進行中的程式修改 | 候選在獨立工作分支，main未改。 |
 | v1.91 與外部更新檔 | v1.91 更新檔 zip 的 7 個檔與 HEAD 逐檔相同（已比對） |
 | 部署 | GitHub Pages：`https://dppss92044.github.io/yogacara/`（使用者端以「更新app」指令從下載資料夾複製並 push；此流程詳情見 MASTER_HISTORY H103，腳本不在 repo） |
