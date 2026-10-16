@@ -5,6 +5,16 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W035（Codex，2026-10-17；嚴格逐節點單層展開，完成封存）
+- 基底維護commit `5fbeec4f56c9e47b1ae5d9ebe70c756bd9b73132`，App 2.3.4不變；分支work-w035-one-level-expand。
+- 使用者再次明確授權靜默合併發布：分幾單擊只開該節點下一層，甲→乙後須點乙自己的分幾才能開丙；「已更新」指此對話前台而非網站。D188。
+- stepNode單擊expand不再搜尋全部已顯示collapsed frontier；若點的節點已開直接不動，若收合則只col[i]=0，其餘全部後代依prKids(k).length設收合。使用完整樹的prKids而非範圍內model.kc，避免某些深層舊展開狀態保留。快速雙擊分幾all=true保留明確全開；減號全收合、標題pick定位及鍵盤不變。
+- canvas pointerdown記錄marker與model；pointerup只有同一marker及model才執行toggleCol，避免按在標題後放開誤命中圖面移動過來的分幾。跨裝置共用pointer路徑，半／全屏共用stepNode。
+- 刪除maintenance-confirmation-style與maintenance-confirmation全部DOM／CSS／時限程式。先前把提示加在網站是誤解；使用者指此對話前台。已說明工具不能設定對話訊息五分鐘自動消失，沒有宣稱已實作此不可控部分，也不再新增獨立三字網站提示。
+- 版本App／meta／SW仍2.3.4，不改既有標籤，不新增更新說明／通知；39項SW metadata重算。靜態解析16段inline JS＋sw.js及git diff --check通過；僅來源檢視藏／韓、半／全屏共用路徑，未編譯、未執行UI／E2E、功能或實機測試，不宣稱互動已實機驗證。
+- 使用者已明確授權靜默合併發布，直接快轉推送main；最終提交見git log「W035: 嚴格逐節點單層展開並移除誤加網站提示」。Pages公網部署完成狀態未確認。
+
+
 ## W034（Codex，2026-10-17；不升版標籤定位修正，完成封存）
 - 固定確認視窗UTC：`2026-10-16T18:40:47+00:00` 至 `2026-10-16T18:45:47+00:00`（300秒）；回覆完成訊息對齊起點。最終17段inline JS與sw.js靜態語法及git diff --check通過；正式維護提交見main／git log「W034: 標籤僅定位、分幾專用展開」。
 - 基底v2.3.4 `3e3f05cbf872d0aad600e7cbcb0ba0c2123ca9c7`，分支work-w034-label-navigation。
