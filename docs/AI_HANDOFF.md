@@ -15,7 +15,7 @@
 - 半屏科判說明樹與全屏操作簡介SVG同步改兩層直書上下組織圖，無字框與底框，原卡片／配色／其他操作維持。僅改動畫示意，不修改正式科判排版與收展程式。
 - 版本仍2.3.0，D176的減號單擊立即全收合及分支單雙擊、D175通知分流皆未變。離線索引替換SVG路徑，仍39項，只重算metadata與SW索引，不自動編譯。
 - 本輪僅檢查16段inline JS、sw.js、工具Python AST與SVG XML靜態語法，git diff --check；未執行UI／E2E、功能測試／實機／離線測試。先前統計Worker的SemVer相容程式仍未部署，正式發版前須同步更新。
-- D179最新程式提交與預覽網址待提交後補記；舊192da82預覽被取代。本輪16段inline JS與sw.js靜態語法、git diff --check通過；未執行UI／E2E或功能測試。只推工作分支，不推main、不開PR、不發布；raw.githack此前於環境代理CONNECT403，公網連線未確認。
+- D179最新程式提交 `38ca11b59fea43c76c04b04214060b3a9f0b698a`，交接補記提交見git log；預覽基址 `https://raw.githack.com/dppss92044/yogacara/38ca11b59fea43c76c04b04214060b3a9f0b698a/index.html`，加 `?layout=mac`／`?layout=iphone`／`?layout=ipad`。舊192da82預覽被取代。本輪16段inline JS與sw.js靜態語法、git diff --check通過；未執行UI／E2E或功能測試。只推工作分支，不推main、不開PR、不發布；raw.githack此前於環境代理CONNECT403，公網連線未確認。
 
 
 ## W028（Codex，2026-10-16；完成並靜默發布至2.2，封存）
