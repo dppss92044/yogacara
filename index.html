@@ -4400,6 +4400,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       }
       var autoOpened=[];
       function followJourney(c,j){
+        var collapsedNow=false;
         releaseFocusOutside(c);
         // 捲動跨卷：舊位置先留在原處，再以1.5秒平移到新卷位置，讓人看出往哪裡跑。
         var crossFrom=-1,cfx=0,cfy=0;if(j!==journeyJuan&&!focusSaved){var o=shownCur();if(o>=0&&model&&model.inc[o]){var wo=wxy(model,o);crossFrom=o;cfx=wo[0]*sc+tx;cfy=wo[1]*sc+ty;}jumpJourney(j);
@@ -4408,7 +4409,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         if(!forestMode){
           // 往回捲：先收合先前自動展開、但已在目前位置之後且不是目前祖先的分支。
           var anc={};for(var p0=c;p0>=0;p0=NN[p0][4])anc[p0]=1;
-          autoOpened=autoOpened.filter(function(k){if(k>=c&&(k===c||!anc[k])&&!col[k]){col[k]=1;changed=true;return false;}return true;});
+          autoOpened=autoOpened.filter(function(k){if(k>=c&&(k===c||!anc[k])&&!col[k]){col[k]=1;changed=true;collapsedNow=true;return false;}return true;});
           // 只展開目前位置的上層；讀到本節點時先不開它的下層，等正文進到下層才開。
           for(var p=NN[c][4];p>=0;p=NN[p][4])if(col[p]){col[p]=0;changed=true;autoOpened.push(p);}
         }
@@ -4417,7 +4418,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         curI=selI=c;if(changed)rebuild(c);catalogSync();updChip();
         if(an>=0&&model.inc[an]){var w1=wxy(model,an);tx=ax-w1[0]*sc;ty=ay-w1[1]*sc;clampPan();}
         req();
-        if(model.inc[c]){var nr=nodeRect(model,c),x0=nr[0]*sc+tx,y0=nr[1]*sc+ty,x1=x0+nr[2]*sc,y1=y0+nr[3]*sc,mg=12,yb=H-mg,mmE=box.querySelector('.km-mm');if(mmE&&mmE.offsetParent){var cr=cv.getBoundingClientRect(),mr=mmE.getBoundingClientRect();if(mr.height)yb=Math.min(yb,mr.top-cr.top-mg);}if(!(x0>=mg&&x1<=W-mg&&y0>=mg&&y1<=yb))animCenter(c,sc,H*.3);}
+        if(model.inc[c]){var nr=nodeRect(model,c),x0=nr[0]*sc+tx,y0=nr[1]*sc+ty,x1=x0+nr[2]*sc,y1=y0+nr[3]*sc,mg=12,yb=H-mg,mmE=box.querySelector('.km-mm');if(mmE&&mmE.offsetParent){var cr=cv.getBoundingClientRect(),mr=mmE.getBoundingClientRect();if(mr.height)yb=Math.min(yb,mr.top-cr.top-mg);}if(!(x0>=mg&&x1<=W-mg&&y0>=mg&&y1<=yb))animCenter(c,sc,H*.3);
+          // 往上收合後下方空太多：整張圖往下帶回，填滿下方，但反黃標題不低於H*.3。
+          else if(collapsedNow){var cb=-1e9;for(var q=0;q<NN.length;q++)if(model.inc[q]){var r2=nodeRect(model,q),b2=(r2[1]+r2[3])*sc+ty,l2=r2[0]*sc+tx;if(l2<W&&l2+r2[2]*sc>0&&b2>cb)cb=b2;}var dy=Math.min(yb-cb,H*.3-y0);if(dy>24){var ty0=ty,ty1=ty+dy,t00=performance.now(),aid=++animId;(function st(tn){if(aid!==animId)return;var k=Math.min(1,(tn-t00)/380),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;ty=ty0+(ty1-ty0)*e;clampPan();req();if(k<1)requestAnimationFrame(st);})(t00);}}}
       }
       // Remember explicit full-map navigation independently of temporary selection / tutorials.
       function rememberMapReading(i,j){
