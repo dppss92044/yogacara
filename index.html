@@ -4382,7 +4382,9 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var autoOpened=[];
       function followJourney(c,j){
         releaseFocusOutside(c);
-        if(j!==journeyJuan&&!focusSaved)jumpJourney(j);
+        // 捲動跨卷：舊位置先留在原處，再以1.5秒平移到新卷位置，讓人看出往哪裡跑。
+        var crossFrom=-1,cfx=0,cfy=0;if(j!==journeyJuan&&!focusSaved){var o=shownCur();if(o>=0&&model&&model.inc[o]){var wo=wxy(model,o);crossFrom=o;cfx=wo[0]*sc+tx;cfy=wo[1]*sc+ty;}jumpJourney(j);
+          if(crossFrom>=0&&model.inc[crossFrom]&&model.inc[c]){var wn=wxy(model,crossFrom);tx=cfx-wn[0]*sc;ty=cfy-wn[1]*sc;curI=selI=c;req();animCenter(c,sc,H*.3,1500);catalogSync();updChip();return;}}
         var changed=false;
         if(!forestMode){
           // 往回捲：先收合先前自動展開、但已在目前位置之後且不是目前祖先的分支。
@@ -4617,8 +4619,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function goLineParent(i){if(i<0)return;rememberMapReading(i);dismissOverlays();foldCatalogOnPhone();selI=i;lastTap=null;hoverEdge=null;animCenter(i,Math.max(1,sc),mapTop());catalogSync();updChip();req();}
       function fitScale(){if(!model||!model.n)return 1;return Math.min((W-48)/model.bw,(H-48)/Math.max(model.bh,1));}
       var animId=0;
-      function animCenter(i,s,yt){if(i<0||!model||!model.inc[i])return;var s0=sc,x0=tx,y0=ty;sc=s;var c=wxy(model,i);tx=W/2-c[0]*sc;ty=(yt==null?H/3:yt)-c[1]*sc;clampPan();var s1=sc,x1=tx,y1=ty;sc=s0;tx=x0;ty=y0;
-        var A=.2,Dn=.45,VM=1/(1-(A+Dn)/2),t0=performance.now(),D=emb?380:1000,id=++animId;
+      function animCenter(i,s,yt,dur){if(i<0||!model||!model.inc[i])return;var s0=sc,x0=tx,y0=ty;sc=s;var c=wxy(model,i);tx=W/2-c[0]*sc;ty=(yt==null?H/3:yt)-c[1]*sc;clampPan();var s1=sc,x1=tx,y1=ty;sc=s0;tx=x0;ty=y0;
+        var A=.2,Dn=.45,VM=1/(1-(A+Dn)/2),t0=performance.now(),D=dur||(emb?380:1000),id=++animId;
         function st(t){if(id!==animId)return;var k=Math.min(1,(t-t0)/D),v=k<A?VM*k*k/(2*A):k<1-Dn?VM*(A/2+(k-A)):1-VM*(1-k)*(1-k)/(2*Dn);if(k>=1)v=1;sc=s0+(s1-s0)*v;tx=x0+(x1-x0)*v;ty=y0+(y1-y0)*v;req();if(k<1)requestAnimationFrame(st);}
         requestAnimationFrame(st);}
       function centerOn(i,s,y){if(i<0||!model||!model.inc[i])return;sc=s;var c=wxy(model,i);tx=W/2-c[0]*sc;ty=(y==null?H/2:y)-c[1]*sc;clampPan();}
