@@ -4421,7 +4421,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         if(an>=0&&model.inc[an]){var w1=wxy(model,an);tx=ax-w1[0]*sc;ty=ay-w1[1]*sc;clampPan();}
         req();
         if(model.inc[c]){var nr=nodeRect(model,c),x0=nr[0]*sc+tx,y0=nr[1]*sc+ty,x1=x0+nr[2]*sc,y1=y0+nr[3]*sc,mg=12,yb=H-mg,mmE=box.querySelector('.km-mm');if(mmE&&mmE.offsetParent){var cr=cv.getBoundingClientRect(),mr=mmE.getBoundingClientRect();if(mr.height)yb=Math.min(yb,mr.top-cr.top-mg);}if(collapsedNow&&viewMem[c]&&viewMem[c].s===sc&&viewMem[c].e===edKey){var vm=viewMem[c],tx0=tx,ty0b=ty,t01=performance.now(),aid2=++animId;(function st(tn){if(aid2!==animId)return;var k=Math.min(1,(tn-t01)/380),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;tx=tx0+(vm.x-tx0)*e;ty=ty0b+(vm.y-ty0b)*e;req();if(k<1)requestAnimationFrame(st);})(t01);}
-          else if(!(x0>=mg&&x1<=W-mg&&y0>=mg&&y1<=yb))animCenter(c,sc,H*.3);
+          else if(!(x0>=mg&&x1<=W-mg&&y0>=mg&&y1<=yb)){
+            // 依下方還剩幾層決定上拉幅度：剩得少就只拉到剛好放得下，不一律拉到H*.3。
+            var rem=0;(function dd(k,d){var ks=prKids(k);if(!ks.length){if(d>rem)rem=d;return;}if(d>=3){rem=3;return;}ks.forEach(function(q){dd(q,d+1);});})(c,0);
+            var pp=NN[c][4],Ls=(pp>=0&&model.inc[pp])?Math.abs(wxy(model,c)[1]-wxy(model,pp)[1])*sc:(y1-y0)*1.6,need=(y1-y0)+rem*Ls,ctr=wxy(model,c)[1]*sc+ty,tgtTop=Math.max(H*.3,yb-need);
+            animCenter(c,sc,tgtTop+(ctr-y0));
+          }
           // 往上收合後下方空太多：整張圖往下帶回，填滿下方，但反黃標題不低於H*.3。
           else if(collapsedNow){var cb=-1e9;for(var q=0;q<NN.length;q++)if(model.inc[q]){var r2=nodeRect(model,q),b2=(r2[1]+r2[3])*sc+ty,l2=r2[0]*sc+tx;if(l2<W&&l2+r2[2]*sc>0&&b2>cb)cb=b2;}var dy=Math.min(yb-cb,H*.3-y0);if(dy>24){var ty0=ty,ty1=ty+dy,t00=performance.now(),aid=++animId;(function st(tn){if(aid!==animId)return;var k=Math.min(1,(tn-t00)/380),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;ty=ty0+(ty1-ty0)*e;clampPan();req();if(k<1)requestAnimationFrame(st);})(t00);}}}
       }
