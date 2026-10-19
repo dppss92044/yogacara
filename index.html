@@ -8308,24 +8308,24 @@ function sets(kind){
     {k:'p1',h:'三個分頁',st:phone()+fin,li:['下面三個分頁：卷次、正文、科判。','點一下就換頁。']},
     {k:'p2',h:'查辭典',st:phone('<span class="ha-sel" style="left:calc(50% - 40px);top:66px"></span><div class="ha-pop" style="left:calc(50% - 50px);right:auto;width:100px;top:90px"><b></b></div>')+fin,li:['設定裡先把「辭典」亮燈。','在正文連點兩下詞語，辭典就跳出來。','點外面就關掉。']},
     {k:'p3',h:'科判',st:phone()+fin,li:['觸控科判標題：反黃並同步正文。','半頁／全屏只有點「分幾」才展開，點標題不展開。']},
-    {k:'p6',h:'鎖',st:phone(lk('right:6px'))+fin,li:['開鎖：隨正文反黃並逐步展開科判。','鎖上：不自動追蹤；觸控標題仍同步反黃。','未展開的科判保持收合，反黃可見上層。']},
+    {k:'p6',h:'鎖',st:phone(lk('right:6px'))+fin,li:['開鎖：隨正文反黃並逐步展開科判。','鎖上：不自動追蹤；觸控標題仍同步反黃。']},
     {k:'p5',h:'科判圖',st:phone('<div class="ha-half">'+tree()+'</div><div class="ha-full">'+tree()+'</div><span class="ha-mb">'+ic('#mapBtn svg')+'</span>')+fin,
       li:['右下科判圖按鍵：半頁 → 全屏 → A4，再循環。']},
     {k:'p7',h:'介面',st:phone()+SW+fin,li:['設定 → 介面：「深色」一點畫面就反黑。','閱讀底色可選：淡黃、護眼綠、灰、白。']},
-    {k:'p4',h:'設定',st:phone('<div class="ha-menu"><div>字體</div><div>版本</div><div>下載</div><div>說明</div></div>')+fin,li:['點左上齒輪：字體、版本、匯出都在這裡。','想再看這段動畫，點「說明」。']}]};
+    {k:'p4',h:'設定',st:phone('<div class="ha-menu"><div>字體</div><div>版本</div><div>下載</div><div>說明</div></div>')+fin,li:['點左上齒輪：字體、版本、下載列印都在這裡。','想再看這段動畫，點「說明」。']}]};
   var tc=touch();
   return {title:'說明',sc:[
     {k:'d1',h:'三欄閱讀',st:screen(),li:['電腦介面：左邊卷次，中間正文，右邊科判。','平板預設正文、科判各半；卷次按鈕點開才出現。']},
     {k:'d2',h:'換卷',st:screen(cur),li:['點左上的卷號，換到那一卷。','往下讀，會自動接到下一卷。']},
     {k:'d3',h:'點標題',st:screen(cur),li:['點標題：三欄同步定位與反黃。','半頁／全屏點標題不展開；觸控「分幾」才展開。']},
-    {k:'d8',h:'鎖',st:screen(lk('left:calc(64% - 20px)')+(tc?fin:cur)),li:['開鎖：隨正文同步反黃、定位，逐步展開科判。','鎖上：不自動追蹤；觸控標題仍同步三欄反黃。','未展開的科判保持收合，反黃可見上層。']},
+    {k:'d8',h:'鎖',st:screen(lk('left:calc(64% - 20px)')+(tc?fin:cur)),li:['開鎖：隨正文同步反黃、定位，逐步展開科判。','鎖上：不自動追蹤；觸控標題仍同步三欄反黃。']},
     {k:'d7',h:'科判圖',st:screen('<div class="ha-half">'+tree()+'</div><div class="ha-full">'+tree()+'</div><span class="ha-mb">'+ic('#mapBtn svg')+'</span>'+(tc?fin:cur)),
-      li:['右下科判圖按鍵：半頁 → 全屏 → A4，再循環。','觸控：點標題定位，點「分幾」展開；減號一直顯示。']},
+      li:['右下科判圖按鍵：半頁 → 全屏 → A4，再循環。']},
     {k:'d4',h:'查辭典',st:screen('<span class="ha-sel" style="left:31%;top:62px"></span><div class="ha-pop"><b></b>'+lines(2)+'</div>'+(tc?fin:cur)),
       li:tc?['設定裡先把「辭典」亮燈。','連點兩下正文詞語，辭典就跳出來。','點外面就關掉。']:['設定裡先把「辭典」亮燈。','用滑鼠反白一個詞，辭典就跳出來。','點外面或按 Esc 關掉。']},
     {k:'d5',h:'搜尋',st:screen('<span class="ha-q"><em>瑜伽</em></span>'+cur+'<div class="ha-keys"><kbd class="kE">Enter</kbd></div>'),li:['點右上放大鏡。','輸入要找的字，按 Enter。']},
     {k:'d9',h:'介面',st:screen(SW+(tc?fin:cur)),li:['設定 → 介面：「深色」一點畫面就反黑。','閱讀底色可選：淡黃、護眼綠、灰、白。']},
-    {k:'d6',h:'設定',st:screen('<div class="ha-menu"><div class="r1">字體</div><div>版本</div><div>下載</div><div>說明</div></div>'+cur),li:['點左上齒輪：字體、版本、匯出都在這裡。','想再看這段動畫，點「說明」。']}]};
+    {k:'d6',h:'設定',st:screen('<div class="ha-menu"><div class="r1">字體</div><div>版本</div><div>下載</div><div>說明</div></div>'+cur),li:['點左上齒輪：字體、版本、下載列印都在這裡。','想再看這段動畫，點「說明」。']}]};
 }
 window.__helpAnim=function(kind){if(document.getElementById('helpAnim'))return;
   var S=sets(kind),SC=S.sc;
