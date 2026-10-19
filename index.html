@@ -4693,11 +4693,15 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       }
       // 只在預覽（非正式網址）時於科判圖畫 x、y 座標刻度（螢幕像素），供溝通位置用。
       var PREVIEW_AXES=!/(^|\.)github\.io$/.test(location.hostname);
-      function drawAxes(){cx.save();cx.setTransform(dpr,0,0,dpr,0,0);cx.font='10px -apple-system,sans-serif';cx.fillStyle='rgba(220,40,40,.85)';cx.strokeStyle='rgba(220,40,40,.6)';cx.lineWidth=1;
-        cx.beginPath();for(var gx=50;gx<W;gx+=50){cx.moveTo(gx+.5,0);cx.lineTo(gx+.5,H);}for(var gy=50;gy<H;gy+=50){cx.moveTo(0,gy+.5);cx.lineTo(W,gy+.5);}cx.strokeStyle='rgba(220,40,40,.10)';cx.stroke();cx.beginPath();for(var hx=100;hx<W;hx+=100){cx.moveTo(hx+.5,0);cx.lineTo(hx+.5,H);}for(var hy=100;hy<H;hy+=100){cx.moveTo(0,hy+.5);cx.lineTo(W,hy+.5);}cx.strokeStyle='rgba(220,40,40,.22)';cx.stroke();cx.strokeStyle='rgba(220,40,40,.6)';cx.beginPath();
-        for(var x=0;x<=W;x+=50){var L=x%100===0?10:5;cx.moveTo(x+.5,0);cx.lineTo(x+.5,L);if(x%100===0&&x>0){cx.textAlign='center';cx.textBaseline='top';cx.fillText(x,x,11);}}
-        for(var y=0;y<=H;y+=50){var L2=y%100===0?10:5;cx.moveTo(0,y+.5);cx.lineTo(L2,y+.5);if(y%100===0&&y>0){cx.textAlign='left';cx.textBaseline='middle';cx.fillText(y,12,y);}}
-        cx.stroke();cx.textAlign='right';cx.textBaseline='bottom';cx.fillText('W'+Math.round(W)+' H'+Math.round(H),W-4,H-4);cx.restore();}
+      function drawAxes(){cx.save();cx.setTransform(dpr,0,0,dpr,0,0);cx.lineWidth=1;
+        // 原點在左下角，x 往右、y 往上（第一象限）。
+        function grid(st,col){cx.beginPath();for(var gx=st;gx<W;gx+=st){cx.moveTo(gx+.5,0);cx.lineTo(gx+.5,H);}for(var gy=st;gy<H;gy+=st){var yy=H-gy;cx.moveTo(0,yy+.5);cx.lineTo(W,yy+.5);}cx.strokeStyle=col;cx.stroke();}
+        grid(50,'rgba(220,40,40,.10)');grid(100,'rgba(220,40,40,.22)');
+        cx.strokeStyle='rgba(220,40,40,.7)';cx.beginPath();cx.moveTo(0,H-.5);cx.lineTo(W,H-.5);cx.moveTo(.5,0);cx.lineTo(.5,H);cx.stroke();
+        cx.font='10px -apple-system,sans-serif';cx.fillStyle='rgba(220,40,40,.9)';
+        cx.textAlign='center';cx.textBaseline='bottom';for(var x=100;x<W;x+=100)cx.fillText(x,x,H-2);
+        cx.textAlign='left';cx.textBaseline='middle';for(var y=100;y<H;y+=100)cx.fillText(y,3,H-y);
+        cx.textBaseline='bottom';cx.fillText('0',3,H-2);cx.textAlign='right';cx.textBaseline='top';cx.fillText('W'+Math.round(W)+' H'+Math.round(H),W-4,4);cx.restore();}
       function draw(){draw0();if(PREVIEW_AXES&&box&&!box.hidden&&model)drawAxes();}
       function draw0(){
         raf=0;if(!box||box.hidden||!model)return;
