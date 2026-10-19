@@ -4342,7 +4342,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       var forestMode=false,forestSaved=null,focusSaved=null,journeyJuan=0;
       function progressSnapshot(){return {ed:edKey,col:col&&col.slice(),a:ra,b:rb,depth:md,focus:focusI,only:selIds&&selIds.slice(),cur:curI,sel:selI,scale:sc,x:tx,y:ty,w:W,h:H,forest:forestMode,forestBackup:forestSaved,focusBackup:focusSaved,juan:journeyJuan};}
       function modeButtons(){if(!box)return;var f=box.querySelector('.km-focus-toggle');if(f)f.setAttribute('aria-pressed',String(!!focusSaved));}
-      function restoreProgress(v){
+      function restoreProgress(v){autoOpened=[];
         if(!v||v.ed!==edKey)return;cancelNodeToggle();++buildSeq;ra=v.a;rb=v.b;md=v.depth;focusI=v.focus;selIds=v.only&&v.only.slice();curI=v.cur;selI=v.sel;col=v.col&&v.col.slice();forestMode=v.forest;forestSaved=v.forestBackup;focusSaved=v.focusBackup;journeyJuan=v.juan;
         model=build(ra,rb,md,vert,col,focusI,selIds);col=model.col;sc=v.scale;tx=v.x+(W-v.w)/2;ty=v.y+(H-v.h)/2;syncUI();modeButtons();updChip();req();if(v.center&&model.inc[curI])centerOn(curI,sc,H*.3);
       }
@@ -4354,7 +4354,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         var first=prKids(c).find(function(k){return NN[k][6]===j;});if(first!=null)folded[first]=0;
         return {ed:edKey,col:folded,a:1,b:100,depth:maxD,focus:-1,only:null,cur:c,sel:c,scale:sc,x:tx,y:ty,w:W,h:H,forest:false,forestBackup:null,focusBackup:null,juan:j,center:true};
       }
-      function jumpJourney(j){
+      function jumpJourney(j){autoOpened=[];
         if(!NN||j<1||j>100)return;var c=firstInJuan(j),state=journeyState(j);
         if(forestMode){forestSaved=state;focusSaved=null;ra=1;rb=100;md=maxD;focusI=-1;selIds=null;col=new Uint8Array(NN.length);curI=selI=c;journeyJuan=j;rebuild(c);centerOn(c,sc,H*.3);modeButtons();}
         else restoreProgress(state);
@@ -4379,11 +4379,17 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         embLast={c:c,e:edKey,j:j};embSkip=Date.now()+1200;embShowY=true;trackAttr();catalogSync();updChip();req();
         if(source!=='go')animCenter(visible,sc,H*.3);
       }
+      var autoOpened=[];
       function followJourney(c,j){
         releaseFocusOutside(c);
         if(j!==journeyJuan&&!focusSaved)jumpJourney(j);
         var changed=false;
-        if(!forestMode){for(var p=c;p>=0;p=NN[p][4])if(col[p]){col[p]=0;changed=true;}}
+        if(!forestMode){
+          // 往回捲：先收合先前自動展開、但已在目前位置之後且不是目前祖先的分支。
+          var anc={};for(var p0=c;p0>=0;p0=NN[p0][4])anc[p0]=1;
+          autoOpened=autoOpened.filter(function(k){if(k>c&&!anc[k]&&!col[k]){col[k]=1;changed=true;return false;}return true;});
+          for(var p=c;p>=0;p=NN[p][4])if(col[p]){col[p]=0;changed=true;autoOpened.push(p);}
+        }
         // 下方仍有空間時不移動：展開前記住最近可見上層的螢幕位置，展開後維持原位；只有反黃標籤落在可視範圍外才拉到固定位置。
         var an=-1,ax=0,ay=0;if(changed&&model&&model.n){for(var p2=c;p2>=0;p2=NN[p2][4])if(model.inc[p2]){an=p2;break;}if(an>=0){var w0=wxy(model,an);ax=w0[0]*sc+tx;ay=w0[1]*sc+ty;}}
         curI=selI=c;if(changed)rebuild(c);catalogSync();updChip();
