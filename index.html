@@ -7881,7 +7881,9 @@ window.__bugfixAnim=function(){
 var version=window.__releaseVersion,attempted=false,readInSession=false,KEY='hk-update-animation-seen';
 var maintenanceBell=document.querySelector('meta[name="app-version"]').content==='2.3.4',maintenanceStarts=Date.parse('2026-10-16T19:28:58+00:00'),maintenanceExpires=Date.parse('2026-10-16T19:33:58+00:00'),maintenanceKey='hk-bugfix-20261019-read',maintenanceDismissed=false;
 function get(k){try{return localStorage.getItem(k);}catch(e){return null;}}
-function unseen(){return !readInSession&&get(KEY)!==version;}
+var PREV=/[?&]preview=update(&|$)/.test(location.search);
+// 預覽專用：?preview=update 一律當作未讀（紅點＋自動跳更新動畫），不受之前看過的紀錄影響。
+function unseen(){return !readInSession&&(PREV||get(KEY)!==version);}
 // This controls in-app release animations, not native Web Push permission.
 window.isNotificationEnabled=function(){return get('hk-update-notice')==='on';};
 if(/[?&]resetdot(&|$)/.test(location.search))try{localStorage.removeItem(KEY);}catch(e){}
@@ -7897,7 +7899,7 @@ window.__refreshReleaseNotifications=function(){
     window.__releaseNotificationPending=false;return;
   }
   if(bell){var bs=unread;bell.hidden=!bs;bell.style.setProperty('display',bs?'inline-flex':'none','important');var dot=bell.querySelector('.upd-dot');if(dot)dot.hidden=!bs;bell.setAttribute('aria-label','v2.4.0 更新未讀，點開更新動畫');bell.title='v'+version+' 更新';}
-  window.__releaseNotificationPending=enabled&&unread&&!attempted;
+  window.__releaseNotificationPending=(enabled||PREV)&&unread&&!attempted;
 };
 function tick(){
   window.__refreshReleaseNotifications();
