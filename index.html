@@ -4693,7 +4693,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       }
       // 只在預覽（非正式網址）時於科判圖畫 x、y 座標刻度（螢幕像素），供溝通位置用。
       var PREVIEW_AXES=!/(^|\.)github\.io$/.test(location.hostname);
-      function drawAxes(){cx.save();cx.setTransform(dpr,0,0,dpr,0,0);cx.font='10px -apple-system,sans-serif';cx.fillStyle='rgba(220,40,40,.85)';cx.strokeStyle='rgba(220,40,40,.6)';cx.lineWidth=1;cx.beginPath();
+      function drawAxes(){cx.save();cx.setTransform(dpr,0,0,dpr,0,0);cx.font='10px -apple-system,sans-serif';cx.fillStyle='rgba(220,40,40,.85)';cx.strokeStyle='rgba(220,40,40,.6)';cx.lineWidth=1;
+        cx.beginPath();for(var gx=50;gx<W;gx+=50){cx.moveTo(gx+.5,0);cx.lineTo(gx+.5,H);}for(var gy=50;gy<H;gy+=50){cx.moveTo(0,gy+.5);cx.lineTo(W,gy+.5);}cx.strokeStyle='rgba(220,40,40,.10)';cx.stroke();cx.beginPath();for(var hx=100;hx<W;hx+=100){cx.moveTo(hx+.5,0);cx.lineTo(hx+.5,H);}for(var hy=100;hy<H;hy+=100){cx.moveTo(0,hy+.5);cx.lineTo(W,hy+.5);}cx.strokeStyle='rgba(220,40,40,.22)';cx.stroke();cx.strokeStyle='rgba(220,40,40,.6)';cx.beginPath();
         for(var x=0;x<=W;x+=50){var L=x%100===0?10:5;cx.moveTo(x+.5,0);cx.lineTo(x+.5,L);if(x%100===0&&x>0){cx.textAlign='center';cx.textBaseline='top';cx.fillText(x,x,11);}}
         for(var y=0;y<=H;y+=50){var L2=y%100===0?10:5;cx.moveTo(0,y+.5);cx.lineTo(L2,y+.5);if(y%100===0&&y>0){cx.textAlign='left';cx.textBaseline='middle';cx.fillText(y,12,y);}}
         cx.stroke();cx.textAlign='right';cx.textBaseline='bottom';cx.fillText('W'+Math.round(W)+' H'+Math.round(H),W-4,H-4);cx.restore();}
