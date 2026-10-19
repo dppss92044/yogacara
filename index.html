@@ -5815,7 +5815,7 @@ box.querySelector('.km-tour-off').addEventListener('change',function(){try{if(th
         var back=box.querySelector('.km-back2');back.title='回主頁';
         var expand=box.querySelector('.km-exp');expand.setAttribute('aria-label','展開成全螢幕科判圖');expand.title='展開成全螢幕';
         embLast=null;
-        if(on)embT=setInterval(function(){if(!emb||box.hidden){clearInterval(embT);return;}embPos();
+        if(on)embT=setInterval(function(){if(!emb||box.hidden){clearInterval(embT);return;}embPos();var nv0=box._ew>0&&box._eh>0;if(nv0&&!box._wv){embLast=null;embSkip=0;}box._wv=nv0;
           if(edKey!==EDITION){embLast=null;setEd(EDITION);return;}
           var j0=S.juan,c=S.cur!=null?S.cur:firstInJuan(j0);
           if(c==null||c<0||c>=VR||!model||!model.n||(embLast&&embLast.c===c&&embLast.e===edKey&&embLast.j===j0))return;
