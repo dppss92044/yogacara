@@ -5,7 +5,7 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
-## W045（Claude Code，2026-10-19；v2.4.0候選：單卷／全卷、說明移右、兩頁更新動畫，預覽未發布）
+## W045（Claude Code，2026-10-19；已發布為 v2.4.0，H181；W045 封存）
 - 半頁／全頁科判圖左上新增「全卷／單卷」鍵（按下＝單卷反黃）：只顯示所在卷（ra=rb=j）前兩層，跨卷上層沿用build灰色虛線；跳卷、跨卷追蹤同樣只顯示該卷；偏好km-single。
 - 全頁科判圖：km-eopt（說明＋開關）比照半頁放右上，說明呼叫原reguide；隱藏置中km-guide-mid。
 - 版本候選2.4.0（MINOR，新功能）：meta／SW 2.4.0、appVer、releaseVersion、versionNotes／Summaries；更新動畫兩頁（新功能、v2.3.4開鎖追蹤優化）。未發布。
