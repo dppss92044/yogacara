@@ -4358,8 +4358,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function journeyState(j){
         var c=firstInJuan(j),folded=new Uint8Array(NN.length);
         for(var k=0;k<NN.length;k++)if(prKids(k).length&&NN[k][6]>=j)folded[k]=1;
-        for(var q=c;q>=0;q=NN[q][4])folded[q]=0;
-        var first=prKids(c).find(function(k){return NN[k][6]===j;});if(first!=null)folded[first]=0;
+        // 開啟預設：只展開本節點的上層，本節點自己不展開（第一卷即只見甲一～甲五）。
+        for(var q=NN[c][4];q>=0;q=NN[q][4])folded[q]=0;
         return {ed:edKey,col:folded,a:1,b:100,depth:maxD,focus:-1,only:null,cur:c,sel:c,scale:sc,x:tx,y:ty,w:W,h:H,forest:false,forestBackup:null,focusBackup:null,juan:j,center:true};
       }
       // 單卷：只顯示該卷，跨卷承接的上層由build以灰色虛線顯示；展開到該卷最上兩層。
