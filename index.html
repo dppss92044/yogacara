@@ -4407,8 +4407,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       // 記住往下捲時每個節點的畫面位置；往上捲回到該節點時還原同一版面。
       var viewMem={},memLast=-1;
       var entryView=null;
-      // 寬鬆開啟（反黃在甲層）：「瑜伽師地論」頂端不高於y＝1000（由底往上算），且被x＝500的線從中間對切（科判欄太窄時改用正中）。
-      function entryLoose(q){if(ST.compact||!model||q<0||!NN[q])return;var r0=q,p=NN[q][4];if(p>=0&&NN[p][4]>=0)return;if(p>=0)r0=p;if(!model.inc[r0])return;var r=nodeRect(model,r0),X=W>=700?500:W/2;tx=X-(r[0]+r[2]/2)*sc;ty=Math.max(H-1000,12)-r[1]*sc;clampPan();}
+      // 開啟（反黃在甲層）：「瑜伽師地論」頂端在y＝1000（寬鬆）／900（緊密）（由底往上算），且被x＝500的線從中間對切（科判欄太窄時改用正中）。
+      function entryLoose(q){if(!model||q<0||!NN[q])return;var r0=q,p=NN[q][4];if(p>=0&&NN[p][4]>=0)return;if(p>=0)r0=p;if(!model.inc[r0])return;var r=nodeRect(model,r0),X=W>=700?500:W/2;tx=X-(r[0]+r[2]/2)*sc;ty=Math.max(H-(ST.compact?900:1000),12)-r[1]*sc;clampPan();}
       // 開啟時：以畫面上整叢科判（所有已顯示節點的左右範圍）中點為水平中心。
       function centerBunchX(){if(!model)return;var mn=1e9,mx=-1e9;for(var q=0;q<NN.length;q++)if(model.inc[q]){var r=nodeRect(model,q),a0=r[0]*sc+tx,a1=a0+r[2]*sc;if(a0<mn)mn=a0;if(a1>mx)mx=a1;}if(mx>mn&&mx-mn<W-24){tx+=W/2-(mn+mx)/2;clampPan();}}
       function followJourney(c,j){
