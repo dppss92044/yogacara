@@ -5,6 +5,12 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W052（Claude Code，2026-10-19；空白模板 template/，草稿未發布、不影響線上網站）
+- 基底main `342a9fb`（v2.4.0），分支claude/project-thread-kll4c2。使用者需求：把這套系統空出來當模板，之後匯入其他有科判、講記、正文的資料（法華經樣本只當結構參考，不放進模板）。
+- 內容只在 `template/`：`tools/derive_shell.py` 由根目錄 index.html 產生外殼（拿掉內嵌資料、版本切換、W001統計；書名／卷數／講記名稱改欄位；localStorage 與快取加代號前綴）；`tools/build.py` 把 `source/` 純文字（科判＋正文＋講記）轉成 data/book.js、notes、科判頁；`tools/pdf_text.py` 整理PDF轉文字。根目錄 App 未改。
+- 驗證：Chromium 模擬電腦／iPhone 開啟示範資料無錯誤；藏經版資料反向匯入，科判樹1970科完全一致、126頁科判全部排得下；未實機Safari、未測iPad。
+- 已知：「卷」字尚不可改名；內附字型為瑜伽論子集，其他字由系統字型補。
+
 ## W047（Claude Code，2026-10-19；電腦版今日修正套用到手機與 iPad，預覽未發布）
 - 基底main `7f08ed0`（v2.4.0），分支claude/project-thread-86cyas。使用者要求把今日電腦版10項修正檢查並套到手機直橫、iPad直橫，電腦版行為不動。
 - 實測：科判圖、跟讀、單卷、點線、更新／說明動畫本為共用程式，手機與iPad已同；iPad Safari走電腦版面（mac）。
