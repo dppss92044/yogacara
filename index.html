@@ -4430,13 +4430,13 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         // 分n（n≥6且整排有部分出畫面）展開：以整排下層的中點（第一個與最後一個的中點）為水平中心；若反黃節點因此出畫面則改以它為準。
         // 換分支：位置不動；只有即將展開的那串有部分出畫面時，才以它的中點為水平中心（反黃節點須仍在畫面內）。
         var dxC=0;if(typeof openedP!=='undefined'&&openedP>=0&&model.inc[openedP]){var ks=prKids(openedP).filter(function(q){return model.inc[q];});if(ks.length){var mn=1e9,mx=-1e9;ks.forEach(function(q){var r=nodeRect(model,q),a0=r[0]*sc+tx,a1=a0+r[2]*sc;if(a0<mn)mn=a0;if(a1>mx)mx=a1;});var dx=W/2-(mn+mx)/2,cr0=nodeRect(model,c),cx0=cr0[0]*sc+tx+dx;if((mn<12||mx>W-12)&&cx0>=12&&cx0+cr0[2]*sc<=W-12){var tx9=tx;tx+=dx;clampPan();dxC=tx-tx9;tx=tx9;}}}
-        function slideTo(dX,dY){if(Math.abs(dX)<1&&Math.abs(dY)<1)return;var xa=tx,ya=ty,ta=performance.now(),ia=++animId;(function st(tn){if(ia!==animId)return;var k=Math.min(1,(tn-ta)/380),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;tx=xa+dX*e;ty=ya+dY*e;req();if(k<1)requestAnimationFrame(st);})(ta);}
+        function slideTo(dX,dY){if(Math.abs(dX)<1&&Math.abs(dY)<1)return;var xa=tx,ya=ty,ta=performance.now(),ia=++animId;(function st(tn){if(ia!==animId)return;var k=Math.min(1,(tn-ta)/190),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;tx=xa+dX*e;ty=ya+dY*e;req();if(k<1)requestAnimationFrame(st);})(ta);}
         req();
         if(model.inc[c]){var nr=nodeRect(model,c),x0=nr[0]*sc+tx,y0=nr[1]*sc+ty,x1=x0+nr[2]*sc,y1=y0+nr[3]*sc,mg=12,yb=H-mg,mmE=box.querySelector('.km-mm');if(mmE&&mmE.offsetParent){var cr=cv.getBoundingClientRect(),mr=mmE.getBoundingClientRect();if(mr.height)yb=Math.min(yb,mr.top-cr.top-mg);}var lbT=(model.lbs[c]||'')+(model.tts[c]||NN[c][0]||''),chH=(y1-y0)/Math.max(1,lbT.length),ex=(prKids(c).length?4*chH:0)+2*chH;
           // 同排兄弟（含其（分幾））也要與路徑框至少隔兩字：取同排最低點換算成反黃節點需保留的下方距離。
           var pp2=NN[c][4];if(pp2>=0)prKids(pp2).forEach(function(q){if(!model.inc[q])return;var rq=nodeRect(model,q),bq=(rq[1]+rq[3])*sc+ty,lq=((model.lbs[q]||'')+(model.tts[q]||NN[q][0]||'')).length,cq=rq[3]*sc/Math.max(1,lq),need=bq+(prKids(q).length?4*cq:0)+2*cq-y1;if(need>ex)ex=need;});if(x0<100||x1>W-100){var hc=nodeRect(model,c);dxC=W/2-(x0+x1)/2;}
           if(entryView&&entryView.c===c&&entryView.s===sc&&entryView.e===edKey){slideTo(entryView.x-tx,entryView.y-ty);}
-          else if(collapsedNow&&viewMem[c]&&viewMem[c].s===sc&&viewMem[c].e===edKey){var vm=viewMem[c],tx0=tx,ty0b=ty,t01=performance.now(),aid2=++animId;(function st(tn){if(aid2!==animId)return;var k=Math.min(1,(tn-t01)/380),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;tx=tx0+(vm.x-tx0)*e;ty=ty0b+(vm.y-ty0b)*e;req();if(k<1)requestAnimationFrame(st);})(t01);}
+          else if(collapsedNow&&viewMem[c]&&viewMem[c].s===sc&&viewMem[c].e===edKey){var vm=viewMem[c],tx0=tx,ty0b=ty,t01=performance.now(),aid2=++animId;(function st(tn){if(aid2!==animId)return;var k=Math.min(1,(tn-t01)/190),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;tx=tx0+(vm.x-tx0)*e;ty=ty0b+(vm.y-ty0b)*e;req();if(k<1)requestAnimationFrame(st);})(t01);}
           else if(!(x0>=mg&&x1<=W-mg&&y0>=mg&&y1+ex<=yb&&y1<=H-200)){
             // 反黃標籤下方要看得到（分幾），再留約兩字的空；不夠才往上拉，且只拉到剛好的位置。
             if(!(x0>=mg&&x1<=W-mg))animCenter(c,sc,yb-ex-(y1-y0)+(wxy(model,c)[1]*sc+ty-y0));
@@ -4666,7 +4666,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       function fitScale(){if(!model||!model.n)return 1;return Math.min((W-48)/model.bw,(H-48)/Math.max(model.bh,1));}
       var animId=0;
       function animCenter(i,s,yt,dur){if(i<0||!model||!model.inc[i])return;var s0=sc,x0=tx,y0=ty;sc=s;var c=wxy(model,i);tx=W/2-c[0]*sc;ty=(yt==null?H/3:yt)-c[1]*sc;clampPan();var s1=sc,x1=tx,y1=ty;sc=s0;tx=x0;ty=y0;
-        var A=.2,Dn=.45,VM=1/(1-(A+Dn)/2),t0=performance.now(),D=dur||(emb?380:1000),id=++animId;
+        var A=.2,Dn=.45,VM=1/(1-(A+Dn)/2),t0=performance.now(),D=dur||(emb?190:1000),id=++animId;
         function st(t){if(id!==animId)return;var k=Math.min(1,(t-t0)/D),v=k<A?VM*k*k/(2*A):k<1-Dn?VM*(A/2+(k-A)):1-VM*(1-k)*(1-k)/(2*Dn);if(k>=1)v=1;sc=s0+(s1-s0)*v;tx=x0+(x1-x0)*v;ty=y0+(y1-y0)*v;req();if(k<1)requestAnimationFrame(st);}
         requestAnimationFrame(st);}
       function centerOn(i,s,y){if(i<0||!model||!model.inc[i])return;sc=s;var c=wxy(model,i);tx=W/2-c[0]*sc;ty=(y==null?H/2:y)-c[1]*sc;clampPan();}
