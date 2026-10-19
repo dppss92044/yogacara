@@ -81,19 +81,31 @@
   }
 
   function pageChars(tc) {
+    // 每個字的位置：依文字矩陣的方向排開。Word 等軟體的直書常是「整行旋轉 90 度」，
+    // 這時一串字是往下排，不是往右排。
     var out = [];
     tc.items.forEach(function (it, n) {
       var str = it.str || '', t = it.transform;
       if (!str.trim() || /^\s*[-–—]\s*\d+\s*[-–—]\s*$/.test(str)) return;             // 頁碼
-      var s = Math.hypot(t[2], t[3]) || Math.abs(t[3]) || 10, ch = Array.from(str), L = ch.length;
-      var vert = L > 1 && it.height > it.width * 1.4 && it.height > s * 1.4;
+      var ch = Array.from(str), L = ch.length;
+      var s = Math.hypot(t[2], t[3]) || Math.hypot(t[0], t[1]) || 10;
+      var al = Math.hypot(t[0], t[1]) || 1, ax = t[0] / al, ay = t[1] / al;           // 前進方向
+      var ux = t[2] / s, uy = t[3] / s;                                               // 字的「上方」
+      var rotated = Math.abs(ay) > Math.abs(ax);
+      var vfont = !rotated && L > 1 && it.height > it.width * 1.4 && it.height > s * 1.4;   // 直書字型（不旋轉、往下排）
+      var len = vfont ? it.height : (it.width || s * L), step = len / L;
+      if (vfont) { ax = 0; ay = -1; ux = 0; uy = 1; }
       ch.forEach(function (c, i) {
         if (!c.trim()) return;
-        var x, y, cw = s;
-        if (L === 1) { x = t[4]; y = t[5]; cw = it.width || s; }
-        else if (vert) { x = t[4]; y = t[5] - i * (it.height / L); }
-        else { cw = (it.width || s * L) / L; x = t[4] + i * cw; y = t[5]; }
-        out.push({ c: c, x: x + cw / 2, y: y, s: s, top: y + s, h: !vert && L > 1, item: n });
+        var x0 = t[4] + ax * step * i, y0 = t[5] + ay * step * i, xs, ys;
+        if (vfont) { xs = [x0, x0 + s]; ys = [y0, y0 + s]; }
+        else {
+          var x1 = x0 + ax * step, y1 = y0 + ay * step;
+          xs = [x0, x1, x0 + ux * s, x1 + ux * s]; ys = [y0, y1, y0 + uy * s, y1 + uy * s];
+        }
+        var xl = Math.min.apply(null, xs), xr = Math.max.apply(null, xs), yb = Math.min.apply(null, ys), yt = Math.max.apply(null, ys);
+        if (vfont || rotated) { yb = Math.max(yb, yt - s); }                             // 直行：一格一個字
+        out.push({ c: c, x: (xl + xr) / 2, y: yb, s: s, top: yb + s, h: !vfont && !rotated && L > 1, item: n });
       });
     });
     return out;
