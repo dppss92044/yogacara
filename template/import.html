@@ -35,6 +35,16 @@ button:disabled{opacity:.45;cursor:default}
 #err{color:var(--err);margin:8px 0 0;white-space:pre-wrap}
 #cur{color:var(--muted);font-size:15px;margin:0}
 details{font-size:15px}
+.hint{color:var(--muted);font-size:15px;margin:0 0 8px}
+.cv{border-top:1px solid var(--rule);padding:10px 0 4px}
+.cv:first-child{border-top:0}
+.cv-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cv-h b{font-weight:600;word-break:break-all}
+.cv-h span{color:var(--muted);font-size:14px}
+.cv-h button{padding:4px 12px;font-size:14px;margin-left:auto}
+.cv ul{margin:6px 0;padding-left:1.2em;color:var(--warn);font-size:14px;max-height:160px;overflow:auto}
+.cv textarea{width:100%;height:220px;margin-top:6px;font:14px/1.6 var(--ui);padding:8px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--fg);resize:vertical}
+.busy{color:var(--muted)}
 summary{cursor:pointer;color:var(--muted)}
 table{border-collapse:collapse;margin:8px 0;font-size:15px}
 td{border-top:1px solid var(--rule);padding:4px 8px;vertical-align:top}
@@ -48,7 +58,7 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:14px}
 <body>
 <main>
   <h1>匯入資料</h1>
-  <p class="lead">選擇整理好的純文字檔（.txt），按「檢查」看結果，再按「套用並開啟」。資料只存在這台裝置的瀏覽器裡。</p>
+  <p class="lead">選擇 PDF 或純文字檔（.txt），按「檢查」看結果，再按「套用並開啟」。PDF 會先轉成文字給你看，可以修改。資料只存在這台裝置的瀏覽器裡。</p>
 
   <section>
     <h2>書名</h2>
@@ -57,18 +67,24 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:14px}
 
   <section>
     <h2>正文與科判</h2>
-    <div class="drop" id="dMain" data-tip="可以一次選好幾個 .txt；依檔名順序讀入" tabindex="0">點這裡選檔，或把 .txt 拖進來<input type="file" accept=".txt,text/plain" multiple></div>
+    <div class="drop" id="dMain" data-tip="可以一次選好幾個 PDF 或 .txt；依檔名順序讀入。科判表 PDF 會依連線讀出科判樹" tabindex="0">點這裡選檔，或把 PDF、.txt 拖進來<input type="file" accept=".txt,.pdf,text/plain,application/pdf" multiple></div>
     <div class="files" id="fMain"></div>
   </section>
 
   <section>
     <h2>講記</h2>
     <label class="f"><span>講記一</span><input type="text" id="n1" value="講記" data-tip="正文裡的開關會顯示這個名稱"><input type="text" class="tag" id="t1" value="講" data-tip="正文檔裡用「> 標記 內容」寫講記時的標記"></label>
-    <div class="drop" id="d1" data-tip="講記檔：每段以【001】這類編號開頭，提到哪一科就接到那一科後面" tabindex="0">講記一的檔案（可省略）<input type="file" accept=".txt,text/plain" multiple></div>
+    <div class="drop" id="d1" data-tip="講記檔：每段以【001】這類編號開頭，提到哪一科就接到那一科後面" tabindex="0">講記一的檔案（可省略）<input type="file" accept=".txt,.pdf,text/plain,application/pdf" multiple></div>
     <div class="files" id="f1"></div>
     <label class="f"><span>講記二</span><input type="text" id="n2" value="補充講表" data-tip="第二種講記的名稱；不需要就留空"><input type="text" class="tag" id="t2" value="補" data-tip="正文檔裡用「> 標記 內容」寫講記時的標記"></label>
-    <div class="drop" id="d2" data-tip="第二種講記的檔案（可省略）" tabindex="0">講記二的檔案（可省略）<input type="file" accept=".txt,text/plain" multiple></div>
+    <div class="drop" id="d2" data-tip="第二種講記的檔案（可省略）" tabindex="0">講記二的檔案（可省略）<input type="file" accept=".txt,.pdf,text/plain,application/pdf" multiple></div>
     <div class="files" id="f2"></div>
+  </section>
+
+  <section id="conv" hidden>
+    <h2>PDF 轉出的文字</h2>
+    <p class="hint">請看一遍，有錯可以直接改；改好的文字也可以下載留存。</p>
+    <div id="convList"></div>
   </section>
 
   <section>
@@ -100,6 +116,7 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:14px}
         <tr><td><code>// 文字</code></td><td>備註，不會出現</td></tr>
         <tr><td>其他</td><td>正文，一行一段</td></tr>
       </table>
+      PDF：科判表（樹狀圖）依連線讀出科判，每一科寫成「# 甲一、…」；講表、講記等文章依版面接成段落。掃描成圖片的 PDF 沒有文字，讀不出來。<br>
       講記檔：每段以【001】開頭；段落裡提到的科判（例如「乙一、華嚴時」）會被找出來，這段講記就接在那一科後面。
     </details>
   </section>
@@ -113,11 +130,40 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:14px}
   function idb(mode,fn){return new Promise(function(res,rej){var r=indexedDB.open(DB,1);r.onupgradeneeded=function(){r.result.createObjectStore('kv');};r.onerror=function(){rej(r.error);};
     r.onsuccess=function(){var db=r.result,tx=db.transaction('kv',mode),st=tx.objectStore('kv'),q=fn(st);tx.oncomplete=function(){db.close();res(q&&q.result);};tx.onerror=function(){db.close();rej(tx.error);};};});}
   var picked={main:[],l1:[],l2:[]},result=null,shell=null;
-  function readFiles(list){return Promise.all([].map.call(list,function(f){return f.text().then(function(t){return {name:f.name,text:t};});}));}
+  var pdfLib=null;
+  function loadPdf(){
+    if(pdfLib)return pdfLib;
+    pdfLib=Promise.all([import('./lib/pdfjs/pdf.min.js'),new Promise(function(res,rej){if(window.PdfRead)return res();var sc=document.createElement('script');sc.src='pdfread.js';sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);})])
+      .then(function(a){var lib=a[0];lib.GlobalWorkerOptions.workerSrc=new URL('lib/pdfjs/pdf.worker.min.js',location.href).href;return lib;});
+    pdfLib.catch(function(){pdfLib=null;});
+    return pdfLib;
+  }
+  function readPdf(f,key,status){
+    return Promise.all([loadPdf(),f.arrayBuffer()]).then(function(a){
+      return PdfRead.read(a[0],new Uint8Array(a[1]),{cMapUrl:new URL('lib/pdfjs/cmaps/',location.href).href,progress:function(i,n){status('讀取 '+f.name+'：第 '+i+' / '+n+' 頁');}});
+    }).then(function(pages){
+      var r=PdfRead.toText(pages,f.name),name=f.name.replace(/\.pdf$/i,'')+'.txt',text=r.text;
+      if(key==='main'&&r.kind==='text'&&!/^\s*=/.test(text))text='= '+f.name.replace(/\.pdf$/i,'')+'\n'+text;   // 文章前面補卷名
+      return {name:name,text:text,pdf:{from:f.name,kind:r.kind,warnings:r.warnings,count:r.count}};
+    });
+  }
+  function readFiles(list,key,status){
+    var fs=[].slice.call(list),out=[];
+    return fs.reduce(function(p,f){return p.then(function(){
+      if(/\.pdf$/i.test(f.name))return readPdf(f,key,status).then(function(x){out.push(x);});
+      if(/\.txt$/i.test(f.name))return f.text().then(function(t){out.push({name:f.name,text:t});});
+    });},Promise.resolve()).then(function(){return out;});
+  }
   function wire(dropId,listId,key){
     var d=$(dropId),inp=d.querySelector('input');
-    function take(fl){readFiles(fl).then(function(fs){picked[key]=fs.filter(function(f){return /\.txt$/i.test(f.name);});
-      $(listId).textContent=picked[key].map(function(f){return f.name;}).join('、');invalidate();});}
+    function take(fl){
+      var line=$(listId);line.className='files busy';line.textContent='讀取中…';invalidate();
+      readFiles(fl,key,function(t){line.textContent=t;}).then(function(fs){
+        picked[key]=fs;line.className='files';
+        line.textContent=fs.map(function(f){return f.pdf?f.pdf.from:f.name;}).join('、');
+        showConv();
+      }).catch(function(e){line.className='files';line.textContent='';$('err').textContent='讀不到檔案：'+(e&&e.message||e);});
+    }
     d.addEventListener('click',function(){inp.click();});
     d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();inp.click();}});
     inp.addEventListener('change',function(){take(inp.files);});
@@ -127,6 +173,24 @@ code{font-family:ui-monospace,Menlo,monospace;font-size:14px}
   }
   wire('dMain','fMain','main');wire('d1','f1','l1');wire('d2','f2','l2');
   ['title','n1','t1','n2','t2'].forEach(function(id){$(id).addEventListener('input',invalidate);});
+  var KIND={tree:'科判表',text:'文章',empty:'沒有文字'};
+  function showConv(){
+    var box=$('convList'),all=[];box.replaceChildren();
+    ['main','l1','l2'].forEach(function(k){picked[k].forEach(function(f){if(f.pdf)all.push(f);});});
+    $('conv').hidden=!all.length;
+    all.forEach(function(f){
+      var d=document.createElement('div');d.className='cv';
+      var h=document.createElement('div');h.className='cv-h';
+      var b=document.createElement('b');b.textContent=f.pdf.from;
+      var info=document.createElement('span');info.textContent=KIND[f.pdf.kind]+(f.pdf.kind==='tree'?'，'+f.pdf.count+' 科':f.pdf.kind==='text'?'，'+f.pdf.count+' 段':'');
+      var dl=document.createElement('button');dl.type='button';dl.textContent='下載文字檔';dl.setAttribute('data-tip','把下面的文字存成 '+f.name+'，下次可以直接選這個檔');
+      dl.onclick=function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([f.text],{type:'text/plain;charset=utf-8'}));a.download=f.name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);};
+      h.append(b,info,dl);d.appendChild(h);
+      if(f.pdf.warnings.length){var ul=document.createElement('ul');f.pdf.warnings.forEach(function(w){var li=document.createElement('li');li.textContent=w;ul.appendChild(li);});d.appendChild(ul);}
+      if(f.pdf.kind!=='empty'){var ta=document.createElement('textarea');ta.value=f.text;ta.spellcheck=false;ta.addEventListener('input',function(){f.text=ta.value;invalidate();});d.appendChild(ta);}
+      box.appendChild(d);
+    });
+  }
   function invalidate(){result=null;$('apply').disabled=true;$('result').classList.remove('on');$('err').textContent='';}
   function cfg(){
     var marks=[];

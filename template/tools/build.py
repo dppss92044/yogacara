@@ -455,7 +455,7 @@ def main():
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(html)
     open(os.path.join(ROOT, 'import.html'), 'w', encoding='utf-8').write(fill(open(os.path.join(shell, 'import.html'), encoding='utf-8').read()))
     open(os.path.join(ROOT, 'manifest.webmanifest'), 'w', encoding='utf-8').write(fill(open(os.path.join(shell, 'manifest.webmanifest'), encoding='utf-8').read()))
-    offline = ['./', 'index.html', 'import.html', 'importer.js', 'shell/index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'assets/tutorial/gestures-lite.svg']
+    offline = ['./', 'index.html', 'import.html', 'importer.js', 'pdfread.js', 'shell/index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'assets/tutorial/gestures-lite.svg']
     offline += sorted('data/' + f for f in os.listdir(dd) if not f.startswith('.'))
     F = {f: sha(os.path.join(ROOT, 'index.html' if f == './' else f)) for f in offline}
     sw = fill(open(os.path.join(shell, 'sw.js'), encoding='utf-8').read())
