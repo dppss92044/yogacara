@@ -4385,7 +4385,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
       }
       function toggleJourneyFocus(i){
         if(focusSaved){var old=focusSaved;restoreProgress(old);return;}
-        if(!model||i<0||i>=VR)return;focusSaved=progressSnapshot();focusI=i;selI=i;rememberMapReading(i);rebuild(i);centerOn(i,sc,H*.3);modeButtons();
+        // 反黃是末端（無下層）時聚焦它的上層分支；聚焦的分支往下展開四層（同全頁按F），不再只剩一個收合節點。
+        if(!model||i<0||i>=VR)return;focusSaved=progressSnapshot();var f=i;if(!prKids(i).length&&NN[i][4]>=0&&NN[i][4]<VR)f=NN[i][4];if(col){var d0=NN[f][3];for(var q=0;q<NN.length;q++){var p=q;while(p>=0&&p!==f)p=NN[p][4];if(p===f)col[q]=NN[q][3]>=d0+4?1:0;}}focusI=f;selI=i;rememberMapReading(i);rebuild(i);centerOn(f,sc,H*.3);modeButtons();
       }
       function releaseFocusOutside(c){
         if(focusI<0)return;var p=c;while(p>=0&&p!==focusI)p=NN[p][4];if(p>=0)return;
