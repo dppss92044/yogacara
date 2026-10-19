@@ -4388,7 +4388,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           // 往回捲：先收合先前自動展開、但已在目前位置之後且不是目前祖先的分支。
           var anc={};for(var p0=c;p0>=0;p0=NN[p0][4])anc[p0]=1;
           autoOpened=autoOpened.filter(function(k){if(k>c&&!anc[k]&&!col[k]){col[k]=1;changed=true;return false;}return true;});
-          for(var p=c;p>=0;p=NN[p][4])if(col[p]){col[p]=0;changed=true;autoOpened.push(p);}
+          // 只展開目前位置的上層；讀到本節點時先不開它的下層，等正文進到下層才開。
+          for(var p=NN[c][4];p>=0;p=NN[p][4])if(col[p]){col[p]=0;changed=true;autoOpened.push(p);}
         }
         // 下方仍有空間時不移動：展開前記住最近可見上層的螢幕位置，展開後維持原位；只有反黃標籤落在可視範圍外才拉到固定位置。
         var an=-1,ax=0,ay=0;if(changed&&model&&model.n){for(var p2=c;p2>=0;p2=NN[p2][4])if(model.inc[p2]){an=p2;break;}if(an>=0){var w0=wxy(model,an);ax=w0[0]*sc+tx;ay=w0[1]*sc+ty;}}
