@@ -107,7 +107,8 @@ self.addEventListener('fetch', event => {
   if (!url.href.startsWith(self.registration.scope)) return;
   const path = url.href.slice(self.registration.scope.length).split(/[?#]/)[0];
   if (path === 'sw.js') return;                                   // 永遠交給瀏覽器取最新 sw.js
-  if (request.mode === 'navigate' || path === '' || path === SHELL) {
+  // 匯入頁是另一個頁面，不能被當成首頁
+  if ((request.mode === 'navigate' && path !== 'import.html') || path === '' || path === SHELL) {
     event.respondWith(networkFirstShell(request));
     return;
   }

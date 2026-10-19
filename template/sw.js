@@ -7,7 +7,7 @@
  */
 const VERSION = "1.0.0";
 const CACHE = 'demo-v' + VERSION;
-const FILES = {"./":"G022S9dcXOWAGqbVpX7R6M8IRSseQnj571mbe3iC9d8=","index.html":"G022S9dcXOWAGqbVpX7R6M8IRSseQnj571mbe3iC9d8=","manifest.webmanifest":"BO4AEmKdHXkcTmW397/eVNGQkK7sYxUDPJRzu1/pFkE=","icon-192.png":"tV/7wahbDleL1hAM4ugkPIj4XL+gQLRaTH5MKmLMbHk=","icon-512.png":"0ShOnLlzcEBFFn38JVY1PAIanubWrtj5wNw2J7AsE1Q=","assets/tutorial/gestures-lite.svg":"mKSpOqIOqVNLUsFVBDpqGWRUYjKn0YipV/Ms6346hWg=","data/book.js":"HmPkJ16c/3K+/oI3AscQ2AWxG2mkwzLtvZALuzO3V24=","data/fontkit.umd.min.js":"VY4hGbCI49y4EHDiTMRcMtoEl3g+k0UW4imPoUC+wKg=","data/heil.woff2":"VNL6GTNblvzXRo1ZzkvTIKsbnw0+RE5bNVJXGE92Wf8=","data/kai2.woff2":"3cm8BvgfE7m4YWfIWOyIhLOyFkZKDSQUvJym0wQF2BM=","data/ming.woff2":"GYLpxxCSYNiKOFUjj0t53q5mo2sbtlDjvs+DD2F7dGo=","data/notes-01.js":"sXCt0v93QU877rkgMVOlmzypVlVCaCSHEwcmoSSziBY=","data/pdf-font-hei.js":"LPD5MbK/JZp+4vvCufdxI8EhOmZcTvZ7wEFn2f2iCv8=","data/pdf-font-kai.js":"X7GlMKAr5BkbUK1cTuI6l3BQReAJmU7PJeLy96VKeJA=","data/pdf-font-ming.js":"7gMbBf92paPreM4r2d79M/dEzyeXc2iUKZNNosjZxXg=","data/pdf-font-study.js":"CLKZTu5NMotSztR5ik7rrG1ceUzraTKjEAOLNItKhmo=","data/pdf-lib.min.js":"U0vIbPdIOVozKSPPoKgLbkIY99NBuJpnnldGaVOSNG4=","data/study-font-LICENSE.txt":"GKq/GQhIcl4ldu77XCm6BqrBAp0CEyJSp/MS6sLlDPM="};
+const FILES = {"./":"1DY9oIBjTm8Cx5rJtTCVqoFPLhg0po7byYW1ozVWCew=","index.html":"1DY9oIBjTm8Cx5rJtTCVqoFPLhg0po7byYW1ozVWCew=","import.html":"EZbqrlxIdsT4dQbr7M3rNVTO/6b5AxW8KAVfssldVVk=","importer.js":"xAljG97cB09BDCDC2BcLKoyfLS1+acsRfMon1akya94=","shell/index.html":"4/Z0GYZ53HaxYDQ9s73KeZolgdUdC09c9HIVSIt6BXc=","manifest.webmanifest":"BO4AEmKdHXkcTmW397/eVNGQkK7sYxUDPJRzu1/pFkE=","icon-192.png":"tV/7wahbDleL1hAM4ugkPIj4XL+gQLRaTH5MKmLMbHk=","icon-512.png":"0ShOnLlzcEBFFn38JVY1PAIanubWrtj5wNw2J7AsE1Q=","assets/tutorial/gestures-lite.svg":"mKSpOqIOqVNLUsFVBDpqGWRUYjKn0YipV/Ms6346hWg=","data/book.js":"HmPkJ16c/3K+/oI3AscQ2AWxG2mkwzLtvZALuzO3V24=","data/fontkit.umd.min.js":"VY4hGbCI49y4EHDiTMRcMtoEl3g+k0UW4imPoUC+wKg=","data/heil.woff2":"VNL6GTNblvzXRo1ZzkvTIKsbnw0+RE5bNVJXGE92Wf8=","data/kai2.woff2":"3cm8BvgfE7m4YWfIWOyIhLOyFkZKDSQUvJym0wQF2BM=","data/ming.woff2":"GYLpxxCSYNiKOFUjj0t53q5mo2sbtlDjvs+DD2F7dGo=","data/notes-01.js":"sXCt0v93QU877rkgMVOlmzypVlVCaCSHEwcmoSSziBY=","data/pdf-font-hei.js":"LPD5MbK/JZp+4vvCufdxI8EhOmZcTvZ7wEFn2f2iCv8=","data/pdf-font-kai.js":"X7GlMKAr5BkbUK1cTuI6l3BQReAJmU7PJeLy96VKeJA=","data/pdf-font-ming.js":"7gMbBf92paPreM4r2d79M/dEzyeXc2iUKZNNosjZxXg=","data/pdf-font-study.js":"CLKZTu5NMotSztR5ik7rrG1ceUzraTKjEAOLNItKhmo=","data/pdf-lib.min.js":"U0vIbPdIOVozKSPPoKgLbkIY99NBuJpnnldGaVOSNG4=","data/study-font-LICENSE.txt":"GKq/GQhIcl4ldu77XCm6BqrBAp0CEyJSp/MS6sLlDPM="};
 const SHELL = 'index.html';
 const NAV_TIMEOUT = 8000;          // 只等「伺服器開始回應」的時間，不是整份下載時間
 
@@ -107,7 +107,8 @@ self.addEventListener('fetch', event => {
   if (!url.href.startsWith(self.registration.scope)) return;
   const path = url.href.slice(self.registration.scope.length).split(/[?#]/)[0];
   if (path === 'sw.js') return;                                   // 永遠交給瀏覽器取最新 sw.js
-  if (request.mode === 'navigate' || path === '' || path === SHELL) {
+  // 匯入頁是另一個頁面，不能被當成首頁
+  if ((request.mode === 'navigate' && path !== 'import.html') || path === '' || path === SHELL) {
     event.respondWith(networkFirstShell(request));
     return;
   }

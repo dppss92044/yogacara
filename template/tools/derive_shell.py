@@ -46,11 +46,37 @@ rsub(r'<script[^>]*>\s*/\* W001 Analytics v2 客戶端.*?</script>', '', 1, re.S
 if 'workers.dev' in s: raise SystemExit('統計程式沒有拿乾淨')
 
 # 3. 儲存與快取分開
-NS = ('<script id="book-ns">(function(){var P="{{代號}}:";[window.localStorage,window.sessionStorage].forEach(function(st){'
-      'try{var g=st.getItem,p=st.setItem,r=st.removeItem;st.getItem=function(k){return g.call(st,P+k)};'
-      'st.setItem=function(k,v){return p.call(st,P+k,v)};st.removeItem=function(k){return r.call(st,P+k)};}catch(e){}});})();</script>')
+NS = ('<script id="book-ns">(function(){var P="{{代號}}:",O=window.__stOrig=window.__stOrig||[];[window.localStorage,window.sessionStorage].forEach(function(st,n){'
+      'try{var o=O[n]=O[n]||{g:st.getItem,p:st.setItem,r:st.removeItem};st.getItem=function(k){return o.g.call(st,P+k)};'
+      'st.setItem=function(k,v){return o.p.call(st,P+k,v)};st.removeItem=function(k){return o.r.call(st,P+k)};}catch(e){}});})();</script>')
+# 匯入的資料：存在這台裝置（IndexedDB）。開啟時改用 shell/index.html 填上匯入的書名、卷數，並把資料交給 App。
+BOOT = ('<script id="book-boot">(function(){if(window.__bookBooted||/[?&]builtin(&|$)/.test(location.search))return;var on=0;'
+        'try{on=localStorage.getItem("book-imported")==="1"}catch(e){}if(!on)return;window.__bookBooted=1;document.write(\'<plaintext style="display:none">\');'
+        'function fail(){try{localStorage.removeItem("book-imported")}catch(e){}location.replace(location.pathname+"?builtin")}'
+        'var rec=new Promise(function(res,rej){var r=indexedDB.open("{{代號}}-import",1);r.onupgradeneeded=function(){r.result.createObjectStore("kv")};r.onerror=rej;'
+        'r.onsuccess=function(){var q=r.result.transaction("kv").objectStore("kv").get("book");q.onsuccess=function(){res(q.result)};q.onerror=rej}});'
+        'var lib=new Promise(function(res,rej){var sc=document.createElement("script");sc.src="importer.js";sc.onload=res;sc.onerror=rej;document.head.appendChild(sc)});'
+        'var sh=fetch("shell/index.html").then(function(r){if(!r.ok)throw r.status;return r.text()});'
+        'var parsed=new Promise(function(res){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",res);else res()});'
+        'Promise.all([rec,sh,lib,parsed]).then(function(a){var b=a[0];if(!b)return fail();window.__bookData=b.data;window.__bookNotes=b.notes;'
+        'var h=BookImporter.fill(a[1],b.cfg,b.juans,"{{代號}}-u").replace(/<script id="book-boot">[\\s\\S]*?<\\/script>/,"");'
+        '(window.__stOrig||[]).forEach(function(o,n){var st=n?sessionStorage:localStorage;st.getItem=o.g;st.setItem=o.p;st.removeItem=o.r});'
+        'document.open();document.write(h);document.close()}).catch(fail)})();</script>')
 i = s.index('<script')
-s = s[:i] + NS + s[i:]
+s = s[:i] + NS + BOOT + s[i:]
+rep('if (!ZANG_PROMISE) ZANG_PROMISE = new Promise(function (res, rej) {',
+    'if (window.__bookData) return Promise.resolve(EDATA.zang = window.__bookData);\n    if (!ZANG_PROMISE) ZANG_PROMISE = new Promise(function (res, rej) {')
+rep('function loadChunk(c) {', 'function loadChunk(c) {\n    if (window.__bookNotes) { Object.keys(window.__bookNotes).forEach(function (k) { if (!NOTES[k]) NOTES[k] = window.__bookNotes[k]; }); return Promise.resolve(true); }')
+# 功能列表「匯入」：開啟匯入頁
+IMPORT_BTN = ('<div class="import-menu-row"><button class="mi" id="importBtn" role="menuitem"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+              '<path d="M10 3v9M6.5 8.5 10 12l3.5-3.5M4 13.5V16h12v-2.5"/></svg><span>匯入</span><i class="chev" aria-hidden="true">›</i></button></div>\n    ')
+rep('<div class="about" id="about">', IMPORT_BTN + '<div class="about" id="about">')
+rep("['其他',['.dl','.ver-menu-row','.about']]", "['其他',['.dl','.import-menu-row','.ver-menu-row','.about']]")
+s = s.replace('</head>', '<style id="book-import-css">.settings-panel:not([data-settings-page=root])>.import-menu-row{display:none!important}:root:root:root:root .settings-panel[data-settings-page=root]>.import-menu-row{margin:0!important;border:0!important;overflow:visible!important;padding:1px 4px!important}</style></head>', 1)
+rep("['#aboutBtn','資料來源與問題回報']", "['#aboutBtn','資料來源與問題回報'],['#importBtn','匯入自己的科判、正文、講記（存在這台裝置）']")
+# 最後一個 </body> 才是真的（前面幾個在列印用的字串裡）
+i = s.rindex('</body>')
+s = s[:i] + '<script id="book-import-btn">document.getElementById("importBtn").addEventListener("click",function(e){e.stopPropagation();location.href="import.html";});</script>' + s[i:]
 
 # 4. 書名
 for old, new in [('瑜伽師地論（藏經科判）', '{{書名}}'), ('瑜伽師地論（韓清淨科判）', '{{書名}}'),

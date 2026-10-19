@@ -10,6 +10,7 @@
 - 內容只在 `template/`：`tools/derive_shell.py` 由根目錄 index.html 產生外殼（拿掉內嵌資料、版本切換、W001統計；書名／卷數／講記名稱改欄位；localStorage 與快取加代號前綴）；`tools/build.py` 把 `source/` 純文字（科判＋正文＋講記）轉成 data/book.js、notes、科判頁；`tools/pdf_text.py` 整理PDF轉文字。根目錄 App 未改。
 - 驗證：Chromium 模擬電腦／iPhone 開啟示範資料無錯誤；藏經版資料反向匯入，科判樹1970科完全一致、126頁科判全部排得下；未實機Safari、未測iPad。
 - 已知：「卷」字尚不可改名；內附字型為瑜伽論子集，其他字由系統字型補。
+- 介面內匯入（同日第二輪）：功能列表「其他」新增「匯入」（下載下面）→ `import.html` 選 .txt、檢查、套用；資料存這台裝置 IndexedDB `{代號}-import`，首頁開啟時改用 `shell/index.html` 填入匯入的書（代號 `{代號}-u`，設定與內建書分開）；`?builtin` 略過匯入；匯入頁可清除。`importer.js` 是 build.py 的瀏覽器版，三組資料輸出與 build.py 相同。SW 導覽不再把 import.html 當首頁。Chromium 模擬電腦／iPhone 走完匯入→開啟→重新整理→清除，無錯誤；未實機 Safari。
 
 ## W047（Claude Code，2026-10-19；電腦版今日修正套用到手機與 iPad，預覽未發布）
 - 基底main `7f08ed0`（v2.4.0），分支claude/project-thread-86cyas。使用者要求把今日電腦版10項修正檢查並套到手機直橫、iPad直橫，電腦版行為不動。

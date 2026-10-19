@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>匯入資料｜示範經</title>
+<style>
+:root{--bg:#faf8f3;--card:#fff;--fg:#2b2620;--muted:#7a7166;--rule:#e4ddd1;--acc:#c9a84c;--accd:#a8862e;--warn:#9a5b12;--err:#a12a1a;
+  --ui:"PMingLiU","新細明體","MingLiU","Songti TC","STSong",serif}
+@media (prefers-color-scheme:dark){:root{--bg:#1d1b18;--card:#262420;--fg:#ece6dc;--muted:#a59c90;--rule:#3a362f;--warn:#e0a85c;--err:#f08a7a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--ui)}
+main{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:24px;margin:8px 0 4px}
+.lead{color:var(--muted);margin:0 0 20px}
+section{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:16px;margin:0 0 14px}
+h2{font-size:17px;margin:0 0 10px}
+label.f{display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap}
+label.f>span{min-width:5.5em;color:var(--muted)}
+input[type=text]{flex:1;min-width:6em;font:inherit;padding:6px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--fg)}
+input.tag{flex:0 0 4em;min-width:4em;text-align:center}
+.drop{border:1.5px dashed var(--rule);border-radius:10px;padding:14px;text-align:center;color:var(--muted);cursor:pointer;margin-top:6px}
+.drop.over{border-color:var(--acc);background:rgba(201,168,76,.08)}
+.drop input{display:none}
+.files{font-size:14px;color:var(--fg);margin-top:6px;word-break:break-all}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+button{font:inherit;padding:8px 16px;border-radius:10px;border:1px solid var(--rule);background:var(--card);color:var(--fg);cursor:pointer}
+button.go{background:var(--acc);border-color:var(--acc);color:#fff}
+button.go:hover{background:var(--accd)}
+button:disabled{opacity:.45;cursor:default}
+#result{display:none}
+#result.on{display:block}
+#sum{margin:0 0 8px}
+#warn{margin:0;padding-left:1.2em;color:var(--warn);font-size:15px;max-height:260px;overflow:auto}
+#err{color:var(--err);margin:8px 0 0;white-space:pre-wrap}
+#cur{color:var(--muted);font-size:15px;margin:0}
+details{font-size:15px}
+summary{cursor:pointer;color:var(--muted)}
+table{border-collapse:collapse;margin:8px 0;font-size:15px}
+td{border-top:1px solid var(--rule);padding:4px 8px;vertical-align:top}
+code{font-family:ui-monospace,Menlo,monospace;font-size:14px}
+/* 說明字框：滑鼠移過去顯示，字級與內文相同 */
+[data-tip]{position:relative}
+@media (hover:hover){[data-tip]:hover::after,[data-tip]:focus-visible::after{content:attr(data-tip);position:absolute;left:0;top:calc(100% + 6px);z-index:9;width:max-content;max-width:300px;padding:8px 12px;border-radius:8px;
+  background:#2b2620;color:#fff;font:15px/1.5 var(--ui);white-space:normal;box-shadow:0 4px 14px rgba(0,0,0,.18);pointer-events:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1>匯入資料</h1>
+  <p class="lead">選擇整理好的純文字檔（.txt），按「檢查」看結果，再按「套用並開啟」。資料只存在這台裝置的瀏覽器裡。</p>
+
+  <section>
+    <h2>書名</h2>
+    <label class="f"><span>書名</span><input type="text" id="title" value="示範經" data-tip="顯示在標題、科判表總表與下載檔名"></label>
+  </section>
+
+  <section>
+    <h2>正文與科判</h2>
+    <div class="drop" id="dMain" data-tip="可以一次選好幾個 .txt；依檔名順序讀入" tabindex="0">點這裡選檔，或把 .txt 拖進來<input type="file" accept=".txt,text/plain" multiple></div>
+    <div class="files" id="fMain"></div>
+  </section>
+
+  <section>
+    <h2>講記</h2>
+    <label class="f"><span>講記一</span><input type="text" id="n1" value="講記" data-tip="正文裡的開關會顯示這個名稱"><input type="text" class="tag" id="t1" value="講" data-tip="正文檔裡用「> 標記 內容」寫講記時的標記"></label>
+    <div class="drop" id="d1" data-tip="講記檔：每段以【001】這類編號開頭，提到哪一科就接到那一科後面" tabindex="0">講記一的檔案（可省略）<input type="file" accept=".txt,text/plain" multiple></div>
+    <div class="files" id="f1"></div>
+    <label class="f"><span>講記二</span><input type="text" id="n2" value="補充講表" data-tip="第二種講記的名稱；不需要就留空"><input type="text" class="tag" id="t2" value="補" data-tip="正文檔裡用「> 標記 內容」寫講記時的標記"></label>
+    <div class="drop" id="d2" data-tip="第二種講記的檔案（可省略）" tabindex="0">講記二的檔案（可省略）<input type="file" accept=".txt,text/plain" multiple></div>
+    <div class="files" id="f2"></div>
+  </section>
+
+  <section>
+    <div class="acts">
+      <button type="button" id="check" data-tip="讀取檔案，列出卷數、科判數與需要注意的地方">檢查</button>
+      <button type="button" class="go" id="apply" disabled data-tip="把檢查過的資料存到這台裝置，並用它開啟閱讀畫面">套用並開啟</button>
+      <button type="button" id="back" data-tip="不匯入，回到閱讀畫面">返回</button>
+    </div>
+    <p id="err"></p>
+    <div id="result"><p id="sum"></p><ul id="warn"></ul></div>
+  </section>
+
+  <section>
+    <h2>目前使用的資料</h2>
+    <p id="cur">內建資料</p>
+    <div class="acts"><button type="button" id="clear" disabled data-tip="刪除這台裝置上匯入的資料，改回網站內建的資料">清除匯入，回到內建資料</button></div>
+  </section>
+
+  <section>
+    <details>
+      <summary>檔案格式</summary>
+      <table>
+        <tr><td><code>= 卷名</code></td><td>新的一卷</td></tr>
+        <tr><td><code>甲一、標題</code></td><td>科判（壹貳參→甲乙丙→子丑寅…自動分層；也可在前面加 <code>#</code>）</td></tr>
+        <tr><td><code>@ 文字</code></td><td>作者、譯者</td></tr>
+        <tr><td><code>* 文字</code></td><td>品名、小標</td></tr>
+        <tr><td><code>~ 文字</code></td><td>偈頌</td></tr>
+        <tr><td><code>&gt; 標記 文字</code></td><td>講記，接在上一段後面</td></tr>
+        <tr><td><code>// 文字</code></td><td>備註，不會出現</td></tr>
+        <tr><td>其他</td><td>正文，一行一段</td></tr>
+      </table>
+      講記檔：每段以【001】開頭；段落裡提到的科判（例如「乙一、華嚴時」）會被找出來，這段講記就接在那一科後面。
+    </details>
+  </section>
+</main>
+<script src="importer.js"></script>
+<script>
+(function(){
+  'use strict';
+  var CODE='demo', DB=CODE+'-import', KEY=CODE+':book-imported';
+  function $(id){return document.getElementById(id);}
+  function idb(mode,fn){return new Promise(function(res,rej){var r=indexedDB.open(DB,1);r.onupgradeneeded=function(){r.result.createObjectStore('kv');};r.onerror=function(){rej(r.error);};
+    r.onsuccess=function(){var db=r.result,tx=db.transaction('kv',mode),st=tx.objectStore('kv'),q=fn(st);tx.oncomplete=function(){db.close();res(q&&q.result);};tx.onerror=function(){db.close();rej(tx.error);};};});}
+  var picked={main:[],l1:[],l2:[]},result=null,shell=null;
+  function readFiles(list){return Promise.all([].map.call(list,function(f){return f.text().then(function(t){return {name:f.name,text:t};});}));}
+  function wire(dropId,listId,key){
+    var d=$(dropId),inp=d.querySelector('input');
+    function take(fl){readFiles(fl).then(function(fs){picked[key]=fs.filter(function(f){return /\.txt$/i.test(f.name);});
+      $(listId).textContent=picked[key].map(function(f){return f.name;}).join('、');invalidate();});}
+    d.addEventListener('click',function(){inp.click();});
+    d.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();inp.click();}});
+    inp.addEventListener('change',function(){take(inp.files);});
+    d.addEventListener('dragover',function(e){e.preventDefault();d.classList.add('over');});
+    d.addEventListener('dragleave',function(){d.classList.remove('over');});
+    d.addEventListener('drop',function(e){e.preventDefault();d.classList.remove('over');take(e.dataTransfer.files);});
+  }
+  wire('dMain','fMain','main');wire('d1','f1','l1');wire('d2','f2','l2');
+  ['title','n1','t1','n2','t2'].forEach(function(id){$(id).addEventListener('input',invalidate);});
+  function invalidate(){result=null;$('apply').disabled=true;$('result').classList.remove('on');$('err').textContent='';}
+  function cfg(){
+    var marks=[];
+    [['n1','t1'],['n2','t2']].forEach(function(p){var n=$(p[0]).value.trim(),t=$(p[1]).value.trim();if(n&&t)marks.push({'標記':t,'名稱':n});});
+    return {'書名':$('title').value.trim(),'講記':marks};
+  }
+  $('check').onclick=function(){
+    invalidate();
+    try{
+      var c=cfg(),lect={};
+      if(picked.l1.length&&!c['講記'][0])throw new Error('講記一有檔案，請填名稱與標記');
+      if(c['講記'][0])lect[c['講記'][0]['標記']]=picked.l1;
+      if(c['講記'][1])lect[c['講記'][1]['標記']]=picked.l2;
+      else if(picked.l2.length)throw new Error('講記二有檔案，請填名稱與標記');
+      result=BookImporter.build(c,picked.main,lect);result.cfg=c;
+      var s=result.stats;
+      $('sum').textContent='共 '+result.juans+' 卷、科判 '+s.nodes+' 科、科判頁 '+s.pages+' 頁、講記 '+s.notes+' 段。';
+      var w=$('warn');w.replaceChildren();result.warnings.forEach(function(t){var li=document.createElement('li');li.textContent=t;w.appendChild(li);});
+      $('result').classList.add('on');$('apply').disabled=false;
+    }catch(e){$('err').textContent=e.message||String(e);}
+  };
+  $('apply').onclick=function(){
+    if(!result)return;$('apply').disabled=true;$('err').textContent='';
+    var rec={cfg:result.cfg,data:result.data,notes:result.notes,juans:result.juans,at:new Date().toISOString()};
+    idb('readwrite',function(st){return st.put(rec,'book');}).then(function(){
+      try{localStorage.setItem(KEY,'1');}catch(e){}
+      location.href='./';
+    }).catch(function(e){$('err').textContent='存檔失敗：'+(e&&e.message||e);$('apply').disabled=false;});
+  };
+  $('back').onclick=function(){location.href='./';};
+  $('clear').onclick=function(){
+    idb('readwrite',function(st){return st.delete('book');}).then(function(){try{localStorage.removeItem(KEY);}catch(e){}showCur(null);});
+  };
+  function showCur(rec){
+    $('cur').textContent=rec?'匯入的資料：《'+rec.cfg['書名']+'》，'+rec.juans+' 卷（'+rec.at.slice(0,10)+' 匯入）':'內建資料';
+    $('clear').disabled=!rec;
+  }
+  idb('readonly',function(st){return st.get('book');}).then(showCur).catch(function(){showCur(null);});
+})();
+</script>
+</body>
+</html>

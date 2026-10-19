@@ -437,7 +437,7 @@ def main():
     ver = cfg.get('版本') or '1.0.0'
     rep = {'{{書名}}': cfg['書名'], '{{短名}}': cfg.get('短名') or cfg['書名'], '{{代號}}': cfg['代號'],
            '{{卷數}}': str(nj), '{{註解檔數}}': str(nchunks), '{{講記一}}': names[0] or '講記一',
-           '{{講記二}}': names[1] or '講記二', '{{講記一標記}}': tags[0] or '講', '{{卷}}': unit,
+           '{{講記二}}': names[1] or '講記二', '{{講記一標記}}': tags[0] or '講', '{{講記二標記}}': tags[1], '{{卷}}': unit,
            '{{版本}}': ver, '{{日期}}': __import__('datetime').date.today().isoformat(), '{{關於}}': esc(cfg.get('關於') or '')}
     hide = []
     if not names[0]: hide.append('.sw.px,#exPx')
@@ -453,8 +453,9 @@ def main():
     if hide:
         html = html.replace('</head>', '<style id="book-hide">' + ','.join(hide).replace(',', ',') + '{display:none!important}</style></head>', 1)
     open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(html)
+    open(os.path.join(ROOT, 'import.html'), 'w', encoding='utf-8').write(fill(open(os.path.join(shell, 'import.html'), encoding='utf-8').read()))
     open(os.path.join(ROOT, 'manifest.webmanifest'), 'w', encoding='utf-8').write(fill(open(os.path.join(shell, 'manifest.webmanifest'), encoding='utf-8').read()))
-    offline = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'assets/tutorial/gestures-lite.svg']
+    offline = ['./', 'index.html', 'import.html', 'importer.js', 'shell/index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'assets/tutorial/gestures-lite.svg']
     offline += sorted('data/' + f for f in os.listdir(dd) if not f.startswith('.'))
     F = {f: sha(os.path.join(ROOT, 'index.html' if f == './' else f)) for f in offline}
     sw = fill(open(os.path.join(shell, 'sw.js'), encoding='utf-8').read())
