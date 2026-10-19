@@ -4389,7 +4389,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         curI=selI=c;if(changed)rebuild(c);catalogSync();updChip();
         if(an>=0&&model.inc[an]){var w1=wxy(model,an);tx=ax-w1[0]*sc;ty=ay-w1[1]*sc;clampPan();}
         req();
-        if(model.inc[c]){var wc=wxy(model,c),sx=wc[0]*sc+tx,sy=wc[1]*sc+ty,mg=Math.min(80,H*.12);if(!(sx>=mg&&sx<=W-mg&&sy>=mg&&sy<=H-mg))animCenter(c,sc,H*.3);}
+        if(model.inc[c]){var nr=nodeRect(model,c),x0=nr[0]*sc+tx,y0=nr[1]*sc+ty,x1=x0+nr[2]*sc,y1=y0+nr[3]*sc,mg=12,yb=H-mg,mmE=box.querySelector('.km-mm');if(mmE&&mmE.offsetParent){var cr=cv.getBoundingClientRect(),mr=mmE.getBoundingClientRect();if(mr.height)yb=Math.min(yb,mr.top-cr.top-mg);}if(!(x0>=mg&&x1<=W-mg&&y0>=mg&&y1<=yb))animCenter(c,sc,H*.3);}
       }
       // Remember explicit full-map navigation independently of temporary selection / tutorials.
       function rememberMapReading(i,j){
