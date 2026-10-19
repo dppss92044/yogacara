@@ -4384,8 +4384,12 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         if(j!==journeyJuan&&!focusSaved)jumpJourney(j);
         var changed=false;
         if(!forestMode){for(var p=c;p>=0;p=NN[p][4])if(col[p]){col[p]=0;changed=true;}}
-        curI=selI=c;if(changed)rebuild(c);catalogSync();updChip();req();
-        if(model.inc[c])animCenter(c,sc,H*.3);
+        // 下方仍有空間時不移動：展開前記住最近可見上層的螢幕位置，展開後維持原位；只有反黃標籤落在可視範圍外才拉到固定位置。
+        var an=-1,ax=0,ay=0;if(changed&&model&&model.n){for(var p2=c;p2>=0;p2=NN[p2][4])if(model.inc[p2]){an=p2;break;}if(an>=0){var w0=wxy(model,an);ax=w0[0]*sc+tx;ay=w0[1]*sc+ty;}}
+        curI=selI=c;if(changed)rebuild(c);catalogSync();updChip();
+        if(an>=0&&model.inc[an]){var w1=wxy(model,an);tx=ax-w1[0]*sc;ty=ay-w1[1]*sc;clampPan();}
+        req();
+        if(model.inc[c]){var wc=wxy(model,c),sx=wc[0]*sc+tx,sy=wc[1]*sc+ty,mg=Math.min(80,H*.12);if(!(sx>=mg&&sx<=W-mg&&sy>=mg&&sy<=H-mg))animCenter(c,sc,H*.3);}
       }
       // Remember explicit full-map navigation independently of temporary selection / tutorials.
       function rememberMapReading(i,j){
