@@ -4400,7 +4400,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         var visible=c;while(visible>=0&&!model.inc[visible])visible=NN[visible][4];
         if(visible<0)return;curI=selI=visible;rememberMapReading(c,j);
         embLast={c:c,e:edKey,j:j};embSkip=Date.now()+1200;embShowY=true;trackAttr();catalogSync();updChip();req();
-        if(source!=='go')animCenter(visible,sc,H*.3);
+        // 與跟讀同一規則：反黃標籤已完整在畫面內就不移動，避免兩套定位互相拉扯造成上下晃。
+        if(source!=='go'){var vr=nodeRect(model,visible),vx0=vr[0]*sc+tx,vy0=vr[1]*sc+ty;if(!(vx0>=12&&vx0+vr[2]*sc<=W-12&&vy0>=12&&vy0+vr[3]*sc<=H-60))animCenter(visible,sc,H*.3);}
       }
       var autoOpened=[];
       // 記住往下捲時每個節點的畫面位置；往上捲回到該節點時還原同一版面。
