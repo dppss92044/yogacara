@@ -1356,6 +1356,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
   try { localStorage.removeItem("hk-vmode"); } catch (e) {}
   var article = $("article"), rail = $("rail"), panel = $("panel"), wrap = $("wrap"), main = $("main");
   var equalPanes=true;try{equalPanes=localStorage.getItem('hk-pane-split-v140')!=='custom';}catch(e){}if(tabletDesktopMode())equalPanes=true;wrap.classList.toggle('equal-panes',equalPanes);
+  // 電腦：視窗由半頁放大成全頁時，若只有正文與科判兩欄，自動回到50%各半。
+  (function(){var lastW=innerWidth;window.addEventListener('resize',function(){var w=innerWidth,grew=lastW<screen.availWidth*.75&&w>=screen.availWidth*.9;lastW=w;if(!grew||deviceLayout!=='mac'||panel.hidden)return;if(typeof railOn!=='undefined'&&railOn&&rail.getBoundingClientRect().width>0)return;equalPanes=true;wrap.classList.add('equal-panes');document.documentElement.style.removeProperty('--pw');try{localStorage.removeItem('hk-pane-split-v140');}catch(e){}try{placeGutters();}catch(e){}});})();
   // vertical text: half-width digits/brackets set upright (2 digits side-by-side, longer runs stacked)
   function vt(s) {
     if (!VM) return esc(s);
