@@ -4698,8 +4698,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         for(var i=0;i<candidates.length;i++){var x=Math.max(8,Math.min(candidates[i][0],ww-cw-8)),y=Math.max(8,Math.min(candidates[i][1],hh-chh-8));if(!obstacles.some(function(o){return x<o.right+4&&x+cw>o.left-4&&y<o.bottom+4&&y+chh>o.top-4;})){chosen=[x,y];break;}}
         chosen=chosen||[(ww-cw)/2,hh-chh-18];st.left=chosen[0]+'px';st.top=chosen[1]+'px';st.transform='none';
       }
-      // 只在預覽（非正式網址）時於科判圖畫 x、y 座標刻度（螢幕像素），供溝通位置用。
-      var PREVIEW_AXES=!/(^|\.)github\.io$/.test(location.hostname);
+      // 只在預覽網址且加 ?grid 時於科判圖畫 x、y 座標刻度（螢幕像素），供溝通位置用；正式預覽與發布不顯示。
+      var PREVIEW_AXES=!/(^|\.)github\.io$/.test(location.hostname)&&/[?&]grid\b/.test(location.search);
       function drawAxes(){cx.save();cx.setTransform(dpr,0,0,dpr,0,0);cx.lineWidth=1;
         // 原點在左下角，x 往右、y 往上（第一象限）。
         function grid(st,col){cx.beginPath();for(var gx=st;gx<W;gx+=st){cx.moveTo(gx+.5,0);cx.lineTo(gx+.5,H);}for(var gy=st;gy<H;gy+=st){var yy=H-gy;cx.moveTo(0,yy+.5);cx.lineTo(W,yy+.5);}cx.strokeStyle=col;cx.stroke();}
