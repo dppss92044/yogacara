@@ -4759,7 +4759,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           if(any){if(ghostPass){cx.setLineDash([2/sc,2/sc]);cx.strokeStyle='#8a8a8a';cx.globalAlpha=.6;}else{cx.setLineDash(ST.dash?[6/sc,5/sc]:[]);cx.strokeStyle=ST.color?PAL[c0]:P.fg;cx.globalAlpha=ST.color?0.9:0.7;}cx.stroke();}
         }}
         cx.globalAlpha=1;cx.setLineDash([]);
-        if(hoverEdge){var ep=hoverEdge.points;cx.beginPath();mv(ep[0],ep[1]);lt(ep[2],ep[3]);cx.strokeStyle='rgba(140,140,140,.28)';cx.lineWidth=7/sc;cx.stroke();}
+        if(hoverEdge&&!(M.ctx&&M.ctx[hoverEdge.parent])){var ep=hoverEdge.points;cx.beginPath();mv(ep[0],ep[1]);lt(ep[2],ep[3]);cx.strokeStyle='rgba(140,140,140,.28)';cx.lineWidth=7/sc;cx.stroke();}
         var fs=vt?FS_V:FS_H;
         if(textOK){cx.font=fs+'px '+(vt?FONT_V:FONT_H);cx.textBaseline='middle';cx.textAlign=vt?'center':'left';}
         for(b=Math.max(0,b0-1);b<=b1;b++){L=M.bn[b];if(!L)continue;
