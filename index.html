@@ -4691,7 +4691,14 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
         for(var i=0;i<candidates.length;i++){var x=Math.max(8,Math.min(candidates[i][0],ww-cw-8)),y=Math.max(8,Math.min(candidates[i][1],hh-chh-8));if(!obstacles.some(function(o){return x<o.right+4&&x+cw>o.left-4&&y<o.bottom+4&&y+chh>o.top-4;})){chosen=[x,y];break;}}
         chosen=chosen||[(ww-cw)/2,hh-chh-18];st.left=chosen[0]+'px';st.top=chosen[1]+'px';st.transform='none';
       }
-      function draw(){
+      // 只在預覽（非正式網址）時於科判圖畫 x、y 座標刻度（螢幕像素），供溝通位置用。
+      var PREVIEW_AXES=!/(^|\.)github\.io$/.test(location.hostname);
+      function drawAxes(){cx.save();cx.setTransform(dpr,0,0,dpr,0,0);cx.font='10px -apple-system,sans-serif';cx.fillStyle='rgba(220,40,40,.85)';cx.strokeStyle='rgba(220,40,40,.6)';cx.lineWidth=1;cx.beginPath();
+        for(var x=0;x<=W;x+=50){var L=x%100===0?10:5;cx.moveTo(x+.5,0);cx.lineTo(x+.5,L);if(x%100===0&&x>0){cx.textAlign='center';cx.textBaseline='top';cx.fillText(x,x,11);}}
+        for(var y=0;y<=H;y+=50){var L2=y%100===0?10:5;cx.moveTo(0,y+.5);cx.lineTo(L2,y+.5);if(y%100===0&&y>0){cx.textAlign='left';cx.textBaseline='middle';cx.fillText(y,12,y);}}
+        cx.stroke();cx.textAlign='right';cx.textBaseline='bottom';cx.fillText('W'+Math.round(W)+' H'+Math.round(H),W-4,H-4);cx.restore();}
+      function draw(){draw0();if(PREVIEW_AXES&&box&&!box.hidden&&model)drawAxes();}
+      function draw0(){
         raf=0;if(!box||box.hidden||!model)return;
         cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,W,H);
         if(pctEl)pctEl.textContent=sc<0.01?'<1%':Math.round(sc*100)+'%';
