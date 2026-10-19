@@ -7784,9 +7784,23 @@ function put(){var pop=document.querySelector('.verpop');if(pop&&!pop.querySelec
   var v=document.querySelector('.settings-panel .grp .ver');if(v&&!v.querySelector('.vp-replay')){var s1=v.querySelector('span');if(s1)s1.appendChild(rb());}}
 put();setInterval(put,800);
 })();</script>
-<script id="release-notification-router">(function(){
+<style id="bugfix-anim-css">#bugfixAnim .bf-list{list-style:none;margin:6px 0 4px;padding:0}#bugfixAnim .bf-list li{position:relative;padding:8px 0 8px 22px;font-size:16px;line-height:1.5;opacity:0;transform:translateY(8px);animation:bfIn .45s ease forwards}#bugfixAnim .bf-list li:before{content:'';position:absolute;left:4px;top:16px;width:7px;height:7px;border-radius:50%;background:var(--acc,#d9a62e)}#bugfixAnim .bf-stage{display:flex;justify-content:center;margin:6px 0 2px}#bugfixAnim .bf-stage svg{width:240px;height:120px;color:var(--fg)}#bugfixAnim .bf-kid{transform-origin:50% 0;animation:bfKid 4s ease-in-out infinite}#bugfixAnim .bf-down{animation:bfDown 4s ease-in-out infinite}#bugfixAnim .bf-up{animation:bfUp 4s ease-in-out infinite}@keyframes bfIn{to{opacity:1;transform:none}}@keyframes bfKid{0%,10%{opacity:0;transform:scaleY(.2)}30%,60%{opacity:1;transform:none}80%,100%{opacity:0;transform:scaleY(.2)}}@keyframes bfDown{0%,8%{opacity:0;transform:translateY(-6px)}15%,40%{opacity:1;transform:translateY(6px)}48%,100%{opacity:0}}@keyframes bfUp{0%,52%{opacity:0;transform:translateY(6px)}60%,85%{opacity:1;transform:translateY(-6px)}92%,100%{opacity:0}}@media (prefers-reduced-motion:reduce){#bugfixAnim *{animation:none!important;opacity:1!important;transform:none!important}}</style><script id="bugfix-anim-js">(function(){
+window.__bugfixAnim=function(){
+  if(document.getElementById('bugfixAnim'))return;
+  var items=['視窗更穩定：下方還有空間就原地展開，不再一直跳動。','滑鼠向下滾動：跟著正文逐層展開。','滑鼠向上滾動：自動收合下層。','跨卷時平順移動，正文與科判同步不漏接。'];
+  var el=document.createElement('div');el.className='ua ha';el.id='bugfixAnim';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label','開鎖追蹤體驗優化');
+  el.innerHTML='<div class="ua-card ha-card"><div class="ua-ts">體驗優化 · bug 修正</div><h3 class="ha-h">開鎖追蹤更順了</h3><div class="bf-stage" aria-hidden="true"><svg viewBox="0 0 240 120" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="100" y="8" width="40" height="18" rx="5"/><path d="M120 26v12M70 38h100M70 38v8M170 38v8"/><g class="bf-kid"><rect x="50" y="46" width="40" height="18" rx="5" fill="#f4e2a4"/><rect x="150" y="46" width="40" height="18" rx="5"/></g><g class="bf-down"><path d="M215 60v26M207 78l8 8 8-8"/></g><g class="bf-up"><path d="M215 86V60M207 68l8-8 8 8"/></g></svg></div><ul class="bf-list"></ul><div class="ua-b ha-b"><button type="button" data-u="replay">重播</button><button type="button" class="go" data-u="done">知道了</button></div></div>';
+  var list=el.querySelector('.bf-list');
+  function play(){list.replaceChildren();items.forEach(function(t,i){var li=document.createElement('li');li.textContent=t;li.style.animationDelay=(0.3+i*0.45)+'s';list.appendChild(li);});var g=el.querySelectorAll('.bf-kid,.bf-down,.bf-up');g.forEach(function(x){x.style.animation='none';void x.getBoundingClientRect();x.style.animation='';});}
+  function close(){el.remove();}
+  el.querySelector('[data-u=replay]').onclick=play;el.querySelector('[data-u=done]').onclick=close;
+  el.addEventListener('click',function(e){if(e.target===el)close();});
+  el.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();close();}});
+  document.body.appendChild(el);play();el.querySelector('[data-u=done]').focus({preventScroll:true});
+};
+})();</script><script id="release-notification-router">(function(){
 var version=window.__releaseVersion,attempted=false,readInSession=false,KEY='hk-update-animation-seen';
-var maintenanceBell=document.querySelector('meta[name="app-version"]').content==='2.3.4',maintenanceStarts=Date.parse('2026-10-16T19:28:58+00:00'),maintenanceExpires=Date.parse('2026-10-16T19:33:58+00:00'),maintenanceKey='hk-maintenance-green-1792178938000',maintenanceDismissed=false;
+var maintenanceBell=document.querySelector('meta[name="app-version"]').content==='2.3.4',maintenanceStarts=Date.parse('2026-10-16T19:28:58+00:00'),maintenanceExpires=Date.parse('2026-10-16T19:33:58+00:00'),maintenanceKey='hk-bugfix-20261019-read',maintenanceDismissed=false;
 function get(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 function unseen(){return !readInSession&&get(KEY)!==version;}
 // This controls in-app release animations, not native Web Push permission.
@@ -7799,8 +7813,8 @@ window.__refreshReleaseNotifications=function(){
   document.querySelectorAll('#menuBtn>.upd-dot,#versionBtn .upd-dot,.vp-more>.upd-dot').forEach(function(d){d.hidden=!show;});
   var bell=document.getElementById('updBell');
   if(maintenanceBell){
-    var active=!maintenanceDismissed&&get(maintenanceKey)!=='read'&&Date.now()>=maintenanceStarts&&Date.now()<maintenanceExpires;
-    if(bell){bell.hidden=!active;bell.style.setProperty('display',active?'inline-flex':'none','important');bell.setAttribute('aria-label','維護完成');bell.title='維護完成';var statusDot=bell.querySelector('.upd-dot');if(statusDot){statusDot.hidden=!active;statusDot.style.setProperty('display',active?'block':'none','important');statusDot.style.background='#2e9d60';}}
+    var active=(!maintenanceDismissed&&get(maintenanceKey)!=='read')||/[?&]preview=bugfix(&|$)/.test(location.search);
+    if(bell){bell.hidden=!active;bell.style.setProperty('display',active?'inline-flex':'none','important');bell.setAttribute('aria-label','開鎖追蹤體驗優化，點開看內容');bell.title='開鎖追蹤體驗優化與修正';var statusDot=bell.querySelector('.upd-dot');if(statusDot){statusDot.hidden=!active;statusDot.style.setProperty('display',active?'block':'none','important');statusDot.style.background='';}}
     window.__releaseNotificationPending=false;return;
   }
   if(bell){bell.hidden=!show;bell.style.setProperty('display',show?'inline-flex':'none','important');var dot=bell.querySelector('.upd-dot');if(dot)dot.hidden=!show;bell.setAttribute('aria-label','v2.3.3 更新未讀，點開更新動畫');bell.title='v'+version+' 更新';}
@@ -7811,7 +7825,7 @@ function tick(){
   if(!window.__releaseNotificationPending||document.hidden||!document.querySelector('.txt')||!window.__updAnim||document.querySelector('#tour,#helpAnim,#updAnim,#updNotice'))return;
   window.__updAnim();if(document.getElementById('updAnim')){attempted=true;window.__releaseNotificationPending=false;}
 }
-document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#updBell');if(!b)return;e.preventDefault();e.stopImmediatePropagation();if(maintenanceBell){maintenanceDismissed=true;try{localStorage.setItem(maintenanceKey,'read');}catch(e){}tick();return;}window.__updAnim();if(document.getElementById('updAnim'))attempted=true;},true);
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#updBell');if(!b)return;e.preventDefault();e.stopImmediatePropagation();if(maintenanceBell){maintenanceDismissed=true;try{localStorage.setItem(maintenanceKey,'read');}catch(e){}if(window.__bugfixAnim)window.__bugfixAnim();tick();return;}window.__updAnim();if(document.getElementById('updAnim'))attempted=true;},true);
 window.addEventListener('upd-dot',tick);window.addEventListener('storage',tick);document.addEventListener('visibilitychange',tick);setTimeout(tick,900);setInterval(tick,500);
 if(maintenanceBell){window.addEventListener('pageshow',tick);window.addEventListener('focus',tick);setTimeout(tick,Math.max(0,maintenanceExpires-Date.now()));}
 })();</script>
