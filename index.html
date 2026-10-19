@@ -4599,7 +4599,8 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
           if(org)x[i]=dep[i]*(step+gap);
           else if(tree)x[i]=x[p]+IND;
           else if(mind&&sd[i]<0)x[i]=x[p]-gap-w[i];
-          else x[i]=x[p]+w[p]+gap;
+          // 灰色（跨卷）上層只連一個下層的單純直線：線長減半；有分支的不動。
+          else x[i]=x[p]+w[p]+(ctx[p]&&fc[p]===i&&ns[i]<0?gap/2:gap);
         }
         if(org){var tmpw=w.slice();for(a2=0;a2<ids.length;a2++){i=ids[a2];vw[i]=tmpw[i];w[i]=step-4;}}
         if(table){var colx=[],cs=0,d0;ids.forEach(function(q){if(colx[dep[q]]==null)colx[dep[q]]=0;});var dmax=0;ids.forEach(function(q){if(dep[q]>dmax)dmax=dep[q];});for(d0=0;d0<=dmax;d0++){colx[d0]=cs;var wd=0;ids.forEach(function(q){if(dep[q]===d0&&w[q]>wd)wd=w[q];});cs+=wd;}ids.forEach(function(q){x[q]=colx[dep[q]];});}
@@ -4756,7 +4757,7 @@ html { padding:0; } body { -webkit-text-size-adjust:100%; }
                 else{var bus=pe+s*M.gap/2;stub[p]=key;if(fs0){mv(pe,yp);lt(bus,yp);}mv(bus,yp);lt(bus,yi);lt(ce,yi);endm(ce,yi,s);}
               }
             }}
-          if(any){if(ghostPass){cx.setLineDash([2/sc,6/sc]);cx.strokeStyle='#8a8a8a';cx.globalAlpha=.6;}else{cx.setLineDash(ST.dash?[6/sc,5/sc]:[]);cx.strokeStyle=ST.color?PAL[c0]:P.fg;cx.globalAlpha=ST.color?0.9:0.7;}cx.stroke();}
+          if(any){if(ghostPass){cx.setLineDash([2/sc,2/sc]);cx.strokeStyle='#8a8a8a';cx.globalAlpha=.6;}else{cx.setLineDash(ST.dash?[6/sc,5/sc]:[]);cx.strokeStyle=ST.color?PAL[c0]:P.fg;cx.globalAlpha=ST.color?0.9:0.7;}cx.stroke();}
         }}
         cx.globalAlpha=1;cx.setLineDash([]);
         if(hoverEdge&&!(M.ctx&&M.ctx[hoverEdge.parent])){var ep=hoverEdge.points;cx.beginPath();mv(ep[0],ep[1]);lt(ep[2],ep[3]);cx.strokeStyle='rgba(140,140,140,.28)';cx.lineWidth=7/sc;cx.stroke();}
