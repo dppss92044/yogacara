@@ -6,6 +6,7 @@
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
 ## W052（Codex，2026-10-21；記住介面開關，完成封存）
+- 最後程式提交：`c28f2dd06c366f5f8738d8bca5124b092fbedc3a`；封存提交見git log。依使用者明確授權合併推送main，不新增通知。
 - 最新正式基底v2.4.0 `342a9fbb2c161a4d3b3d5ee49af4e167bc0700b8`，分支work-w052-remember-interface，D196。使用者要求所有介面記住百卷、左側卷次縮圖、註解開關，明確授權默默合併發布。
 - 開工本地仍是d80e04a，實作後fetch發現遠端已有更新至W051；已將僅index.html的修正3-way乾淨套用到最新origin/main，未覆蓋任何近期新功能，工作號改用W052。舊基底暫存只供轉移，不發布。
 - 本機hk-interface-choices-v1記各mac／ipad／iphone介面的juanOpen／railOpen，以及單欄pane。百卷按鍵確實寫入，初始化與reader-layout還原；手機百卷浮窗在進入介面時恢復，不把暫時自動關閉寫成手動偏好。
