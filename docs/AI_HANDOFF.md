@@ -5,6 +5,15 @@
 > 下方是目前的**實際狀態**；固定模板見文末「模板」。
 > **歷史整合預覽（W004第八十四輪，含W005）：** `https://raw.githack.com/dppss92044/yogacara/26f3d3d7bfa981d92de9794930a471e110e6d4e1/index.html`。程式SHA `26f3d3d7bfa981d92de9794930a471e110e6d4e1`；下方各歷史輪次網址不代表最新。
 
+## W052（Codex，2026-10-21；記住介面開關，完成封存）
+- 最新正式基底v2.4.0 `342a9fbb2c161a4d3b3d5ee49af4e167bc0700b8`，分支work-w052-remember-interface，D196。使用者要求所有介面記住百卷、左側卷次縮圖、註解開關，明確授權默默合併發布。
+- 開工本地仍是d80e04a，實作後fetch發現遠端已有更新至W051；已將僅index.html的修正3-way乾淨套用到最新origin/main，未覆蓋任何近期新功能，工作號改用W052。舊基底暫存只供轉移，不發布。
+- 本機hk-interface-choices-v1記各mac／ipad／iphone介面的juanOpen／railOpen，以及單欄pane。百卷按鍵確實寫入，初始化與reader-layout還原；手機百卷浮窗在進入介面時恢復，不把暫時自動關閉寫成手動偏好。
+- setRail只在explicit=true保存選擇，適配不再強制重設左欄，平板電腦也可記住手動開啟。單欄分頁在手動切換、離開或旋轉時保存；自動初開科判不覆蓋已記住的分頁。相同值不重寫storage。
+- OPT依保存的px／cb還原，初始化／切版不再全部重設；藏經版沒有該註解時僅關閉當前顯示，回韓版再恢復，不刪偏好。點搜尋註解結果手動開啟也保存。
+- 只改共用UI偏好與必要恢復入口，近期單卷／F四層聚焦、A4列印、跨卷追蹤、觸控定位、v2.4.0動畫及通知／已讀保持。版本仍2.4.0，metadata工具僅重算資產，不編譯。
+- 最新基底已重跑19段可執行inline JS＋sw.js靜態語法，git diff --check通過，39項metadata重算；未編譯，未跑電腦／iPad直橫／手機直橫／藏韓UI、E2E、功能／實機／離線測試。依授權快轉合併推送main與工作分支、不加tag不開PR；Pages公網完成狀態未確認。
+
 ## W047（Claude Code，2026-10-19；電腦版今日修正套用到手機與 iPad，預覽未發布）
 - 基底main `7f08ed0`（v2.4.0），分支claude/project-thread-86cyas。使用者要求把今日電腦版10項修正檢查並套到手機直橫、iPad直橫，電腦版行為不動。
 - 實測：科判圖、跟讀、單卷、點線、更新／說明動畫本為共用程式，手機與iPad已同；iPad Safari走電腦版面（mac）。
